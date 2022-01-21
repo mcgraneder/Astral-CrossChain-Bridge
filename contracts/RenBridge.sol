@@ -1,7 +1,7 @@
 pragma solidity >= 0.5.0;
 pragma abicoder v2;
 
-import "./utils/SafeMath.sol";
+import "./SafeMath.sol";
 
 //interface functions needed to get info on RenBTC for current user after mint is successful
 //we also need the interface to be able to transfer tokens to and from this contract address
@@ -226,9 +226,11 @@ contract RenBridge {
     //we use this function to init a stuct array. we can use this to prevent the user from
     //initing multiple mints at once therefore reducing their capacting to only be able to 
     //init one bridge operation at a time
-    function lockAndMintInitialized(string memory asset, uint256 amount) external returns (bool) {
+    function lockAndMintInitialized(string memory asset, uint256 amount, bool data) external returns (bool) {
 
         LockAndMints[] storage deposits = depositList[msg.sender];
+        if (data) deposits.pop();
+
         require(deposits.length == 0, "can only have one LockAndMint operation at a time");
 
         deposits.push(
@@ -248,9 +250,11 @@ contract RenBridge {
 
     //this function is the same as above for the lockAndMint. We prevent the user from executing multiple
     //withdrawals at once
-    function burnAndReleaseInitialized(string memory asset, uint256 amount) external returns (bool) {
+    function burnAndReleaseInitialized(string memory asset, uint256 amount, bool data) external returns (bool) {
 
         BurnAndReleases[] storage widthdrawals = withdrawalList[msg.sender];
+        if (data) widthdrawals.pop();
+        
         require(widthdrawals.length == 0, "can only have one burnAndRelease operation at a time");
         widthdrawals.push(
             BurnAndReleases(
@@ -276,15 +280,15 @@ contract RenBridge {
         external  {
 
         LockAndMints[] storage deposits = depositList[msg.sender];
-        string memory ticker =  "BTC";
+        string memory ticker =  deposits[0].asset;
         bytes32 pHash = keccak256(abi.encode(_msg));
 
-        require(deposits.length == 0, "can only have one LockAndMint operation at a time");
+        require(deposits.length == 1, "can only have one LockAndMint operation at a time");
 
         uint256 mintedAmount = registry.getGatewayBySymbol(ticker).mint(pHash, _amount, _nHash, _sig);
         tokenBalance[msg.sender][ticker] +=_amount;
 
-        depositList[msg.sender].pop();
+        deposits.pop();
 
         emit Deposit(mintedAmount, _msg);
     }
@@ -299,7 +303,7 @@ contract RenBridge {
         BurnAndReleases[] storage widthdrawals = withdrawalList[msg.sender];
         string memory ticker = widthdrawals[0].asset;
 
-        require(widthdrawals.length == 0, "can only have one burnAndRelease operation at a time");
+        require(widthdrawals.length == 1, "can only have one burnAndRelease operation at a time");
         require(tokenBalance[msg.sender][ticker] >= _amount, "insufficent balance");
         require(_amount != 0, "cannot withdraw zero tokens");
 
@@ -307,7 +311,7 @@ contract RenBridge {
 
         uint256 burnedAmount = registry.getGatewayBySymbol(ticker).burn(_to, _amount);
 
-        withdrawalList[msg.sender].pop();
+        widthdrawals.pop();
 
         emit Withdraw(_to, burnedAmount, _msg);
     }
@@ -322,7 +326,7 @@ contract RenBridge {
         tokenExists(_ticker) 
         returns (bool) {
 
-        tokenBalance[msg.sender][_ticker].sub(amount);
+        tokenBalance[msg.sender][_ticker] -= amount;
         registry.getTokenBySymbol(_ticker).transfer(recipient, amount);
 
         return true;
@@ -340,7 +344,7 @@ contract RenBridge {
         returns (bool) {
 
         registry.getTokenBySymbol(_ticker).transferFrom(sender, recipient, amount);
-        tokenBalance[msg.sender][_ticker].add(amount);
+        tokenBalance[msg.sender][_ticker] += amount;
 
         return true;
     }
