@@ -108,6 +108,18 @@ contract RenBridge {
     event Withdraw(bytes _to, uint256 _amount, bytes _msg);
     event tokenAdded(string ticker, address tokenAddress);
     event ownerAdded(address owner);
+    event depositInitialized(
+        string asset, 
+        uint256 id, 
+        uint256 amount, 
+        address depositedBy, 
+        uint256 timeOfCreation);
+    event withdrawalInitialized(
+        string asset, 
+        uint256 id, 
+        uint256 amount, 
+        address withdrawedBy, 
+        uint256 timeOfCreation);
 
     
     function addToken(
@@ -151,7 +163,9 @@ contract RenBridge {
         return true;
     }
 
-    function lockAndMintInitialized(string memory asset, uint256 amount) private returns (bool) {
+    function lockAndMintInitialized(string memory asset, uint256 amount) external returns (bool) {
+
+        require(depositList[msg.sender].length == 0, "can only have one LockAndMint operation at a time");
 
         LockAndMints[] storage deposits = depositList[msg.sender];
         deposits.push(
@@ -162,12 +176,16 @@ contract RenBridge {
             block.timestamp
         ));
 
+        emit depositInitialized(asset, lockAndMintId, amount, msg.sender, block.timestamp);
+
         lockAndMintId++;
 
         return true;
     }
 
-    function burnAndReleaseInitialized(string memory asset, uint256 amount) private returns (bool) {
+    function burnAndReleaseInitialized(string memory asset, uint256 amount) external returns (bool) {
+
+        require(withdrawalList[msg.sender].length == 0, "can only have one burnAndRelease operation at a time");
 
         BurnAndReleases[] storage widthdrawals = withdrawalList[msg.sender];
         widthdrawals.push(
@@ -178,52 +196,51 @@ contract RenBridge {
             block.timestamp
         ));
 
+        emit withdrawalInitialized(asset, burnAndReleaseId, amount, msg.sender, block.timestamp);
+
         burnAndReleaseId++;
 
         return true;
     }
 
+    //HARDODING THE TOKEN TICKER TO BTC FOR THE MOMENT FOR TESTING HAVING ISSUES PASSING IN EXTRA PARAMS 
+    //IN THE CLIENT WITH REN.JS
     function deposit(
-        bytes calldata _msg, 
-        bytes calldata _ticker,
+        bytes calldata _msg,
         uint256 _amount, 
         bytes32 _nHash, 
         bytes calldata _sig) 
         external  {
 
-        string memory ticker = string(abi.encodePacked(_ticker));
+        // string memory ticker = string(abi.encodePacked(_ticker));
         bytes32 pHash = keccak256(abi.encode(_msg));
-
-        lockAndMintInitialized(ticker, _amount);
         require(depositList[msg.sender].length == 0, "can only have one LockAndMint operation at a time");
-        
 
-        uint256 mintedAmount = registry.getGatewayBySymbol(ticker).mint(pHash, _amount, _nHash, _sig);
-        tokenBalance[msg.sender][ticker].add(_amount);
+        uint256 mintedAmount = registry.getGatewayBySymbol("BTC").mint(pHash, _amount, _nHash, _sig);
+        tokenBalance[msg.sender]["BTC"].add(_amount);
 
         depositList[msg.sender].pop();
 
         emit Deposit(mintedAmount, _msg);
     }
 
+    //AGAIN HARDODING THE TOKEN TICKER TO BTC FOR THE MOMENT FOR TESTING HAVING ISSUES PASSING IN EXTRA PARAMS 
+    //IN THE CLIENT WITH REN.JS
     function withdraw(
         bytes calldata _msg, 
-        bytes calldata _ticker,
         bytes calldata _to, 
         uint256 _amount) 
         external {
 
-        string memory ticker = string(abi.encodePacked(_ticker));
-        burnAndReleaseInitialized(ticker, _amount);
-
+        // string memory ticker = string(abi.encodePacked(_ticker));
         require(withdrawalList[msg.sender].length == 0, "can only have one burnAndRelease operation at a time");
         require(depositList[msg.sender].length == 0, "can only have one LockAndMint operation at a time");
-        require(tokenBalance[msg.sender][ticker] >= _amount, "insufficent balance");
+        require(tokenBalance[msg.sender]["BTC"] >= _amount, "insufficent balance");
         require(_amount != 0, "cannot withdraw zero tokens");
 
-        tokenBalance[msg.sender][ticker].sub(_amount);
+        tokenBalance[msg.sender]["BTC"].sub(_amount);
 
-        uint256 burnedAmount = registry.getGatewayBySymbol(ticker).burn(_to, _amount);
+        uint256 burnedAmount = registry.getGatewayBySymbol("BTC").burn(_to, _amount);
 
         withdrawalList[msg.sender].pop();
 
