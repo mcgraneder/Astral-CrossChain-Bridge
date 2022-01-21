@@ -6,8 +6,10 @@ import RenJS from "@renproject/ren";
 import { Bitcoin, Ethereum } from "@renproject/chains";
 
 import ABI from "./ABI.json";
+import ABI2 from "./AB12.json"
 //0x74B6aC59285f67953d50E54019724eb7973a71c2
-const contractAddress = "0x1dD56Ac58227270ab8f00cD203D6C16E4a26ec45"
+const contractAddress = "0x12762d65155afb584E9BE4127C25168Cc151C37F"
+const renBtcAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
 class App extends React.Component {
   constructor(props) {
@@ -77,6 +79,16 @@ class App extends React.Component {
         <p>
           <button onClick={() => this.withdraw().catch(this.logError)}>
             Withdraw {balance} BTC
+          </button>
+        </p>
+        <p>
+          <button onClick={() => this.transfer().catch(this.logError)}>
+            Transfer {balance} BTC to wallet
+          </button>
+        </p>
+        <p>
+          <button onClick={() => this.transferFrom().catch(this.logError)}>
+            Transfer BTC from wallet to bridge
           </button>
         </p>
         {message.split("\n").map((line) => (
@@ -187,9 +199,11 @@ class App extends React.Component {
     this.logError(""); // Reset error
 
     const { web3, renJS, balance } = this.state;
+    const contract = new web3.eth.Contract(ABI, contractAddress);
+    const amount = 0.001;
+    // await contract.methods.burnAndReleaseInitialized("BTC", web3.utils.toWei(amount.toString(), "ether")).send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
 
     const recipient = prompt("Enter BTC recipient:");
-    const amount = balance;
     const burnAndRelease = await renJS.burnAndRelease({
       // Send BTC from Ethereum back to the Bitcoin blockchain.
       asset: "BTC",
@@ -201,11 +215,6 @@ class App extends React.Component {
 
         contractParams: [
 
-          {
-            type: "bytes",
-            name: "_ticker",
-            value: Buffer.from(`BTC`),
-          },
           {
             type: "bytes",
             name: "_msg",
@@ -249,6 +258,48 @@ class App extends React.Component {
       .on("txHash", (hash) => this.log(`RenVM hash: ${hash}`));
 
     this.log(`Withdrew ${amount} BTC to ${recipient}.`);
+  };
+
+  transfer = async () => {
+
+    const { web3, renJS } = this.state;
+    const contract = new web3.eth.Contract(ABI, contractAddress);
+    this.logError(""); // Reset error
+
+    
+
+    this.log(`Transfering Your RenBTC to your wallet...`);
+
+    const amount = await contract.methods.getUserbalanceInContract("BTC").call({from : "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
+    console.log(amount)
+    await contract.methods.transfer("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", amount, "BTC")
+    .send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
+
+    this.log(`Success`);
+    
+  };
+
+  transferFrom = async () => {
+
+    const { web3, renJS } = this.state;
+    const contract = new web3.eth.Contract(ABI, contractAddress);
+    const renBtcContract = new web3.eth.Contract(ABI2, renBtcAddress);
+
+    this.logError(""); // Reset error
+
+    this.log(`Depositing RenBtc from your wallet...`);
+
+    const amount = await renBtcContract.methods.balanceOf("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113").call()// BTC
+    console.log(amount)
+    await renBtcContract.methods.approve(contractAddress, amount).send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"});
+
+    const allowance = await contract.methods.tokenAllowance("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", contractAddress, "BTC").call();
+    console.log(allowance)
+    await contract.methods.transferFrom("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", "0x12762d65155afb584E9BE4127C25168Cc151C37F", amount, "BTC" )
+    .send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
+
+    this.log(`Success`);
+    
   };
 }
 
