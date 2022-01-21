@@ -6,8 +6,10 @@ import RenJS from "@renproject/ren";
 import { Bitcoin, Ethereum } from "@renproject/chains";
 
 import ABI from "./ABI.json";
-//0x74B6aC59285f67953d50E54019724eb7973a71c2
-const contractAddress = "0xA1080b82706F31f27C83222dd9723EACC9D29417"
+import ABI2 from "./AB12.json";
+
+
+const contractAddress = "0x8DdA81636cc01d96A49F51cABad7C7A62e13Daff"
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class App extends React.Component {
 
   componentDidMount = async () => {
     let web3Provider;
-   
+
     // Initialize web3 (https://medium.com/coinmonks/web3-js-ethereum-javascript-api-72f7b22e2f0a)
     // Modern dApp browsers...
     if (window.ethereum) {
@@ -63,7 +65,6 @@ class App extends React.Component {
     });
   };
 
- 
   render = () => {
     const { balance, message, error } = this.state;
     return (
@@ -90,7 +91,9 @@ class App extends React.Component {
   updateBalance = async () => {
     const { web3 } = this.state;
     const contract = new web3.eth.Contract(ABI, contractAddress);
-    const balance = await contract.methods.getContractTokenbalance("BTC").call();
+    const contract2 = new web3.eth.Contract(ABI2, "0x0ec73ccdcd8e643d909d0c4b663eb1b2fb0b1e1c");
+    console.log(contract2)
+    const balance = await contract.methods.balance().call();
     this.setState({ balance: parseInt(balance.toString()) / 10 ** 8 });
   };
 
@@ -111,27 +114,11 @@ class App extends React.Component {
     this.log(`Generating deposit address...`);
 
     const amount = 0.003; // BTC
-    const BTC = "BTC";
     const mint = await renJS.lockAndMint({
       // Send BTC from the Bitcoin blockchain to the Ethereum blockchain.
       asset: "BTC",
       from: Bitcoin(),
-      to: Ethereum(web3.currentProvider).Contract({
-        // The contract we want to interact with
-        sendTo: contractAddress,
-
-        // The name of the function we want to call
-        contractFn: "deposit",
-
-        // Arguments expected for calling `deposit`
-        contractParams: [
-          {
-            name: "_msg",
-            type: "bytes",
-            value: Buffer.from(`Depositing ${amount} BTC`),
-          },
-        ],
-      }),
+      to: Ethereum(web3.currentProvider).Address("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"),
     });
 
     // Show the gateway address to the user so that they can transfer their BTC to it.
@@ -196,12 +183,6 @@ class App extends React.Component {
         contractFn: "withdraw",
 
         contractParams: [
-
-          {
-            type: "bytes",
-            name: "_ticker",
-            value: Buffer.from(`BTC`),
-          },
           {
             type: "bytes",
             name: "_msg",
