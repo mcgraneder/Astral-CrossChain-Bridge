@@ -7,7 +7,7 @@ import { Bitcoin, Ethereum } from "@renproject/chains";
 
 import ABI from "./ABI.json";
 //0x74B6aC59285f67953d50E54019724eb7973a71c2
-const contractAddress = "0xA1080b82706F31f27C83222dd9723EACC9D29417"
+const contractAddress = "0x1dD56Ac58227270ab8f00cD203D6C16E4a26ec45"
 
 class App extends React.Component {
   constructor(props) {
@@ -104,13 +104,17 @@ class App extends React.Component {
   };
 
   deposit = async () => {
-    this.logError(""); // Reset error
 
     const { web3, renJS } = this.state;
+    const contract = new web3.eth.Contract(ABI, contractAddress);
+    this.logError(""); // Reset error
+
+    
 
     this.log(`Generating deposit address...`);
 
-    const amount = 0.003; // BTC
+    const amount = 0.002// BTC
+    await contract.methods.lockAndMintInitialized("BTC", web3.utils.toWei(amount.toString(), "ether")).send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
     const BTC = "BTC";
     const mint = await renJS.lockAndMint({
       // Send BTC from the Bitcoin blockchain to the Ethereum blockchain.

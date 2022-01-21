@@ -45,6 +45,30 @@
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "asset",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "burnAndReleaseInitialized",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "bytes",
 				"name": "_msg",
 				"type": "bytes"
@@ -86,9 +110,38 @@
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_ticker",
+				"type": "string"
 			}
 		],
-		"name": "getSymbol",
+		"name": "getTokenSymbol",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "asset",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "lockAndMintInitialized",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -164,13 +217,94 @@
 		"inputs": [
 			{
 				"indexed": false,
+				"internalType": "string",
+				"name": "asset",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "depositedBy",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "timeOfCreation",
+				"type": "uint256"
+			}
+		],
+		"name": "depositInitialized",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "time",
+				"type": "uint256"
+			}
+		],
+		"name": "ownerAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "time",
+				"type": "uint256"
+			}
+		],
+		"name": "ownerRemoved",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "owner",
 				"type": "address"
 			}
 		],
-		"name": "ownerAdded",
-		"type": "event"
+		"name": "removeOwner",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -278,28 +412,41 @@
 		"type": "function"
 	},
 	{
+		"anonymous": false,
 		"inputs": [
 			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "asset",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
 				"internalType": "address",
-				"name": "owner",
+				"name": "withdrawedBy",
 				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
+				"indexed": false,
 				"internalType": "uint256",
-				"name": "",
+				"name": "timeOfCreation",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
+		"name": "withdrawalInitialized",
+		"type": "event"
 	},
 	{
 		"inputs": [],
@@ -492,8 +639,43 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "totalSupply",
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_ticker",
+				"type": "string"
+			}
+		],
+		"name": "tokenAllowance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_ticker",
+				"type": "string"
+			}
+		],
+		"name": "totalSupplyofToken",
 		"outputs": [
 			{
 				"internalType": "uint256",
