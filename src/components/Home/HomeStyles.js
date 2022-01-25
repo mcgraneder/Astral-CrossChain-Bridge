@@ -8,7 +8,7 @@ export const StyledTitle = styled.div`
     color: White;
     padding: 5px;
     margin-bottom:  ${(props) => props.margin}px;
-    // font-weight: ${(props) => props.weight};
+    font-weight: ${(props) => props.weight};
     // font-style: ${(props) => props.styleds};
     background-color: transparent;
 `
@@ -16,10 +16,14 @@ export const StyledSubTitle = styled.div`
 
     font-size: ${(props) => props.size}px;
     text-align: center;
+    align-items: center;
     color: White;
     padding: 5px;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
     background-color: transparent;
+    white-space: initial;
+    width: 500px;
+    margin: 0 auto;
 
 `
 export const Wrapper = styled.div`
@@ -27,12 +31,19 @@ export const Wrapper = styled.div`
     height ${(props) => props.space}px;
 `;
 
+export const Container = styled.div`
+
+    position: absolute;
+    top: 23%;
+`
+
 export const ButtonWrapper = styled.div`
 
     display: flex;
-    margin: 0 auto;
-   width: 300px;
-   text-align: center;
+   justify-content: center;
+   align-items: center;
+   margin-top: 50px;
+    
 `
 export const VideoBackground = styled.video`
 

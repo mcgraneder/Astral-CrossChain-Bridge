@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const ConnectButton = styled.div`
 
+    font-family: 'Open Sans', sans-serif;
     // background: rgb(89,115,254);
     border: none;
     border-radius: 15px;

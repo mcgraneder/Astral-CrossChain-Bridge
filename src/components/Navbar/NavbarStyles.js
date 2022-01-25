@@ -34,14 +34,14 @@ export const NavMenu = styled.div`
 
 export const NavItem = styled.div`
 
-    background: rgb(7, 16, 33);
+    background: rgb(14, 22, 39);
     height: 40px;
     width: 500px;
     display: flex;
     border-radius: 18px;
     align-items: center;
     justify-content: center;
-    border: 3.5px solid rgb(7, 16, 33);
+    border: 3.5px solid rgb(14, 22, 39);
     float: left;
     margin-left: 150px;
     
@@ -58,7 +58,7 @@ export const NavLogoContainer = styled.div`
     padding-left: 100px;
     // padding-top: 5px;
     color: White;
-    font-size: 30px;
+    font-size: 35px;
     
 
 `
@@ -127,16 +127,16 @@ export const NavMenu2 = styled.div`
 
 export const NavItem2 = styled.div`
 
-    background: rgb(7, 16, 33);
+    background: rgb(14, 22, 39);
     height: 40px;
-    width: ${(props) => props.active ? "255px" : "180px"};
+    width: 100%;
     padding-left: ${(props) => props.active ? "5px" : "0px"};
     // margin-top: 3px;
     display: flex;
     border-radius: 18px;
     align-items: center;
     justify-content: right;
-    border: 3.5px solid rgb(7, 16, 33);
+    border: 3.5px solid rgb(14, 22, 39);
     text-align: center;
     color: White;
     // padding-left: 10px;
@@ -146,6 +146,7 @@ export const NavItem2 = styled.div`
 
 export const NavButton2 = styled.div`
 
+    
     display: inline;
     background: ${(props) => props.color};
     width: 180px;
@@ -162,6 +163,8 @@ export const NavButton2 = styled.div`
     &:hover {
 
         cursor: pointer;
+        border: 1px solid rgb(75,135,220);
+        background: rgb(38,58,88);
        
     }
 
@@ -170,6 +173,7 @@ export const NavButton2 = styled.div`
 
 export const BalanceContainer = styled.div`
 
+    font-family: 'Open Sans', sans-serif;
     padding-right: 10px;
     padding-left: 10px;
     

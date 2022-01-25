@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyledTitle, StyledSubTitle, ButtonWrapper, VideoBackground } from "./HomeStyles";
+import { StyledTitle, StyledSubTitle, ButtonWrapper, VideoBackground, Container } from "./HomeStyles";
 // import { Button, ButtonWrapper } from "../ButtomStyles";
 import { Wrapper } from "./HomeStyles";
 import Disconnect from "../Web3Modal/Disconnect";
@@ -8,7 +8,10 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router'
 import { Link } from "react-router-dom";
 import BridgePage from "../../pages/BridgePage";
 import Video from "../assets/videos/video - Copy.mp4"
-const Home = () => {
+import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
+import HomeConnectButton from "./HomeConnectButton";
+
+const Home = ({close}) => {
 
     const { active } = useAuth()
     
@@ -16,16 +19,18 @@ const Home = () => {
     return(
         <>
         {/* <VideoBackground autoPlay loop muted src={Video} type="video/mp4"></VideoBackground> */}
-        <div>
+        <Container>
             
-            <div>
-                <Wrapper space={50}/>
-                <StyledTitle size={100} margin={0} weight={900} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
-                <StyledTitle size={65} margin={20} weight={600} align={"center"}>Liquidity Unchained</StyledTitle>
-                <StyledSubTitle size={35}>Transfer crypto cross-chain</StyledSubTitle>
-            </div>
+            
+                <StyledTitle size={120} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
+                <StyledTitle size={65} margin={20} weight={400} align={"center"}>Liquidity Unchained</StyledTitle>
+                <StyledSubTitle size={24}>Transfer your favouite crypto-currencies cross-chain. We support BTC, SEC, BCH and more</StyledSubTitle>
+                <ButtonWrapper>
+                    <HomeConnectButton active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></HomeConnectButton>
+                </ButtonWrapper>
+            
            {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
-        </div>
+        </Container>
         </>
     )
 }

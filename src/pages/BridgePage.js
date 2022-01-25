@@ -17,7 +17,7 @@ const BridgePage = () => {
     return (
 
         <>
-            <Nav colour={"rgb(24,33,58)"} colour1={"rgb(7, 16, 33)"} colour2={"rgb(7, 16, 33)"} close={toggle1} visible={true}></Nav>
+            <Nav colour={"rgb(24,33,58)"} colour1={"rgb(14, 22, 39)"} colour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
             <Web3Modal visible={show1} close={toggle1}></Web3Modal>
             <BrideModal></BrideModal>
         </>

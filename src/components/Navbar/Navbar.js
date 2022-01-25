@@ -43,10 +43,10 @@ export default function Nav({colour, colour1, colour2, close, visible}) {
                     </NavMenu>
                     <NavMenu2>
                     <NavItem2 active={active}>
-                        {active &&  <BalanceContainer active={active}>0 ETH</BalanceContainer>}
+                        {active &&  <BalanceContainer active={active}>500 ETH</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
-                            <ConnectWalletButton active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
+                            <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
                         </NavItem2>
                     </NavMenu2>
                 </NavWrapper>
