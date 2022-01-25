@@ -1,10 +1,11 @@
 * {
 
-  background-color: rgb(43,34,44);
+  /* background-color: rgb(43,34,44); */
 }
 
 body {
   margin: 0;
+  background-color: rgb(43,34,44);
   font-family: 'Encode Sans Expanded', sans-serif;
 font-family: 'Roboto', sans-serif;
 font-family: 'Roboto Condensed', sans-serif;

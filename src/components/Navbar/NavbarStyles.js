@@ -96,6 +96,12 @@ export const NavButton = styled.div`
     font-weight: bold;
     font-size: 16px;
 
+    &:hover {
+
+        cursor: pointer;
+     
+    }
+
 `
 
 export const NavMenu2 = styled.div`
@@ -125,7 +131,7 @@ export const NavItem2 = styled.div`
 
     background: rgb(25,27,31);
     height: 40px;
-    width: 245px;
+    width: 250px;
     display: flex;
     border-radius: 18px;
     align-items: center;
@@ -133,7 +139,8 @@ export const NavItem2 = styled.div`
     border: 2.5px solid rgb(25,27,31);
     text-align: center;
     color: White;
-    padding-left: 10px;
+    // padding-left: 10px;
+    // padding-right: 5px;
     
 `
 
@@ -152,7 +159,19 @@ export const NavButton2 = styled.div`
 
     border: 1px solid rgb(75,135,220);
 
+    &:hover {
 
+        cursor: pointer;
+       
+    }
+
+
+`
+
+export const BalanceContainer = styled.div`
+
+    padding-right: 10px;
+    padding-left: 10px;
 `
 
 
