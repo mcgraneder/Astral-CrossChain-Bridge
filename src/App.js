@@ -10,6 +10,7 @@ import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
 import useOnPageLoad from "./hooks/usePageOnLoad";
 import WalletPage from "./pages/WalletPage";
 import TransactionPage from "./pages/TransactionPage";
+import HomePage from "./pages/HomePage";
 
 function getLibrary(provider) {
   return new Web3(provider)
@@ -28,7 +29,8 @@ function App() {
       <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
           <Switch>
-            <Route exact path="/" component={BridgePage}></Route>
+            <Route exact path="/" component={HomePage}></Route>
+            <Route exact path="/bridge" component={BridgePage}></Route>
             <Route exact path="/wallet" component={WalletPage}></Route>
             <Route exact path="/transactions" component={TransactionPage}></Route>
           </Switch>

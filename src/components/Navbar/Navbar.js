@@ -17,7 +17,7 @@ import { NavContainer,
 } from './NavbarStyles';
 import useAuth from '../../hooks/useAuth';
 import { useEffect } from 'react/cjs/react.development';
-export default function Nav({colour, colour1, colour2, close}) {
+export default function Nav({colour, colour1, colour2, close, visible}) {
 
     const [bridge, setBridge] = useState(false);
     const [wallet, setWallet] = useState(false);
@@ -34,7 +34,7 @@ export default function Nav({colour, colour1, colour2, close}) {
                         <NavLogo src={RenLogo} height="70px" width="70px"></NavLogo>
                         <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
                     </NavLogoContainer>
-                    <NavMenu>
+                    <NavMenu visible={visible}>
                         <NavItem>
                             <NavButton to="/" color={colour}>Bridge</NavButton>
                             <NavButton to="/wallet" color={colour1}>Wallet</NavButton>

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 export const FormWrapper = styled.div`
 
@@ -248,7 +249,7 @@ font-size: 25px;
 color: rgb(141,141,149);
 `
 
-export const StyledLink = styled.div`
+export const StyledLink = styled(Link)`
 
     min-height: 50px;
     display: flex;
@@ -262,6 +263,7 @@ export const StyledLink = styled.div`
     box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.1);
     transition: opacity 0.2s cubic-bezier(0.4, 0, 1, 1);
     text-align: center;
+    text-decoration: none;
 
     i {
 

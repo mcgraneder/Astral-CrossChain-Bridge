@@ -390,7 +390,7 @@ const Web3Modal = ({visible, close}) => {
                     <Provider margin={"20px"} width1={50} logo={torus} width2={27} title={"Torus"} connect={connectOnClickTorus}></Provider>
                     <Provider margin={"20px"} width1={50} logo={portis} width2={25} title={"Portis"} connect={connectOnClickPortis}></Provider>
                     <Provider margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Wallet Connect"} connect={connectOnClickWalletConnect}></Provider> */}
-                    <Disconnect margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect}></Disconnect>
+                    <Disconnect to={"/"} margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect}></Disconnect>
                 </ButtonContainer>
             </FormWrapper>
             {loading ? <ConnectSpinner loading={loading}></ConnectSpinner> : <div></div>}

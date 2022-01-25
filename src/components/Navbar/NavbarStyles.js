@@ -28,22 +28,8 @@ export const NavMenu = styled.div`
     display: flex;
     list-style: none;
     align-items: center;
-    // background: rgb(25,27,31);
-    
-   / // justify-content: center;
-    
-    
-    // line-height: 50px;
     margin: 10px;
-   
-    
-    
-    
-
-    // @media screen and (max-width: 768px) {
-
-    //     display: none;
-    // }
+    opacity: ${(props) => props.visible ? "1" : "0"};
 `
 
 export const NavItem = styled.div`
@@ -143,7 +129,8 @@ export const NavItem2 = styled.div`
 
     background: rgb(7, 16, 33);
     height: 40px;
-    width: 250px;
+    width: 255px;
+    padding-left: 5px;
     // margin-top: 3px;
     display: flex;
     border-radius: 18px;
