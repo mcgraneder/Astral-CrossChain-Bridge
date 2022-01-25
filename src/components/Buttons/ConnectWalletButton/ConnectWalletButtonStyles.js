@@ -8,7 +8,7 @@ export const ConnectButton = styled.div`
     border-radius: 15px;
     width: ${(props) => props.height}px;
     height: 26px;
-    background: rgb(33,36,41);
+    background: rgb(24,33,58);
     padding: 5px 10px;
     color: #fff;
     font-size: ${(props) => props.fontsize}px;
@@ -18,12 +18,13 @@ export const ConnectButton = styled.div`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     vertical-align: middle;
-    border: 2px solid rgb(43,46,51);
+    border: 2px solid rgb(34,43,68);
     z-index: 100;
   
     &:hover {
         transition: all 0.2s ease-in-out;
-        background: rgb(33,36,41);
+        background: rgb(34,43,68);
+        border: 2px solid rgb(34,43,68);
     }
 `
 
@@ -38,7 +39,7 @@ export const Logo = styled.div`
 
    &:hover {
     transition: all 0.2s ease-in-out;
-    background: rgb(33,36,41);
+    // background: rgb(33,36,41);
 }
 
    

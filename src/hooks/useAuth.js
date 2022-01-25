@@ -25,10 +25,13 @@ export default function useAuth() {
     var { active, account, library, connector, activate, deactivate } = useWeb3React()
     var loggedInAccount = localStorage.getItem("account")
     var provider = localStorage.getItem("provider")
-  
+    // console.log(localStorage.getItem("provider"))
     async function connectOnLoad() {
 
-        
+        if ( localStorage.getItem("provider") == null)  {
+            // console.log("hello")
+            return
+        }
         if ( localStorage.getItem("provider") == "fortmatic") provider = fortmatic
         if ( localStorage.getItem("provider") == "injected") provider = injected
         if ( localStorage.getItem("provider") == "walletconnect") {
@@ -87,7 +90,7 @@ export default function useAuth() {
             return
         }
 
-        console.log(provider1)
+        // console.log(provider1)
         if (provider1 === "fortmatic") provider = fortmatic
         if (provider1 === "injected") provider = injected
         if (provider1 === "walletconnect") {
@@ -98,8 +101,8 @@ export default function useAuth() {
         if (provider1 === "portis") provider = portis
         if (provider1 === "torus") provider = torus 
 
-        console.log(provider)
-        console.log(injected)
+        // console.log(provider)
+        // console.log(injected)
        
         setLoading(true)
 

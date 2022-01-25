@@ -9,7 +9,7 @@ transform: translate(-50%, -50%);
 width: 150px;
 height: 150px;
 opacity: 1;
-background-color: rgb(35,35,52);
+background-color: rgb(15, 35, 55);
 text-align: right;
 padding: 20px 20px;
 border: 1.5px solid  rgb(31,31,44);
@@ -254,7 +254,7 @@ export const StyledLink = styled.div`
     display: flex;
     align-items: center;
     padding: 5px 125px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     line-height: 60px;
     color: White;
@@ -272,7 +272,7 @@ export const StyledLink = styled.div`
         align-items: center;
         justify-content: center;
         color: White;
-        
+        font-size: 20px;
         
     }
 
@@ -287,12 +287,12 @@ export const StyledLink = styled.div`
 
     }
 
-    &:hover {
-        text-decoration: none;
-        background-color: rgb(35,35,52);
-        color: rgb(22,181,127);
+    // &:hover {
+    //     text-decoration: none;
+    //     background-color: rgb(75,135,220);
+    //     border: 1px solid rgb(23,42,66);
 
-    }
+    // }
 
 `
 
@@ -300,15 +300,16 @@ export const ConnectButton = styled.div`
 
     height: 60px;
     width: 100%;
-    background: rgb(77, 102, 235);
+    background: rgb(23,42,66);
     border-radius: 10px;
     margin-top: 20px;
     
-    border: 1px solid rgb(45,45,62);
+    border: 1px solid rgb(75,135,220);
    
     &:hover {
 
-        border: 1px solid rgb(77, 102, 235);
+        background-color: rgb(75,135,220);
+        border: 1px solid rgb(23,42,66);
         // height: 60.5px;
 
     }

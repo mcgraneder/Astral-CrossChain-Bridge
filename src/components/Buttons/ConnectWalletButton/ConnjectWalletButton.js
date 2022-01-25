@@ -35,9 +35,9 @@ export const Logo1 = styled.div`
    
 `;
 
-const ConnectWalletButton = ({close, color, fontsize, height, left, top, onclick}) => {
+const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top, onclick}) => {
 
-    const { active, account, onPageLoading} = useAuth()
+    const { account, onPageLoading} = useAuth()
     var logo
     var width1;
     var width2;
@@ -72,7 +72,7 @@ const ConnectWalletButton = ({close, color, fontsize, height, left, top, onclick
     const provider = localStorage.getItem("provider")
 
     
-    console.log(onPageLoading)
+   
 
     return (
 

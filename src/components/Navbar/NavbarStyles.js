@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NavContainer = styled.div`
 
@@ -6,7 +7,7 @@ export const NavContainer = styled.div`
     background:transparent;
     width: 100%;
     position: fixed;
-    z-index: 99;
+    // z-index: 99;
 
 `
 export const NavWrapper = styled.div`
@@ -47,14 +48,14 @@ export const NavMenu = styled.div`
 
 export const NavItem = styled.div`
 
-    background: rgb(25,27,31);
+    background: rgb(7, 16, 33);
     height: 40px;
     width: 500px;
     display: flex;
     border-radius: 18px;
     align-items: center;
     justify-content: center;
-    border: 2.5px solid rgb(25,27,31);
+    border: 3.5px solid rgb(7, 16, 33);
     float: left;
     margin-left: 150px;
     
@@ -76,6 +77,16 @@ export const NavLogoContainer = styled.div`
 
 `
 
+export const NavLogoLink = styled.a`
+
+    text-decoration: none;
+    color: White;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
+
 export const NavLogo = styled.img`
 
     
@@ -83,7 +94,7 @@ export const NavLogo = styled.img`
     font-wight: bold;
 `
 
-export const NavButton = styled.div`
+export const NavButton = styled(Link)`
 
     display: inline;
     background: ${(props) => props.color};
@@ -95,6 +106,7 @@ export const NavButton = styled.div`
     color: White;
     font-weight: bold;
     font-size: 16px;
+    text-decoration: none;
 
     &:hover {
 
@@ -129,14 +141,15 @@ export const NavMenu2 = styled.div`
 
 export const NavItem2 = styled.div`
 
-    background: rgb(25,27,31);
+    background: rgb(7, 16, 33);
     height: 40px;
     width: 250px;
+    // margin-top: 3px;
     display: flex;
     border-radius: 18px;
     align-items: center;
     justify-content: right;
-    border: 2.5px solid rgb(25,27,31);
+    border: 3.5px solid rgb(7, 16, 33);
     text-align: center;
     color: White;
     // padding-left: 10px;

@@ -1,0 +1,30 @@
+.loader-content {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height: 100vh;
+    z-index: 99;
+    
+  }
+  .loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background: radial-gradient(circle at 50% -20%, #0d2747, #122644, #152542, #18243f, #1a243d, #1c233a, #1d2238, #1e2135, #1f2133, #1f2031, #20202e, #201f2c);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    animation: animateHeroImage 2s;
+    @keyframes animateHeroImage {
+        from {
+            opacity: 1
+        }
+        to {
+            opacity: 0;
+        }
+    }
+  }
+  

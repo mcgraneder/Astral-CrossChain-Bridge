@@ -20,19 +20,19 @@ export const FormWrapper = styled.div`
     width: 450px;
     height: 610px;
     opacity: 0;
-    background-color: rgb(33,36,41);
+    background-color: rgb(27,32,52);
     text-align: right;
     padding: 30px 20px;
-    border: 1.5px solid  rgb(31,31,44);
+    border: 1.5px solid rgb(41, 50, 67);
     border-radius: 10px;
     pointer-events: none;
     z-index: -10000;
-    transition: opacity 0.2s ease-in-out !important;
+    transition: opacity 0.03s ease-in-out !important;
     ${(props) => props.visible && css`
         z-index: 10000;
         opacity: 1;
         pointer-events: all;
-        transition: opacity 0.2s ease-in-out !important;
+        transition: opacity 0.03s ease-in-out !important;
     `}
 
 `
@@ -46,14 +46,17 @@ export const Backdrop = styled.div`
     opacity: 0;
     pointer-events: none;
     backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 0, 0.2);
+    background: #23233999;
+background: -webkit-linear-gradient(top, #23233999, #040717);
+background: -moz-linear-gradient(top, #23233999, #040717);
+background: linear-gradient(to bottom, #23233999, #040717);
     transition: opacity 0.2s ease-in-out !important;
     z-index: 10000;
     ${(props) => props.visible && css`
 
         opacity: 1;
         pointer-events: all;
-        transition: opacity 0.2s ease-in-out !important;
+        transition: opacity 0.03s ease-in-out !important;
     `}
 
    
@@ -63,7 +66,7 @@ export const ButtonContainer = styled.div`
 
     // width: 300px;
     // height: 100%;
-    background: rgb(25,27,31);
+    background: rgb(14, 22, 39);
     border-radius: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -80,7 +83,7 @@ export const DisclaimerContainer = styled.div`
 
     // width: 300px;
     // height: 100%;
-    background: rgb(25,27,31);
+    background: rgb(14, 22, 39);
     border-radius: 10px;
     padding-left: 20px;
     padding-right: 20px;
@@ -94,11 +97,11 @@ export const ConnectButton = styled.div`
 
     height: 60px;
     width: 100%;
-    background: rgb(33,36,41);
+    background:  rgb(27,32,52);
     border-radius: 10px;
     margin-top: 20px;
     
-    border: 1px solid rgb(45,45,62);
+    border: 1px solid rgb(37, 46, 63);
    
     &:hover {
 
@@ -109,7 +112,7 @@ export const ConnectButton = styled.div`
 
     ${(props) => props.active && css`
 
-        background: rgb(43,46,51);
+        background:  rgb(37,42,62);
         border: 1px solid rgb(75,75,92);
         
     `}
