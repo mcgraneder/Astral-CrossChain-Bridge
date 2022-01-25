@@ -80,8 +80,8 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
 
             {active ? 
             <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo><ButtonText >{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton> 
-            : (!onPageLoading ?  <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>
-            :  <NavButton2 color={"rgb(23,42,66)"} onClick={close}><Logo1 left={left} top={top}><Loader style={{paddingTop: "5px"}} type="Oval" height={25} height={25} color="rgb(89,115,254)"></Loader></Logo1>Connecting...</NavButton2>)
+            : (!onPageLoading ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>
+            :  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}><Logo1 left={left} top={top}><Loader style={{paddingTop: "5px"}} type="Oval" height={25} height={25} color="rgb(89,115,254)"></Loader></Logo1>Connecting...</NavButton2>)
             }
         </>
     )

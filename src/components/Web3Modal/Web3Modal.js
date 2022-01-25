@@ -142,7 +142,7 @@ export const ModalTitle = styled.div`
 
     
     font-size: 20px;
-    font-weight: bold;
+    // font-weight: bold;
     align-items: left;
     color: white;
     display: flex;
@@ -183,7 +183,7 @@ export const ModalText = styled.p`
     word-wrap: break-word;
     align-items: left  !important;
     text-align: left;
-    font-weight: bold;
+    // font-weight: bold;
     
    
     

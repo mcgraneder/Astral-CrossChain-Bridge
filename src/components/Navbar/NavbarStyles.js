@@ -90,8 +90,8 @@ export const NavButton = styled(Link)`
     text-align: center;
     line-height: 40px;
     color: White;
-    font-weight: bold;
-    font-size: 16px;
+    // font-weight: bold;
+    font-size: 17px;
     text-decoration: none;
 
     &:hover {
@@ -129,8 +129,8 @@ export const NavItem2 = styled.div`
 
     background: rgb(7, 16, 33);
     height: 40px;
-    width: 255px;
-    padding-left: 5px;
+    width: ${(props) => props.active ? "255px" : "180px"};
+    padding-left: ${(props) => props.active ? "5px" : "0px"};
     // margin-top: 3px;
     display: flex;
     border-radius: 18px;
@@ -154,7 +154,7 @@ export const NavButton2 = styled.div`
     text-align: center;
     line-height: 35px;
     color:  rgb(75,135,220);
-    margin-left: 7px;
+    margin-left: ${(props) => props.active ? "7px" : "0px"};
     font-weight: bold;
 
     border: 1px solid rgb(75,135,220);
@@ -172,6 +172,7 @@ export const BalanceContainer = styled.div`
 
     padding-right: 10px;
     padding-left: 10px;
+    
 `
 
 

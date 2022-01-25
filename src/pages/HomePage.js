@@ -14,8 +14,6 @@ const HomePage = () => {
     const toggle1 = () => setShow1(!show1);
     const { active, onPageLoading, account } = useAuth()
     var loading = useOnPageLoad()
-
-    if (!active) loading = false
     return (
 
         <>

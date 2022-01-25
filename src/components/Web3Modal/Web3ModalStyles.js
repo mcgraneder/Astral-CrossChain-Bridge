@@ -10,7 +10,7 @@ transform: translate(-50%, -50%);
 width: 150px;
 height: 150px;
 opacity: 1;
-background-color: rgb(15, 35, 55);
+background-color: rgb(27,32,52);
 text-align: right;
 padding: 20px 20px;
 border: 1.5px solid  rgb(31,31,44);
@@ -229,7 +229,7 @@ justify-content: center;
 //    line-height: 75px;
 right: 35%;
 bottom: 35%;
-background: rgb(35,35,52);;
+background: rgb(27,32,52);
 
 
 

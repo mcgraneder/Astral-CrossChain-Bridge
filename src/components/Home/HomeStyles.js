@@ -8,8 +8,8 @@ export const StyledTitle = styled.div`
     color: White;
     padding: 5px;
     margin-bottom:  ${(props) => props.margin}px;
-    font-weight: ${(props) => props.weight};
-    font-style: ${(props) => props.styleds};
+    // font-weight: ${(props) => props.weight};
+    // font-style: ${(props) => props.styleds};
     background-color: transparent;
 `
 export const StyledSubTitle = styled.div`
@@ -33,4 +33,14 @@ export const ButtonWrapper = styled.div`
     margin: 0 auto;
    width: 300px;
    text-align: center;
+`
+export const VideoBackground = styled.video`
+
+    width: 100vw;
+    height: 100vh;
+    -o-object-fit: cover;
+    object-fit: cover;
+    background: #232a34;
+    z-index: -1000;
+    position: fixed;
 `
