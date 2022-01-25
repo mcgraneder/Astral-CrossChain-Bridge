@@ -326,6 +326,9 @@ contract RenBridge {
         tokenExists(_ticker) 
         returns (bool) {
 
+        require(tokenBalance[msg.sender][_ticker] >= amount, "innsufficent balance");
+        require(amount > 0, "cannot transfer 0 amount");
+
         tokenBalance[msg.sender][_ticker] -= amount;
         registry.getTokenBySymbol(_ticker).transfer(recipient, amount);
 
@@ -343,6 +346,9 @@ contract RenBridge {
         tokenExists(_ticker) 
         returns (bool) {
 
+        uint256 userWalletBalance = registry.getTokenBySymbol(_ticker).balanceOf(msg.sender);
+        require(userWalletBalance > amount, "insufficent funds in your wallet");
+        
         registry.getTokenBySymbol(_ticker).transferFrom(sender, recipient, amount);
         tokenBalance[msg.sender][_ticker] += amount;
 
@@ -394,16 +400,10 @@ contract RenBridge {
         return withdrawalList[msg.sender];
     }
 
-    function getTokenSymbol(
-        address sender, 
-        address recipient, 
-        uint256 amount, 
-        string memory _ticker) 
-        public 
-        returns (bool) {
+    function getTokenSymbol(IERC20 tokenAddress) public returns (string memory ticker) {
 
-        registry.getTokenBySymbol(_ticker).transferFrom(sender, recipient, amount);
-        return true;
+        return registry.getTokenBySymbol(tokenAddress).symbol();
+    
     }
 
      function getTokenList() public view returns (string[] memory) {
