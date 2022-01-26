@@ -9,7 +9,7 @@ export const FormWrapper = styled.div`
     height: 530px;
     background: rgb(14, 22, 39);
     text-align: right;
-    padding: 10px 35px;
+    // padding: 10px 35px;
     border: 1px solid  rgb(37, 46, 63);
     border-radius: 20px;
 
@@ -18,14 +18,14 @@ export const FormWrapper = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 15%;
+    top: 17%;
     // width: 470px;
     // height: 575px;
     background: rgb(14, 22, 39);
     text-align: right;
-    padding: 20px 20px;
-    border: 15px solid  rgb(18,27,50);
-    border-radius: 30px;
+    padding: 10px 10px;
+    border: 20px solid  rgb(27,32,52);;
+    border-radius: 20px;
 
 `
 export const BridgeModalWrapper = styled.div`
@@ -45,7 +45,7 @@ export const ChainSelector = styled.div`
     // padding: 3px;
     height: 40px;
     // width: 100%;
-    background: rgb(24,33,58);
+    background: rgb(27,32,52);;
     border: 2px solid rgb(34,43,68);
     border-radius: 10px;
 
@@ -115,7 +115,7 @@ export const DropdownContainer = styled.div`
 `
 export const BalanceContainer = styled.div`
 
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
@@ -143,13 +143,14 @@ export const MintFormWrapper = styled.div`
 export const MintFormContainer = styled.div`
 
     margin-top: 20px;
-    margin-bottom: 40px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
-    height: 230px;
+    height: 100%;
     // width: 100%;
-    background: transaprent;
+    background: rgb(27,32,52);
     border: 1px solid rgb(34,43,68);
     border-radius: 10px;
 `
@@ -160,7 +161,6 @@ export const BalanceWrapper = styled.div`
     height: 100%;
     width: 100%;
     line-height: 60px;
-    
     display: flex;
     padding-left: 25px;
     padding-right: 5px;
@@ -171,6 +171,11 @@ export const ButtonWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+    // padding-left: 20px;
+    // padding-right: 20px;
+    width: 90%;
+
   
     
 `
@@ -218,7 +223,7 @@ export const MintFormTextWrapper = styled.div`
 
 export const MintFormText = styled.div`
 
-font-family: 'Open Sans', sans-serif;
+// font-family: 'Open Sans', sans-serif;
 
  font-size: 15px;
  padding-left: 10px;
@@ -240,6 +245,83 @@ export const StyledContainer = styled.div`
     
 `
 
+export const MinFormToggleButtonContainer = styled.div`
+
+   
+    height: 40px;
+    // width: 100%;
+    display: flex;
+    margin-bottom: 25px;
+    background:rgb(27,32,52);;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   
+
+    &:hover {
+
+        background:  rgb(34,43,68);
+    }
+`;
+
+export const MintToggleButton = styled.div`
+
+   
+    width: 50%;
+    height: 100%;
+    border-top-${(props) => props.side}-radius: 10px;
+    border-right: 1.5px solid rgb(14, 22, 39);
+    background: ${(props) => props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
+    font-size: 18px;
+    font-weight: bold;
+    // font-family: 'Open Sans', sans-serif;
+    border: 1px solid ${(props) => props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
+    // border-bottom: 1.5px solid rgb(75,135,220);
+    color: ${(props) => props.active ? "rgb(75,135,220)" : "White"};
+    &:hover {
+
+        cursor: pointer
+    }
+
+`
+export const ReleaseToggleButton = styled.div`
+
+   
+    width: 50%;
+    height: 100%;
+    border-top-${(props) => props.side}-radius: 10px;
+    border-right: 1.5px solid rgb(14, 22, 39);
+    background: ${(props) => !props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    border: 1px solid ${(props) => !props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
+    // border-bottom: 1.5px solid rgb(75,135,220);
+    color: ${(props) => !props.active ? "rgb(75,135,220)" : "White"};
+
+    &:hover {
+
+        cursor: pointer
+    }
+
+`
+
+
+export const MintFormTextWrapper2 = styled.div`
+
+    display: flex;
+    height: 100%;
+    // text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+`
+
+export const MintFormText2 = styled.div`
+
+ font-size: 17px;
+ padding-left: 10px;
+
+`
 export const DropdownContainer2 = styled.div`
 
     display: flex;
@@ -250,3 +332,37 @@ export const DropdownContainer2 = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+export const ArrowContainer = styled.div`
+
+    width: 100%;
+    height: 100%;
+    // padding: 5px;
+`
+export const ArrowLogoContainer = styled.div`
+
+    width: 25px;
+    height: 100%;
+    // padding: 5px;
+    margin: 0 auto;
+    background:  rgb(27,32,52);
+    border-radius: 10px;
+    line-height: 15px;
+    // border: 0.2px solid rgb(75,135,220);
+`
+
+export const ArrowLogo = styled.img`
+
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+   
+    text-align: center;
+    display: inline;
+    width: 25px;
+    height:  25px;
+    
+
+    // float: left;
+`
+
