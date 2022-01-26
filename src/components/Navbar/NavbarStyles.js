@@ -59,6 +59,7 @@ export const NavLogoContainer = styled.div`
     // padding-top: 5px;
     color: White;
     font-size: 35px;
+  
     
 
 `
@@ -67,6 +68,7 @@ export const NavLogoLink = styled.a`
 
     text-decoration: none;
     color: White;
+    padding-bottom: 5px;
 
     &:hover {
         cursor: pointer;
@@ -86,13 +88,15 @@ export const NavButton = styled(Link)`
     background: ${(props) => props.color};
     width: 170px;
     border-radius: 18px;
-    height: 100%;
+    height: 93%;
     text-align: center;
-    line-height: 40px;
+    line-height: 37px;
     color: White;
     // font-weight: bold;
     font-size: 17px;
     text-decoration: none;
+    border: 2px solid ${(props) => props.bbcolour};
+
 
     &:hover {
 

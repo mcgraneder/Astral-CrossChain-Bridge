@@ -17,7 +17,7 @@ import { NavContainer,
 } from './NavbarStyles';
 import useAuth from '../../hooks/useAuth';
 import { useEffect } from 'react/cjs/react.development';
-export default function Nav({colour, colour1, colour2, close, visible}) {
+export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible}) {
 
     const [bridge, setBridge] = useState(false);
     const [wallet, setWallet] = useState(false);
@@ -36,14 +36,14 @@ export default function Nav({colour, colour1, colour2, close, visible}) {
                     </NavLogoContainer>
                     <NavMenu visible={visible}>
                         <NavItem>
-                            <NavButton to="/" color={colour}>Bridge</NavButton>
-                            <NavButton to="/wallet" color={colour1}>Wallet</NavButton>
-                            <NavButton to="/transactions" color={colour2}>Transactions</NavButton>
+                            <NavButton to="/" color={colour} bbcolour={bcolour}>Bridge</NavButton>
+                            <NavButton to="/wallet" color={colour1} bbcolour={bcolour1}>Wallet</NavButton>
+                            <NavButton to="/transactions" color={colour2} bbcolour={bcolour2}>Transactions</NavButton>
                         </NavItem>
                     </NavMenu>
                     <NavMenu2>
                     <NavItem2 active={active}>
-                        {active &&  <BalanceContainer active={active}>500 ETH</BalanceContainer>}
+                        {active &&  <BalanceContainer active={active}>0 RenBTC</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
                             <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>

@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
 
     position: absolute;
-    top: 23%;
+    top: 24%;
 `
 
 export const ButtonWrapper = styled.div`
