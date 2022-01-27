@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormWrapper, StyledContainer, BridgeModalContainer, ArrowLogo, BridgeModalWrapper, ChainSelector, ChainSelectorWrapper, ChainSelectorIcon, ChainSelectorIconWrapper, ChainSelectorText, ChainSelectorTextWrapper, DropdownContainer, ChainSelectorContainter, BalanceContainer, BalanceWrapper, MintFormmWrapper, MintFormWrapper, ButtonWrapper, MintFormIcon, MintFormIconWrapper, MintFormText, MintFormTextWrapper, MintFormContainer, DropdownContainer2, MintToggleButton, ReleaseToggleButton, MinFormToggleButtonContainer, MintFormTextWrapper2, MintFormText2, ArrowContainer, ArrowLogoContainer } from "./BridgeModalStyles";
+import { ArrowContainer12, ArrowLogo12, ArrowLogoContainer12, FormWrapper, StyledContainer, BridgeModalContainer, ArrowLogo, BridgeModalWrapper, ChainSelector, ChainSelectorWrapper, ChainSelectorIcon, ChainSelectorIconWrapper, ChainSelectorText, ChainSelectorTextWrapper, DropdownContainer, ChainSelectorContainter, BalanceContainer, BalanceWrapper, MintFormmWrapper, MintFormWrapper, ButtonWrapper, MintFormIcon, MintFormIconWrapper, MintFormText, MintFormTextWrapper, MintFormContainer, DropdownContainer2, MintToggleButton, ReleaseToggleButton, MinFormToggleButtonContainer, MintFormTextWrapper2, MintFormText2, ArrowContainer, ArrowLogoContainer } from "./BridgeModalStyles";
 import chainLogo from "../assets/metamask.svg"
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
@@ -57,6 +57,11 @@ const BrideModal = ({close}) => {
                         </DropdownContainer>
                     </ChainSelectorWrapper>
                 </ChainSelector>
+                 <ArrowContainer12>
+                    <ArrowLogoContainer12>
+                        <ArrowLogo12 src={arrowDown}></ArrowLogo12>
+                    </ArrowLogoContainer12>
+                </ArrowContainer12>
                 <ChainSelector>
                     <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper>
@@ -72,14 +77,14 @@ const BrideModal = ({close}) => {
                 </ChainSelector>
                 <BalanceContainer>
                     <BalanceWrapper>
-                        Balance
+                        Balance: 4,2 RenBtc
                     </BalanceWrapper>
                 </BalanceContainer>
-                <ArrowContainer>
+                {/* <ArrowContainer>
                     <ArrowLogoContainer>
                         <ArrowLogo src={arrowDown}></ArrowLogo>
                     </ArrowLogoContainer>
-                </ArrowContainer>
+                </ArrowContainer> */}
                 <MintFormContainer>
                     <MinFormToggleButtonContainer>
                         <MintToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>

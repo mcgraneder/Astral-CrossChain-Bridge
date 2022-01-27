@@ -36,7 +36,7 @@ export const NavItem = styled.div`
 
     background: rgb(14, 22, 39);
     height: 40px;
-    width: 500px;
+    // width: 500px;
     display: flex;
     border-radius: 18px;
     align-items: center;
@@ -86,7 +86,7 @@ export const NavButton = styled(Link)`
 
     display: inline;
     background: ${(props) => props.color};
-    width: 170px;
+    width: 140px;
     border-radius: 18px;
     height: 93%;
     text-align: center;

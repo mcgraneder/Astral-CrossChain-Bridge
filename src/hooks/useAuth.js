@@ -133,9 +133,6 @@ export default function useAuth() {
 
         deactivate()
         web3 = undefined;
-        setTimeout(function() {
-            alert("you are no longer connected")
-        }, 250)
         setLoading(false)
         localStorage.removeItem("account");
         localStorage.removeItem("provider");

@@ -24,8 +24,11 @@ export const BridgeModalContainer = styled.div`
     background: rgb(14, 22, 39);
     text-align: right;
     padding: 10px 10px;
-    border: 20px solid  rgb(27,32,52);;
+    border: 1px solid  rgb(27,32,52);;
     border-radius: 20px;
+    // -webkit-box-shadow: -2px -1px 15px 7px rgba(255,0,0,0.5);
+    // -moz-box-shadow: -3px -2px 30px 14px rgba(255,0,0,0.425);
+    // box-shadow: -4px -3px 45px 21px rgba(255,0,0,0.35);
 
 `
 export const BridgeModalWrapper = styled.div`
@@ -63,6 +66,7 @@ export const ChainSelectorWrapper = styled.div`
     display: flex;
     padding-left: 5px;
     padding-right: 5px;
+    
 `
 
 export const ChainSelectorIconWrapper = styled.div`
@@ -109,7 +113,7 @@ export const DropdownContainer = styled.div`
     height: 40px;
     width: 40px;
     position: absolute;
-    right: 9%; 
+    right: 5%; 
     align-items: center;
     justify-content: center;
 `
@@ -365,4 +369,36 @@ export const ArrowLogo = styled.img`
 
     // float: left;
 `
+
+export const ArrowContainer12 = styled.div`
+
+    position: absolute;
+    top: 14%;
+    left: 0;
+    width: 100%;
+    height: 25px;
+   
+    // padding: 5px;
+`
+export const ArrowLogoContainer12 = styled.div`
+
+    width: 25px;
+    margin: 0 auto;
+    background:  rgb(27,32,52);
+    border-radius: 10px;
+    border-left: 2px solid rgb(34,43,68);
+    border-right: 2px solid rgb(34,43,68);
+    // border: 0.2px solid rgb(75,135,220);
+`
+
+export const ArrowLogo12 = styled.img`
+
+    display: inline;
+    width: 25px;
+    height:  25px;
+    
+
+    // float: left;
+`
+
 

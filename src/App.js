@@ -11,7 +11,6 @@ import useOnPageLoad from "./hooks/usePageOnLoad";
 import WalletPage from "./pages/WalletPage";
 import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
-
 function getLibrary(provider) {
   return new Web3(provider)
 }
