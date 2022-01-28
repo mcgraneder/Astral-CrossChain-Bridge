@@ -29,7 +29,7 @@ export const BridgeModalContainer = styled.div`
     // -webkit-box-shadow: -2px -1px 15px 7px rgba(255,0,0,0.5);
     // -moz-box-shadow: -3px -2px 30px 14px rgba(255,0,0,0.425);
     // box-shadow: -4px -3px 45px 21px rgba(255,0,0,0.35);
-
+     box-shadow: 0px 10px 150px 5px rgba(75,135,220,0.03);
 `
 export const BridgeModalWrapper = styled.div`
 

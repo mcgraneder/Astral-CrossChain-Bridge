@@ -11,6 +11,8 @@ import useOnPageLoad from "./hooks/usePageOnLoad";
 import WalletPage from "./pages/WalletPage";
 import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
+import Footer from "./components/Footer/Footer";
+
 function getLibrary(provider) {
   return new Web3(provider)
 }
@@ -33,6 +35,7 @@ function App() {
             <Route exact path="/wallet" component={WalletPage}></Route>
             <Route exact path="/transactions" component={TransactionPage}></Route>
           </Switch>
+          <Footer colour={"rgb(24,33,58)"} colour1={"rgb(7, 16, 33)"} colour2={"rgb(7, 16, 33)"}></Footer>
         </Router>
         {/* <BridgePage></BridgePage> */}
       </Web3ReactProvider>

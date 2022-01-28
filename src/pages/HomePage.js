@@ -24,6 +24,7 @@ const HomePage = () => {
                 <Home close={toggle1}></Home>
             </LoginStyledContainer>
            
+           
             
         </>
     )
