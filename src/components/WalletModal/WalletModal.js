@@ -7,7 +7,9 @@ import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
-import DropdownMenu from "../WalletModal/DropdownMenu";
+import DropdownItem from "./DropdownItem";
+import DropdownMenu from "./DropdownMenu";
+
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -31,8 +33,15 @@ import { ArrowContainer12,
          MinFormToggleButtonContainer, 
          MintFormTextWrapper2, 
          MintFormText2,
-         Balancetext
-} from "./BridgeModalStyles";
+         Balancetext,
+         FromContainer,
+         WalletInputWrapper,
+         WalletInput,
+         ArrowContainer,
+         ArrowLogoContainer,
+         ArrowLogo,
+         Dropdown
+} from "./WalletModalStyles";
 
 export const MintForm = styled.div`
 
@@ -53,29 +62,33 @@ export const MintForm = styled.div`
     }
 `
 
-const BrideModal = ({close}) => {
+const WalletModal = ({close}) => {
 
     const [toggle, setToggle] = useState(true)
-    const [height, setHeight] = useState("")
     const [dropDownActive, setDropDownActive] = useState(false)
+    const [text, setText] = useState("Deposit")
+    const [inputText, setInputText] = useState("Deposit Amount")
     const { active, onPageLoading, account } = useAuth()
 
     const setToggleValue = () => {
 
         setToggle(!toggle);
+        if(!toggle) {
+            setText("Deposit")
+            setInputText("Deposit Amount")
+
+        } else {
+            setText("Withdraw")
+            setInputText("Withdraw Amount")
+
+        }
     }
 
-    const setDropdownValue1 = () => {
+    const setDropdownValue = () => {
 
         setDropDownActive(!dropDownActive);
-        setHeight("64px")
     }
-
-    const setDropdownValue2 = () => {
-
-        setDropDownActive(!dropDownActive);
-        setHeight("128px")
-    }
+    console.log(text)
 
     return (
 
@@ -84,59 +97,41 @@ const BrideModal = ({close}) => {
             
             <BridgeModalContainer>
             <BridgeModalWrapper>
-                <ChainSelector>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
+                <ChainSelector onClick={() => setDropdownValue()}>
+                    <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>Origin Chain</ChainSelectorText>
+                            <ChainSelectorText>Token</ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
                         </DropdownContainer>
+                       
                     </ChainSelectorWrapper>
-                    { dropDownActive && <DropdownMenu height={height}></DropdownMenu>}
+                    { dropDownActive && <DropdownMenu height={"64px;"}></DropdownMenu>}
                 </ChainSelector>
-                 <ArrowContainer12>
-                    <ArrowLogoContainer12>
-                        <ArrowLogo12 src={arrowDown}></ArrowLogo12>
-                    </ArrowLogoContainer12>
-                </ArrowContainer12>
-                <ChainSelector>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
-                        <ChainSelectorIconWrapper >
-                            <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
-                        </ChainSelectorIconWrapper>
-                        <ChainSelectorTextWrapper>
-                            <ChainSelectorText> Destination Chain</ChainSelectorText>
-                        </ChainSelectorTextWrapper>
-                        <DropdownContainer>
-                            <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
-                        </DropdownContainer>
-                    </ChainSelectorWrapper>
-                    </ChainSelector>
-
                 <BalanceContainer>
                     <BalanceWrapper>
                         <Balancetext>Balance: 0.003 RenBTC</Balancetext>
                     </BalanceWrapper>
                 </BalanceContainer>
-                {/* <ArrowContainer>
+                <ArrowContainer>
                     <ArrowLogoContainer>
                         <ArrowLogo src={arrowDown}></ArrowLogo>
                     </ArrowLogoContainer>
-                </ArrowContainer> */}
+                </ArrowContainer>
                 <MintFormContainer>
                     <MinFormToggleButtonContainer>
                         <MintToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>
                             <MintFormTextWrapper2>
-                                <MintFormText2>Mint</MintFormText2>
+                                <MintFormText2>Deposit</MintFormText2>
                             </MintFormTextWrapper2>
                         </MintToggleButton>
                         <ReleaseToggleButton side={"right"} active={toggle} onClick={setToggleValue}>
                             <MintFormTextWrapper2>
-                                <MintFormText2>Release</MintFormText2>
+                                <MintFormText2>Withdraw</MintFormText2>
                             </MintFormTextWrapper2>
                         </ReleaseToggleButton>
                     </MinFormToggleButtonContainer>
@@ -152,8 +147,13 @@ const BrideModal = ({close}) => {
                             </MintFormmWrapper>
                             
                         </MintForm> */}
+                        <FromContainer>
+                            <WalletInputWrapper>
+                                <WalletInput name="text" type="text" value={inputText}  onChange={(e) => setText(e.target.value)} placeholder="email"></WalletInput>
+                            </WalletInputWrapper>
+                        </FromContainer>
                         <ButtonWrapper>
-                            <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
+                            <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={text}></HomeConnectButton>
                         </ButtonWrapper>
                     </MintFormWrapper>
                     
@@ -165,4 +165,4 @@ const BrideModal = ({close}) => {
     )
 }
 
-export default BrideModal;
+export default WalletModal;

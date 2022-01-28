@@ -26,7 +26,7 @@ const Home = ({close}) => {
                 <StyledTitle size={65} margin={20} weight={400} align={"center"}>Liquidity Unchained</StyledTitle>
                 <StyledSubTitle size={24}>Transfer your favouite crypto-currencies cross-chain. We support BTC, SEC, BCH and more</StyledSubTitle>
                 <ButtonWrapper>
-                    <HomeConnectButton width={"250px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="17" colour="rgb(20, 29, 49)"></HomeConnectButton>
+                    <HomeConnectButton width={"250px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="17" colour="rgb(20, 29, 49)" text={"connect wallet"}></HomeConnectButton>
                 </ButtonWrapper>
             
            {active && <Switch> <Redirect exact to="/bridge"/></Switch>}

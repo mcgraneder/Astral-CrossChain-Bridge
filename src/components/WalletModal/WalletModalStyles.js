@@ -52,10 +52,6 @@ export const ChainSelector = styled.div`
     border: 2px solid rgb(34,43,68);
     border-radius: 10px;
 
-    &:hover {
-
-        background:  rgb(34,43,68);
-    }
 `
 
 
@@ -66,6 +62,11 @@ export const ChainSelectorWrapper = styled.div`
     display: flex;
     padding-left: 5px;
     padding-right: 5px;
+    
+    &:hover {
+
+        background:  rgb(34,43,68);
+    }
     
 `
 
@@ -163,7 +164,7 @@ export const MintFormContainer = styled.div`
 export const BalanceWrapper = styled.div`
 
     height: 100%;
-    width: 100%;
+    // width: 100%;
     line-height: 60px;
     display: flex;
     padding-left: 25px;
@@ -406,4 +407,56 @@ export const Balancetext = styled.div`
     font-family: 'Open Sans', sans-serif;    
 `
 
+export const FromContainer = styled.form`
 
+margin-bottom: 20px;
+margin-left: 30px;
+margin-right: 30px;
+// padding: 3px;
+height: 50px;
+// width: 100%;
+background: rgb(14, 22, 39);
+border: 3px solid rgb(34,43,68);
+border-radius: 10px;
+`
+
+
+export const WalletInputWrapper = styled.div`
+
+    height: 100%;
+    // width: 100%;
+    line-height: 60px;
+    display: flex;
+    // border: 3px solid rgb(34,43,68);
+    
+    // padding-left: 25px;
+    // padding-right: 5px;
+`
+
+export const WalletInput = styled.input`
+
+width: 100%;
+background: transparent;
+border: none;
+color: white;
+padding-left: 20px;
+border-radius: 10px;
+font-family: 'Open Sans', sans-serif; 
+border: 3px solid: blue;
+
+&:focus {
+    
+    border: 1px solid red;
+}
+`
+
+export const Dropdown = styled.div`
+
+position: absolute;
+top: ${(props) => props.height};
+left: 4%;
+border-radius: 10px;
+width: 455px;
+background: rgb(14, 22, 39);
+border: 1px solid rgb(75,135,220);
+`

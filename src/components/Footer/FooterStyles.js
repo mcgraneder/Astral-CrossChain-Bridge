@@ -65,23 +65,6 @@ export const NavLogoContainer = styled.div`
 
 `
 
-export const NavLogoLink = styled.a`
-
-    text-decoration: none;
-    color: White;
-    padding-bottom: 5px;
-
-    &:hover {
-        cursor: pointer;
-    }
-`
-
-export const NavLogo = styled.img`
-
-    
-    color: White;
-    font-wight: bold;
-`
 
 export const NavButton = styled(Link)`
 
@@ -187,12 +170,5 @@ export const NavButton2 = styled.img`
 
 `
 
-export const BalanceContainer = styled.div`
-
-    font-family: 'Open Sans', sans-serif;
-    padding-right: 10px;
-    padding-left: 10px;
-    
-`
 
 

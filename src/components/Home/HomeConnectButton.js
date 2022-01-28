@@ -35,7 +35,7 @@ export const Logo1 = styled.div`
    
 `;
 
-const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, onclick, width}) => {
+const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, onclick, width, text}) => {
 
     const { account, onPageLoading} = useAuth()
     var logo
@@ -78,7 +78,7 @@ const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, 
 
         <>
 
-            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>
+            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} onClick={close}>{text}</NavButton2>
            
         </>
     )
