@@ -29,7 +29,7 @@ export const NavMenu = styled.div`
     list-style: none;
     align-items: center;
     margin: 10px;
-    margin-left: 50px;
+    margin-left: 120px;
     opacity: ${(props) => props.visible ? "1" : "0"};
 `
 
@@ -112,13 +112,13 @@ export const NavMenu2 = styled.div`
     display: flex;
     list-style: none;
     align-items: center;
-    padding-right: 30px;
+    // padding-right: 30px;
     text-align: center;
    / // justify-content: center;
     
     
     // line-height: 50px;
-    margin: 10px;
+    // margin: 10px;
    
     
     
@@ -154,7 +154,7 @@ export const NavButton2 = styled.div`
     
     display: inline;
     background: ${(props) => props.color};
-    width: 180px;
+    width: 100%;
     border-radius: 18px;
     height: 93%;
     text-align: center;
@@ -184,4 +184,49 @@ export const BalanceContainer = styled.div`
     
 `
 
+export const NavMenu3 = styled.div`
+
+    display: flex;
+    list-style: none;
+    align-items: center;
+    padding-right: 30px;
+    text-align: center;
+   / // justify-content: center;
+    
+    
+    // line-height: 50px;
+    // margin-left: 10px;
+   
+    
+    
+    
+
+    // @media screen and (max-width: 768px) {
+
+    //     display: none;
+    // }
+`
+
+export const NavItem3 = styled.div`
+
+    background: rgb(14, 22, 39);
+    height: 40px;
+    width: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    padding-left: ${(props) => props.active ? "5px" : "0px"};
+    // margin-top: 3px;
+    display: flex;
+    border-radius: 18px;
+    align-items: center;
+    justify-content: right;
+    border: 1.5px solid rgb(47,52,72);
+    text-align: center;
+    color: White;
+    line-height: 10px;
+    padding-left: 10px;
+    // padding-right: 5px;
+    
+`
 
