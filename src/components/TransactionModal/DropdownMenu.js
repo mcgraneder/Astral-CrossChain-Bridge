@@ -2,11 +2,11 @@ import React from "react";
 import DropdownItem from "./DropdownItem";
 import { Dropdown } from "./DropdownStyles";
 
-const DropdownMenu = ({height, setText, width, top, active}) => {
+const DropdownMenu = ({height, setText, width, top, active, left}) => {
 
     return (
 
-        <Dropdown active={active} width={width} height={height} top={top}>
+        <Dropdown active={active} width={width} height={height} top={top} left={left}>
             <DropdownItem text={"Deposits"}></DropdownItem>
             <DropdownItem text={"Withdrawals"} ></DropdownItem>
             <DropdownItem text={"Mints"}></DropdownItem>

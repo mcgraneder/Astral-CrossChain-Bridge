@@ -30,9 +30,12 @@ import { HeaderContainer,
          ChainSelectorIconWrapper,
          Spacer,
          ToggleContainer,
-         ToggleButtonWrapper
+         ToggleButtonWrapper,
+         ToggleButton,
+         ToggleButton2
 } from "./TransactionModalStyles";
 import DropdownMenu2 from "./DropDownMenu2";
+import DropdownMenu3 from "./DropdownMenu3";
 // import { ChainSelectorIconWrapper } from "../BridgeModal/BridgeModalStyles";
 // import { ChainSelectorIcon } from "../BridgeModal/BridgeModalStyles";
 import Nav from "../Navbar/Navbar";
@@ -41,6 +44,7 @@ import { Ethereum } from "@renproject/chains";
 const TransactionModal = ({close}) => {
 
     const [toggle, setToggle] = useState(true)
+    const [dropDownActive0, setDropDownActive0] = useState(false)
     const [dropDownActive, setDropDownActive] = useState(false)
     const [dropDownActive1, setDropDownActive1] = useState(false)
     const [dropDownActive2, setDropDownActive2] = useState(false)
@@ -62,6 +66,11 @@ const TransactionModal = ({close}) => {
         }
     }
 
+    const setDropdownValue0 = () => {
+
+        setDropDownActive0(!dropDownActive0);
+    }
+
     const setDropdownValue = () => {
 
         setDropDownActive(!dropDownActive);
@@ -79,7 +88,8 @@ const TransactionModal = ({close}) => {
 
     const setDropdownValue3 = () => {
 
-        if(!dropDownActive && !dropDownActive1 && !dropDownActive2) return
+        if(!dropDownActive && !dropDownActive1 && !dropDownActive2 && !dropDownActive0) return
+        setDropDownActive0(false);
         setDropDownActive(false);
         setDropDownActive1(false);
         setDropDownActive2(false);
@@ -102,13 +112,19 @@ const TransactionModal = ({close}) => {
                                 Transaction Details
                             </LogoLink>
                         </LogoContainer>
-                        <ButtonContainer onClick={e => setDropDownActive(!dropDownActive)}>
-                            <DropdownButton>{text}</DropdownButton>
-                            <DropdownContainer>
-                                <ChainSelectorIcon src={chevronDownLogo1} width={"15px"}></ChainSelectorIcon>
+                        <ButtonContainer >
+                            <DropdownButton width={"100px"} background={"rgb(14, 22, 39)"} border={true} onClick={e => setDropDownActive0(!dropDownActive0)}>Pending</DropdownButton>
+                            <DropdownContainer left={"215px"}>
+                                <ChainSelectorIcon src={chevronDownLogo} width={"15px"} ></ChainSelectorIcon>
                             </DropdownContainer>
-                            <DropdownMenu active={dropDownActive} width={"200px"} height={"100px"} top={"65px"}></DropdownMenu>
+                        <DropdownMenu3 active={dropDownActive0} width={"125px"} height={"100px"} top={"65px"} left={"215px"}></DropdownMenu3>
+                            <DropdownButton  width={"170px"} background={"rgb(33,114,229)"} border={false} onClick={e => setDropDownActive(!dropDownActive)}>{text}</DropdownButton>
+                            <DropdownContainer>
+                                <ChainSelectorIcon src={chevronDownLogo1} width={"15px"} ></ChainSelectorIcon>
+                            </DropdownContainer>
+                            <DropdownMenu active={dropDownActive} width={"185px"} height={"100px"} top={"65px"} left={"10px"}></DropdownMenu>
                         </ButtonContainer>
+                        
                     </TransactionModalHeaderWrapper>
                 </TransactionModalHeaderContainer>
                 <TransactionDetails>
@@ -144,11 +160,12 @@ const TransactionModal = ({close}) => {
                             </TransactionHeader>
                         </TransactionSelector>
                     </TransactionModalHeaderWrapper>
-                    <ToggleContainer>
-                        <TransactionModalHeaderWrapper>
-                            <ToggleButtonWrapper></ToggleButtonWrapper>
-                        </TransactionModalHeaderWrapper>
-                    </ToggleContainer>
+                    {/* <ToggleContainer>
+                            <ToggleButtonWrapper>
+                                <ToggleButton>Pending</ToggleButton>
+                                <ToggleButton2>Completed</ToggleButton2>
+                            </ToggleButtonWrapper>
+                    </ToggleContainer> */}
                 </TransactionDetails>
             </BridgeModalContainer>
         </StyledContainer>

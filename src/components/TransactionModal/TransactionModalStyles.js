@@ -22,7 +22,7 @@ export const HeaderContainer = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 13%;
+    top: 14.5%;
     width: 900px;
     height: 500px;
     // background: rgb(14, 22, 39);
@@ -117,7 +117,7 @@ export const TransactionDetails = styled.div`
 
 export const ButtonContainer = styled.div`
 
-    width: 195px;
+    // width: 100%;
     display: flex;
     flex-direction: space-between;
     align-items: center;
@@ -140,19 +140,22 @@ export const DropdownContainer = styled.div`
     width: 40px;
     position: absolute;
     // padding-left: 20px;
-    right: 2.5%; 
+    right: 2.5%;
+    right: ${(props) => props.left}; 
     align-items: center;
     justify-content: center;
 `
 export const DropdownButton = styled.div`
 
-    width: 195px;
+    width: ${(props) => props.width};
     height: 40px;
     padding-left: 25px;
-    background: rgb(33,114,229);
+    background: ${(props) => props.background};
     font-size: 17px;
     text-align: left;
+    margin-left: 10px;
     border-radius: 10px;
+    border: ${(props) => props.border ? "1px solid rgb(75,135,220)" : "none"};
 
     &:hover {
         background: rgb(23,104,219);
@@ -253,21 +256,54 @@ export const Spacer = styled.div`
 
 export const ToggleContainer = styled.div`
 
-// width: 100%;
+width: 100%;
 height: 40px;
-// height: 100%;
-    display: flex;
-    // margin-left: 180px;
-margin: 0 auto;
+margin-top: 20px;
+display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid  rgb(57,62,82);;
    
 `
 
 export const ToggleButtonWrapper = styled.div`
 
     // width: 100%;
-    // height: 100%;
-    // display: flex;
-    margin-left: 180px;
-    // margin: 0 auto
+    height: 100%;
+    display: flex;
+    // margin-left: 180px;
+    margin: 0 auto
+`
+export const ToggleButton = styled.div`
+
+    height: 100%;
+    width: 150px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 40px;
+    // background: White;
+    border-top-left-radius: 10px;
+    color: rgb(75,135,220);
+    border: 1px solid rgb(75,135,220);
+`
+export const ToggleButton2 = styled.div`
+
+    height: 100%;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 18px;
+    line-height: 40px;
+    background: rgb(37,42,62);
+    text-align: center;
+    border-top-right-radius: 10px;
+    border: 1px solid rgb(37,42,62);
 `
 

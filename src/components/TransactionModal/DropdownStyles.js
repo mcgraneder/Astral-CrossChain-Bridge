@@ -57,11 +57,12 @@ export const Dropdown = styled.div`
 
 position: absolute;
 top: ${(props) => props.top};;
-// left: 75%;
+right: ${(props) => props.left};
 border-radius: 10px;
 width: ${(props) => props.width};
 background: rgb(14, 22, 39);
 border: 1px solid rgb(75,135,220);
 opacity: ${(props) => props.active ? "1" : "0"};
-transition: opacity 0.2s ease-in-out;
+transition: opacity 0.1s ease-in-out;
+z-index: ${(props) => props.active ? "1" : "-1"};
 `
