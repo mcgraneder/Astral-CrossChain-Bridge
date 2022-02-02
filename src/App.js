@@ -24,7 +24,7 @@ function App() {
  
   return (
 
-    <>
+    <div>
       {loading && <PageLoad></PageLoad>}
 
       <Web3ReactProvider getLibrary={getLibrary}>
@@ -39,7 +39,7 @@ function App() {
         </Router>
         {/* <BridgePage></BridgePage> */}
       </Web3ReactProvider>
-    </>
+    </div>
   )
 
 }

@@ -57,6 +57,7 @@ const BrideModal = ({close}) => {
 
     const [toggle, setToggle] = useState(true)
     const [height, setHeight] = useState("")
+    const [ac, setAc] = useState(false)
     const [dropDownActive, setDropDownActive] = useState(false)
     const { active, onPageLoading, account } = useAuth()
 
@@ -65,8 +66,19 @@ const BrideModal = ({close}) => {
         setToggle(!toggle);
     }
 
+    // useEffect(() => {
+
+    //     if(dropDownActive) {
+
+    //         window.addEventListener("click", setDropDownActive)
+
+    //     } 
+    // })
+
     const setDropdownValue1 = () => {
 
+        
+       
         setDropDownActive(!dropDownActive);
         setHeight("64px")
     }

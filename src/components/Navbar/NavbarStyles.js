@@ -154,7 +154,7 @@ export const NavButton2 = styled.div`
     
     display: inline;
     background: ${(props) => props.color};
-    width: 100%;
+    width: 170px;
     border-radius: 18px;
     height: 93%;
     text-align: center;
@@ -217,7 +217,7 @@ export const NavItem3 = styled.div`
 
     padding-left: ${(props) => props.active ? "5px" : "0px"};
     // margin-top: 3px;
-    display: flex;
+    display: ${(props) => props.visible ? "flex" : "none"};
     border-radius: 18px;
     align-items: center;
     justify-content: right;

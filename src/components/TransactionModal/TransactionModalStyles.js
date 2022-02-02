@@ -117,7 +117,7 @@ export const TransactionDetails = styled.div`
 
 export const ButtonContainer = styled.div`
 
-    width: 200px;
+    width: 195px;
     display: flex;
     flex-direction: space-between;
     align-items: center;
@@ -140,13 +140,13 @@ export const DropdownContainer = styled.div`
     width: 40px;
     position: absolute;
     // padding-left: 20px;
-    right: 3.3%; 
+    right: 2.5%; 
     align-items: center;
     justify-content: center;
 `
 export const DropdownButton = styled.div`
 
-    width: 200px;
+    width: 195px;
     height: 40px;
     padding-left: 25px;
     background: rgb(33,114,229);
@@ -159,3 +159,116 @@ export const DropdownButton = styled.div`
         cursor: pointer;
     }
 `    
+export const TransactionSelector = styled.div`
+
+    // width: 100%;
+    // height: 100%;
+    display: flex;
+    margin-left: 210px;
+    // margin: 0 auto
+`
+
+
+export const TransactionHeader = styled.div`
+
+    // width: 230px;
+    display: flex;
+    flex-direction: space-between;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    // padding-left: 100px;
+    // padding-top: 5px;
+    color: White;
+    font-size: 22px;
+    line-height: 60px;
+  
+    
+
+`
+
+export const Transactiontext = styled.div`
+
+    text-decoration: none;
+    color: White;
+    // padding-left: 20px;
+    // width: 100%;
+    // float: left;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
+
+export const HeaderContainerr = styled.div`
+
+    width: 50px;
+    display: flex;
+    flex-direction: space-between;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    margin-left: 30px;
+    margin-right: 30px;
+    // padding-top: 5px;
+    color: White;
+    font-size: 25px;
+    line-height: 40px;
+  
+    
+
+`
+
+export const HeaderButton = styled.div`
+
+    // width: 50px;
+    // height: 40px;
+    // padding-left: 25px;
+    background: rgb(44,53,78);
+    font-size: 17px;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-align: center;
+    border-radius: 20px;
+    border: 2px solid rgb(64,73,98);
+
+    &:hover {
+        background: rgb(64,73,98);
+        cursor: pointer;
+    }
+`   
+
+export const ChainSelectorIconWrapper = styled.div`
+
+    height: 35px;
+    // width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const Spacer = styled.div`
+
+    padding-left: 20px;
+`
+
+export const ToggleContainer = styled.div`
+
+// width: 100%;
+height: 40px;
+// height: 100%;
+    display: flex;
+    // margin-left: 180px;
+margin: 0 auto;
+   
+`
+
+export const ToggleButtonWrapper = styled.div`
+
+    // width: 100%;
+    // height: 100%;
+    // display: flex;
+    margin-left: 180px;
+    // margin: 0 auto
+`
+

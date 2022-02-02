@@ -51,9 +51,9 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
                             <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
                         </NavItem2>
-                        <NavItem3 active={active}>
-                        {active &&  <BalanceContainer active={active}>
-                        <NavLogo src={threeDots} height="30px" width="30px"></NavLogo></BalanceContainer>}
+                        <NavItem3 active={active} visible={visible}>
+                        <BalanceContainer active={active}>
+                        <NavLogo src={threeDots} height="30px" width="30px"></NavLogo></BalanceContainer>
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
                             {/* <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton> */}
