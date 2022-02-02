@@ -90,10 +90,16 @@ const WalletModal = ({close}) => {
     }
     console.log(text)
 
+    const setDropdownValue3 = () => {
+
+        if(!dropDownActive) return
+        setDropDownActive(!dropDownActive);
+    }
+
     return (
 
         <>
-        <StyledContainer>
+        <StyledContainer onClick={() => setDropdownValue3()}>
             
             <BridgeModalContainer>
             <BridgeModalWrapper>

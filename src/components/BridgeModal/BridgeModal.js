@@ -85,6 +85,14 @@ const BrideModal = ({close}) => {
 
     const setDropdownValue2 = () => {
 
+        console.log("hello")
+        setDropDownActive(!dropDownActive);
+        setHeight("128px")
+    }
+
+    const setDropdownValue3 = () => {
+
+        if(!dropDownActive) return
         setDropDownActive(!dropDownActive);
         setHeight("128px")
     }
@@ -92,7 +100,7 @@ const BrideModal = ({close}) => {
     return (
 
         <>
-        <StyledContainer>
+        <StyledContainer onClick={() => setDropdownValue3()}>
             
             <BridgeModalContainer>
             <BridgeModalWrapper>
@@ -108,8 +116,8 @@ const BrideModal = ({close}) => {
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
                         </DropdownContainer>
                     </ChainSelectorWrapper>
-                    { dropDownActive && <DropdownMenu height={height}></DropdownMenu>}
                 </ChainSelector>
+                { dropDownActive && <DropdownMenu height={height}></DropdownMenu>}
                  <ArrowContainer12>
                     <ArrowLogoContainer12>
                         <ArrowLogo12 src={arrowDown}></ArrowLogo12>

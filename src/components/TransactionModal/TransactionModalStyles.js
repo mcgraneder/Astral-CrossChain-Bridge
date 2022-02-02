@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const HeaderContainer = styled.div`
 
     position: absolute;
-    top: 15%;
+    top: 18%;
     width: 900px;
     height: 40px;
     // background: rgb(14, 22, 39);
@@ -164,8 +164,7 @@ export const TransactionSelector = styled.div`
     // width: 100%;
     // height: 100%;
     display: flex;
-    margin-left: 210px;
-    // margin: 0 auto
+    margin: 0 auto
 `
 
 
@@ -208,8 +207,8 @@ export const HeaderContainerr = styled.div`
     align-items: center;
     justify-content: center;
     float: left;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
     // padding-top: 5px;
     color: White;
     font-size: 25px;
