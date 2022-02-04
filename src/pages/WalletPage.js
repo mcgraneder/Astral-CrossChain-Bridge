@@ -8,7 +8,7 @@ const WalletPage = () => {
 
     const [show1, setShow1] = useState(false);
     const toggle1 = () => setShow1(!show1);
-    const { active, onPageLoading, account } = useAuth()
+
 
     return (
 

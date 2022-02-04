@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useWeb3React } from "@web3-react/core"
 import { injected, 
          fortmatic, 
@@ -63,13 +63,6 @@ export default function useAuth() {
        
     }
 
-    useEffect(() => {
- 
-       setAddress(account);
-
-       localStorage.setItem("account", account)
-
-    }, [account])
 
     useEffect(() => {
  
@@ -77,6 +70,9 @@ export default function useAuth() {
 
              connectOnLoad()
         }
+        setAddress(account);
+
+        localStorage.setItem("account", account)
 
     }, [])
 

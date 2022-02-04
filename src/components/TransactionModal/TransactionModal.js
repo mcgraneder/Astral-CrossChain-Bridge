@@ -94,7 +94,7 @@ const TransactionModal = ({close}) => {
         setDropDownActive1(false);
         setDropDownActive2(false);
     }
-    console.log(text)
+    // console.log(text)
 
     return (
 
@@ -138,6 +138,7 @@ const TransactionModal = ({close}) => {
                                     <HeaderButton onClick={e => setDropDownActive1(!dropDownActive1)}>
                                         <ChainSelectorIconWrapper>
                                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
+                                            Bitcoin
                                             <Spacer></Spacer>
                                             <ChainSelectorIcon src={chevronDownLogo} width={"13px"}></ChainSelectorIcon>
                                         </ChainSelectorIconWrapper>
@@ -151,6 +152,7 @@ const TransactionModal = ({close}) => {
                                     <HeaderButton onClick={e => setDropDownActive2(!dropDownActive2)}>
                                         <ChainSelectorIconWrapper>
                                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
+                                            Ethereum
                                             <Spacer></Spacer>
                                             <ChainSelectorIcon src={chevronDownLogo} width={"13px"}></ChainSelectorIcon>
                                         </ChainSelectorIconWrapper>

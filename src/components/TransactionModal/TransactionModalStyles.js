@@ -204,14 +204,14 @@ export const Transactiontext = styled.div`
 
 export const HeaderContainerr = styled.div`
 
-    width: 50px;
+    // width: 50px;
     display: flex;
     flex-direction: space-between;
     align-items: center;
     justify-content: center;
     float: left;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 15px;
+    margin-right: 15px;
     // padding-top: 5px;
     color: White;
     font-size: 25px;

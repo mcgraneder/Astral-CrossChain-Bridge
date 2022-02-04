@@ -68,7 +68,7 @@ const WalletModal = ({close}) => {
     const [dropDownActive, setDropDownActive] = useState(false)
     const [text, setText] = useState("Deposit")
     const [inputText, setInputText] = useState("Deposit Amount")
-    const { active, onPageLoading, account } = useAuth()
+    const { active } = useAuth()
 
     const setToggleValue = () => {
 

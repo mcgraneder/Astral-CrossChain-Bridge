@@ -12,9 +12,10 @@ import WalletPage from "./pages/WalletPage";
 import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
+import { Web3Provider } from "@ethersproject/providers";
 
 function getLibrary(provider) {
-  return new Web3(provider)
+  return new Web3Provider(provider)
 }
 
 function App() { 

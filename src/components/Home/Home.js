@@ -21,8 +21,7 @@ const Home = ({close}) => {
         {/* <VideoBackground autoPlay loop muted src={Video} type="video/mp4"></VideoBackground> */}
         <Container>
             
-            
-                <StyledTitle size={120} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
+                <StyledTitle size={120} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V1.</StyledTitle>
                 <StyledTitle size={65} margin={20} weight={400} align={"center"}>Liquidity Unchained</StyledTitle>
                 <StyledSubTitle size={24}>Transfer your favouite crypto-currencies cross-chain. We support BTC, SEC, BCH and more</StyledSubTitle>
                 <ButtonWrapper>

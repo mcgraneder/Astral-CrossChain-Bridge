@@ -37,7 +37,6 @@ export const Logo1 = styled.div`
 
 const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, onclick, width, text}) => {
 
-    const { account, onPageLoading} = useAuth()
     var logo
     var width1;
     var width2;
@@ -69,10 +68,7 @@ const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, 
         width2=20
     }
 
-    const provider = localStorage.getItem("provider")
 
-    
-   
 
     return (
 

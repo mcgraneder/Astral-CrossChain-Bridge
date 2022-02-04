@@ -58,9 +58,29 @@ const BrideModal = ({close}) => {
     const [toggle, setToggle] = useState(true)
     const [height, setHeight] = useState("")
     const [ac, setAc] = useState(false)
+    const [web3, setWeb3] = useState()
     const [dropDownActive, setDropDownActive] = useState(false)
-    const { active, onPageLoading, account } = useAuth()
+    const { active, library, context, account } = useAuth()
+//  console.log(web3)
 
+    useEffect(() => {
+
+        if(library) {
+          
+           setWeb3(library)
+           w()
+        }
+       
+       
+    }, [active, library])
+
+    const w = async() => {
+
+           
+           const accou = await library.listAccounts()
+        //    c
+
+    }
     const setToggleValue = () => {
 
         setToggle(!toggle);
