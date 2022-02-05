@@ -16,6 +16,7 @@
     "@web3-react/portis-connector": "^6.2.9",
     "@web3-react/torus-connector": "^6.2.9",
     "@web3-react/walletconnect-connector": "^6.2.10",
+    "ethers": "^5.5.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-loader-spinner": "^4.0.0",

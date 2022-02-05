@@ -9,7 +9,13 @@ import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
 import DropdownItem from "./DropdownItem";
 import DropdownMenu from "./DropdownMenu";
+import { getContract } from "../../utils/utils";
+import abi from "../../utils/Abis/ABI.json"
+import abi2 from "../../utils/Abis/AB12.json"
+import Web3	 from "web3";
+import { ethers } from 'ethers'
 
+import Button from "./Button";
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -66,20 +72,37 @@ const WalletModal = ({close}) => {
 
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
-    const [text, setText] = useState("Deposit")
-    const [inputText, setInputText] = useState("Deposit Amount")
-    const { active } = useAuth()
+    const [text, setText] = useState(" ")
+    const [inputText, setInputText] = useState("Deposit")
+    const [ren1, setRen1] = useState()
+    const [bridge, setBridge] = useState()
 
+    const { active, library } = useAuth()
+    var bridgeContract
+    var ren
+    const amount = ethers.utils.parseUnits("10", 6);
+
+
+    useEffect(() => {
+
+        if(library) {
+
+            setBridge(getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"))
+            setRen1(getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"))
+            console.log(ren1)
+        }
+
+    }, [library])
     const setToggleValue = () => {
 
         setToggle(!toggle);
         if(!toggle) {
-            setText("Deposit")
-            setInputText("Deposit Amount")
+            // setText("Deposit")
+            setInputText("Deposit ")
 
         } else {
-            setText("Withdraw")
-            setInputText("Withdraw Amount")
+            // setText("Withdraw")
+            setInputText("Withdraw ")
 
         }
     }
@@ -94,6 +117,53 @@ const WalletModal = ({close}) => {
 
         if(!dropDownActive) return
         setDropDownActive(!dropDownActive);
+    }
+
+    const preventMinus = (e) => {
+        if (e.code === 'Minus') {
+            e.preventDefault();
+        }
+    };
+
+    const handleDeposit = async() => {
+
+
+        console.log("hello")
+
+        try {
+
+            console.log(ren1)
+            const approve = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount, { gasPrice: 20e9 });
+            await approve.wait()
+
+            const deposit = bridge.transferFrom("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", 10, "BTC", { gasPrice: 20e9 })
+    
+
+        } catch(error) {
+
+            console.error(error)
+        }
+       
+       
+       
+
+    }
+
+    const handleWithdraw = async() => {
+
+        try {
+
+            const withdraw = bridge.transfer("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", 10, "BTC", { gasPrice: 20e9 })
+            
+
+        } catch(error) {
+
+            console.error(error)
+        }
+      
+    //    await tx.wait()
+       
+
     }
 
     return (
@@ -155,11 +225,11 @@ const WalletModal = ({close}) => {
                         </MintForm> */}
                         <FromContainer>
                             <WalletInputWrapper>
-                                <WalletInput name="text" type="text" value={inputText}  onChange={(e) => setText(e.target.value)} placeholder="email"></WalletInput>
+                                <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  onChange={(e) => setText(e.target.value)} placeholder="amount"></WalletInput>
                             </WalletInputWrapper>
                         </FromContainer>
                         <ButtonWrapper>
-                            <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={text}></HomeConnectButton>
+                            <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} click={inputText === "Withdraw " ? handleWithdraw : handleDeposit} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={inputText +  " " + text + " BTC" }></HomeConnectButton>
                         </ButtonWrapper>
                     </MintFormWrapper>
                     

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ConnectButton, Logo, ButtonText, ButtonText1 } from "./HomeConnectButtonStyles"
+import { ConnectButton, Logo, ButtonText, ButtonText1 } from "../Home/HomeConnectButtonStyles"
 import useAuth from "../../hooks/useAuth"
 import logo1 from "../assets/metamask.png"
 import Loader from "react-loader-spinner"
@@ -10,7 +10,7 @@ import coinbase from "../assets/coinbase.svg"
 import fortmatic from "../assets/fortmatic.svg"
 import torus from "../assets/torus.svg"
 import portis from "../assets/portis.svg"
-import { NavButton2 } from "./HomeConnectButtonStyles"
+import { NavButton2 } from "../Home/HomeConnectButtonStyles"
 
 export const Logo1 = styled.div`
 
@@ -35,7 +35,7 @@ export const Logo1 = styled.div`
    
 `;
 
-const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, onclick, width, text, click}) => {
+const Button = ({ active, close, color, fontsize, height, left, top, onclick, width, text}) => {
 
     var logo
     var width1;
@@ -74,10 +74,10 @@ const HomeConnectButton = ({ active, close, color, fontsize, height, left, top, 
 
         <>
 
-            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} onClick={click}>{text}</NavButton2>
+            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} >{text}</NavButton2>
            
         </>
     )
 }
 
-export default HomeConnectButton;
+export default Button;

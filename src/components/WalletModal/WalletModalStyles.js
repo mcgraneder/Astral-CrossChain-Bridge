@@ -51,6 +51,7 @@ export const ChainSelector = styled.div`
     background: rgb(27,32,52);;
     border: 2px solid rgb(34,43,68);
     border-radius: 10px;
+    
 
 `
 
@@ -418,6 +419,14 @@ height: 50px;
 background: rgb(14, 22, 39);
 border: 3px solid rgb(34,43,68);
 border-radius: 10px;
+-webkit-appearance: none;
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+
+
 `
 
 
@@ -427,6 +436,12 @@ export const WalletInputWrapper = styled.div`
     // width: 100%;
     line-height: 60px;
     display: flex;
+    border: none;
+//     input[type=number]::-webkit-inner-spin-button, 
+// input[type=number]::-webkit-outer-spin-button { 
+//   -webkit-appearance: none; 
+// }
+
     // border: 3px solid rgb(34,43,68);
     
     // padding-left: 25px;
@@ -442,11 +457,15 @@ color: white;
 padding-left: 20px;
 border-radius: 10px;
 font-family: 'Open Sans', sans-serif; 
-border: 3px solid: blue;
+// border: 3px solid: blue;
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
 
-&:focus {
+&:active {
     
-    border: 1px solid red;
+    // border: 3px solid green;
 }
 `
 
