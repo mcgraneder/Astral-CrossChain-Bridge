@@ -48,6 +48,7 @@ import { ArrowContainer12,
          ArrowLogo,
          Dropdown
 } from "./WalletModalStyles";
+import useBalance from "../../hooks/useBalance";
 
 export const MintForm = styled.div`
 
@@ -75,21 +76,49 @@ const WalletModal = ({close}) => {
     const [text, setText] = useState(" ")
     const [inputText, setInputText] = useState("Deposit")
     const [ren1, setRen1] = useState()
+    // const [balance, setBalance] = useState("")
     const [bridge, setBridge] = useState()
+    const balance = useBalance()
+    // console.log(balance)
 
-    const { active, library } = useAuth()
+    const { active, library, account } = useAuth()
     var bridgeContract
     var ren
     const amount = ethers.utils.parseUnits("10", 6);
+    // const updateBalance = async () => {
+        
+    //     console.log(bridge)
+    //     try {
+
+    //         if (bridge == undefined) return
+    //         const balanc = await bridge.getContractTokenbalance("BTC");
+           
+    //         const n = ethers.utils.formatEther(balanc.toString())
+    //         setBalance(n)
+    //     console.log(balance)
+
+    //     } catch (error) {
+
+    //         console.error(error)
+    //     }
+       
+        
+    // };
+
 
 
     useEffect(() => {
 
+        console.log(balance)
         if(library) {
-
-            setBridge(getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"))
-            setRen1(getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"))
-            console.log(ren1)
+            console.log(true)
+            // setBridge(getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account))
+            // setRen1(getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account))
+            // // console.log(balance)
+            // updateBalance();
+            // setInterval(() => {
+            //     updateBalance();
+            //   }, 10 * 1000);
         }
 
     }, [library])
@@ -133,10 +162,13 @@ const WalletModal = ({close}) => {
         try {
 
             console.log(ren1)
-            const approve = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount, { gasPrice: 20e9 });
+            const balance = await bridge.getContractTokenbalance("BTC");
+            console.log(balance)
+            console.log(ethers.BigNumber.from("0x00"))
+            const approve = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount);
             await approve.wait()
 
-            const deposit = bridge.transferFrom("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", 10, "BTC", { gasPrice: 20e9 })
+            const deposit = bridge.transferFrom(account, "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", 10, "BTC")
     
 
         } catch(error) {
@@ -153,7 +185,7 @@ const WalletModal = ({close}) => {
 
         try {
 
-            const withdraw = bridge.transfer("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", 10, "BTC", { gasPrice: 20e9 })
+            const withdraw = bridge.transfer("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", 10, "BTC")
             
 
         } catch(error) {
@@ -190,7 +222,7 @@ const WalletModal = ({close}) => {
                 </ChainSelector>
                 <BalanceContainer>
                     <BalanceWrapper>
-                        <Balancetext>Balance: 0.003 RenBTC</Balancetext>
+                        <Balancetext>Balance: {balance}</Balancetext>
                     </BalanceWrapper>
                 </BalanceContainer>
                 <ArrowContainer>
