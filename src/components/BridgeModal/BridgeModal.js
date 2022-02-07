@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import chainLogo from "../assets/metamask.svg"
+import React, { useState } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
@@ -53,47 +52,20 @@ export const MintForm = styled.div`
     }
 `
 
-const BrideModal = ({close}) => {
+const BrideModal = ({close, balance, setBalance}) => {
 
     const [toggle, setToggle] = useState(true)
     const [height, setHeight] = useState("")
     const [ac, setAc] = useState(false)
     const [web3, setWeb3] = useState()
+    const [loading, setLoading] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
     const { active, library, context, account } = useAuth()
-//  console.log(web3)
 
-    useEffect(() => {
-
-        if(library) {
-          
-           setWeb3(library)
-           w()
-        }
-       
-       
-    }, [active, library])
-
-    const w = async() => {
-
-           
-           const accou = await library.listAccounts()
-        //    c
-
-    }
     const setToggleValue = () => {
 
         setToggle(!toggle);
     }
-
-    // useEffect(() => {
-
-    //     if(dropDownActive) {
-
-    //         window.addEventListener("click", setDropDownActive)
-
-    //     } 
-    // })
 
     const setDropdownValue1 = () => {
 
@@ -159,7 +131,7 @@ const BrideModal = ({close}) => {
 
                 <BalanceContainer>
                     <BalanceWrapper>
-                        <Balancetext>Balance: 0.003 RenBTC</Balancetext>
+                        {loading ? <Balancetext>Balance: {balance} RenBTC</Balancetext> :  <Balancetext>Balance: {balance} RenBTC</Balancetext>}
                     </BalanceWrapper>
                 </BalanceContainer>
                 {/* <ArrowContainer>

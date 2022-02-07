@@ -136,7 +136,8 @@ export const BalanceContainer = styled.div`
 
 export const MintFormWrapper = styled.div`
 
-    height: 100%;
+    // height: 200px;
+    // height: 100%;
     width: 100%;
     padding-top: 10px;
     // display: inline;
@@ -154,7 +155,7 @@ export const MintFormContainer = styled.div`
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
-    height: 100%;
+    // height: 100%;
     // width: 100%;
     background: rgb(27,32,52);
     border: 1px solid rgb(34,43,68);
@@ -164,7 +165,7 @@ export const MintFormContainer = styled.div`
 
 export const BalanceWrapper = styled.div`
 
-    height: 100%;
+    // height: 100%;
     // width: 100%;
     line-height: 60px;
     display: flex;
@@ -175,6 +176,7 @@ export const BalanceWrapper = styled.div`
 export const ButtonWrapper = styled.div`
 
     display: flex;
+    // height: 100%;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
@@ -189,7 +191,7 @@ export const ButtonWrapper = styled.div`
 
 export const MintFormmWrapper = styled.div`
 
-    height: 100%;
+    // height: 100%;
     width: 100%;
     display: flex;
     padding-left: 5px;
@@ -410,7 +412,7 @@ export const Balancetext = styled.div`
 
 export const FromContainer = styled.form`
 
-margin-bottom: 20px;
+// margin-bottom: 20px;
 margin-left: 30px;
 margin-right: 30px;
 // padding: 3px;
@@ -478,4 +480,20 @@ border-radius: 10px;
 width: 455px;
 background: rgb(14, 22, 39);
 border: 1px solid rgb(75,135,220);
+`
+
+export const SpinnerWrapper = styled.div`
+
+    height: 140px;
+    // width: 100%;
+    
+    margin-bottom: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+    // padding: 3px;
+    // height: 50px;
+    // width: 100%;
+    background: rgb(14, 22, 39);
+    border: 3px solid rgb(34,43,68);
+    border-radius: 10px;
 `

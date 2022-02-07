@@ -16,10 +16,10 @@ export const injected = new InjectedConnector({
   
   export const portis = new PortisConnector({ dAppId: 
       "10c2a4ba-93fc-46d3-8c27-9b9019bea48f",
-      networks: [1, 100] 
+      networks: [42] 
   })
   
-  export const torus = new TorusConnector({ chainId: 1 })
+  export const torus = new TorusConnector({ chainId: 42 })
   
   export const walletconnect = new WalletConnectConnector({
       rpc: { 1: "https://mainnet.infura.io/v3/7c328fa0092c43a6b22073cdb477c58b" },

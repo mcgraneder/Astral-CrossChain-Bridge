@@ -1,66 +1,52 @@
-import React, { useState, useEffect } from "react"
-import { getContract } from "../utils/utils"
-import { ethers } from "ethers"
+import React, { useState, useEffect, useCallback } from "react";
+import useAuth from "../hooks/useAuth";
+import { getContract } from "../utils/utils";
 import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
-import useAuth from "./useAuth"
-import Fortmatic from 'fortmatic';
-// import NFTContractBuild from 'contracts/NFT.json';
-import Web3 from 'web3';
+import Web3 from "web3";
 
-let selectedAccount;
+const useBalance = () => {
 
-// let nftContract;
-let erc20Contract;
+    const [ren1, setRen1] = useState()
+    const [bridge, setBridge] = useState()
+    const [balance, setBalance] = useState(0);
+  
+    const { library, account } = useAuth()
 
-let isInitialized = false;
+    const getBalance = React.useCallback(() => {
 
-export const init = async () => {
-	// let provider = window.ethereum;
+        if(library) {
 
-    const fm = new Fortmatic('pk_test_C102027C0649EF66', 'kovan');
-	let provider = fm.getProvider()
-	const web3 = new Web3(provider);
+            const bridgeContract = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
+            const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
-	const networkId = await web3.eth.net.getId();
+            setBridge(bridgeContract)
+            setRen1(renContract)
 
-	// nftContract = new web3.eth.Contract(
-	// 	NFTContractBuild.abi,
-	// 	NFTContractBuild.networks[networkId].address
-	// );
+            bridgeContract.getContractTokenbalance("BTC")
+            .then((balance) => {
+                console.log(balance)
+                const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                console.log(n)
+                setBalance(n)
+            });
+        }
+        
+    }, [library])
 
-	
-	erc20Contract = new web3.eth.Contract(
-		abi,
-		// Dai contract on Rinkeby
-		'0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B'
-	);
+    useEffect(() => {
 
-    console.log(erc20Contract)
+        (async () => {
+            if (library) {
+            getBalance();
+            }
+        })().catch(console.error);
+        
 
-	isInitialized = true;
-};
+    }, [getBalance]);
 
-export const getOwnBalance = async () => {
-	if (!isInitialized) {
-		await init();
-	}
 
-	return erc20Contract.methods
-		.getContractTokenbalance("BTC")
-		.call()
-		.then((balance) => {
-            console.log(balance)
-			return Web3.utils.fromWei(balance);
-		});
-};
+    return { balance, setBalance}
+}
 
-// export const mintToken = async () => {
-// 	if (!isInitialized) {
-// 		await init();
-// 	}
-
-// 	return nftContract.methods
-// 		.mint(selectedAccount)
-// 		.send({ from: selectedAccount });
-// };
+export default useBalance

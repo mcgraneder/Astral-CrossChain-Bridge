@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ethersproject/providers": "^5.5.3",
+    "@portis/web3": "^4.0.7",
     "@renproject/chains": "^2.5.11",
     "@renproject/ren": "^2.5.11",
     "@testing-library/jest-dom": "^5.16.1",
