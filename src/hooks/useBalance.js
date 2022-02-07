@@ -4,43 +4,63 @@ import { ethers } from "ethers"
 import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
 import useAuth from "./useAuth"
+import Fortmatic from 'fortmatic';
+// import NFTContractBuild from 'contracts/NFT.json';
+import Web3 from 'web3';
 
-const useBalance = () => {
+let selectedAccount;
 
-    const [bridge, setBridge] = useState()
-    const [ren, setRen] = useState()
-    const [balance, setBalance] = useState("")
+// let nftContract;
+let erc20Contract;
 
-    const { library, account } = useAuth()
+let isInitialized = false;
 
+export const init = async () => {
+	// let provider = window.ethereum;
 
-    const updateBalance = async () => {
-        
-        console.log(bridge)
-        if(bridge == undefined) return
-        const balance = await bridge.getContractTokenbalance("BTC");
+    const fm = new Fortmatic('pk_test_C102027C0649EF66', 'kovan');
+	let provider = fm.getProvider()
+	const web3 = new Web3(provider);
 
-        const n = ethers.utils.formatEther(balance.toString())
-        setBalance(n)
-        console.log(balance)
-    };
+	const networkId = await web3.eth.net.getId();
 
-    useEffect(() => {
+	// nftContract = new web3.eth.Contract(
+	// 	NFTContractBuild.abi,
+	// 	NFTContractBuild.networks[networkId].address
+	// );
 
-        if(library) {
+	
+	erc20Contract = new web3.eth.Contract(
+		abi,
+		// Dai contract on Rinkeby
+		'0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B'
+	);
 
-            setBridge(getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account))
-            setRen(getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account))
-            updateBalance()
-            setInterval(() => {
-                updateBalance();
-              }, 10 * 1000);
-        }
+    console.log(erc20Contract)
 
-    }, [library])
+	isInitialized = true;
+};
 
+export const getOwnBalance = async () => {
+	if (!isInitialized) {
+		await init();
+	}
 
-    return balance
-}
+	return erc20Contract.methods
+		.getContractTokenbalance("BTC")
+		.call()
+		.then((balance) => {
+            console.log(balance)
+			return Web3.utils.fromWei(balance);
+		});
+};
 
-export default useBalance
+// export const mintToken = async () => {
+// 	if (!isInitialized) {
+// 		await init();
+// 	}
+
+// 	return nftContract.methods
+// 		.mint(selectedAccount)
+// 		.send({ from: selectedAccount });
+// };

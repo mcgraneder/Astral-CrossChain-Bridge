@@ -11,7 +11,7 @@ export const injected = new InjectedConnector({
   
   export const fortmatic = new FortmaticConnector({ 
       apiKey: "pk_test_C102027C0649EF66", 
-      chainId: 4
+      chainId: 42
   })
   
   export const portis = new PortisConnector({ dAppId: 

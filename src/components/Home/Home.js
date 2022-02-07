@@ -13,7 +13,7 @@ import HomeConnectButton from "./HomeConnectButton";
 
 const Home = ({close}) => {
 
-    const { active } = useAuth()
+    const { active, library } = useAuth()
     
    
     return(

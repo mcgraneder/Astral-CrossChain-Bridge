@@ -48,8 +48,7 @@ import { ArrowContainer12,
          ArrowLogo,
          Dropdown
 } from "./WalletModalStyles";
-import useBalance from "../../hooks/useBalance";
-
+import { getOwnBalance } from "../../hooks/useBalance";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -78,50 +77,42 @@ const WalletModal = ({close}) => {
     const [ren1, setRen1] = useState()
     // const [balance, setBalance] = useState("")
     const [bridge, setBridge] = useState()
-    const balance = useBalance()
+    // const balance = useBalance()
     // console.log(balance)
+    const [balance, setBalance] = useState(0);
+
+	// const mint = () => {
+	// 	mintToken()
+	// 		.then((tx) => {
+	// 			console.log(tx);
+	// 			setMinted(true);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// };
+
+	const fetchBalance = () => {
+		getOwnBalance()
+			.then((balance) => {
+				setBalance(balance);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+    fetchBalance()
+
+
 
     const { active, library, account } = useAuth()
-    var bridgeContract
-    var ren
+  
     const amount = ethers.utils.parseUnits("10", 6);
-    // const updateBalance = async () => {
-        
-    //     console.log(bridge)
-    //     try {
 
-    //         if (bridge == undefined) return
-    //         const balanc = await bridge.getContractTokenbalance("BTC");
-           
-    //         const n = ethers.utils.formatEther(balanc.toString())
-    //         setBalance(n)
-    //     console.log(balance)
-
-    //     } catch (error) {
-
-    //         console.error(error)
-    //     }
-       
-        
-    // };
-
-
-
-    useEffect(() => {
-
-        console.log(balance)
-        if(library) {
-            console.log(true)
-            // setBridge(getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account))
-            // setRen1(getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account))
-            // // console.log(balance)
-            // updateBalance();
-            // setInterval(() => {
-            //     updateBalance();
-            //   }, 10 * 1000);
-        }
-
-    }, [library])
+    // setInterval(() => {
+    //     updateBalance();
+    //   }, 10 * 100)
     const setToggleValue = () => {
 
         setToggle(!toggle);
@@ -161,10 +152,11 @@ const WalletModal = ({close}) => {
 
         try {
 
-            console.log(ren1)
-            const balance = await bridge.getContractTokenbalance("BTC");
-            console.log(balance)
-            console.log(ethers.BigNumber.from("0x00"))
+            // console.log(ren1)
+            // const balance = await bridge.getContractTokenbalance("BTC");
+            // console.log(balance)
+            // console.log(ethers.BigNumber.from("0x00"))
+            
             const approve = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount);
             await approve.wait()
 
