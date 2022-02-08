@@ -353,18 +353,21 @@ const WalletModal = ({close, balance, setBalance}) => {
         const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
         const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
-        if(inputText === "Deposit ") {
+        console.log(inputText)
+        if(inputText === "Deposit") {
 
+            
             var walletBalance = await renContract.balanceOf(account)
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
 
-        } else if (inputText === "Withdraw ") {
+        } else if (inputText === "Withdraw") {
 
             var walletBalance = await bridge1.getContractTokenbalance("BTC")
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
-            setText(walletBalance)
+            setText(0)
             console.log(text)
+            console.log("hey")
 
         }
 
