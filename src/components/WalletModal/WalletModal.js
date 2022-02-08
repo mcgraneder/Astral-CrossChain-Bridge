@@ -20,6 +20,7 @@ import { ethers } from 'ethers'
 import Loader from "react-loader-spinner";
 import { Spacer } from "../TransactionModal/TransactionModalStyles";
 import Button from "./Button";
+import walletIcon from "../assets/depositIcon2.png"
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -57,7 +58,10 @@ import { ArrowContainer12,
          StatusText,
          CompletionTextWrapper,
          CompletionTextContainer,
-         LoaderContainer
+         LoaderContainer,
+         MaxOption,
+         ForumIcon,
+         ForumImg
 } from "./WalletModalStyles";
 import { getOwnBalance } from "../../hooks/useBalance";
 export const MintForm = styled.div`
@@ -344,6 +348,28 @@ const WalletModal = ({close, balance, setBalance}) => {
       
     }
 
+    const getMaxDeposit = async() => {
+
+        const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
+        const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
+
+        if(inputText === "Deposit") {
+
+            var walletBalance = await renContract.balanceOf(account)
+            walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+            setText(walletBalance)
+
+        } else {
+
+            var walletBalance = await bridge1.getContractTokenbalance("BTC")
+            walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+            setText(walletBalance)
+            console.log(text)
+
+        }
+
+    }
+
     return (
 
         <>
@@ -393,6 +419,10 @@ const WalletModal = ({close, balance, setBalance}) => {
                         <FromContainer>
                             <WalletInputWrapper>
                                 <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  onChange={(e) => setText(e.target.value)} placeholder="amount"></WalletInput>
+                                <ForumIcon>
+                                    <ForumImg src={walletIcon}></ForumImg>
+                                </ForumIcon>
+                                <MaxOption onClick={getMaxDeposit}>max</MaxOption>
                             </WalletInputWrapper>
                         </FromContainer>
                         { loading && (<ArrowContainer>

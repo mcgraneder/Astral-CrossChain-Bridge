@@ -18,7 +18,7 @@ export const FormWrapper = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 17%;
+    top: 15%;
     // width: 470px;
     // height: 575px;
     background: rgb(14, 22, 39);
@@ -428,6 +428,15 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
 }
 
+    &:focus {
+
+        border: none;
+    }
+
+    &:active {
+
+        border:
+    }
 
 
 `
@@ -440,15 +449,16 @@ export const WalletInputWrapper = styled.div`
     line-height: 60px;
     display: flex;
     border: none;
-//     input[type=number]::-webkit-inner-spin-button, 
-// input[type=number]::-webkit-outer-spin-button { 
-//   -webkit-appearance: none; 
-// }
+    -webkit-appearance: none;
+    input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
 
     // border: 3px solid rgb(34,43,68);
     
-    // padding-left: 25px;
-    // padding-right: 5px;
+    // padding-left: 50px;
+    // padding-right: 15px;
 `
 
 export const WalletInput = styled.input`
@@ -459,17 +469,20 @@ border: none;
 color: white;
 padding-left: 20px;
 border-radius: 10px;
+padding-left: 60px;
+font-size: 14px;
 font-family: 'Open Sans', sans-serif; 
 // border: 3px solid: blue;
+-webkit-appearance: none;
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
 }
 
-&:active {
+// &:active {
     
-    // border: 3px solid green;
-}
+//     // border: 3px solid green;
+// }
 `
 
 export const Dropdown = styled.div`
@@ -573,4 +586,56 @@ export const LoaderContainer = styled.div`
 
     // display: flex;
     
+`
+
+export const MaxOption = styled.div`
+
+    position: absolute;
+    font-family: 'Open Sans', sans-serif;
+    height: 30px;
+    width: 50px;
+    left: 77%;
+    background: transparent;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    color: rgb(75,135,220);
+    font-size: 15px;
+    font-weight: bold;
+    
+    &:hover {
+
+        cursor: pointer;
+        font-size: 15.5px;
+        color: rgb(95,155,240);
+    }
+`
+
+export const ForumIcon = styled.div`
+
+    position: absolute;
+    font-family: 'Open Sans', sans-serif;
+    height: 25px;
+    margin-top: 3px;
+    // padding-bottom: 10px;
+    width: 25px;
+    left: 15%;
+    // left: 78%;
+    // background: White;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 8px;
+    color: rgb(75,135,220);
+    font-size: 15px;
+    font-weight: bold;
+`
+
+export const ForumImg = styled.img`
+
+    width: 28px;
+    height: 28px;
 `
