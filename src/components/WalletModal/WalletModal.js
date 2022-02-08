@@ -98,6 +98,7 @@ const WalletModal = ({close, balance, setBalance}) => {
     const [transactionText, setTransactionText] = useState("")
     const [approvalFinished, setApprovalFinished] = useState(false)
     const [depositFinished, setDepositFinished] = useState(false)
+    const [errorTrue, setErrorTrue] = useState(false)
 
     const { active, library, account } = useAuth()
 
@@ -140,13 +141,27 @@ const WalletModal = ({close, balance, setBalance}) => {
         const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
         const ren1 = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
-        const walletBalance = await ren1.balanceOf(account)
+        var walletBalance = await ren1.balanceOf(account)
+        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         const amount = Web3.utils.toWei(text.toString(), "Gwei")
         console.log( amount)
         console.log(walletBalance)
-        if(text > walletBalance) {
+        if(amount > walletBalance) {
 
+            setLoading(true)
+            setErrorTrue(true)
             setError("insufficient balance")
+            setTimeout(() => {
+
+                setLoading(false)
+                setLoading(false)
+                setDepositLoading(false)
+                setApprovalLoading(false)
+                setApprovalFinished(false)
+                setDepositFinished(false)
+                setErrorTrue(false)
+
+            }, 4000)
             console.log("hey")
             return
         }
@@ -181,33 +196,54 @@ const WalletModal = ({close, balance, setBalance}) => {
 
                 await result.wait().then(() => {
 
-                    setDepositText("Complete")
-                    setDepositFinished(true)
-                    setTransactionText("Deposit Successful")
+                    bridge.getContractTokenbalance("BTC")
+                    .then((balance) => {
+                        console.log(balance)
+                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        setBalance(n)
+                        setDepositText("Complete")
+                        setDepositFinished(true)
+                        setTransactionText("Deposit Successful")
 
-                    setTimeout(() => {
+                        setTimeout(() => {
 
-                        setLoading(false)
-                        setDepositLoading(false)
-                        setApprovalLoading(false)
-                        setApprovalFinished(false)
-                        setDepositFinished(false)
-                    }, 2000)
+                            setLoading(false)
+                            setDepositLoading(false)
+                            setApprovalLoading(false)
+                            setApprovalFinished(false)
+                            setDepositFinished(false)
+                        }, 3000)
+                    });
                 })
             })
 
             
         } catch(error) {
 
+            setErrorTrue(true)
             console.error(error)
-            setError(error.message)
+            if (error.code == 4001) {
+
+                setError("User denied transaction!")
+
+            } else {
+
+                setError(error.message)
+            }
+            
             console.log(error)
-            setLoading(false)
-            setLoading(false)
-            setDepositLoading(false)
-            setApprovalLoading(false)
-            setApprovalFinished(false)
-            setDepositFinished(false)
+            setTimeout(() => {
+
+                setLoading(false)
+                setLoading(false)
+                setDepositLoading(false)
+                setApprovalLoading(false)
+                setApprovalFinished(false)
+                setDepositFinished(false)
+                setErrorTrue(false)
+
+            }, 4000)
+            
         }
 
 
@@ -217,38 +253,93 @@ const WalletModal = ({close, balance, setBalance}) => {
 
         const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
         const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-        const walletBalance = await bridge1.getContractTokenbalance("BTC")
-        console.log(walletBalance)
-        console.log(library)
-        if(text > walletBalance) {
 
+        var walletBalance = await bridge1.getContractTokenbalance("BTC")
+        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+        const amount = Web3.utils.toWei(text.toString(), "Gwei")
+        console.log( amount)
+        console.log(walletBalance)
+        if(amount > walletBalance) {
+
+            setLoading(true)
+            setErrorTrue(true)
             setError("insufficient balance")
+            setTimeout(() => {
+
+                setLoading(false)
+                setLoading(false)
+                setDepositLoading(false)
+                setApprovalLoading(false)
+                setApprovalFinished(false)
+                setDepositFinished(false)
+                setErrorTrue(false)
+
+            }, 4000)
+            console.log("hey")
             return
         }
-        const amount = Web3.utils.toWei(text.toString(), "Gwei")
-        console.log(amount)
-        console.log(account)
+        
+        setLoading(true)
+        setDepositLoading(true)
+        setDepositText("Pending")
+        setTransactionText("Awaiting Withdrawal")
+
         try {
 
             const withdraw = await bridge1.transfer(account, amount, "BTC")
-            
-            const depositReceipt = await withdraw.wait()
-            .then(() => {
-                bridge1.getContractTokenbalance("BTC")
-                .then((balance) => {
-                    console.log(balance)
-                    const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                    setBalance(n)
-                    setLoading(false)
-                });
+            .then(async (result) => {
+
+                setTransactionText("Withdrawing RenBTC")
+                await result.wait().then(() => {
+
+                    setDepositFinished(true)
+                    setDepositText("Complete")
+
+                    bridge1.getContractTokenbalance("BTC")
+                    .then((balance) => {
+                        console.log(balance)
+                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        setBalance(n)
+                        setTransactionText("Withdrawal Successful")
+                        
+                        setTimeout(() => {
+
+                            setLoading(false)
+                            setDepositLoading(false)
+                            setApprovalLoading(false)
+                            setApprovalFinished(false)
+                            setDepositFinished(false)
+                        }, 4000)
+                    });
+                })
+    
             });
 
         } catch(error) {
 
+            setErrorTrue(true)
             console.error(error)
-            setError(error.message)
+            if (error.code == 4001) {
+
+                setError("User denied transaction!")
+
+            } else {
+
+                setError(error.message)
+            }
+            
             console.log(error)
-            setLoading(false)
+            setTimeout(() => {
+
+                setLoading(false)
+                setLoading(false)
+                setDepositLoading(false)
+                setApprovalLoading(false)
+                setApprovalFinished(false)
+                setDepositFinished(false)
+                setErrorTrue(false)
+
+            }, 4000)
         }
       
     }
@@ -322,7 +413,7 @@ const WalletModal = ({close, balance, setBalance}) => {
                                 { !depositFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
                             </StatusTextWrapper>)}
                             <CompletionTextContainer>
-                                Transaction Status: {transactionText}...
+                                {errorTrue ? <div style={{color: "red"}}>{error}</div> : <div>Transaction Status: {transactionText}...</div>}
                             </CompletionTextContainer>
                               
                         </SpinnerWrapper>)}
