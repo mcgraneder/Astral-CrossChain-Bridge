@@ -1,363 +1,107 @@
-import logo from './logo.svg';
-import './App.css';
 import React from "react";
-import Web3 from "web3";
-import RenJS from "@renproject/ren";
-import { Bitcoin, Ethereum } from "@renproject/chains";
 
-import ABI from "./ABI.json";
-import ABI2 from "./AB12.json"
-//0x74B6aC59285f67953d50E54019724eb7973a71c2
-const contractAddress = "0x89c4EaDD65c1b8718a36BaE98e080F29927780A5"
-const renBtcAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
+const useWalletTransaction = (text, inputText) => {
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      balance: 0,
-      message: "",
-      error: "",
-      renJS: new RenJS("testnet", { useV2TransactionFormat: true }),
-    };
-  }
-
-  componentDidMount = async () => {
-    let web3Provider;
+    const [text, setText] = useState(" ")
+    const [inputText, setInputText] = useState("Deposit")
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
    
-    // Initialize web3 (https://medium.com/coinmonks/web3-js-ethereum-javascript-api-72f7b22e2f0a)
-    // Modern dApp browsers...
-    if (window.ethereum) {
-      web3Provider = window.ethereum;
-      try {
-        // Request account access
-        await window.ethereum.enable();
-      } catch (error) {
-        // User denied account access...
-        this.logError("Please allow access to your Web3 wallet.");
-        return;
-      }
-    }
-    // Legacy dApp browsers...
-    else if (window.web3) {
-      web3Provider = window.web3.currentProvider;
-    }
-    // If no injected web3 instance is detected, fall back to Ganache
-    else {
-      this.logError("Please install MetaMask!");
-      return;
-    }
+    const { library, account } = useAuth()
 
-    const web3 = new Web3(web3Provider);
+    const handleDeposit = async() => {
 
-    const networkID = await web3.eth.net.getId();
-    if (networkID !== 42) {
-      this.logError("Please set your network to Kovan.");
-      return;
-    }
+        const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
+        const ren1 = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
-    this.setState({ web3 }, () => {
-      // Update balances immediately and every 10 seconds
-      this.updateBalance();
-      setInterval(() => {
-        this.updateBalance();
-      }, 10 * 1000);
-    });
-  };
+        const walletBalance = await ren1.balanceOf(account)
+        const amount = Web3.utils.toWei(text.toString(), "Gwei")
+        console.log( amount)
+        console.log(walletBalance)
+        if(text > walletBalance) {
 
- 
-  render = () => {
-    const { balance, message, error } = this.state;
-    return (
-      <div className="App">
-        <p>Balance: {balance} BTC</p>
-        <p>
-          <button onClick={() => this.deposit().catch(this.logError)}>
-            Deposit 0.003 BTC
-          </button>
-        </p>
-        <p>
-          <button onClick={() => this.withdraw().catch(this.logError)}>
-            Withdraw {balance} BTC
-          </button>
-        </p>
-        <p>
-          <button onClick={() => this.transfer().catch(this.logError)}>
-            Transfer {balance} BTC to wallet
-          </button>
-        </p>
-        <p>
-          <button onClick={() => this.transferFrom().catch(this.logError)}>
-            Transfer BTC from wallet to bridge
-          </button>
-        </p>
-        {message.split("\n").map((line) => (
-          <p>{line}</p>
-        ))}
-        {error ? <p style={{ color: "red" }}>{error}</p> : null}
-      </div>
-    );
-  };
+            setError("insufficient balance")
+            console.log("hey")
+            return
+        }
+       
+        setLoading(true)
+        try {
 
-  updateBalance = async () => {
-    const { web3 } = this.state;
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    const balance = await contract.methods.getContractTokenbalance("BTC").call();
-    this.setState({ balance: parseInt(balance.toString()) / 10 ** 8 });
-  };
+            const tx1 = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount);
+            const txReceipt = await tx1.wait()
+           
 
-  logError = (error) => {
-    console.error(error);
-    this.setState({ error: String((error || {}).message || error) });
-  };
+            console.log(amount)
+            const tx2 = await bridge.transferFrom(account, "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount, "BTC")
 
-  log = (message) => {
-    this.setState({ message });
-  };
+            const depositReceipt = await tx2.wait()
+            .then(() => {
+                bridge.getContractTokenbalance("BTC")
+                .then((balance) => {
+                    console.log(balance)
+                    const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                    setBalance(n)
+                    setLoading(false)
+                });
+            });
+            
+            console.log(depositReceipt)
+            
+        } catch(error) {
 
-  deposit = async () => {
+            console.error(error)
+            setError(error.message)
+            console.log(error)
+            setLoading(false)
+        }
 
-    const { web3, renJS } = this.state;
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    var data;
 
-    if (localStorage.getItem("failed") == true) {
-
-      data = true;
-
-    } else {
-
-      data = false;
     }
 
-    this.logError(""); // Reset error
+    const handleWithdraw = async() => {
 
-    try {
+        const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
+        const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
+        const walletBalance = await bridge1.getContractTokenbalance("BTC")
+        console.log(walletBalance)
+        console.log(library)
+        if(text > walletBalance) {
 
-      this.log(`Generating deposit address...`);
+            setError("insufficient balance")
+            return
+        }
+        const amount = Web3.utils.toWei(text.toString(), "Gwei")
+        console.log(amount)
+        console.log(account)
+        try {
 
-      const amount = 0.002// BTC
-      await contract.methods.lockAndMintInitialized("BTC", web3.utils.toWei(amount.toString(), "ether"), data).send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
-      const BTC = "BTC";
-      const mint = await renJS.lockAndMint({
-        // Send BTC from the Bitcoin blockchain to the Ethereum blockchain.
-        asset: "BTC",
-        from: Bitcoin(),
-        to: Ethereum(web3.currentProvider).Contract({
-          // The contract we want to interact with
-          sendTo: contractAddress,
+            const withdraw = await bridge1.transfer(account, amount, "BTC")
+            
+            const depositReceipt = await withdraw.wait()
+            .then(() => {
+                bridge1.getContractTokenbalance("BTC")
+                .then((balance) => {
+                    console.log(balance)
+                    const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                    setBalance(n)
+                    setLoading(false)
+                });
+            });
 
-          // The name of the function we want to call
-          contractFn: "deposit",
+        } catch(error) {
 
-          // Arguments expected for calling `deposit`
-          contractParams: [
-            {
-              name: "_msg",
-              type: "bytes",
-              value: Buffer.from(`Depositing ${amount} BTC`),
-            },
-          ],
-        }),
-      });
-
-      // Show the gateway address to the user so that they can transfer their BTC to it.
-      this.log(`Deposit ${amount} BTC to ${mint.gatewayAddress}`);
-
-      mint.on("deposit", async (deposit) => {
-        // Details of the deposit are available from `deposit.depositDetails`.
-
-        const hash = deposit.txHash();
-        const depositLog = (msg) =>
-          this.log(
-            `BTC deposit: ${Bitcoin.utils.transactionExplorerLink(
-              deposit.depositDetails.transaction,
-              "testnet"
-            )}\n
-            RenVM Hash: ${hash}\n
-            Status: ${deposit.status}\n
-            ${msg}`
-          );
-
-        await deposit
-          .confirmed()
-          .on("target", (target) => depositLog(`0/${target} confirmations`))
-          .on("confirmation", (confs, target) =>
-            depositLog(`${confs}/${target} confirmations`)
-          );
-
-        await deposit
-          .signed()
-          // Print RenVM status - "pending", "confirming" or "done".
-          .on("status", (status) => depositLog(`Status: ${status}`)).then(function() {
-
-            console.log("finished")
-          });
-
-        await deposit
-          .mint()
-          // Print Ethereum transaction hash.
-          .on("transactionHash", (txHash) => depositLog(`Mint tx: ${txHash}`)).then(function() {
-
-            console.log("finishesssssssssssssss")
-          });;
-
-        console.log(`Deposited ${amount} BTC.`);
-        localStorage.removeItem("failed");
-      });
-
-
-    } catch(error) {
-
-      console.error(error);
-      localStorage.setItem("failed", true);
+            console.error(error)
+            setError(error.message)
+            console.log(error)
+            setLoading(false)
+        }
       
     }
 
-  };
-
-  withdraw = async () => {
-    this.logError(""); // Reset error
-
-    const { web3, renJS, balance } = this.state;
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    const amount = 0.000048;
-    var data;
-
-    if (localStorage.getItem("failed") == true) {
-
-      data = true;
-      
-    } else {
-
-      data = false;
-    }
-
-    try {
-
-      await contract.methods.burnAndReleaseInitialized("BTC", web3.utils.toWei(amount.toString(), "ether"), data ).send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
-
-      const recipient = prompt("Enter BTC recipient:");
-
-      const burnAndRelease = await renJS.burnAndRelease({
-        // Send BTC from Ethereum back to the Bitcoin blockchain.
-        asset: "BTC",
-        to: Bitcoin().Address(recipient),
-        from: Ethereum(web3.currentProvider).Contract((btcAddress) => ({
-          sendTo: contractAddress,
-  
-          contractFn: "withdraw",
-  
-          contractParams: [
-  
-            {
-              type: "bytes",
-              name: "_msg",
-              value: Buffer.from(`Withdrawing ${amount} BTC`),
-            },
-            {
-              type: "bytes",
-              name: "_to",
-              value: btcAddress,
-            },
-            {
-              type: "uint256",
-              name: "_amount",
-              value: RenJS.utils.toSmallestUnit(amount, 8),
-            },
-          ],
-        })),
-      });
-  
-      let confirmations = 0;
-      await burnAndRelease
-        .burn()
-        // Ethereum transaction confirmations.
-        .on("confirmation", (confs) => {
-          confirmations = confs;
-        })
-        // Print Ethereum transaction hash.
-        .on("transactionHash", (txHash) =>
-          this.log(`Ethereum transaction: ${String(txHash)}\nSubmitting...`)
-        );
-  
-      await burnAndRelease
-        .release()
-        // Print RenVM status - "pending", "confirming" or "done".
-        .on("status", (status) =>
-          status === "confirming"
-            ? this.log(`${status} (${confirmations}/15)`)
-            : this.log(status)
-        )
-        // Print RenVM transaction hash
-        .on("txHash", (hash) => this.log(`RenVM hash: ${hash}`));
-  
-      this.log(`Withdrew ${amount} BTC to ${recipient}.`);
-      localStorage.removeItem("failed");
-
-    } catch (error) {
-
-      console.error(error);
-      localStorage.setItem("failed", true);
-      
-    }
-    
-  };
-
-  transfer = async () => {
-
-    const { web3, renJS } = this.state;
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    this.logError(""); // Reset error
-
-    try {
-
-      this.log(`Transfering Your RenBTC to your wallet...`);
-
-      const amount = await contract.methods.getUserbalanceInContract("BTC").call({from : "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
-      console.log(amount)
-      await contract.methods.transfer("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", amount, "BTC")
-      .send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
-
-    this.log(`Success`);
-
-    } catch (error) {
-
-      console.error(error) 
-    }
-    
-  };
-
-  transferFrom = async () => {
-
-    const { web3, renJS } = this.state;
-    const contract = new web3.eth.Contract(ABI, contractAddress);
-    const renBtcContract = new web3.eth.Contract(ABI2, renBtcAddress);
-
-    try {
-
-      this.logError(""); // Reset error
-
-      this.log(`Depositing RenBtc from your wallet...`);
-  
-      const amount = await renBtcContract.methods.balanceOf("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113").call()// BTC
-      console.log(amount + "heyyy")
-      await renBtcContract.methods.approve(contractAddress, amount).send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"});
-  
-      const allowance = await contract.methods.tokenAllowance("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", contractAddress, "BTC").call();
-      console.log(allowance)
-      await contract.methods.transferFrom("0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113", contractAddress, amount, "BTC" )
-      .send({from: "0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113"})
-  
-      this.log(`Success`);
+    return { handleDeposit, handleWithdraw, setError, error, setLoading, loading}
 
 
-    } catch(error) {
-
-      console.error(error) 
-    }
-    
-  };
 }
 
-export default App;
+export default useWalletTransaction

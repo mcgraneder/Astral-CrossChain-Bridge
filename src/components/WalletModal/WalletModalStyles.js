@@ -180,6 +180,7 @@ export const ButtonWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    margin-top: 20px;
     // padding-left: 20px;
     // padding-right: 20px;
     width: 90%;
@@ -484,7 +485,7 @@ border: 1px solid rgb(75,135,220);
 
 export const SpinnerWrapper = styled.div`
 
-    height: 140px;
+    // height: 140px;
     // width: 100%;
     
     margin-bottom: 20px;
@@ -496,4 +497,80 @@ export const SpinnerWrapper = styled.div`
     background: rgb(14, 22, 39);
     border: 3px solid rgb(34,43,68);
     border-radius: 10px;
+    // padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 5px;
+    transition: height 0.3s ease-in-out;
+`
+
+export const StatusTextWrapper = styled.div`
+
+    width: 100%;
+    height: 20px;
+    display: flex;
+    // align-items: left;
+    // justify-content: center;
+    // background: White;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+
+`
+
+export const StatustTextIcon = styled.img`
+
+    width: 20px;
+    height: 20px;
+    display: flex;
+    
+`
+
+export const StatusText = styled.div`
+
+    font-family: 'Open Sans', sans-serif;
+    height: 20px;
+    display: flex;
+    font-size: 15px;
+    color: White;
+    line-height: 20px;
+    padding-left: 20px;
+    // font-weight: bold;
+    padding-right: 100px;
+`   
+
+export const CompletionTextWrapper = styled.div`
+
+    width: 100%;
+    height: 20px;
+    background: White;
+
+`
+
+export const CompletionTextContainer = styled.div`
+
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    // height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 20px;
+    padding-top: 25px;
+    color: White;
+    font-size: 17px;
+    // font-weight: bold;
+
+`
+
+export const LoaderContainer = styled.div`
+
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 15%;
+
+    // display: flex;
+    
 `

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
 import Web3 from "web3";
@@ -13,6 +13,7 @@ import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import { Web3Provider } from "@ethersproject/providers";
+import { OrderMap } from "immutable"
 
 function getLibrary(provider) {
   return new Web3Provider(provider)
@@ -22,6 +23,7 @@ function App() {
 
   const loading = useOnPageLoad()
 
+  
  
   return (
 

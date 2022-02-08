@@ -7,6 +7,9 @@ import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
+import numberOne from "../assets/number-one.png"
+import numberTwo from "../assets/number-2.png"
+import greenTick from "../assets/greenTick.png"
 import DropdownItem from "./DropdownItem";
 import DropdownMenu from "./DropdownMenu";
 import { getContract } from "../../utils/utils";
@@ -15,6 +18,7 @@ import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
 import { ethers } from 'ethers'
 import Loader from "react-loader-spinner";
+import { Spacer } from "../TransactionModal/TransactionModalStyles";
 import Button from "./Button";
 import { ArrowContainer12, 
          ArrowLogo12, 
@@ -47,7 +51,13 @@ import { ArrowContainer12,
          ArrowLogoContainer,
          ArrowLogo,
          Dropdown,
-         SpinnerWrapper
+         SpinnerWrapper,
+         StatusTextWrapper,
+         StatustTextIcon,
+         StatusText,
+         CompletionTextWrapper,
+         CompletionTextContainer,
+         LoaderContainer
 } from "./WalletModalStyles";
 import { getOwnBalance } from "../../hooks/useBalance";
 export const MintForm = styled.div`
@@ -81,41 +91,16 @@ const WalletModal = ({close, balance, setBalance}) => {
     // const [balance, setBalance] = useState(0);
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    const [approvalLoading, setApprovalLoading] = useState(false);
+    const [depositLoading, setDepositLoading] = useState(false);
+    const [approvalText, setApprovalText] = useState("")
+    const [depositText, setDepositText] = useState("")
+    const [transactionText, setTransactionText] = useState("")
+    const [approvalFinished, setApprovalFinished] = useState(false)
+    const [depositFinished, setDepositFinished] = useState(false)
+
     const { active, library, account } = useAuth()
 
-    // const getBalance = React.useCallback(() => {
-
-    //     if(library) {
-
-    //         const bridgeContract = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
-    //         const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-
-    //         setBridge(bridgeContract)
-    //         setRen1(renContract)
-
-    //         bridgeContract.getContractTokenbalance("BTC")
-    //         .then((balance) => {
-    //             console.log(balance)
-    //             const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-    //             console.log(n)
-    //             setBalance(n)
-    //         });
-    //     }
-        
-    // }, [library])
-        
-    
-
-    // useEffect(() => {
-
-    //     (async () => {
-    //         if (library) {
-    //         getBalance();
-    //         }
-    //     })().catch(console.error);
-        
-
-    // }, [getBalance]);
 
 
     const setToggleValue = () => {
@@ -167,27 +152,50 @@ const WalletModal = ({close, balance, setBalance}) => {
         }
        
         setLoading(true)
+        setApprovalLoading(true)
+        setDepositLoading(false)
+        setApprovalText("Pending")
+        setTransactionText("Awaiting Approval")
         try {
 
-            const tx1 = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount);
-            const txReceipt = await tx1.wait()
+            const tx1 = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
+            .then(async(result) => {
+                setTransactionText("Approving")
+
+                await result.wait().then(() => {
+
+                    setApprovalText("Complete")
+                    setApprovalFinished(true)
+                    setDepositLoading(true)
+                    setDepositText("Pending")
+                    setTransactionText("Awaiting Deposit")
+                })
+            });
+            // const txReceipt = await tx1.wait()
            
 
             console.log(amount)
             const tx2 = await bridge.transferFrom(account, "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount, "BTC")
+            .then(async(result) => {
+                setTransactionText("Depositing RenBTC");
 
-            const depositReceipt = await tx2.wait()
-            .then(() => {
-                bridge.getContractTokenbalance("BTC")
-                .then((balance) => {
-                    console.log(balance)
-                    const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                    setBalance(n)
-                    setLoading(false)
-                });
-            });
-            
-            console.log(depositReceipt)
+                await result.wait().then(() => {
+
+                    setDepositText("Complete")
+                    setDepositFinished(true)
+                    setTransactionText("Deposit Successful")
+
+                    setTimeout(() => {
+
+                        setLoading(false)
+                        setDepositLoading(false)
+                        setApprovalLoading(false)
+                        setApprovalFinished(false)
+                        setDepositFinished(false)
+                    }, 2000)
+                })
+            })
+
             
         } catch(error) {
 
@@ -195,6 +203,11 @@ const WalletModal = ({close, balance, setBalance}) => {
             setError(error.message)
             console.log(error)
             setLoading(false)
+            setLoading(false)
+            setDepositLoading(false)
+            setApprovalLoading(false)
+            setApprovalFinished(false)
+            setDepositFinished(false)
         }
 
 
@@ -286,30 +299,33 @@ const WalletModal = ({close, balance, setBalance}) => {
                         </ReleaseToggleButton>
                     </MinFormToggleButtonContainer>
                     <MintFormWrapper>
-                        {/* <MintForm>
-                        <MintFormmWrapper>
-                            <MintFormTextWrapper>
-                                <MintFormText>0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113</MintFormText>
-                            </MintFormTextWrapper>
-                            <DropdownContainer2>
-                                <MintFormIcon src={chainLogo} width={"18px"}></MintFormIcon>
-                            </DropdownContainer2>
-                            </MintFormmWrapper>
-                            
-                        </MintForm> */}
                         <FromContainer>
                             <WalletInputWrapper>
                                 <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  onChange={(e) => setText(e.target.value)} placeholder="amount"></WalletInput>
                             </WalletInputWrapper>
                         </FromContainer>
-                        <ArrowContainer>
+                        { loading && (<ArrowContainer>
                             <ArrowLogoContainer>
                                 <ArrowLogo src={arrowDown}></ArrowLogo>
                             </ArrowLogoContainer>
-                        </ArrowContainer>
-                        <SpinnerWrapper>
-                                { loading ? <Loader type="Oval" height={60} color="rgb(77, 102, 235)"></Loader> : <div></div>}
-                            </SpinnerWrapper>
+                        </ArrowContainer>)}
+                        { loading && (<SpinnerWrapper>
+                               
+                            { approvalLoading && (<StatusTextWrapper>
+                                <StatustTextIcon src={numberOne}/>
+                                <StatusText>Approval Status: {approvalText}...</StatusText>
+                                { !approvalFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
+                            </StatusTextWrapper>)}
+                            { depositLoading && (<StatusTextWrapper>
+                                <StatustTextIcon src={numberTwo}/>
+                                <StatusText>Deposit Status: {depositText}...</StatusText>
+                                { !depositFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
+                            </StatusTextWrapper>)}
+                            <CompletionTextContainer>
+                                Transaction Status: {transactionText}...
+                            </CompletionTextContainer>
+                              
+                        </SpinnerWrapper>)}
                         <ButtonWrapper>
                             <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} click={inputText === "Withdraw " ? handleWithdraw : handleDeposit} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={inputText +  " " + text + " BTC" }></HomeConnectButton>
                         </ButtonWrapper>
