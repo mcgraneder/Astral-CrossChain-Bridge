@@ -24,11 +24,12 @@ const useBalance = () => {
             setRen1(renContract)
 
             bridgeContract.getContractTokenbalance("BTC")
-            .then((balance) => {
-                console.log(balance)
-                const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                console.log(n)
-                setBalance(n)
+            .then((result) => {
+                console.log(result)
+                result = Web3.utils.fromWei(result.toString(), "Gwei")
+                var balance = new Number(result)
+                balance = balance.toFixed(6)
+                setBalance(balance)
             });
         }
         

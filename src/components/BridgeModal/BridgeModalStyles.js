@@ -18,7 +18,7 @@ export const FormWrapper = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 17%;
+    top: 15%;
     // width: 470px;
     // height: 575px;
     background: rgb(14, 22, 39);

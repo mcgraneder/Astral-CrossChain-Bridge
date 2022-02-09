@@ -88,7 +88,7 @@ const WalletModal = ({close, balance, setBalance}) => {
 
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
-    const [text, setText] = useState(" ")
+    const [text, setText] = useState("")
     const [inputText, setInputText] = useState("Deposit")
     const [ren1, setRen1] = useState()
     const [bridge, setBridge] = useState()
@@ -145,12 +145,14 @@ const WalletModal = ({close, balance, setBalance}) => {
         const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
         const ren1 = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
+        if(text === "") return
         var walletBalance = await ren1.balanceOf(account)
         walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         const amount = Web3.utils.toWei(text.toString(), "Gwei")
         console.log( amount)
         console.log(walletBalance)
-        if(amount > walletBalance) {
+
+        if(amount > walletBalance || amount == 0) {
 
             setLoading(true)
             setErrorTrue(true)
@@ -169,6 +171,7 @@ const WalletModal = ({close, balance, setBalance}) => {
             console.log("hey")
             return
         }
+        
        
         setLoading(true)
         setApprovalLoading(true)
@@ -258,12 +261,12 @@ const WalletModal = ({close, balance, setBalance}) => {
         const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
         const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
+        if(text === "") return
         var walletBalance = await bridge1.getContractTokenbalance("BTC")
         walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         const amount = Web3.utils.toWei(text.toString(), "Gwei")
-        console.log( amount)
-        console.log(walletBalance)
-        if(amount > walletBalance) {
+        
+        if(amount > walletBalance || amount == 0) {
 
             setLoading(true)
             setErrorTrue(true)
@@ -354,18 +357,20 @@ const WalletModal = ({close, balance, setBalance}) => {
         const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
         console.log(inputText)
-        if(inputText === "Deposit") {
+        var walletBalance = await renContract.balanceOf(account)
+        walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
+        setText(walletBalance)
+        if(inputText === "Deposit ") {
 
             
-            var walletBalance = await renContract.balanceOf(account)
-            walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
-            setText(walletBalance)
+            console.log("hey")
+           
 
-        } else if (inputText === "Withdraw") {
+        } else if (inputText === "Withdraw ") {
 
             var walletBalance = await bridge1.getContractTokenbalance("BTC")
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
-            setText(0)
+            setText(walletBalance)
             console.log(text)
             console.log("hey")
 

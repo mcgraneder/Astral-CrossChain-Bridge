@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import ConnectWalletButton from '../Buttons/ConnectWalletButton';
 import RenLogo from "../assets/RenLogo.svg"
 import ConnectWalletButton from '../Buttons/ConnectWalletButton/ConnjectWalletButton';
@@ -18,16 +18,38 @@ import { NavContainer,
          NavMenu3
 } from './NavbarStyles';
 import useAuth from '../../hooks/useAuth';
-import { useEffect } from 'react/cjs/react.development';
 import threeDots from "../assets/threeDots.svg"
+import Web3 from 'web3';
+import {ethers} from "ethers"
+import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
+import { formatEther } from 'ethers/lib/utils';
 export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible}) {
 
     const [bridge, setBridge] = useState(false);
     const [wallet, setWallet] = useState(false);
+    const [balance, setBalance] = useState(0)
     const [transaction, setTransaction] = useState(false);
 
+    const { active, library, account } = useAuth()
 
-  const { active } = useAuth()
+    useEffect(() => {
+
+        if(account) {
+
+            library.getBalance(account).then((result) => {
+
+                result = Web3.utils.fromWei(result.toString(), "ether")
+                var balance = new Number(result)
+                balance = balance.toFixed(4)
+                setBalance(balance)
+            })
+        }
+
+        return balance ? `${formatEther(balance)} ETH` : null;
+
+    }, [library, account])
+
+
   return (
       
         <div>
@@ -46,7 +68,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                     </NavMenu>
                     <NavMenu2>
                     <NavItem2 active={active}>
-                        {active &&  <BalanceContainer active={active}>0.003 RenBTC</BalanceContainer>}
+                        {active &&  <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
                             <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
