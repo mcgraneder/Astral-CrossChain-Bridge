@@ -32,6 +32,7 @@ function App() {
 
       <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
+        {/* <Nav bcolour={"rgb(34,43,68)"} bcolour1={"rgb(14, 22, 39)"} bcolour2={"rgb(14, 22, 39)"} visible={true}></Nav> */}
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>

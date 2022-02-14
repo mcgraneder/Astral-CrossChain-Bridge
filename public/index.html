@@ -38,6 +38,61 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
+    <!-- 
+    <style>
+      * {
+          font-family: 'Inter', sans-serif;
+          /* box-sizing: border-box; */
+      }
+
+      /**
+        Explicitly load Inter var from public/ so it does not block LCP's critical path.
+      */
+      @font-face {
+          font-family: 'Inter custom';
+          font-weight: 100 900;
+          font-style: normal;
+          font-display: block;
+          font-named-instance: 'Regular';
+          src: url(%PUBLIC_URL%/fonts/Inter-roman.var.woff2) format("woff2 supports variations(gvar)"),
+              url(%PUBLIC_URL%/fonts/Inter-roman.var.woff2) format("woff2-variations"),
+              url(%PUBLIC_URL%/fonts/Inter-roman.var.woff2) format("woff2");
+      }
+
+      @supports (font-variation-settings: normal) {
+          * {
+              font-family: 'Inter custom', sans-serif;
+          }
+      }
+
+     
+      /* html {
+          /* font-size: 16px; */
+          font-variant: none;
+          font-smooth: always;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
+      }
+
+      #background-radial-gradient {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          pointer-events: none;
+          width: 200vw;
+          height: 200vh;
+          background: radial-gradient(50% 50% at 50% 50%, #fc077d10 0%, rgba(255, 255, 255, 0) 100%);
+          transform: translate(-50vw, -100vh);
+          z-index: -1;
+      } */
+
+    
+
+  </style> -->
     <title>React App</title>
   </head>
   <body>

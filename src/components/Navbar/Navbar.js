@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import ConnectWalletButton from '../Buttons/ConnectWalletButton';
 import RenLogo from "../assets/RenLogo.svg"
 import ConnectWalletButton from '../Buttons/ConnectWalletButton/ConnjectWalletButton';
@@ -23,12 +23,14 @@ import Web3 from 'web3';
 import {ethers} from "ethers"
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { formatEther } from 'ethers/lib/utils';
+
 export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible}) {
 
     const [bridge, setBridge] = useState(false);
     const [wallet, setWallet] = useState(false);
-    const [balance, setBalance] = useState(0)
+    const [balance, setBalance] = useState(0.000)
     const [transaction, setTransaction] = useState(false);
+    const bal = useRef(null)
 
     const { active, library, account } = useAuth()
 
@@ -45,7 +47,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
             })
         }
 
-        return balance ? `${formatEther(balance)} ETH` : null;
+        // return balance ? `${formatEther(balance)} ETH` : null;
 
     }, [library, account])
 

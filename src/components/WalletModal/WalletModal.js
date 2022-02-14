@@ -21,6 +21,7 @@ import Loader from "react-loader-spinner";
 import { Spacer } from "../TransactionModal/TransactionModalStyles";
 import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
+import { generate } from "shortid";
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -83,8 +84,11 @@ export const MintForm = styled.div`
         background:  rgb(34,43,68);
     }
 `
+const aId = generate()
+const unrankedId = generate();
 
-const WalletModal = ({close, balance, setBalance}) => {
+
+const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setPending}) => {
 
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
@@ -103,6 +107,110 @@ const WalletModal = ({close, balance, setBalance}) => {
     const [approvalFinished, setApprovalFinished] = useState(false)
     const [depositFinished, setDepositFinished] = useState(false)
     const [errorTrue, setErrorTrue] = useState(false)
+    // amount = text
+    const [deposit, setDeposit] = React.useState();
+
+    // const addDeposit = React.useCallback(() => {
+    //         setDeposit((deposits) =>
+    //             deposits.get(txHash)
+    //                 ? deposits
+    //                 : deposits.set(txHash, {
+    //                       type: "MINT",
+    //                       deposit: deposit,
+    //                       status: DepositStatus.DETECTED,
+    //                   })
+    //         );
+    //     },
+    //     [setDeposits]
+    // );
+
+    // const updateDeposit = React.useCallback(() => {
+    //         setDeposit((deposits) => {
+    //             const currentDeposit = deposits.get(txHash);
+    //             if (!currentDeposit) {
+    //                 return deposits;
+    //             }
+    //             if (currentDeposit.type === "MINT") {
+    //                 if (newDetails.status === DepositStatus.DONE) {
+    //                     updateBalance(
+    //                         currentDeposit.deposit.params.asset
+    //                     );
+    //                 }
+    //                 return deposits.set(txHash, {
+    //                     ...currentDeposit,
+    //                     ...newDetails,
+    //                 });
+    //             } else {
+    //                 if (newDetails.status === BurnStatus.BURNT) {
+    //                     updateBalance(
+    //                         currentDeposit.burn.params.asset
+    //                     );
+    //                 }
+    //                 return deposits.set(txHash, {
+    //                     ...currentDeposit,
+    //                     ...newDetails,
+    //                 });
+    //             }
+    //         });
+    //     },
+    //     [setDeposits, updateBalance]
+    // );
+
+
+    const [pendingDeposits, setPendingDeposits] = React.useState([
+        {
+          id: String,
+          from: String,
+          amount: Number,
+          approved: Boolean,
+          status: String,
+          time: Number
+        }
+      ]);
+
+      console.log(pendingDeposits[0].id)
+
+    const [deposits, setDeposits] = React.useState([
+        {
+            id: unrankedId,
+            from: "address",
+            amount: "number",
+            time: "Date"
+          }
+      ]);
+    
+      React.useEffect(() => {
+        const depositData = localStorage.getItem("deposits");
+        if (depositData) {
+          setDeposits(JSON.parse(depositData));
+        }
+
+        const pendingDepositData = localStorage.getItem("pending-deposits");
+        if (pendingDepositData) {
+          setPendingDeposits(JSON.parse(pendingDepositData));
+        }
+      }, []);
+    
+      React.useEffect(() => {
+        localStorage.setItem("deposits", JSON.stringify(deposits));
+        localStorage.setItem("pending-deposits", JSON.stringify(pendingDeposits));
+      });
+
+    const addPendingDeposit = async(text) => {
+
+        setPendingDeposits([
+            {
+              id: generate(),
+              from: account,
+              amount: Number(text),
+              approved: false,
+              status: "DETECTED",
+              time: 5
+            },
+          ]);
+
+    }
+    
 
     const { active, library, account } = useAuth()
 
@@ -142,6 +250,17 @@ const WalletModal = ({close, balance, setBalance}) => {
 
     const handleDeposit = async() => {
 
+        togglePending()
+        setDeposits([
+            {
+              id: generate(),
+              label: "",
+              urls: []
+            },
+            ...deposits
+          ]);
+
+        addPendingDeposit(text)
         const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
         const ren1 = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
 
@@ -182,6 +301,8 @@ const WalletModal = ({close, balance, setBalance}) => {
 
             const tx1 = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
             .then(async(result) => {
+
+                console.log(result)
                 setTransactionText("Approving")
 
                 await result.wait().then(() => {
@@ -227,6 +348,7 @@ const WalletModal = ({close, balance, setBalance}) => {
             
         } catch(error) {
 
+            setPending(false)
             setErrorTrue(true)
             console.error(error)
             if (error.code == 4001) {
@@ -378,6 +500,18 @@ const WalletModal = ({close, balance, setBalance}) => {
 
     }
 
+    const getGas = async(e) => {
+
+        setText(e.target.value)
+        setAmount(Number(e.target.value))
+        const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
+
+        const gas = await bridge.estimateGas.transferFrom(account, "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", 2000, "BTC")
+        const n = Web3.utils.fromWei(gas.toString(), "Gwei")
+        console.log(n)
+       
+    }
+
     return (
 
         <>
@@ -426,7 +560,7 @@ const WalletModal = ({close, balance, setBalance}) => {
                     <MintFormWrapper>
                         <FromContainer>
                             <WalletInputWrapper>
-                                <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  value={text} onChange={(e) => setText(e.target.value)} placeholder="amount"></WalletInput>
+                                <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  value={text} onChange={getGas} placeholder="amount"></WalletInput>
                                 <ForumIcon>
                                     <ForumImg src={walletIcon}></ForumImg>
                                 </ForumIcon>
