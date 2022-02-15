@@ -204,7 +204,7 @@ export const ErrorText = styled.div`
   font-size: 22px;
 `
 
-const PendingModal = ({visible, close, amount}) => {
+const RejectionModal = ({visible, close, amount}) => {
     
     // const { connectOn, disconnect, active, loading } = useAuth()
   
@@ -260,7 +260,7 @@ const TransactionSubmittedModal = ({visible, close, amount}) => {
     )
 }
 
-const RejectionModal = ({visible, close, amount}) => {
+const ConfirmationModal = ({visible, close, amount}) => {
     
     // const { connectOn, disconnect, active, loading } = useAuth()
   
@@ -286,6 +286,33 @@ const RejectionModal = ({visible, close, amount}) => {
                 </AddTokenWrapper>
                 <ButtonWrapper margin={"20px"}>
                     <Button onClick={close}>Close</Button>
+                </ButtonWrapper>
+                
+               
+            </FormWrapper>
+        </>
+    )
+}
+
+const PendingModal = ({visible, close, amount}) => {
+
+    return (
+        <>
+         <Backdrop visible={visible} onClick={close}></Backdrop>
+            <FormWrapper visible={visible}>
+                <ErrorText>Error</ErrorText>
+                <CloseIcon onClick={close}></CloseIcon>
+                <ImgWrapper padding={"25px"}>
+                    <AlertTriangle strokeWidth={1.5} size={'100px'} color={"red"} />
+                </ImgWrapper>
+                <TitleWrapper margin={"0"}>
+                    <SubTitle style={{"font-weight": "bold"}} color={"red"} size={"16px"} margin={"0"}>Transaction Failed</SubTitle>
+                </TitleWrapper>
+                <TitleWrapper margin={"5px"}>
+                    <SubTitle color={"White"} size={"20px"} margin={"0"}>Close this modal to try again</SubTitle>
+                </TitleWrapper>
+                <ButtonWrapper margin={"20px"}>
+                    <Button onClick={close}>Dismiss</Button>
                 </ButtonWrapper>
                 
                

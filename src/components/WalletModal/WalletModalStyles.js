@@ -5,7 +5,7 @@ export const FormWrapper = styled.div`
 
     position: fixed;
     top: 20%;
-    width: 420px;
+    width: 520px;
     height: 530px;
     background: rgb(14, 22, 39);
     text-align: right;
@@ -19,7 +19,7 @@ export const BridgeModalContainer = styled.div`
 
     position: absolute;
     top: 15%;
-    // width: 470px;
+    width: 470px;
     // height: 575px;
     background: rgb(14, 22, 39);
     text-align: right;
@@ -550,7 +550,7 @@ export const StatusText = styled.div`
     line-height: 20px;
     padding-left: 20px;
     // font-weight: bold;
-    padding-right: 100px;
+    // padding-right: 100px;
 `   
 
 export const CompletionTextWrapper = styled.div`

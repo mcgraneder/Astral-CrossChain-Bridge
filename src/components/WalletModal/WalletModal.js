@@ -22,6 +22,7 @@ import { Spacer } from "../TransactionModal/TransactionModalStyles";
 import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
 import { generate } from "shortid";
+import { CheckCircle } from "react-feather"
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -65,10 +66,12 @@ import { ArrowContainer12,
          ForumImg
 } from "./WalletModalStyles";
 import { getOwnBalance } from "../../hooks/useBalance";
+import { hash } from "immutable";
+import { CHAIN_IDS_TO_NAMES, SupportedChainId } from "../../constants/chains";
 export const MintForm = styled.div`
 
     margin-top: 10px;
-    margin-bottom: 20px;
+    // margin-bottom: -20px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
@@ -84,6 +87,45 @@ export const MintForm = styled.div`
         background:  rgb(34,43,68);
     }
 `
+
+export const Button1 = styled.div`
+
+  height: 50px;
+  width: 100%;
+  background: rgb(33,114,229);
+  border-radius: 15px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 17px;
+//   font-weight: bold;
+  color: White;
+
+  &:hover {
+
+    cursor: pointer;
+    background: rgb(13,94,209);
+}
+`
+
+export const ButtonWrapper1 = styled.div`
+
+font-family: 'Open Sans', sans-serif;
+   margin-top: 40px;
+   margin-bottom: 10px;
+//    margin-ledt: 10px;
+//    margin-right: 10px;
+    // padding: 10px;
+    // width: 100%;
+    // margin: 0 auto;
+    height: 30px;
+    // margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+` 
+
+
 const aId = generate()
 const unrankedId = generate();
 
@@ -109,6 +151,7 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
     const [errorTrue, setErrorTrue] = useState(false)
     // amount = text
     const [deposit, setDeposit] = React.useState();
+    console.log([SupportedChainId.MAINNET])
 
     // const addDeposit = React.useCallback(() => {
     //         setDeposit((deposits) =>
@@ -214,6 +257,21 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
 
     const { active, library, account } = useAuth()
 
+    useEffect(() => {
+
+        if(library) {
+
+        const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
+
+        const hash = localStorage.getItem("hash")
+        renContract.on("Approval", (from, to , value, hash) => console.log(from, to, value, hash))
+        let txn_test = library.getTransaction(hash).then((result) => {
+
+        console.log(result)
+
+        });
+        }
+    }, [library])
 
 
     const setToggleValue = () => {
@@ -302,7 +360,8 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
             const tx1 = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
             .then(async(result) => {
 
-                console.log(result)
+                console.log(result.hash)
+                localStorage.setItem("hash", result.hash)
                 setTransactionText("Approving")
 
                 await result.wait().then(() => {
@@ -418,6 +477,7 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
             const withdraw = await bridge1.transfer(account, amount, "BTC")
             .then(async (result) => {
 
+                
                 setTransactionText("Withdrawing RenBTC")
                 await result.wait().then(() => {
 
@@ -567,28 +627,35 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
                                 <MaxOption onClick={getMaxDeposit}>max</MaxOption>
                             </WalletInputWrapper>
                         </FromContainer>
-                        { loading && (<ArrowContainer>
+                        <ArrowContainer>
                             <ArrowLogoContainer>
                                 <ArrowLogo src={arrowDown}></ArrowLogo>
                             </ArrowLogoContainer>
-                        </ArrowContainer>)}
-                        { loading && (<SpinnerWrapper>
+                        </ArrowContainer>
+                        <SpinnerWrapper>
                                
-                            { approvalLoading && (<StatusTextWrapper>
+                            { !approvalLoading && (<StatusTextWrapper>
                                 <StatustTextIcon src={numberOne}/>
-                                <StatusText>Approval Status: {approvalText}...</StatusText>
-                                { !approvalFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
+                                <StatusText>Estimated Gas: 0.0001823 ETH</StatusText>
+                                {/* { approvalFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>} */}
                             </StatusTextWrapper>)}
                             { depositLoading && (<StatusTextWrapper>
                                 <StatustTextIcon src={numberTwo}/>
                                 <StatusText>Deposit Status: {depositText}...</StatusText>
                                 { !depositFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
                             </StatusTextWrapper>)}
-                            <CompletionTextContainer>
-                                {errorTrue ? <div style={{color: "red"}}>{error}</div> : <div>Transaction Status: {transactionText}...</div>}
-                            </CompletionTextContainer>
-                              
-                        </SpinnerWrapper>)}
+                              {/* <ArrowContainer>
+                            <ArrowLogoContainer>
+                                <ArrowLogo src={arrowDown}></ArrowLogo>
+                            </ArrowLogoContainer>
+                        </ArrowContainer> */}
+                              <ButtonWrapper1>
+                                  <Button1 onClick={handleDeposit}>Approve Token Deposit <CheckCircle/></Button1>
+                              </ButtonWrapper1>
+                              {/* <ButtonWrapper1> */}
+                                  {/* <Button1 onClick={handleDeposit}>Confirm RenBTC Deposit</Button1> */}
+                              {/* </ButtonWrapper1> */}
+                        </SpinnerWrapper>
                         <ButtonWrapper>
                             <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} click={inputText === "Withdraw " ? handleWithdraw : handleDeposit} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={inputText +  " " + text + " BTC" }></HomeConnectButton>
                         </ButtonWrapper>
