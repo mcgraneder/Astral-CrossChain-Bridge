@@ -239,7 +239,15 @@ const WalletModal = ({setShow, visible, close}) => {
 
       useEffect(() => {
 
-        beginDeposit()
+        if(inputText === "Deposit ") {
+
+            console.log(true)
+            beginDeposit()
+        } else {
+
+            setSufficentApproval(true)
+        }
+        
       }, [text])
 
     const addPendingDeposit = async(text) => {
@@ -259,19 +267,7 @@ const WalletModal = ({setShow, visible, close}) => {
     }
 
 
-    const setToggleValue = () => {
-
-        setToggle(!toggle);
-        if(!toggle) {
-            // setText("Deposit")
-            setInputText("Deposit ")
-
-        } else {
-            // setText("Withdraw")
-            setInputText("Withdraw ")
-
-        }
-    }
+   
 
     const setDropdownValue = () => {
 
@@ -323,7 +319,7 @@ const WalletModal = ({setShow, visible, close}) => {
             var allowance = await ren.allowance(account, BridgeAddress)
             allowance = Web3.utils.fromWei(allowance.toString(), "Gwei")
 
-        //    console.log(amount, allowance)
+           console.log(amount, allowance)
             if(Number(amount) > Number(allowance)) {
 
                 setSufficentApproval(false)
@@ -368,6 +364,23 @@ const WalletModal = ({setShow, visible, close}) => {
 
         console.log(sufficentApproval)
 
+    }
+
+    const setToggleValue = () => {
+
+        setToggle(!toggle);
+        setText(text)
+        if(!toggle) {
+            // setText("Deposit")
+            setInputText("Deposit ")
+            beginDeposit()
+
+        } else {
+            // setText("Withdraw")
+            setInputText("Withdraw ")
+            setSufficentApproval(true)
+
+        }
     }
 
     const beginTransactionProcess = () => {
@@ -438,6 +451,8 @@ const WalletModal = ({setShow, visible, close}) => {
         //     ...deposits
         //   ]);
 
+        setConfirm(false)
+        setPending1(true)
         addPendingDeposit(text)
         
         if(text === "") return
@@ -448,8 +463,12 @@ const WalletModal = ({setShow, visible, close}) => {
         
         try {
            
-            const tx2 = await bridge.transferFrom(account, RenAddress, amount, "BTC")
+            const tx2 = await bridge.transferFrom(account, BridgeAddress, amount, "BTC")
             .then(async(result) => {
+
+                setPending1(false)
+                setSubmitted(true)
+                // setText("")
 
                 await result.wait().then(() => {
 
@@ -458,6 +477,7 @@ const WalletModal = ({setShow, visible, close}) => {
                         console.log(balance)
                         const n = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(n)
+                      
                     });
                 })
             })
@@ -466,6 +486,8 @@ const WalletModal = ({setShow, visible, close}) => {
         } catch(error) {
 
             clearAllStates()
+            setRejected(true)
+
             if (error.code == 4001) {
 
                 setError("User denied transaction!")
@@ -482,6 +504,10 @@ const WalletModal = ({setShow, visible, close}) => {
 
     const handleWithdraw = async() => {
 
+        setConfirm(false)
+        setPending1(true)
+        addPendingDeposit(text)
+
         if(text === "") return
         var walletBalance = await bridge.getContractTokenbalance("BTC")
         walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
@@ -493,6 +519,10 @@ const WalletModal = ({setShow, visible, close}) => {
             const withdraw = await bridge.transfer(account, amount, "BTC")
             .then(async (result) => {
 
+                setPending1(false)
+                setSubmitted(true)
+                // setText("")
+
                 await result.wait().then(() => {
 
                     bridge.getContractTokenbalance("BTC")
@@ -500,12 +530,16 @@ const WalletModal = ({setShow, visible, close}) => {
                         console.log(balance)
                         const n = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(n)
+                
                     });
                 })
     
             });
 
         } catch(error) {
+
+            clearAllStates()
+            setRejected(true)
 
             if (error.code == 4001) {
 
@@ -517,6 +551,18 @@ const WalletModal = ({setShow, visible, close}) => {
             }
         }
       
+    }
+
+    const a = () => {
+
+        setSubmitted(!submitted)
+        
+        setTimeout(() => {
+
+            setText("")
+
+        }, 300)
+       
     }
 
     return (
@@ -535,7 +581,7 @@ const WalletModal = ({setShow, visible, close}) => {
                 handleDeposit={handleApproval}
             />
             <TransactionSubmittedModal
-                close={() => setSubmitted(!submitted)} 
+                close={() => a()} 
                 amount={amount} 
                 visible={submitted}
             />

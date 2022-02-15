@@ -64,46 +64,18 @@ export const Logo1 = styled.div`
    
 `;
 
-const Button = ({ state, active, close, color, fontsize, height, left, top, onclick, width, text}) => {
+const Button = ({ state, active, height, click, width, text}) => {
 
     var logo
     var width1;
     var width2;
-   
-
-    if(localStorage.getItem("provider") === "injected") {
-        logo = metamask;
-        width1=40
-        width2=22
-    }
-    if(localStorage.getItem("provider") === "walletconnect") {
-        logo = walletConnect;
-        width1=40
-        width2=22
-    }
-    if(localStorage.getItem("provider") === "fortmatic") {
-        logo = fortmatic;
-        width1=32
-        width2=20
-    }
-    if(localStorage.getItem("provider") === "portis") {
-        logo = portis;
-        width1=32
-        width2=18
-    }
-    if(localStorage.getItem("provider") === "torus") {
-        logo = torus;
-        width1=32
-        width2=20
-    }
-
 
 
     return (
 
         <>
 
-            <NavButton2  state={state} width={width} height={height} active={active} color={"rgb(23,42,66)"} >{text}</NavButton2>
+            <NavButton2  state={state} width={width} height={height} active={active} color={"rgb(23,42,66)"} onClick={click} >{text}</NavButton2>
            
         </>
     )

@@ -218,7 +218,7 @@ export const TokenAmountWrapper = styled.div`
 export const ArrowDownContainer = styled.div`
 
     position: absolute;
-    top: 35%;
+    top: 23.5%;
     left: 46%;
     // color: White;
     background: White;
