@@ -10,7 +10,36 @@ import coinbase from "../assets/coinbase.svg"
 import fortmatic from "../assets/fortmatic.svg"
 import torus from "../assets/torus.svg"
 import portis from "../assets/portis.svg"
-import { NavButton2 } from "../Home/HomeConnectButtonStyles"
+
+
+export const NavButton2 = styled.div`
+
+    
+    display: inline;
+    background: ${(props) => props.state ? "rgb(33,114,229);" : " rgb(48,58,78)"};
+    width: ${(props) => props.width};
+    border-radius: 18px;
+    height: ${(props) => props.height};
+    text-align: center;
+    line-height: ${(props) => props.height};
+    color:  White;
+    margin-left: ${(props) => props.active ? "7px" : "0px"};
+    margin-right: ${(props) => props.active ? "7px" : "0px"};
+    font-weight: bold;
+
+    // border: 1px solid rgb(3,184,189);
+
+    &:hover {
+
+        cursor:  ${(props) => props.state ? "pointer" : "auto"};
+        // border: 1px solid rgb(75,135,220);
+        background: ${(props) => props.state ? "rgb(13,94,209);" : " rgb(38,58,88)"};
+        // color: rgb(23,42,66);
+       
+    }
+
+
+`
 
 export const Logo1 = styled.div`
 
@@ -35,7 +64,7 @@ export const Logo1 = styled.div`
    
 `;
 
-const Button = ({ active, close, color, fontsize, height, left, top, onclick, width, text}) => {
+const Button = ({ state, active, close, color, fontsize, height, left, top, onclick, width, text}) => {
 
     var logo
     var width1;
@@ -74,7 +103,7 @@ const Button = ({ active, close, color, fontsize, height, left, top, onclick, wi
 
         <>
 
-            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} >{text}</NavButton2>
+            <NavButton2  state={state} width={width} height={height} active={active} color={"rgb(23,42,66)"} >{text}</NavButton2>
            
         </>
     )

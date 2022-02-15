@@ -23,6 +23,7 @@ import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
 import { generate } from "shortid";
 import { CheckCircle } from "react-feather"
+import { PendingModal, RejectionModal, TransactionSubmittedModal, ConfirmationModal} from "../TransactionConfirmationModal/PendingModal"
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -66,8 +67,12 @@ import { ArrowContainer12,
          ForumImg
 } from "./WalletModalStyles";
 import { getOwnBalance } from "../../hooks/useBalance";
-import { hash } from "immutable";
+import { hash, set } from "immutable";
 import { CHAIN_IDS_TO_NAMES, SupportedChainId } from "../../constants/chains";
+import TransactionProcess from "../TransactionConfirmationModal/PendingModal";
+import { clear } from "@testing-library/user-event/dist/clear";
+import useBalance from "../../hooks/useBalance";
+import { ArrowRight, ArrowUpCircle } from "react-feather"
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -128,77 +133,41 @@ font-family: 'Open Sans', sans-serif;
 
 const aId = generate()
 const unrankedId = generate();
+const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
+const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
+
+const WalletModal = ({setShow, visible, close}) => {
 
 
-const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setPending}) => {
+    // useEffect(() => {
 
+    //     if(library) {
+
+    //     const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
+
+    //     const hash = localStorage.getItem("hash")
+    //     renContract.on("Approval", (from, to , value, hash) => console.log(from, to, value, hash))
+    //     let txn_test = library.getTransaction(hash).then((result) => {
+
+    //     console.log(result)
+
+    //     });
+    //     }
+    // }, [library])
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
     const [text, setText] = useState("")
     const [inputText, setInputText] = useState("Deposit")
-    const [ren1, setRen1] = useState()
-    const [bridge, setBridge] = useState()
-    // const [balance, setBalance] = useState(0);
     const [error, setError] = useState("")
-    const [loading, setLoading] = useState(false)
-    const [approvalLoading, setApprovalLoading] = useState(false);
-    const [depositLoading, setDepositLoading] = useState(false);
-    const [approvalText, setApprovalText] = useState("")
-    const [depositText, setDepositText] = useState("")
-    const [transactionText, setTransactionText] = useState("")
-    const [approvalFinished, setApprovalFinished] = useState(false)
-    const [depositFinished, setDepositFinished] = useState(false)
-    const [errorTrue, setErrorTrue] = useState(false)
-    // amount = text
-    const [deposit, setDeposit] = React.useState();
-    console.log([SupportedChainId.MAINNET])
-
-    // const addDeposit = React.useCallback(() => {
-    //         setDeposit((deposits) =>
-    //             deposits.get(txHash)
-    //                 ? deposits
-    //                 : deposits.set(txHash, {
-    //                       type: "MINT",
-    //                       deposit: deposit,
-    //                       status: DepositStatus.DETECTED,
-    //                   })
-    //         );
-    //     },
-    //     [setDeposits]
-    // );
-
-    // const updateDeposit = React.useCallback(() => {
-    //         setDeposit((deposits) => {
-    //             const currentDeposit = deposits.get(txHash);
-    //             if (!currentDeposit) {
-    //                 return deposits;
-    //             }
-    //             if (currentDeposit.type === "MINT") {
-    //                 if (newDetails.status === DepositStatus.DONE) {
-    //                     updateBalance(
-    //                         currentDeposit.deposit.params.asset
-    //                     );
-    //                 }
-    //                 return deposits.set(txHash, {
-    //                     ...currentDeposit,
-    //                     ...newDetails,
-    //                 });
-    //             } else {
-    //                 if (newDetails.status === BurnStatus.BURNT) {
-    //                     updateBalance(
-    //                         currentDeposit.burn.params.asset
-    //                     );
-    //                 }
-    //                 return deposits.set(txHash, {
-    //                     ...currentDeposit,
-    //                     ...newDetails,
-    //                 });
-    //             }
-    //         });
-    //     },
-    //     [setDeposits, updateBalance]
-    // );
-
+    const [confirm, setConfirm] = useState(false)
+    const [pending1, setPending1] = useState(false)
+    const [submitted, setSubmitted] = useState(false)
+    const [rejected, setRejected] = useState(false)
+    const [amount, setAmount] = useState()
+    const [ren, setRen] = useState()
+    const [bridge, setBridge] = useState()
+    const [gas, setGas] = useState(0)
+    const [sufficentApproval, setSufficentApproval] = useState(true)
 
     const [pendingDeposits, setPendingDeposits] = React.useState([
         {
@@ -211,8 +180,6 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
         }
       ]);
 
-      console.log(pendingDeposits[0].id)
-
     const [deposits, setDeposits] = React.useState([
         {
             id: unrankedId,
@@ -221,9 +188,37 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
             time: "Date"
           }
       ]);
+
+      const { library, account, active } = useAuth()
+      const { balance, setBalance } = useBalance()
+
+      useEffect(() => {
+
+            if(library) {
+
+                const bridgeContract = getContract(
+                    BridgeAddress, 
+                    abi, 
+                    library,
+                    account)
+                ;
+                const renContract = getContract(
+                    RenAddress, 
+                    abi2, 
+                    library, 
+                    account)
+                ;
+
+                setRen(renContract)
+                setBridge(bridgeContract)
+            }
+      }, [library, setRen, setBridge])
+
     
       React.useEffect(() => {
+
         const depositData = localStorage.getItem("deposits");
+
         if (depositData) {
           setDeposits(JSON.parse(depositData));
         }
@@ -232,12 +227,20 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
         if (pendingDepositData) {
           setPendingDeposits(JSON.parse(pendingDepositData));
         }
+
       }, []);
     
       React.useEffect(() => {
+
         localStorage.setItem("deposits", JSON.stringify(deposits));
         localStorage.setItem("pending-deposits", JSON.stringify(pendingDeposits));
+
       });
+
+      useEffect(() => {
+
+        beginDeposit()
+      }, [text])
 
     const addPendingDeposit = async(text) => {
 
@@ -246,32 +249,14 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
               id: generate(),
               from: account,
               amount: Number(text),
-              approved: false,
+              confirmed: false,
               status: "DETECTED",
               time: 5
             },
+            ...pendingDeposits
           ]);
 
     }
-    
-
-    const { active, library, account } = useAuth()
-
-    useEffect(() => {
-
-        if(library) {
-
-        const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-
-        const hash = localStorage.getItem("hash")
-        renContract.on("Approval", (from, to , value, hash) => console.log(from, to, value, hash))
-        let txn_test = library.getTransaction(hash).then((result) => {
-
-        console.log(result)
-
-        });
-        }
-    }, [library])
 
 
     const setToggleValue = () => {
@@ -292,7 +277,7 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
 
         setDropDownActive(!dropDownActive);
     }
-    console.log(text)
+    // console.log(text)
 
     const setDropdownValue3 = () => {
 
@@ -306,242 +291,13 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
         }
     };
 
-    const handleDeposit = async() => {
-
-        togglePending()
-        setDeposits([
-            {
-              id: generate(),
-              label: "",
-              urls: []
-            },
-            ...deposits
-          ]);
-
-        addPendingDeposit(text)
-        const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
-        const ren1 = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-
-        if(text === "") return
-        var walletBalance = await ren1.balanceOf(account)
-        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
-        const amount = Web3.utils.toWei(text.toString(), "Gwei")
-        console.log( amount)
-        console.log(walletBalance)
-
-        if(amount > walletBalance || amount == 0) {
-
-            setLoading(true)
-            setErrorTrue(true)
-            setError("insufficient balance")
-            setTimeout(() => {
-
-                setLoading(false)
-                setLoading(false)
-                setDepositLoading(false)
-                setApprovalLoading(false)
-                setApprovalFinished(false)
-                setDepositFinished(false)
-                setErrorTrue(false)
-
-            }, 4000)
-            console.log("hey")
-            return
-        }
-        
-       
-        setLoading(true)
-        setApprovalLoading(true)
-        setDepositLoading(false)
-        setApprovalText("Pending")
-        setTransactionText("Awaiting Approval")
-        try {
-
-            const tx1 = await ren1.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
-            .then(async(result) => {
-
-                console.log(result.hash)
-                localStorage.setItem("hash", result.hash)
-                setTransactionText("Approving")
-
-                await result.wait().then(() => {
-
-                    setApprovalText("Complete")
-                    setApprovalFinished(true)
-                    setDepositLoading(true)
-                    setDepositText("Pending")
-                    setTransactionText("Awaiting Deposit")
-                })
-            });
-            // const txReceipt = await tx1.wait()
-           
-
-            console.log(amount)
-            const tx2 = await bridge.transferFrom(account, "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount, "BTC")
-            .then(async(result) => {
-                setTransactionText("Depositing RenBTC");
-
-                await result.wait().then(() => {
-
-                    bridge.getContractTokenbalance("BTC")
-                    .then((balance) => {
-                        console.log(balance)
-                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                        setBalance(n)
-                        setDepositText("Complete")
-                        setDepositFinished(true)
-                        setTransactionText("Deposit Successful")
-
-                        setTimeout(() => {
-
-                            setLoading(false)
-                            setDepositLoading(false)
-                            setApprovalLoading(false)
-                            setApprovalFinished(false)
-                            setDepositFinished(false)
-                        }, 3000)
-                    });
-                })
-            })
-
-            
-        } catch(error) {
-
-            setPending(false)
-            setErrorTrue(true)
-            console.error(error)
-            if (error.code == 4001) {
-
-                setError("User denied transaction!")
-
-            } else {
-
-                setError(error.message)
-            }
-            
-            console.log(error)
-            setTimeout(() => {
-
-                setLoading(false)
-                setLoading(false)
-                setDepositLoading(false)
-                setApprovalLoading(false)
-                setApprovalFinished(false)
-                setDepositFinished(false)
-                setErrorTrue(false)
-
-            }, 4000)
-            
-        }
-
-
-    }
-
-    const handleWithdraw = async() => {
-
-        const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
-        const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-
-        if(text === "") return
-        var walletBalance = await bridge1.getContractTokenbalance("BTC")
-        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
-        const amount = Web3.utils.toWei(text.toString(), "Gwei")
-        
-        if(amount > walletBalance || amount == 0) {
-
-            setLoading(true)
-            setErrorTrue(true)
-            setError("insufficient balance")
-            setTimeout(() => {
-
-                setLoading(false)
-                setLoading(false)
-                setDepositLoading(false)
-                setApprovalLoading(false)
-                setApprovalFinished(false)
-                setDepositFinished(false)
-                setErrorTrue(false)
-
-            }, 4000)
-            console.log("hey")
-            return
-        }
-        
-        setLoading(true)
-        setDepositLoading(true)
-        setDepositText("Pending")
-        setTransactionText("Awaiting Withdrawal")
-
-        try {
-
-            const withdraw = await bridge1.transfer(account, amount, "BTC")
-            .then(async (result) => {
-
-                
-                setTransactionText("Withdrawing RenBTC")
-                await result.wait().then(() => {
-
-                    setDepositFinished(true)
-                    setDepositText("Complete")
-
-                    bridge1.getContractTokenbalance("BTC")
-                    .then((balance) => {
-                        console.log(balance)
-                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                        setBalance(n)
-                        setTransactionText("Withdrawal Successful")
-                        
-                        setTimeout(() => {
-
-                            setLoading(false)
-                            setDepositLoading(false)
-                            setApprovalLoading(false)
-                            setApprovalFinished(false)
-                            setDepositFinished(false)
-                        }, 4000)
-                    });
-                })
-    
-            });
-
-        } catch(error) {
-
-            setErrorTrue(true)
-            console.error(error)
-            if (error.code == 4001) {
-
-                setError("User denied transaction!")
-
-            } else {
-
-                setError(error.message)
-            }
-            
-            console.log(error)
-            setTimeout(() => {
-
-                setLoading(false)
-                setLoading(false)
-                setDepositLoading(false)
-                setApprovalLoading(false)
-                setApprovalFinished(false)
-                setDepositFinished(false)
-                setErrorTrue(false)
-
-            }, 4000)
-        }
-      
-    }
-
     const getMaxDeposit = async() => {
 
-        const bridge1 = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
-        const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-
         console.log(inputText)
-        var walletBalance = await renContract.balanceOf(account)
+        var walletBalance = await ren.balanceOf(account)
         walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
         setText(walletBalance)
+        setAmount(walletBalance)
         if(inputText === "Deposit ") {
 
             
@@ -550,7 +306,7 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
 
         } else if (inputText === "Withdraw ") {
 
-            var walletBalance = await bridge1.getContractTokenbalance("BTC")
+            var walletBalance = await bridge.getContractTokenbalance("BTC")
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
             console.log(text)
@@ -560,21 +316,234 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
 
     }
 
-    const getGas = async(e) => {
+    const getAllowance = async(amount) => {
 
-        setText(e.target.value)
-        setAmount(Number(e.target.value))
-        const bridge = getContract("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", abi, library, account);
+        try {
 
-        const gas = await bridge.estimateGas.transferFrom(account, "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", 2000, "BTC")
-        const n = Web3.utils.fromWei(gas.toString(), "Gwei")
-        console.log(n)
+            var allowance = await ren.allowance(account, BridgeAddress)
+            allowance = Web3.utils.fromWei(allowance.toString(), "Gwei")
+
+        //    console.log(amount, allowance)
+            if(Number(amount) > Number(allowance)) {
+
+                setSufficentApproval(false)
+            } else {
+
+                setSufficentApproval(true)
+            }
+
+            return allowance
+
+        } catch (error) {
+
+            setSufficentApproval(true)
+            console.error(error)
+        }
+
+    }
+
+    const getGas = async() => {
+
+        try {
+
+            const gas = await ren.estimateGas.approve(account, BridgeAddress)
+            const n = Web3.utils.fromWei(gas.toString(), "Gwei")
+            setGas(n)
+
+            return gas
+
+        } catch(error) {
+
+            console.error(error)
+        }
        
+    }
+
+    const beginDeposit = () => {
+
+        console.log(text)
+
+        const allowance = getAllowance(text)
+        const gas = getGas()
+
+        console.log(sufficentApproval)
+
+    }
+
+    const beginTransactionProcess = () => {
+
+        clearAllStates()
+        setConfirm(true)
+        close()
+    }
+
+    const clearAllStates = () => {
+
+        setPending1(false)
+        setConfirm(false)
+        setSubmitted(false)
+        setRejected(false)
+    }
+
+    const handleApproval = async() => {
+
+        setConfirm(false)
+        setPending1(true)
+        addPendingDeposit(text)
+
+        if(text === "") return
+        var walletBalance = await ren.balanceOf(account)
+        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+        const amount = Web3.utils.toWei(text.toString(), "Gwei")
+       
+        try {
+
+            const tx1 = await ren.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
+            .then(async(result) => {
+
+                setPending1(false)
+                setSubmitted(true)
+                await result.wait().then(() => {
+
+                    beginDeposit()
+                })
+            });
+        
+        } catch (error) {
+
+            clearAllStates()
+            setRejected(true)
+            
+        
+            if (error.code == 4001) {
+
+                setError("User denied transaction!")
+
+            } else {
+
+                setError(error.message)
+            }
+
+        }
+    }
+    const handleDeposit = async() => {
+
+        // // togglePending()
+        // setDeposits([
+        //     {
+        //       id: generate(),
+        //       label: "",
+        //       urls: []
+        //     },
+        //     ...deposits
+        //   ]);
+
+        addPendingDeposit(text)
+        
+        if(text === "") return
+
+        var walletBalance = await ren.balanceOf(account)
+        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+        const amount = Web3.utils.toWei(text.toString(), "Gwei")
+        
+        try {
+           
+            const tx2 = await bridge.transferFrom(account, RenAddress, amount, "BTC")
+            .then(async(result) => {
+
+                await result.wait().then(() => {
+
+                    bridge.getContractTokenbalance("BTC")
+                    .then((balance) => {
+                        console.log(balance)
+                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        setBalance(n)
+                    });
+                })
+            })
+
+            
+        } catch(error) {
+
+            clearAllStates()
+            if (error.code == 4001) {
+
+                setError("User denied transaction!")
+
+            } else {
+
+                setError(error.message)
+            }
+            
+        }
+
+
+    }
+
+    const handleWithdraw = async() => {
+
+        if(text === "") return
+        var walletBalance = await bridge.getContractTokenbalance("BTC")
+        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+        const amount = Web3.utils.toWei(text.toString(), "Gwei")
+        
+
+        try {
+
+            const withdraw = await bridge.transfer(account, amount, "BTC")
+            .then(async (result) => {
+
+                await result.wait().then(() => {
+
+                    bridge.getContractTokenbalance("BTC")
+                    .then((balance) => {
+                        console.log(balance)
+                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        setBalance(n)
+                    });
+                })
+    
+            });
+
+        } catch(error) {
+
+            if (error.code == 4001) {
+
+                setError("User denied transaction!")
+
+            } else {
+
+                setError(error.message)
+            }
+        }
+      
     }
 
     return (
 
         <>
+       
+            <PendingModal 
+                close={() => setPending1(!pending1)} 
+                amount={amount} 
+                visible={pending1}
+            />
+            <ConfirmationModal
+                close={() => setConfirm(!confirm)} 
+                amount={amount} 
+                visible={confirm}
+                handleDeposit={handleApproval}
+            />
+            <TransactionSubmittedModal
+                close={() => setSubmitted(!submitted)} 
+                amount={amount} 
+                visible={submitted}
+            />
+            <RejectionModal
+                close={() => setRejected(!rejected)} 
+                amount={amount} 
+                visible={rejected}
+            />
         <StyledContainer onClick={() => setDropdownValue3()}>
             
             <BridgeModalContainer>
@@ -620,44 +589,64 @@ const WalletModal = ({close, balance, setBalance, setAmount, togglePending, setP
                     <MintFormWrapper>
                         <FromContainer>
                             <WalletInputWrapper>
-                                <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  value={text} onChange={getGas} placeholder="amount"></WalletInput>
+                                <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  value={text} onChange={(e) => setText(e.target.value)} placeholder="amount"></WalletInput>
                                 <ForumIcon>
                                     <ForumImg src={walletIcon}></ForumImg>
                                 </ForumIcon>
                                 <MaxOption onClick={getMaxDeposit}>max</MaxOption>
                             </WalletInputWrapper>
                         </FromContainer>
-                        <ArrowContainer>
+                        {text != "" && <ArrowContainer>
                             <ArrowLogoContainer>
                                 <ArrowLogo src={arrowDown}></ArrowLogo>
                             </ArrowLogoContainer>
-                        </ArrowContainer>
-                        <SpinnerWrapper>
+                        </ArrowContainer>}
+                        {text != "" && <SpinnerWrapper>
                                
-                            { !approvalLoading && (<StatusTextWrapper>
-                                <StatustTextIcon src={numberOne}/>
+                           {!sufficentApproval && 
+                           <StatusTextWrapper>
+                                <StatusText>You need to approve this deposit first</StatusText>
+                            </StatusTextWrapper>}
+                            {!sufficentApproval && 
+                            <StatusTextWrapper>
+                                <ArrowRight size={"20px"} color={"rgb(33,114,229)"}></ArrowRight>
                                 <StatusText>Estimated Gas: 0.0001823 ETH</StatusText>
-                                {/* { approvalFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>} */}
-                            </StatusTextWrapper>)}
-                            { depositLoading && (<StatusTextWrapper>
+                            </StatusTextWrapper>}
+                            {sufficentApproval && 
+                           <StatusTextWrapper>
+                               <ArrowUpCircle size={"20px"} color={"rgb(33,114,229)"}/>
+                                <StatusText>Confrim Deposit of {text} RenBTC</StatusText>
+                            </StatusTextWrapper>}
+                            {sufficentApproval && 
+                            <StatusTextWrapper>
+                                <ArrowRight size={"20px"} color={"rgb(33,114,229)"}></ArrowRight>
+                                <StatusText>Estimated Gas: 0.0001823 ETH</StatusText>
+                            </StatusTextWrapper>}
+                            {sufficentApproval && 
+                            <StatusTextWrapper>
+                                <ArrowRight size={"20px"} color={"rgb(33,114,229)"}></ArrowRight>
+                                <StatusText>Bridge Fee: 0.0001 ETH</StatusText>
+                            </StatusTextWrapper>}
+                            {/* { depositLoading && (<StatusTextWrapper>
                                 <StatustTextIcon src={numberTwo}/>
                                 <StatusText>Deposit Status: {depositText}...</StatusText>
                                 { !depositFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
-                            </StatusTextWrapper>)}
+                            </StatusTextWrapper>)} */}
                               {/* <ArrowContainer>
                             <ArrowLogoContainer>
                                 <ArrowLogo src={arrowDown}></ArrowLogo>
                             </ArrowLogoContainer>
                         </ArrowContainer> */}
+                         {!sufficentApproval && 
                               <ButtonWrapper1>
-                                  <Button1 onClick={handleDeposit}>Approve Token Deposit <CheckCircle/></Button1>
-                              </ButtonWrapper1>
+                                  <Button1 onClick={beginTransactionProcess}>Approve Token Deposit <CheckCircle/></Button1>
+                              </ButtonWrapper1>}
                               {/* <ButtonWrapper1> */}
                                   {/* <Button1 onClick={handleDeposit}>Confirm RenBTC Deposit</Button1> */}
                               {/* </ButtonWrapper1> */}
-                        </SpinnerWrapper>
+                        </SpinnerWrapper>}
                         <ButtonWrapper>
-                            <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} click={inputText === "Withdraw " ? handleWithdraw : handleDeposit} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={inputText +  " " + text + " BTC" }></HomeConnectButton>
+                            <Button state={sufficentApproval} width={"440px"} active={active} left={"82%"} top={"31%"} close={close} click={inputText === "Withdraw " ? handleWithdraw : handleDeposit} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={sufficentApproval ? ( inputText +  " " + text + " BTC") : "Approve token spend first" }></Button>
                         </ButtonWrapper>
                     </MintFormWrapper>
                     

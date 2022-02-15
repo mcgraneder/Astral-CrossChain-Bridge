@@ -3,7 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
 import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
 // import { walletconnect } from "web3modal/dist/providers/connectors";
-import {X, ArrowUpCircle, AlertTriangle} from "react-feather"
+import {X, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
 import metaMask from "../assets/metamask.png"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 
@@ -18,16 +18,16 @@ export const FormWrapper = styled.div`
     // height: 30px;
     opacity: 0;
     background-color: rgb(27,32,52);
-    padding: 30px 20px;
+    padding: 35px 20px;
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 20px;
     pointer-events: none;
-    transition: opacity 0.3s ease-in-out !important;
+    transition: ${(props) => props.trueFade ? "opacity 0.3s ease-in-out !important;": "none"};
     ${(props) => props.visible && css`
         z-index: 10000;
         opacity: 1;
         pointer-events: all;
-        transition: opacity 0.3s ease-in-out !important;
+        transition: ${(props) => props.trueFade ? "opacity 0.3s ease-in-out !important;": "none"};
     `}
 
 `
@@ -50,18 +50,18 @@ export const Backdrop = styled.div`
     width: 100vw;
     opacity: 0;
     pointer-events: none;
-    backdrop-filter: blur(2px);
-    background: #23233999;
-background: -webkit-linear-gradient(top, #23233999, #040717);
-background: -moz-linear-gradient(top, #23233999, #040717);
-background: linear-gradient(to bottom, #23233999, #040717);
-    transition: opacity 0.2s ease-in-out !important;
+    backdrop-filter: blur(3px);
+    background: rgba(2,8,26, 0.3);
+// background: -webkit-linear-gradient(top, #23233999, #040717);
+// background: -moz-linear-gradient(top, #23233999, #040717);
+// background: linear-gradient(to bottom, rgba(112,128,136, 0.1), rgba(2,8,26, 0.75));
+transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
     z-index: 10000;
     ${(props) => props.visible && css`
 
         opacity: 1;
         pointer-events: all;
-        transition: opacity 0.03s ease-in-out !important;
+        transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
     `}
 
    
@@ -204,7 +204,35 @@ export const ErrorText = styled.div`
   font-size: 22px;
 `
 
-const RejectionModal = ({visible, close, amount}) => {
+export const TokenAmountWrapper = styled.div`
+
+    width: 100%;
+    height: ${(props) => props.height};
+    background: rgb(14,22,39);
+    border-radius: 15px;
+    border: 1px solid rgb(41, 50, 67);
+    margin-top: ${(props) => props.marginTop};
+    // margin-bottom: 10px;
+
+`
+export const ArrowDownContainer = styled.div`
+
+    position: absolute;
+    top: 35%;
+    left: 46%;
+    // color: White;
+    background: White;
+    background-color:rgb(14,22,39);
+    border: 5px solid  rgb(27,32,52);
+    border-radius: 10px;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const RejectionModal = ({visible, close, amount}) => {
     
     // const { connectOn, disconnect, active, loading } = useAuth()
   
@@ -213,8 +241,8 @@ const RejectionModal = ({visible, close, amount}) => {
    
     return (
         <>
-         <Backdrop visible={visible} onClick={close}></Backdrop>
-            <FormWrapper visible={visible}>
+         <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
+            <FormWrapper visible={visible} trueFade={false}>
                 <ErrorText>Error</ErrorText>
                 <CloseIcon onClick={close}></CloseIcon>
                 <ImgWrapper padding={"25px"}>
@@ -236,12 +264,12 @@ const RejectionModal = ({visible, close, amount}) => {
     )
 }
 
-const TransactionSubmittedModal = ({visible, close, amount}) => {
+export const PendingModal = ({visible, close, amount}) => {
 
     return (
         <>
-         <Backdrop visible={visible} onClick={close}></Backdrop>
-            <FormWrapper visible={visible}>
+         <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
+            <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
                 <ImgWrapper padding={"50px"}>
                     <CustomLightSpinner src={Circle} size={"90px"}></CustomLightSpinner>
@@ -260,7 +288,7 @@ const TransactionSubmittedModal = ({visible, close, amount}) => {
     )
 }
 
-const ConfirmationModal = ({visible, close, amount}) => {
+export const TransactionSubmittedModal = ({visible, close, amount}) => {
     
     // const { connectOn, disconnect, active, loading } = useAuth()
   
@@ -269,8 +297,8 @@ const ConfirmationModal = ({visible, close, amount}) => {
    
     return (
         <>
-         <Backdrop visible={visible} onClick={close}></Backdrop>
-            <FormWrapper visible={visible}>
+         <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
+            <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
                 <ImgWrapper padding={"25px"}>
                     <ArrowUpCircle strokeWidth={0.5} size={'100px'} color={"rgb(33,114,229)"} />
@@ -294,25 +322,34 @@ const ConfirmationModal = ({visible, close, amount}) => {
     )
 }
 
-const PendingModal = ({visible, close, amount}) => {
+export const ConfirmationModal = ({visible, close, amount, handleDeposit}) => {
 
     return (
         <>
-         <Backdrop visible={visible} onClick={close}></Backdrop>
-            <FormWrapper visible={visible}>
-                <ErrorText>Error</ErrorText>
+         <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
+            <FormWrapper visible={visible} trueFade={true}>
+                <ErrorText>Confirm Transaction</ErrorText>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"25px"}>
-                    <AlertTriangle strokeWidth={1.5} size={'100px'} color={"red"} />
-                </ImgWrapper>
-                <TitleWrapper margin={"0"}>
-                    <SubTitle style={{"font-weight": "bold"}} color={"red"} size={"16px"} margin={"0"}>Transaction Failed</SubTitle>
+                <ArrowDownContainer>
+                    <ArrowDown color={"White"} size={"15px"}/>
+                </ArrowDownContainer>
+                <TokenAmountWrapper height={"65px"} marginTop={"40px"}>
+
+                </TokenAmountWrapper>
+                <TokenAmountWrapper height={"65px"} marginTop={"7px"}>
+
+                </TokenAmountWrapper>
+                <TitleWrapper margin={"10px"}>
+                    <SubTitle style={{"font-weight": "bold"}} color={"White"} size={"16px"} margin={"0"}>1 RenBTC = $43,647.47</SubTitle>
                 </TitleWrapper>
-                <TitleWrapper margin={"5px"}>
-                    <SubTitle color={"White"} size={"20px"} margin={"0"}>Close this modal to try again</SubTitle>
+                <TokenAmountWrapper height={"110px"} marginTop={"15px"}>
+
+                </TokenAmountWrapper>
+                <TitleWrapper margin={"0px"}>
+                    <SubTitle style={{"font-weight": "bold"}} color={"White"} size={"12px"} margin={"0"}>Output is estimated. You will receive at least 16.9807 DAI or the transaction will revert.</SubTitle>
                 </TitleWrapper>
-                <ButtonWrapper margin={"20px"}>
-                    <Button onClick={close}>Dismiss</Button>
+                <ButtonWrapper margin={"0px"}>
+                    <Button onClick={handleDeposit}>Confirm Transaction</Button>
                 </ButtonWrapper>
                 
                
@@ -321,4 +358,48 @@ const PendingModal = ({visible, close, amount}) => {
     )
 }
 
-export default PendingModal;
+const TransactionProcess = (
+    {
+        confirm, 
+        pending, 
+        submitted, 
+        rejected, 
+        visible, 
+        close, 
+        amount,
+        handleDeposit
+    }
+) => {
+
+
+    return (
+
+        <>
+            {pending && <PendingModal 
+                close={close} 
+                amount={amount} 
+                visible={visible}
+            />}
+            {confirm && <ConfirmationModal
+                close={close} 
+                amount={amount} 
+                visible={visible}
+                handleDeposit={handleDeposit}
+            />}
+            {submitted && <TransactionSubmittedModal
+                close={close} 
+                amount={amount} 
+                visible={visible}
+            />}
+            {rejected && <RejectionModal
+                close={close} 
+                amount={amount} 
+                visible={visible}
+            />}
+        
+        </>
+    )
+}
+
+
+export default TransactionProcess;
