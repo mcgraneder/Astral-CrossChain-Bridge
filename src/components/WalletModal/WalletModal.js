@@ -76,6 +76,7 @@ import TransactionProcess from "../TransactionConfirmationModal/PendingModal";
 import { clear } from "@testing-library/user-event/dist/clear";
 import useBalance from "../../hooks/useBalance";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
+import { renderIntoDocument } from "react-dom/cjs/react-dom-test-utils.production.min";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -176,21 +177,6 @@ export const TRANSACTION_TYPES = {
 const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
 
-    // useEffect(() => {
-
-    //     if(library) {
-
-    //     const renContract = getContract("0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f", abi2, library, account);
-
-    //     const hash = localStorage.getItem("hash")
-    //     renContract.on("Approval", (from, to , value, hash) => console.log(from, to, value, hash))
-    //     let txn_test = library.getTransaction(hash).then((result) => {
-
-    //     console.log(result)
-
-    //     });
-    //     }
-    // }, [library])
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
     const [text, setText] = useState("")
@@ -210,13 +196,21 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
-      const { setPendingTransactions, pendingTransactions, deposits, setDeposits} = usePendingTransaction()
+      const { 
 
+          setPendingTransactions, 
+          pendingTransactions, 
+          deposits, 
+          setDeposits, 
+          currentHash, 
+          setCurrentHash
+
+        } = usePendingTransaction()
+
+        console.log(currentHash)
     
       useEffect(() => {
-
             if(library) {
-
                 const bridgeContract = getContract(
                     BridgeAddress, 
                     abi, 
@@ -229,7 +223,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                     library, 
                     account)
                 ;
-
                 setRen(renContract)
                 setBridge(bridgeContract)
             }
@@ -249,31 +242,37 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         
       }, [text])
  
-    // const MODAL_COMPONENTS = {
-    //     [TRANSACTION_TYPES.APPROVAL]: Approval,
-    //     [TRANSACTION_TYPES.DEPOSIT]: Deposit,
-    //     [TRANSACTION_TYPES.WITHDRAWAL]: Withdrawal
-    // };
-     // clearAllStates()
-        // setConfirm(true)
-        // close()
+     useEffect(() => {
 
-    const handleTransaction = () => {
+         if(library && ren) {
+            ren.on("Approval", (from, to , value) => {
+                console.log(from, to, value)
+                setTimeout(() => {
+                    pendingTransactions.pop()
+                    setPendingTransactions(pendingTransactions)
+                }, 10000)
+            });
 
+            ren.on("Transfer", (from, to , value) => {
+                console.log(from, to, value)
+                setTimeout(() => {
+                    pendingTransactions.pop()
+                    setPendingTransactions(pendingTransactions)
+                }, 10000)
+            });
 
-       if(TransactionType === "DEPOSIT") {
-           return handleDeposit
-       }
-       if(TransactionType === "APPROVAL") {
+            // if(currentHash.length > 1 && currentHash == undefined) {
 
-        console.log("heyy")
-           return handleApproval
-       }
-       if(TransactionType === "WITHDRAWAL") {
-           return handleWithdraw
-       }
+            //     library.getTransaction(currentHash).then((result) => {
+            //         if(!result.blockNumber) {
+            //             setLoading(true)
+            //         } 
+            //     })
+            // }
 
-    }
+         }
+     }, [library, ren, currentHash])
+
     const setDropdownValue = () => {
 
         setDropDownActive(!dropDownActive);
@@ -396,11 +395,13 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         try {
             await ren.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
             .then(async(result) => {
+                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
 
                 await result.wait().then(() => {
                     beginDeposit()
+                    setLoading(false)
 
                     setPendingTransactions([
                         {
@@ -418,6 +419,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         } catch (error) {
             clearAllStates()
             setRejected(true)
+            setLoading(false)
 
             if (error.code == 4001) {
                 setError("User denied transaction!")
@@ -441,11 +443,12 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         try {
             await bridge.transferFrom(account, BridgeAddress, amount, "BTC")
             .then(async(result) => {
+                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
                
                 await result.wait().then(() => {
-
+                    setLoading(false)
                     setPendingTransactions([
 
                         ...pendingTransactions,
@@ -474,6 +477,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
             
         } catch(error) {
+            setLoading(false)
             clearAllStates()
             setRejected(true)
 
@@ -500,26 +504,34 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         try {
             await bridge.transfer(account, amount, "BTC")
             .then(async (result) => {
+                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
 
-                setPendingTransactions([
-
-                    ...pendingTransactions,
-                    {
-                      type: "APPROVAL",  
-                      id: generate(),
-                      from: account,
-                      amount: amount,
-                      time: 2
-                    },
-                ]);
-
                 await result.wait().then(() => {
+                    setLoading(false)
+
+                    setPendingTransactions([
+
+                        ...pendingTransactions,
+                        {
+                          type: "APPROVAL",  
+                          id: generate(),
+                          from: account,
+                          amount: amount,
+                          time: 2
+                        },
+                    ]);
+
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(balance)
+
+                        setTimeout(() => {
+                            pendingTransactions.pop()
+                            setPendingTransactions(pendingTransactions)
+                        }, 10000)
                     });
                 })
     
@@ -528,6 +540,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         } catch(error) {
             clearAllStates()
             setRejected(true)
+            setLoading(false)
 
             if (error.code == 4001) {
                 setError("User denied transaction!")
@@ -539,11 +552,13 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     }
 
     const a = () => {
-        setSubmitted(!submitted)
-        
-        setTimeout(() => {
-            setText("")
-        }, 300)
+
+        clearAllStates()
+        if(TransactionType !== "APPROVAL") {
+            setTimeout(() => {
+                setText("")
+            }, 300)
+        }
        
     }
 
@@ -573,7 +588,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 visible={submitted}
             />
             <RejectionModal
-                close={() => setRejected(!rejected)} 
+                close={() => a()} 
                 amount={amount} 
                 visible={rejected}
             />
