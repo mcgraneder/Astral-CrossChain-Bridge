@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import React from "react"
 import { CheckCircle, X } from "react-feather"
+import usePendingTransaction from "../../hooks/usePendingTransaction"
+import { useEffect } from "react/cjs/react.development"
 export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
@@ -70,7 +72,7 @@ export const CloseIcon = styled(X)`
     left: 89%;
     top: 10%;
     cursor: pointer;
-    color: rgb(14,22,39);
+    color:White;
     z-index: 10;
 `
 
@@ -114,12 +116,12 @@ export const CloseIcon = styled(X)`
 //   }
 // }
 
-const DepositSummary = () => {
+const TransactionNotification = ({transaction}) => {
 
 
     return (
 
-        <TransactionPopupWrapper>
+        
             <TransactionPopupContainer>
                 <CloseIcon strokeWidth={3}/>
                 <IconContainer>
@@ -134,20 +136,44 @@ const DepositSummary = () => {
                     </Text>
                 </TextContainer>
             </TransactionPopupContainer>
-            <TransactionPopupContainer>
-                <CloseIcon/>
-                <IconContainer>
-                    <CheckCircle strokeWidth={1.5} size="35" color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                    <Text size={"16px"} color={"White"} weight={true}>
-                        Deposited Exactly 0.00036 Ren BTC at a price of $100
-                    </Text>
-                    <Text size={"15px"} color={"rgb(13,94,209)"} weight={true}>
-                        View on explorer
-                    </Text>
-                </TextContainer>
-            </TransactionPopupContainer>
+           
+       
+    )
+}
+
+const DepositSummary = ({pendingTransactions, counter}) => {
+
+    var isDefined
+    // const pendingTransactions = JSON.parse(localStorage.getItem("pending-deposits"))
+    // if(!localStorage.getItem("pendingTransactions")) isDefined = false
+    // const { setPendingTransactions, pendingTransactions, deposits, setDeposits} = usePendingTransaction()
+
+    
+
+    useEffect(() => {
+
+
+        console.log(pendingTransactions)
+
+    }, [])
+    
+    console.log(pendingTransactions)
+    // localStorage.removeItem("pending-deposits")
+    // console.log(pendingTransactions[0])
+    return (
+
+        <TransactionPopupWrapper>
+            <TransactionPopupWrapper>
+           {pendingTransactions.map((item, i) => {
+
+                console.log(i)
+                if(i >= 0){
+                return <div key={item.id} className="objectname">
+                    <TransactionNotification idd={item.id} amount={item.amount}></TransactionNotification>
+                    </div>
+                
+}})}
+            </TransactionPopupWrapper>
         </TransactionPopupWrapper>
     )
 }

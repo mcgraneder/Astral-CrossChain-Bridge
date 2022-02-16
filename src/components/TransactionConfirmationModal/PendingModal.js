@@ -324,6 +324,8 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
 
 export const ConfirmationModal = ({visible, close, amount, handleDeposit}) => {
 
+    const transactionType = handleDeposit
+    
     return (
         <>
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>

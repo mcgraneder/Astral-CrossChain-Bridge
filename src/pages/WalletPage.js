@@ -28,7 +28,7 @@ const WalletPage = () => {
     return (
 
         <>
-            <DepositSummary></DepositSummary>
+            
             {/* <PendingModal visible={showPending} close={togglePending} amount={amount}></PendingModal> */}
             <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
             <Web3Modal visible={show1} close={toggle1}></Web3Modal>

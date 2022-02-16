@@ -67,6 +67,8 @@ import { ArrowContainer12,
          ForumIcon,
          ForumImg
 } from "./WalletModalStyles";
+import DepositSummary from "../AccountDetails/TransactionSummary";
+import usePendingTransaction from "../../hooks/usePendingTransaction";
 import { getOwnBalance } from "../../hooks/useBalance";
 import { hash, set } from "immutable";
 import { CHAIN_IDS_TO_NAMES, SupportedChainId } from "../../constants/chains";
@@ -165,6 +167,12 @@ const unrankedId = generate();
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
+export const TRANSACTION_TYPES = {
+    APPROVAL: "APPROVAL",
+    DEPOSIT: "DEPOSIT",
+    WITHDRAWAL: "WITHDRAWAL"
+};
+   
 const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
 
@@ -186,7 +194,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
     const [text, setText] = useState("")
-    const [inputText, setInputText] = useState("Deposit")
+    const [inputText, setInputText] = useState("Deposit ")
     const [error, setError] = useState("")
     const [confirm, setConfirm] = useState(false)
     const [pending1, setPending1] = useState(false)
@@ -196,31 +204,15 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [ren, setRen] = useState()
     const [bridge, setBridge] = useState()
     const [gas, setGas] = useState(0)
+    const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
 
-    const [pendingDeposits, setPendingDeposits] = React.useState([
-        {
-          id: String,
-          from: String,
-          amount: Number,
-          approved: Boolean,
-          status: String,
-          time: Number
-        }
-      ]);
-
-    const [deposits, setDeposits] = React.useState([
-        {
-            id: unrankedId,
-            from: "address",
-            amount: "number",
-            time: "Date"
-          }
-      ]);
 
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
+      const { setPendingTransactions, pendingTransactions, deposits, setDeposits} = usePendingTransaction()
 
+    
       useEffect(() => {
 
             if(library) {
@@ -244,28 +236,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
       }, [library, setRen, setBridge])
 
     
-      React.useEffect(() => {
-
-        const depositData = localStorage.getItem("deposits");
-
-        if (depositData) {
-          setDeposits(JSON.parse(depositData));
-        }
-
-        const pendingDepositData = localStorage.getItem("pending-deposits");
-        if (pendingDepositData) {
-          setPendingDeposits(JSON.parse(pendingDepositData));
-        }
-
-      }, []);
-    
-      React.useEffect(() => {
-
-        localStorage.setItem("deposits", JSON.stringify(deposits));
-        localStorage.setItem("pending-deposits", JSON.stringify(pendingDeposits));
-
-      });
-
       useEffect(() => {
 
         if(inputText === "Deposit ") {
@@ -278,31 +248,37 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         }
         
       }, [text])
+ 
+    // const MODAL_COMPONENTS = {
+    //     [TRANSACTION_TYPES.APPROVAL]: Approval,
+    //     [TRANSACTION_TYPES.DEPOSIT]: Deposit,
+    //     [TRANSACTION_TYPES.WITHDRAWAL]: Withdrawal
+    // };
+     // clearAllStates()
+        // setConfirm(true)
+        // close()
 
-    const addPendingDeposit = async(text) => {
+    const handleTransaction = () => {
 
-        setPendingDeposits([
-            {
-              id: generate(),
-              from: account,
-              amount: Number(text),
-              confirmed: false,
-              status: "DETECTED",
-              time: 5
-            },
-            ...pendingDeposits
-          ]);
+
+       if(TransactionType === "DEPOSIT") {
+           return handleDeposit
+       }
+       if(TransactionType === "APPROVAL") {
+
+        console.log("heyy")
+           return handleApproval
+       }
+       if(TransactionType === "WITHDRAWAL") {
+           return handleWithdraw
+       }
 
     }
-
-
-   
-
     const setDropdownValue = () => {
 
         setDropDownActive(!dropDownActive);
     }
-    // console.log(text)
+
 
     const setDropdownValue3 = () => {
 
@@ -318,24 +294,18 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
     const getMaxDeposit = async() => {
 
-        console.log(inputText)
         var walletBalance = await ren.balanceOf(account)
         walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
         setText(walletBalance)
         setAmount(walletBalance)
-        if(inputText === "Deposit ") {
 
-            
-            console.log("hey")
-           
+        if(inputText === "Deposit ") {
 
         } else if (inputText === "Withdraw ") {
 
             var walletBalance = await bridge.getContractTokenbalance("BTC")
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
-            console.log(text)
-            console.log("hey")
 
         }
 
@@ -344,23 +314,18 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const getAllowance = async(amount) => {
 
         try {
-
             var allowance = await ren.allowance(account, BridgeAddress)
             allowance = Web3.utils.fromWei(allowance.toString(), "Gwei")
 
-           console.log(amount, allowance)
             if(Number(amount) > Number(allowance)) {
-
                 setSufficentApproval(false)
             } else {
-
                 setSufficentApproval(true)
             }
 
             return allowance
 
         } catch (error) {
-
             setSufficentApproval(true)
             console.error(error)
         }
@@ -370,28 +335,28 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const getGas = async() => {
 
         try {
-
-            const gas = await ren.estimateGas.approve(account, BridgeAddress)
-            const n = Web3.utils.fromWei(gas.toString(), "Gwei")
-            setGas(n)
+            var gas = await ren.estimateGas.approve(account, BridgeAddress)
+            gas = Web3.utils.fromWei(gas.toString(), "Gwei")
+            setGas(gas)
 
             return gas
 
         } catch(error) {
-
             console.error(error)
         }
        
     }
 
+    const start = (type) => { 
+
+        setConfirm(true)
+        setTransactionType(type)
+
+    }
     const beginDeposit = () => {
 
-        console.log(text)
-
-        const allowance = getAllowance(text)
-        const gas = getGas()
-
-        console.log(sufficentApproval)
+        getAllowance(text)
+        getGas()
 
     }
 
@@ -399,24 +364,14 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         setToggle(!toggle);
         setText(text)
+
         if(!toggle) {
-            // setText("Deposit")
             setInputText("Deposit ")
             beginDeposit()
-
         } else {
-            // setText("Withdraw")
             setInputText("Withdraw ")
             setSufficentApproval(true)
-
         }
-    }
-
-    const beginTransactionProcess = () => {
-
-        clearAllStates()
-        setConfirm(true)
-        close()
     }
 
     const clearAllStates = () => {
@@ -431,40 +386,42 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         setConfirm(false)
         setPending1(true)
-        addPendingDeposit(text)
 
         if(text === "") return
+
         var walletBalance = await ren.balanceOf(account)
         walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         const amount = Web3.utils.toWei(text.toString(), "Gwei")
        
         try {
-
-            const tx1 = await ren.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
+            await ren.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
             .then(async(result) => {
-
-                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
-                await result.wait().then(() => {
 
+                await result.wait().then(() => {
                     beginDeposit()
-                    setLoading(false)
+
+                    setPendingTransactions([
+                        {
+                          type: "APPROVAL",  
+                          id: generate(),
+                          from: account,
+                          amount: amount,
+                          time: 2
+                        },
+                        ...pendingTransactions
+                    ]);
                 })
             });
         
         } catch (error) {
-
             clearAllStates()
             setRejected(true)
-            setLoading(false)
 
             if (error.code == 4001) {
-
                 setError("User denied transaction!")
-
             } else {
-
                 setError(error.message)
             }
 
@@ -472,19 +429,8 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     }
     const handleDeposit = async() => {
 
-        // // togglePending()
-        // setDeposits([
-        //     {
-        //       id: generate(),
-        //       label: "",
-        //       urls: []
-        //     },
-        //     ...deposits
-        //   ]);
-
         setConfirm(false)
         setPending1(true)
-        addPendingDeposit(text)
         
         if(text === "") return
 
@@ -493,23 +439,34 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         const amount = Web3.utils.toWei(text.toString(), "Gwei")
         
         try {
-           
-            const tx2 = await bridge.transferFrom(account, BridgeAddress, amount, "BTC")
+            await bridge.transferFrom(account, BridgeAddress, amount, "BTC")
             .then(async(result) => {
-
-                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
-                // setText("")
-
+               
                 await result.wait().then(() => {
+
+                    setPendingTransactions([
+
+                        ...pendingTransactions,
+                        {
+                          type: "APPROVAL",  
+                          id: generate(),
+                          from: account,
+                          amount: amount,
+                          time: 2
+                        },
+                    ]);
 
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
-                        console.log(balance)
-                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                        setBalance(n)
-                        setLoading(false)
+                        balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        setBalance(balance)
+
+                        setTimeout(() => {
+                            pendingTransactions.pop()
+                            setPendingTransactions(pendingTransactions)
+                        }, 10000)
                       
                     });
                 })
@@ -517,71 +474,64 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
             
         } catch(error) {
-
             clearAllStates()
             setRejected(true)
-            setLoading(false)
 
             if (error.code == 4001) {
-
                 setError("User denied transaction!")
-
             } else {
-
                 setError(error.message)
             }
             
         }
-
-
     }
 
     const handleWithdraw = async() => {
 
         setConfirm(false)
         setPending1(true)
-        addPendingDeposit(text)
-
+      
         if(text === "") return
+
         var walletBalance = await bridge.getContractTokenbalance("BTC")
         walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         const amount = Web3.utils.toWei(text.toString(), "Gwei")
         
-
         try {
-
-            const withdraw = await bridge.transfer(account, amount, "BTC")
+            await bridge.transfer(account, amount, "BTC")
             .then(async (result) => {
-
                 setPending1(false)
                 setSubmitted(true)
-                setLoading(true)
+
+                setPendingTransactions([
+
+                    ...pendingTransactions,
+                    {
+                      type: "APPROVAL",  
+                      id: generate(),
+                      from: account,
+                      amount: amount,
+                      time: 2
+                    },
+                ]);
 
                 await result.wait().then(() => {
-
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
-                        console.log(balance)
-                        const n = Web3.utils.fromWei(balance.toString(), "Gwei")
-                        setBalance(n)
-                        setLoading(false)
-                
+                        balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        setBalance(balance)
                     });
                 })
     
             });
 
         } catch(error) {
-
             clearAllStates()
             setRejected(true)
-            setLoading(false)
+
             if (error.code == 4001) {
-
                 setError("User denied transaction!")
-
             } else {
-
                 setError(error.message)
             }
         }
@@ -589,13 +539,10 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     }
 
     const a = () => {
-
         setSubmitted(!submitted)
         
         setTimeout(() => {
-
             setText("")
-
         }, 300)
        
     }
@@ -604,6 +551,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         <>
        
+       <DepositSummary pendingTransactions={pendingTransactions}></DepositSummary>
             <PendingModal 
                 close={() => setPending1(!pending1)} 
                 amount={amount} 
@@ -613,7 +561,11 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 close={() => setConfirm(!confirm)} 
                 amount={amount} 
                 visible={confirm}
-                handleDeposit={handleApproval}
+                handleDeposit={
+                    TransactionType === "APPROVAL" ? handleApproval 
+                    : TransactionType === "DEPOSIT" ? handleDeposit 
+                    : handleWithdraw
+                }
             />
             <TransactionSubmittedModal
                 close={() => a()} 
@@ -682,8 +634,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                                 <ArrowLogo src={arrowDown}></ArrowLogo>
                             </ArrowLogoContainer>
                         </ArrowContainer>}
-                        {text != "" && <SpinnerWrapper>
-                               
+                        {text != "" && <SpinnerWrapper>  
                            {!sufficentApproval && 
                            <StatusTextWrapper>
                                 <StatusText>You need to approve this deposit first</StatusText>
@@ -705,40 +656,49 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                             </StatusTextWrapper>}
                             {sufficentApproval && 
                             <StatusTextWrapper>
-                                <ArrowRight size={"20px"} color={"rgb(33,114,229)"}></ArrowRight>
+                                <ArrowRight 
+                                    size={"20px"} 
+                                    color={"rgb(33,114,229)"
+                                    }
+                                />
                                 <StatusText>Bridge Fee: 0.0001 ETH</StatusText>
                             </StatusTextWrapper>}
-                            {/* { depositLoading && (<StatusTextWrapper>
-                                <StatustTextIcon src={numberTwo}/>
-                                <StatusText>Deposit Status: {depositText}...</StatusText>
-                                { !depositFinished ? <LoaderContainer><Loader type="Oval" height={20} width={20}color="rgb(77, 102, 235)"></Loader></LoaderContainer> :  <StatustTextIcon src={greenTick}/>}
-                            </StatusTextWrapper>)} */}
-                              {/* <ArrowContainer>
-                            <ArrowLogoContainer>
-                                <ArrowLogo src={arrowDown}></ArrowLogo>
-                            </ArrowLogoContainer>
-                        </ArrowContainer> */}
                          {!sufficentApproval && 
                               <ButtonWrapper1>
-                                  <Button1 onClick={beginTransactionProcess}>Approve Token Deposit <CheckCircle/></Button1>
+                                  <Button1 
+                                    onClick={
+                                        () => start(TRANSACTION_TYPES.APPROVAL)
+                                    }>
+                                    Approve Token Deposit 
+                                    <CheckCircle/>
+                                    </Button1>
                               </ButtonWrapper1>}
-                              {/* <ButtonWrapper1> */}
-                                  {/* <Button1 onClick={handleDeposit}>Confirm RenBTC Deposit</Button1> */}
-                              {/* </ButtonWrapper1> */}
                         </SpinnerWrapper>}
                         <ButtonWrapper>
-                            <Button state={sufficentApproval} width={"440px"} active={active} left={"82%"} top={"31%"} close={close} click={inputText === "Withdraw " ? handleWithdraw : handleDeposit} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={sufficentApproval ? ( inputText +  " " + text + " BTC") : "Approve token spend first" }></Button>
+                            <Button 
+                            state={sufficentApproval} 
+                            width={"440px"} 
+                            active={active} 
+                            left={"82%"} 
+                            top={"31%"} c
+                            lose={close} 
+                            click={
+                                inputText === "Withdraw " ? 
+                                () => start(TRANSACTION_TYPES.WITHDRAWAL) : 
+                                () => start(TRANSACTION_TYPES.DEPOSIT)} 
+                            height="60px" 
+                            fontsize="17" 
+                            colour="rgb(20, 29, 49)" 
+                            text={
+                                sufficentApproval ? 
+                                ( inputText +  " " + text + " BTC") : 
+                                "Approve token spend first" }
+                            ></Button>
                         </ButtonWrapper>
                     </MintFormWrapper>
-                    
                 </MintFormContainer>
             </BridgeModalWrapper>
-
             </BridgeModalContainer>
-            { loading && <ImgWrapper padding={"450px"}>
-                    <CustomLightSpinner src={Circle} size={"50px"}></CustomLightSpinner>
-                </ImgWrapper>}
-            
         </StyledContainer>
         </>
     )
