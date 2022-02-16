@@ -4,7 +4,7 @@ import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
 import numberOne from "../assets/number-one.png"
@@ -23,6 +23,7 @@ import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
 import { generate } from "shortid";
 import { CheckCircle } from "react-feather"
+import Circle from "../assets/blue-loader.svg"
 import { PendingModal, RejectionModal, TransactionSubmittedModal, ConfirmationModal} from "../TransactionConfirmationModal/PendingModal"
 import { ArrowContainer12, 
          ArrowLogo12, 
@@ -130,13 +131,41 @@ font-family: 'Open Sans', sans-serif;
 
 ` 
 
+export const ImgWrapper = styled.div`
 
+    padding-top: ${(props) => props.padding};
+    // padding-bottom: ${(props) => props.padding};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`
+const Spinner = styled.img`
+
+animation: 2s ${rotate} linear infinite;
+  width: 16px;
+  height: 16px;
+`
+export const CustomLightSpinner = styled(Spinner)`
+  
+ 
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
+`
 const aId = generate()
 const unrankedId = generate();
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
-const WalletModal = ({setShow, visible, close}) => {
+const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
 
     // useEffect(() => {
@@ -414,11 +443,13 @@ const WalletModal = ({setShow, visible, close}) => {
             const tx1 = await ren.approve("0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B", amount)
             .then(async(result) => {
 
+                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
                 await result.wait().then(() => {
 
                     beginDeposit()
+                    setLoading(false)
                 })
             });
         
@@ -426,8 +457,8 @@ const WalletModal = ({setShow, visible, close}) => {
 
             clearAllStates()
             setRejected(true)
-            
-        
+            setLoading(false)
+
             if (error.code == 4001) {
 
                 setError("User denied transaction!")
@@ -466,6 +497,7 @@ const WalletModal = ({setShow, visible, close}) => {
             const tx2 = await bridge.transferFrom(account, BridgeAddress, amount, "BTC")
             .then(async(result) => {
 
+                setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
                 // setText("")
@@ -477,6 +509,7 @@ const WalletModal = ({setShow, visible, close}) => {
                         console.log(balance)
                         const n = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(n)
+                        setLoading(false)
                       
                     });
                 })
@@ -487,6 +520,7 @@ const WalletModal = ({setShow, visible, close}) => {
 
             clearAllStates()
             setRejected(true)
+            setLoading(false)
 
             if (error.code == 4001) {
 
@@ -521,7 +555,7 @@ const WalletModal = ({setShow, visible, close}) => {
 
                 setPending1(false)
                 setSubmitted(true)
-                // setText("")
+                setLoading(true)
 
                 await result.wait().then(() => {
 
@@ -530,6 +564,7 @@ const WalletModal = ({setShow, visible, close}) => {
                         console.log(balance)
                         const n = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(n)
+                        setLoading(false)
                 
                     });
                 })
@@ -540,7 +575,7 @@ const WalletModal = ({setShow, visible, close}) => {
 
             clearAllStates()
             setRejected(true)
-
+            setLoading(false)
             if (error.code == 4001) {
 
                 setError("User denied transaction!")
@@ -698,7 +733,12 @@ const WalletModal = ({setShow, visible, close}) => {
                     
                 </MintFormContainer>
             </BridgeModalWrapper>
+
             </BridgeModalContainer>
+            { loading && <ImgWrapper padding={"450px"}>
+                    <CustomLightSpinner src={Circle} size={"50px"}></CustomLightSpinner>
+                </ImgWrapper>}
+            
         </StyledContainer>
         </>
     )

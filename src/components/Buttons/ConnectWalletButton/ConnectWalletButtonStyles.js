@@ -7,10 +7,12 @@ export const ConnectButton = styled.div`
     // background: rgb(89,115,254);
     border: none;
     border-radius: 15px;
-    width: ${(props) => props.height}px;
+    // width: ${(props) => props.height}px;
     height: 26px;
-    background: rgb(24,33,58);
+    background: ${(props) => props.col2 ? "rgb(33,114,229)" : "rgb(24,33,58);"};
     padding: 5px 10px;
+    // padding-left: 20px;
+    padding-right: 20px;
     color: #fff;
     font-size: ${(props) => props.fontsize}px;
     outline: none;

@@ -13,6 +13,7 @@ const WalletPage = () => {
     const [pending1, setPending1] = useState(false)
     const [submitted, setSubmitted] = useState(false)
     const [rejected, setRejected] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const toggle1 = () => setShow1(!show1);
 
@@ -29,9 +30,9 @@ const WalletPage = () => {
         <>
             <DepositSummary></DepositSummary>
             {/* <PendingModal visible={showPending} close={togglePending} amount={amount}></PendingModal> */}
-            <Nav colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
+            <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
             <Web3Modal visible={show1} close={toggle1}></Web3Modal>
-            <WalletModal setShow={setShow1} close={togglePending} visible={showPending}></WalletModal>
+            <WalletModal setShow={setShow1} close={togglePending} visible={showPending} setLoading={setLoading} loading={loading}></WalletModal>
         </>
     )
 }

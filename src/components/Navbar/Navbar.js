@@ -24,7 +24,7 @@ import {ethers} from "ethers"
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { formatEther } from 'ethers/lib/utils';
 
-export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible}) {
+export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible, loading}) {
 
     const [bridge, setBridge] = useState(false);
     const [wallet, setWallet] = useState(false);
@@ -73,7 +73,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                         {active &&  <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
-                            <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
+                            <ConnectWalletButton loading={loading} active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
                         </NavItem2>
                         <NavItem3 active={active} visible={visible}>
                         <BalanceContainer active={active}>
