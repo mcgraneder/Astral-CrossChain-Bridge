@@ -6,7 +6,8 @@ import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
 import {X, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
 import metaMask from "../assets/metamask.png"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
-
+import Bitcoin from "../assets/Bitcoin.svg"
+import Dollar from "../assets/dollar.png"
 export const FormWrapper = styled.div`
 
 
@@ -18,7 +19,7 @@ export const FormWrapper = styled.div`
     // height: 30px;
     opacity: 0;
     background-color: rgb(27,32,52);
-    padding: 28px 20px;
+    padding: 28px 15px;
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 20px;
     pointer-events: none;
@@ -74,6 +75,7 @@ export const ImgWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    float: ${(props => props.float)};
 `
 
 const rotate = keyframes`
@@ -164,6 +166,7 @@ export const Button = styled.div`
   font-size: 20px;
   font-weight: bold;
   color: White;
+  margin-bottom: 5px;
 
   &:hover {
 
@@ -175,7 +178,7 @@ export const Button = styled.div`
 export const ButtonWrapper = styled.div`
 
 font-family: 'Open Sans', sans-serif;
-   margin-top: 50px;
+   margin-top: ${(props) => props.margin};
     height: 30px;
     // margin: 0 auto;
     display: flex;
@@ -195,12 +198,14 @@ export const ErrorText = styled.div`
 
 export const TokenAmountWrapper = styled.div`
 
-    width: 100%;
+    // width: 100%;
     height: ${(props) => props.height};
     background: rgb(14,22,39);
     border-radius: 15px;
     border: 1px solid rgb(41, 50, 67);
     margin-top: ${(props) => props.marginTop};
+    padding-left: 15px;
+    padding-right: 20px;
     // margin-bottom: 10px;
 
 `
@@ -220,6 +225,60 @@ export const ArrowDownContainer = styled.div`
     align-items: center;
     justify-content: center;
 `
+export const TokenAmount = styled.div`
+
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+    font-size: ${(props) => props.size};
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: ${(props) => props.float};
+    color: White;
+    line-height: ${(props) => props.lineHeight};
+    margin-left: 5px;
+`
+export const SubTitle2 = styled.div`
+
+  padding-top: 10px;
+  width: 100%;
+  font-size: ${(props) => props.size};
+  align-items: left;
+  padding-left: 5px;
+  color: ${(props) => props.color};
+` 
+export const TokenAmount2 = styled.div`
+
+    font-family: 'Open Sans', sans-serif;
+    color: ${(props) => props.colour};
+    font-size: ${(props) => props.size};
+    // width: 100%;
+    padding-left: 5px;
+    padding-top: ${(props) => props.paddingTop};
+    padding-right: ${(props) => props.paddingRight};
+    display: block !important;
+    vertical-align: bottom;
+    // align-items: center;
+    // justify-content: center;
+    float: ${(props) => props.float};
+`
+export const Divider = styled.div`
+
+    position: absolute;
+    width: 91%;
+    height: 0.3px;
+    background: #adadad;
+    top: 55%;
+`
+
+export const Wrapper = styled.div`
+
+    position: relative;
+`
+
+
+
 
 export const RejectionModal = ({visible, close, amount}) => {
     
@@ -234,7 +293,7 @@ export const RejectionModal = ({visible, close, amount}) => {
             <FormWrapper visible={visible} trueFade={false}>
                 <ErrorText>Error</ErrorText>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"50px"} paddingBottom={"0px"}>
+                <ImgWrapper padding={"50px"} paddingBottom={"0px"} float={""}>
                     <AlertTriangle strokeWidth={1.2} size={'80px'} color={"red"} />
                 </ImgWrapper>
                 <TitleWrapper>
@@ -243,7 +302,7 @@ export const RejectionModal = ({visible, close, amount}) => {
                 <TitleWrapper>
                     <SubTitle color={"White"} size={"18px"}>Close this modal to try again</SubTitle>
                 </TitleWrapper>
-                <ButtonWrapper>
+                <ButtonWrapper margin={"40px"}>
                     <Button onClick={close}>Dismiss</Button>
                 </ButtonWrapper>
                 
@@ -260,7 +319,7 @@ export const PendingModal = ({visible, close, amount}) => {
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
             <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"40px"}  paddingBottom={"40px"}>
+                <ImgWrapper padding={"40px"}  paddingBottom={"40px"} float={""}>
                     <CustomLightSpinner src={Circle} size={"100px"}></CustomLightSpinner>
                 </ImgWrapper>
                 <TitleWrapper>
@@ -289,7 +348,7 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
             <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"25px"}  paddingBottom={"25px"}>
+                <ImgWrapper padding={"25px"}  paddingBottom={"25px"} float={""}>
                     <ArrowUpCircle strokeWidth={0.5} size={'110px'} color={"rgb(33,114,229)"} />
                 </ImgWrapper>
                 <TitleWrapper>
@@ -301,7 +360,7 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
                 <AddTokenWrapper>
                     <AddTokenTitle size={"18px"}>Add RenBTC To Metamask <img src={metaMask} width={"35px"}></img></AddTokenTitle>
                 </AddTokenWrapper>
-                <ButtonWrapper>
+                <ButtonWrapper margin={"40px"}>
                     <Button onClick={close}>Close</Button>
                 </ButtonWrapper>
                 
@@ -324,22 +383,39 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit}) => {
                 <ArrowDownContainer>
                     <ArrowDown color={"White"} size={"15px"}/>
                 </ArrowDownContainer>
-                <TokenAmountWrapper height={"65px"} marginTop={"40px"}>
-
+                <TokenAmountWrapper height={"70px"} marginTop={"40px"}>
+                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>0.0003826</TokenAmount>
+                    <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>RenBTC</TokenAmount>
+                    <ImgWrapper padding={"17px"} float={"right"}>
+                        <img src={Bitcoin} width={"35px"}></img>
+                    </ImgWrapper>
                 </TokenAmountWrapper>
-                <TokenAmountWrapper height={"65px"} marginTop={"7px"}>
-
+                <TokenAmountWrapper height={"70px"} marginTop={"4px"}>
+                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>432.78</TokenAmount>
+                    <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>Dollars</TokenAmount>
+                    <ImgWrapper padding={"20px"} float={"right"}>
+                        <img src={Dollar} height={"30px"}></img>
+                    </ImgWrapper>
                 </TokenAmountWrapper>
                 <TitleWrapper margin={"10px"}>
-                    <SubTitle style={{"font-weight": "bold"}} color={"White"} size={"16px"} margin={"0"}>1 RenBTC = $43,647.47</SubTitle>
+                    <SubTitle2 style={{"font-weight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = $43,647.47</SubTitle2>
                 </TitleWrapper>
-                <TokenAmountWrapper height={"110px"} marginTop={"15px"}>
-
-                </TokenAmountWrapper>
-                <TitleWrapper margin={"0px"}>
-                    <SubTitle style={{"font-weight": "bold"}} color={"White"} size={"12px"} margin={"0"}>Output is estimated. You will receive at least 16.9807 DAI or the transaction will revert.</SubTitle>
+                <Wrapper>
+                    <TokenAmountWrapper height={"125px"}>
+                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} lineHieght={"80px"} paddingTop={"10px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} lineHieght={"70px"}paddingTop={"10px"} paddingRight={"0"} style={{"font-weight": "bold"}}>0.0001823 ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} lineHieght={"80px"}paddingTop={"3px"} paddingRight={"50px"}>Token Bridge Fee:</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} lineHieght={"70px"}paddingTop={"3px"} paddingRight={"0"} style={{"font-weight": "bold"}}>0.00382 ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} lineHieght={"80px"}paddingTop={"20px"} paddingRight={"50px"}>Expected balance after</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} lineHieght={"70px"}paddingTop={"20px"} paddingRight={"0"} style={{"font-weight": "bold"}}>0.00382 ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} lineHieght={"80px"}paddingTop={"0"} paddingRight={"50px"}>calculation</TokenAmount2>
+                        <Divider></Divider>
+                    </TokenAmountWrapper>
+                </Wrapper>
+                <TitleWrapper margin={"10px"}>
+                <SubTitle2 style={{"font-weight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least 0.0003812 RenBTC after the Bridge fee.</SubTitle2>
                 </TitleWrapper>
-                <ButtonWrapper margin={"0px"}>
+                <ButtonWrapper margin={"40px"}>
                     <Button onClick={handleDeposit}>Confirm Transaction</Button>
                 </ButtonWrapper>
                 

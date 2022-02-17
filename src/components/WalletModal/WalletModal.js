@@ -165,7 +165,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [amount, setAmount] = useState()
     const [ren, setRen] = useState()
     const [bridge, setBridge] = useState()
-    const [sufficentBalance, setSufficentBalance] = useState(true)
+    const [sufficentBalance, setSufficentBalance] = useState(false)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
 
@@ -190,7 +190,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             }
 
             if(inputText === "Deposit ") {
-
                 if(ren) beginDeposit()
             } else {
                 setSufficentApproval(true)
@@ -268,7 +267,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         console.log(TransactionType)
         try {
-            if (TransactionType === "DEPOSIT") {
+            if (TransactionType === "DEPOSIT" || TransactionType === "APPROVAL") {
 
                 var balance = await ren.balanceOf(account)
                 balance = Web3.utils.fromWei(balance.toString(), "Gwei")
