@@ -70,7 +70,7 @@ import { ArrowContainer12,
 import DepositSummary from "../AccountDetails/TransactionSummary";
 import usePendingTransaction from "../../hooks/usePendingTransaction";
 import { getOwnBalance } from "../../hooks/useBalance";
-import { hash, set } from "immutable";
+import { set } from "immutable";
 import { CHAIN_IDS_TO_NAMES, SupportedChainId } from "../../constants/chains";
 import TransactionProcess from "../TransactionConfirmationModal/PendingModal";
 import { clear } from "@testing-library/user-event/dist/clear";
@@ -190,88 +190,39 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [ren, setRen] = useState()
     const [bridge, setBridge] = useState()
     const [gas, setGas] = useState(0)
+    const [hash, setHash] = useState(null)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
 
 
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
-      const { 
-
-          setPendingTransactions, 
-          pendingTransactions, 
-          deposits, 
-          setDeposits, 
-          currentHash, 
-          setCurrentHash
-
-        } = usePendingTransaction()
+      const { setDeposits, deposits, currentHash, notifications, setNotifications} = usePendingTransaction()
 
         console.log(currentHash)
     
       useEffect(() => {
+        setDeposits(deposits.filter(items => items.txHash==="hash"))
+      }, [])
+      
+      useEffect(() => {
             if(library) {
-                const bridgeContract = getContract(
-                    BridgeAddress, 
-                    abi, 
-                    library,
-                    account)
-                ;
-                const renContract = getContract(
-                    RenAddress, 
-                    abi2, 
-                    library, 
-                    account)
-                ;
+                const bridgeContract = getContract(BridgeAddress, abi, library, account);
+                const renContract = getContract(RenAddress, abi2, library, account);
+
                 setRen(renContract)
                 setBridge(bridgeContract)
             }
-      }, [library, setRen, setBridge])
 
+            if(inputText === "Deposit ") {
+
+                if(ren) beginDeposit()
+               
+            } else {
+                setSufficentApproval(true)
+            }
     
-      useEffect(() => {
-
-        if(inputText === "Deposit ") {
-
-            console.log(true)
-            beginDeposit()
-        } else {
-
-            setSufficentApproval(true)
-        }
-        
-      }, [text])
- 
-     useEffect(() => {
-
-         if(library && ren) {
-            ren.on("Approval", (from, to , value) => {
-                console.log(from, to, value)
-                setTimeout(() => {
-                    pendingTransactions.pop()
-                    setPendingTransactions(pendingTransactions)
-                }, 10000)
-            });
-
-            ren.on("Transfer", (from, to , value) => {
-                console.log(from, to, value)
-                setTimeout(() => {
-                    pendingTransactions.pop()
-                    setPendingTransactions(pendingTransactions)
-                }, 10000)
-            });
-
-            // if(currentHash.length > 1 && currentHash == undefined) {
-
-            //     library.getTransaction(currentHash).then((result) => {
-            //         if(!result.blockNumber) {
-            //             setLoading(true)
-            //         } 
-            //     })
-            // }
-
-         }
-     }, [library, ren, currentHash])
+      }, [library, text]) 
 
     const setDropdownValue = () => {
 
@@ -296,7 +247,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         var walletBalance = await ren.balanceOf(account)
         walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
         setText(walletBalance)
-        setAmount(walletBalance)
 
         if(inputText === "Deposit ") {
 
@@ -322,8 +272,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setSufficentApproval(true)
             }
 
-            return allowance
-
         } catch (error) {
             setSufficentApproval(true)
             console.error(error)
@@ -336,9 +284,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         try {
             var gas = await ren.estimateGas.approve(account, BridgeAddress)
             gas = Web3.utils.fromWei(gas.toString(), "Gwei")
-            setGas(gas)
-
-            return gas
 
         } catch(error) {
             console.error(error)
@@ -353,6 +298,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
     }
     const beginDeposit = () => {
+
 
         getAllowance(text)
         getGas()
@@ -399,20 +345,25 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
-                await result.wait().then(() => {
+                await result.wait().then((result) => {
                     beginDeposit()
                     setLoading(false)
 
-                    setPendingTransactions([
+                    setDeposits([
                         {
-                          type: "APPROVAL",  
-                          id: generate(),
-                          from: account,
-                          amount: amount,
-                          time: 2
+                            id: deposits.length,
+                            type: "APPROVAL",
+                            from: account,
+                            amount: amount,
+                            txHash: result.transactionHash,
+                            time: 2
                         },
-                        ...pendingTransactions
+                        ...deposits
                     ]);
+
+                    setTimeout(() => {
+                        setDeposits(deposits.filter(items => items.id!==deposits.length))
+                    }, 25000)
                 })
             });
         
@@ -447,29 +398,30 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
                
-                await result.wait().then(() => {
+                await result.wait().then((result) => {
                     setLoading(false)
-                    setPendingTransactions([
+                    console.log(result)
+                    setDeposits([
 
-                        ...pendingTransactions,
-                        {
-                          type: "APPROVAL",  
-                          id: generate(),
+                        ...deposits,
+                        {  
+                          id: deposits.length,
+                          type: "DEPOSIT",
                           from: account,
                           amount: amount,
+                          txHash: result.transactionHash,
                           time: 2
                         },
                     ]);
-
+                    
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(balance)
 
                         setTimeout(() => {
-                            pendingTransactions.pop()
-                            setPendingTransactions(pendingTransactions)
-                        }, 10000)
+                            setDeposits(deposits.filter(items => items.id!==deposits.length))
+                        }, 25000)
                       
                     });
                 })
@@ -508,18 +460,19 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
-                await result.wait().then(() => {
+                await result.wait().then((result) => {
                     setLoading(false)
 
-                    setPendingTransactions([
+                    setDeposits([
 
-                        ...pendingTransactions,
+                        ...deposits,
                         {
-                          type: "APPROVAL",  
-                          id: generate(),
-                          from: account,
-                          amount: amount,
-                          time: 2
+                            id: deposits.length,
+                            type: "WITHDRAWAL",
+                            from: account,
+                            amount: amount,
+                            txHash: result.transactionHash,
+                            time: 2
                         },
                     ]);
 
@@ -529,9 +482,8 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                         setBalance(balance)
 
                         setTimeout(() => {
-                            pendingTransactions.pop()
-                            setPendingTransactions(pendingTransactions)
-                        }, 10000)
+                            setDeposits(deposits.filter(items => items.id!==deposits.length))
+                        }, 25000)
                     });
                 })
     
@@ -566,7 +518,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         <>
        
-       <DepositSummary pendingTransactions={pendingTransactions}></DepositSummary>
+       <DepositSummary deposits={deposits}></DepositSummary>
             <PendingModal 
                 close={() => setPending1(!pending1)} 
                 amount={amount} 

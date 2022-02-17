@@ -51,7 +51,7 @@ export const Backdrop = styled.div`
     opacity: 0;
     pointer-events: none;
     backdrop-filter: blur(3px);
-    background: rgba(2,8,26, 0.3);
+    background: rgba(2,8,26, 0.65);
 // background: -webkit-linear-gradient(top, #23233999, #040717);
 // background: -moz-linear-gradient(top, #23233999, #040717);
 // background: linear-gradient(to bottom, rgba(112,128,136, 0.1), rgba(2,8,26, 0.75));

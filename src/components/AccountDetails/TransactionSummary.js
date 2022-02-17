@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React from "react"
+import React, { useState } from "react"
 import { CheckCircle, X } from "react-feather"
 import usePendingTransaction from "../../hooks/usePendingTransaction"
 import { useEffect } from "react/cjs/react.development"
@@ -14,18 +14,28 @@ export const TransactionPopupWrapper = styled.div`
     text-align: right;
     padding: 20px 20px;
     padding-top: 110px;
+    // background: White;
+    z-index: -1;
+    transition: width 0.15s ease-in-out;
 `
 
-export const TransactionPopupContainer = styled.div`
+export const Container = styled.div`
 
     position: relative;
-    height: 80px;
-    // width: 100%;
-    background-color: rgb(33,37,57); //b 72
+`
+export const TransactionPopupContainer = styled.div`
+
+    
+    height: 90px;
+    width: 100%;
+    background-color: rgb(37,42,62); //b 72
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 30px;
     border: 1px solid  rgb(13,17,37);
+    transition: width 0.15s ease-in-out;
+    // white-space: nowrap;
+  overflow: hidden;
 `
 
 export const IconContainer = styled.div`
@@ -40,6 +50,8 @@ export const IconContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
+  overflow: hidden;
 `
 
 export const TextContainer = styled.div`
@@ -52,18 +64,22 @@ export const TextContainer = styled.div`
     // width: 100%;
     // height: 50%;
     // background: White;
+    // white-space: nowrap;
+  overflow: hidden;
 
 `
 
 export const Text = styled.div`
 
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     margin-right: 23px;
     font-family: 'Open Sans', sans-serif;
     text-align: left;
     font-size: ${(props) => props.size};
     color: ${(props) => props.color};
     font-weight: ${(props) => props.weight ? "bold" : "400"};
+    // white-space: nowrap;
+  overflow: hidden;
 `
 
 export const CloseIcon = styled(X)`
@@ -74,6 +90,53 @@ export const CloseIcon = styled(X)`
     cursor: pointer;
     color:White;
     z-index: 10;
+    white-space: nowrap;
+  overflow: hidden;
+`
+
+export const Progress = styled.div`
+
+`
+
+export const ProgressBar = styled.div`
+
+    border-radius: 10px;
+    // border: 1px solid White;
+    animation animate-positive 2s;
+    position: absolute;
+    top: 20.4%;
+    right: 3.3%;
+    background: rgb(23,104,219);
+    width:  ${(props) => props.active ? "350px" : "0px"};
+    height: 3px;
+    transition: width 20s ease-in-out;
+    
+`
+
+export const ProgressValue = styled.div`
+
+    // width: 350px;
+    // height: 3px;
+    // line-height: 5px;
+    // background: black;
+
+    // @-webkit-keyframes animate-positive{
+
+    //     0% {
+
+    //         width: 0;
+    //     }
+    // }
+
+    // @keyframes animate-positive{
+
+    //     100% {
+
+    //         width: 350px;
+    //     }
+    // }
+
+
 `
 
 
@@ -116,65 +179,92 @@ export const CloseIcon = styled(X)`
 //   }
 // }
 
-const TransactionNotification = ({transaction}) => {
+const TransactionNotification = ({transaction, active}) => {
 
+    const [loadBar, setLoadBar] = useState(false)
+
+    useEffect(() => {
+        if(active) setLoadBar(true)
+    }, [active])
 
     return (
 
-        
-            <TransactionPopupContainer>
-                <CloseIcon strokeWidth={3}/>
-                <IconContainer>
-                    <CheckCircle strokeWidth={1.5} size="35" color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                    <Text size={"16px"} color={"White"} weight={true}>
-                        Deposited Exactly 0.00036 Ren BTC at a price of $100
-                    </Text>
-                    <Text size={"15px"} color={"rgb(13,94,209)"} weight={true}>
-                        View on explorer
-                    </Text>
-                </TextContainer>
-            </TransactionPopupContainer>
+            <Container>
+                <TransactionPopupContainer active={active}>
+                    <CloseIcon strokeWidth={3}/>
+                    <IconContainer>
+                        <CheckCircle strokeWidth={1.5} size="35" color={"rgb(38,162,91)"} />
+                    </IconContainer>
+                    <TextContainer>
+                        <Text size={"16px"} color={"White"} weight={true}>
+                            Deposited Exactly 0.00036 Ren BTC at a price of $100
+                        </Text>
+                        <Text size={"15px"} color={"rgb(13,94,209)"} weight={true}>
+                            View on explorer
+                        </Text>
+                    </TextContainer>
+                    {/* <ProgressBar1 active={loadBar}/> */}
+                </TransactionPopupContainer>
+            </Container>
            
        
     )
 }
 
-const DepositSummary = ({pendingTransactions, counter}) => {
+export const ProgressBar1 = ({deposits}) => {
 
-    var isDefined
-    // const pendingTransactions = JSON.parse(localStorage.getItem("pending-deposits"))
-    // if(!localStorage.getItem("pendingTransactions")) isDefined = false
-    // const { setPendingTransactions, pendingTransactions, deposits, setDeposits} = usePendingTransaction()
-
-    
+    const [active, setActive] = useState(false)
 
     useEffect(() => {
 
+        setActive(false)
+        setTimeout(() => {
 
-        console.log(pendingTransactions)
+            setActive(true)
+        }, 100)
+    }, [deposits])
 
-    }, [])
-    
-    console.log(pendingTransactions)
-    // localStorage.removeItem("pending-deposits")
-    // console.log(pendingTransactions[0])
+    return(
+
+        <Progress>
+            <ProgressBar active={active}>
+                <ProgressValue>
+
+                </ProgressValue>
+            </ProgressBar>
+        </Progress>
+    )
+
+}
+
+const DepositSummary = ({deposits, counter}) => {
+
+
+    const [isActive, setIsActive] = useState(false)
+    useEffect (() => {
+
+        console.log(JSON.parse(deposits.length))
+        if(deposits.length >= 0) {
+
+            setIsActive(true)
+        }
+
+    }, [deposits])
     return (
 
-        <TransactionPopupWrapper>
-            <TransactionPopupWrapper>
-           {pendingTransactions.map((item, i) => {
+       
+            <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
+                {deposits.map((item, i) => {
 
                 console.log(i)
-                if(i >= 0){
+                if(i > 0){
                 return <div key={item.id} className="objectname">
-                    <TransactionNotification idd={item.id} amount={item.amount}></TransactionNotification>
+                    <TransactionNotification idd={item.id} amount={item.amount} active={isActive}></TransactionNotification>
+                    <ProgressBar1 deposits={deposits}/>
                     </div>
                 
-}})}
+                }})}
             </TransactionPopupWrapper>
-        </TransactionPopupWrapper>
     )
 }
 

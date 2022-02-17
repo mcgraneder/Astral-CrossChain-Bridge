@@ -3,36 +3,30 @@ import { generate } from "shortid";
 const aId = generate()
 const unrankedId = generate();
 
+
 const usePendingTransactions = () => {
 
 
-    const [pendingTransactions, setPendingTransactions] = React.useState([]);
+    const [deposits, setDeposits] = useState([ {
+        id: "Id",
+        type: "type",
+        from: "from",
+        to: "to",
+        amount: "amount",
+        txHash: "hash",
+        time: "date",
+    }])
+
+    const [notifications, setNotifications] = React.useState([{
+        id: "id"
+    }]);
     const [currentHash, setCurrentHash] = useState()
-    const [deposits, setDeposits] = React.useState([
-        {
-            id: unrankedId,
-            from: "address",
-            amount: "number",
-            time: "Date"
-          }
-      ]);
     
-      React.useEffect(() => {
-
-        const depositData = localStorage.getItem("deposits");
-
-        if (depositData) {
-          setDeposits(JSON.parse(depositData));
-        }
+    React.useEffect(() => {
 
         const pendingDepositData = localStorage.getItem("pending-deposits");
         if (pendingDepositData) {
-          setPendingTransactions(JSON.parse(pendingDepositData));
-        }
-
-        const currentHashData = localStorage.getItem("currentHash");
-        if (currentHashData) {
-          setCurrentHash(currentHashData);
+          setNotifications(JSON.parse(pendingDepositData));
         }
 
       }, []);
@@ -40,12 +34,12 @@ const usePendingTransactions = () => {
       React.useEffect(() => {
 
         localStorage.setItem("deposits", JSON.stringify(deposits));
-        localStorage.setItem("pending-deposits", JSON.stringify(pendingTransactions));
+        localStorage.setItem("notifications", JSON.stringify(notifications));
         localStorage.setItem("currentHash", currentHash);
 
       });
 
-      return { pendingTransactions, setPendingTransactions, deposits, setDeposits, currentHash, setCurrentHash}
+      return { notifications, setNotifications, deposits, setDeposits, currentHash, setCurrentHash}
 }
 
 export default usePendingTransactions
