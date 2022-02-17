@@ -1,34 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
-import chainLogo from "../assets/metamask.svg"
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
-import EthereumLogo from "../assets/Ethereum.svg"
-import HomeConnectButton from "../Home/HomeConnectButton";
 import styled, { keyframes } from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
-import numberOne from "../assets/number-one.png"
-import numberTwo from "../assets/number-2.png"
-import greenTick from "../assets/greenTick.png"
-import DropdownItem from "./DropdownItem";
 import DropdownMenu from "./DropdownMenu";
 import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
-import { ethers } from 'ethers'
-import Loader from "react-loader-spinner";
-import { Spacer } from "../TransactionModal/TransactionModalStyles";
 import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
 import { generate } from "shortid";
 import { CheckCircle } from "react-feather"
-import Circle from "../assets/blue-loader.svg"
 import { PendingModal, RejectionModal, TransactionSubmittedModal, ConfirmationModal} from "../TransactionConfirmationModal/PendingModal"
-import { ArrowContainer12, 
-         ArrowLogo12, 
-         ArrowLogoContainer12, 
-         StyledContainer, 
+import { StyledContainer, 
          BridgeModalContainer, 
          BridgeModalWrapper, 
          ChainSelector, 
@@ -55,28 +41,18 @@ import { ArrowContainer12,
          ArrowContainer,
          ArrowLogoContainer,
          ArrowLogo,
-         Dropdown,
          SpinnerWrapper,
          StatusTextWrapper,
-         StatustTextIcon,
          StatusText,
-         CompletionTextWrapper,
-         CompletionTextContainer,
-         LoaderContainer,
          MaxOption,
          ForumIcon,
          ForumImg
 } from "./WalletModalStyles";
 import DepositSummary from "../AccountDetails/TransactionSummary";
 import usePendingTransaction from "../../hooks/usePendingTransaction";
-import { getOwnBalance } from "../../hooks/useBalance";
-import { set } from "immutable";
-import { CHAIN_IDS_TO_NAMES, SupportedChainId } from "../../constants/chains";
-import TransactionProcess from "../TransactionConfirmationModal/PendingModal";
-import { clear } from "@testing-library/user-event/dist/clear";
 import useBalance from "../../hooks/useBalance";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
-import { renderIntoDocument } from "react-dom/cjs/react-dom-test-utils.production.min";
+
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -189,15 +165,14 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [amount, setAmount] = useState()
     const [ren, setRen] = useState()
     const [bridge, setBridge] = useState()
-    const [gas, setGas] = useState(0)
-    const [hash, setHash] = useState(null)
+    const [sufficentBalance, setSufficentBalance] = useState(true)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
 
 
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
-      const { setDeposits, deposits, currentHash, notifications, setNotifications} = usePendingTransaction()
+      const { setDeposits, deposits, currentHash, setCurrentHash} = usePendingTransaction()
 
         console.log(currentHash)
     
@@ -217,10 +192,11 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             if(inputText === "Deposit ") {
 
                 if(ren) beginDeposit()
-               
             } else {
                 setSufficentApproval(true)
+                getBalance(text)
             }
+
     
       }, [library, text]) 
 
@@ -255,9 +231,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             var walletBalance = await bridge.getContractTokenbalance("BTC")
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
-
         }
-
     }
 
     const getAllowance = async(amount) => {
@@ -288,7 +262,40 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         } catch(error) {
             console.error(error)
         }
-       
+    }
+
+    const getBalance = async(amount) => {
+
+        console.log(TransactionType)
+        try {
+            if (TransactionType === "DEPOSIT") {
+
+                var balance = await ren.balanceOf(account)
+                balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+
+                if(Number(balance) >= Number(amount)) {
+                    setSufficentBalance(false)
+                } else {
+                    setSufficentBalance(true)
+                }
+
+            } else if (TransactionType === "WITHDRAWAL") {
+
+                var balance = await bridge.getContractTokenbalance("BTC")
+                balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+
+                if(Number(balance) >= Number(amount)) {
+                    setSufficentBalance(false)
+                } else {
+                    setSufficentBalance(true)
+                }
+            }     
+
+        } catch (error) {
+            setSufficentApproval(true)
+            console.error(error)
+        }
+
     }
 
     const start = (type) => { 
@@ -300,6 +307,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const beginDeposit = () => {
 
 
+        getBalance(text)
         getAllowance(text)
         getGas()
 
@@ -312,10 +320,14 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         if(!toggle) {
             setInputText("Deposit ")
+            setTransactionType("DEPOSIT") 
             beginDeposit()
+            setText("") 
         } else {
             setInputText("Withdraw ")
             setSufficentApproval(true)
+            setTransactionType("WITHDRAWAL")  
+            setText("")
         }
     }
 
@@ -363,7 +375,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
                     setTimeout(() => {
                         setDeposits(deposits.filter(items => items.id!==deposits.length))
-                    }, 25000)
+                    }, 15000)
                 })
             });
         
@@ -421,7 +433,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
                         setTimeout(() => {
                             setDeposits(deposits.filter(items => items.id!==deposits.length))
-                        }, 25000)
+                        }, 15000)
                       
                     });
                 })
@@ -483,7 +495,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
                         setTimeout(() => {
                             setDeposits(deposits.filter(items => items.id!==deposits.length))
-                        }, 25000)
+                        }, 15000)
                     });
                 })
     
@@ -521,7 +533,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
        <DepositSummary deposits={deposits}></DepositSummary>
             <PendingModal 
                 close={() => setPending1(!pending1)} 
-                amount={amount} 
+                amount={text} 
                 visible={pending1}
             />
             <ConfirmationModal
@@ -540,7 +552,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 visible={submitted}
             />
             <RejectionModal
-                close={() => a()} 
+                close={() => setRejected(!rejected)} 
                 amount={amount} 
                 visible={rejected}
             />
@@ -596,12 +608,12 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                                 <MaxOption onClick={getMaxDeposit}>max</MaxOption>
                             </WalletInputWrapper>
                         </FromContainer>
-                        {text != "" && <ArrowContainer>
+                        {text != "" && !sufficentBalance &&  <ArrowContainer>
                             <ArrowLogoContainer>
                                 <ArrowLogo src={arrowDown}></ArrowLogo>
                             </ArrowLogoContainer>
                         </ArrowContainer>}
-                        {text != "" && <SpinnerWrapper>  
+                        {text != "" && !sufficentBalance && <SpinnerWrapper>  
                            {!sufficentApproval && 
                            <StatusTextWrapper>
                                 <StatusText>You need to approve this deposit first</StatusText>
@@ -644,22 +656,23 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                         <ButtonWrapper>
                             <Button 
                             state={sufficentApproval} 
+                            balanceState={sufficentBalance}
                             width={"440px"} 
                             active={active} 
-                            left={"82%"} 
-                            top={"31%"} c
-                            lose={close} 
+                            close={close} 
+                            input={text}
                             click={
                                 inputText === "Withdraw " ? 
                                 () => start(TRANSACTION_TYPES.WITHDRAWAL) : 
                                 () => start(TRANSACTION_TYPES.DEPOSIT)} 
                             height="60px" 
-                            fontsize="17" 
-                            colour="rgb(20, 29, 49)" 
+                            fontsize="17"  
                             text={
-                                sufficentApproval ? 
-                                ( inputText +  " " + text + " BTC") : 
-                                "Approve token spend first" }
+                                sufficentBalance ? 
+                                "Insufficent Balance" :
+                                (sufficentApproval ? 
+                                ( text === "" ? "Enter an Amount" 
+                                : inputText +  " " + text + " BTC") : "Approve token spend first")}
                             ></Button>
                         </ButtonWrapper>
                     </MintFormWrapper>

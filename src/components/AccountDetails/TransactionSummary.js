@@ -7,13 +7,13 @@ export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
     top: 0;
-    right: 0;
+    right: 0.75%;
     width: 350px;
     height: 100vh;
     // height: 575px;
     text-align: right;
     padding: 20px 20px;
-    padding-top: 110px;
+    padding-top: 100px;
     // background: White;
     z-index: -1;
     transition: width 0.15s ease-in-out;
@@ -28,11 +28,11 @@ export const TransactionPopupContainer = styled.div`
     
     height: 90px;
     width: 100%;
-    background-color: rgb(37,42,62); //b 72
+    background-color: rgb(17,20,39); //b 72
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 30px;
-    border: 1px solid  rgb(13,17,37);
+    border: 1px solid  rgb(25,30,82);
     transition: width 0.15s ease-in-out;
     // white-space: nowrap;
   overflow: hidden;
@@ -104,12 +104,12 @@ export const ProgressBar = styled.div`
     // border: 1px solid White;
     animation animate-positive 2s;
     position: absolute;
-    top: 20.4%;
+    top: 19.6%;
     right: 3.3%;
     background: rgb(23,104,219);
-    width:  ${(props) => props.active ? "350px" : "0px"};
+    width:  ${(props) => props.active ? "0px" : "350px"};
     height: 3px;
-    transition: width 20s ease-in-out;
+    transition: width 16s ease-in-out;
     
 `
 
@@ -244,7 +244,7 @@ const DepositSummary = ({deposits, counter}) => {
     useEffect (() => {
 
         console.log(JSON.parse(deposits.length))
-        if(deposits.length >= 0) {
+        if(deposits.length > 0) {
 
             setIsActive(true)
         }
@@ -254,7 +254,7 @@ const DepositSummary = ({deposits, counter}) => {
 
        
             <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
-                {deposits.map((item, i) => {
+                {deposits?.map((item, i) => {
 
                 console.log(i)
                 if(i > 0){

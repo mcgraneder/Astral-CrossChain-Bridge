@@ -14,11 +14,11 @@ export const FormWrapper = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 380px;
     // height: 30px;
     opacity: 0;
     background-color: rgb(27,32,52);
-    padding: 35px 20px;
+    padding: 28px 20px;
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 20px;
     pointer-events: none;
@@ -70,7 +70,7 @@ transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;"
 export const ImgWrapper = styled.div`
 
     padding-top: ${(props) => props.padding};
-    padding-bottom: ${(props) => props.padding};
+    padding-bottom: ${(props) => props.paddingBottom};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,11 +101,7 @@ export const TitleWrapper = styled.div`
 
 font-family: 'Open Sans', sans-serif;
     margin: ${(props) => props.margin};
-    // padding: 10px;
-    // width: 100%;
-    // margin: 0 auto;
     height: 30px;
-    // margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -127,25 +123,21 @@ export const AddTokenWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 15px;
     
 
 `   
 export const AddTokenTitle = styled.div`
 
   font-size: ${(props) => props.size};
-//   text-align: center;
   align-items: center;
   height: 100%;
-//   width: 280px;
   line-height: 35px;
   color: ${(props) => props.color};
   background: rgb(23,42,66);
-    // border: 1px solid rgb(99,163,253);
     border-radius: 20px;
     padding-left: 5px;
     padding-right: 5px;
-    // padding: 5px;
     font-weight: bold;
     color: rgb(79,143,233);
 ` 
@@ -163,13 +155,13 @@ export const SubTitle = styled.div`
 
 export const Button = styled.div`
 
-  height: 60px;
+  height: 55px;
   width: 100%;
   background: rgb(33,114,229);
-  border-radius: 15px;
+  border-radius: 20px;
   text-align: center;
-  line-height: 60px;
-  font-size: 22px;
+  line-height: 55px;
+  font-size: 20px;
   font-weight: bold;
   color: White;
 
@@ -183,10 +175,7 @@ export const Button = styled.div`
 export const ButtonWrapper = styled.div`
 
 font-family: 'Open Sans', sans-serif;
-   margin-top: 60px;
-    // padding: 10px;
-    // width: 100%;
-    // margin: 0 auto;
+   margin-top: 50px;
     height: 30px;
     // margin: 0 auto;
     display: flex;
@@ -245,16 +234,16 @@ export const RejectionModal = ({visible, close, amount}) => {
             <FormWrapper visible={visible} trueFade={false}>
                 <ErrorText>Error</ErrorText>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"25px"}>
-                    <AlertTriangle strokeWidth={1.5} size={'100px'} color={"red"} />
+                <ImgWrapper padding={"50px"} paddingBottom={"0px"}>
+                    <AlertTriangle strokeWidth={1.2} size={'80px'} color={"red"} />
                 </ImgWrapper>
-                <TitleWrapper margin={"0"}>
+                <TitleWrapper>
                     <SubTitle style={{"font-weight": "bold"}} color={"red"} size={"16px"} margin={"0"}>Transaction Failed</SubTitle>
                 </TitleWrapper>
-                <TitleWrapper margin={"5px"}>
-                    <SubTitle color={"White"} size={"20px"} margin={"0"}>Close this modal to try again</SubTitle>
+                <TitleWrapper>
+                    <SubTitle color={"White"} size={"18px"}>Close this modal to try again</SubTitle>
                 </TitleWrapper>
-                <ButtonWrapper margin={"20px"}>
+                <ButtonWrapper>
                     <Button onClick={close}>Dismiss</Button>
                 </ButtonWrapper>
                 
@@ -271,17 +260,17 @@ export const PendingModal = ({visible, close, amount}) => {
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
             <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"50px"}>
-                    <CustomLightSpinner src={Circle} size={"90px"}></CustomLightSpinner>
+                <ImgWrapper padding={"40px"}  paddingBottom={"40px"}>
+                    <CustomLightSpinner src={Circle} size={"100px"}></CustomLightSpinner>
                 </ImgWrapper>
-                <TitleWrapper margin={"5px"}>
-                    <Title color={"White"} size={"25px"}>Waiting For Confirmation</Title>
+                <TitleWrapper>
+                    <Title color={"White"} size={"21px"}>Waiting For Confirmation</Title>
                 </TitleWrapper>
                 <TitleWrapper margin={"5px"}>
-                    <SubTitle color={"White"} size={"20px"} margin={"0"}>Approving this contract for {amount} RenBTC</SubTitle>
+                    <SubTitle color={"White"} size={"18px"} margin={"0"}>Approving spend of {amount} RenBTC</SubTitle>
                 </TitleWrapper>
                 <TitleWrapper>
-                    <SubTitle color={"#adadad"} size={"17px"} margin={"0"}>Confirm this transaction in your wallet</SubTitle>
+                    <SubTitle color={"#adadad"} size={"15px"} margin={"0"}>Confirm this transaction in your wallet</SubTitle>
                 </TitleWrapper>
             </FormWrapper>
         </>
@@ -300,19 +289,19 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
             <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
-                <ImgWrapper padding={"25px"}>
-                    <ArrowUpCircle strokeWidth={0.5} size={'100px'} color={"rgb(33,114,229)"} />
+                <ImgWrapper padding={"25px"}  paddingBottom={"25px"}>
+                    <ArrowUpCircle strokeWidth={0.5} size={'110px'} color={"rgb(33,114,229)"} />
                 </ImgWrapper>
-                <TitleWrapper margin={"5px"}>
-                    <Title color={"White"} size={"23px"}>Transaction Submitted</Title>
+                <TitleWrapper>
+                    <Title color={"White"} size={"21px"}>Transaction Submitted</Title>
                 </TitleWrapper>
-                <TitleWrapper margin={"5px"}>
-                    <SubTitle style={{"font-weight": "bold"}} color={"rgb(33,114,229)"} size={"16px"} margin={"0"}>view on explorer</SubTitle>
+                <TitleWrapper>
+                    <SubTitle style={{"font-weight": "bold"}} color={"rgb(33,114,229)"} size={"15px"}>view on explorer</SubTitle>
                 </TitleWrapper>
                 <AddTokenWrapper>
                     <AddTokenTitle size={"18px"}>Add RenBTC To Metamask <img src={metaMask} width={"35px"}></img></AddTokenTitle>
                 </AddTokenWrapper>
-                <ButtonWrapper margin={"20px"}>
+                <ButtonWrapper>
                     <Button onClick={close}>Close</Button>
                 </ButtonWrapper>
                 
