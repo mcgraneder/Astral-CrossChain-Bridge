@@ -36,6 +36,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>
+            
             <Route exact path="/wallet" component={WalletPage}></Route>
             <Route exact path="/transactions" component={TransactionPage}></Route>
           </Switch>

@@ -297,7 +297,7 @@ export const RejectionModal = ({visible, close, amount}) => {
                     <AlertTriangle strokeWidth={1.2} size={'80px'} color={"red"} />
                 </ImgWrapper>
                 <TitleWrapper>
-                    <SubTitle style={{"font-weight": "bold"}} color={"red"} size={"16px"} margin={"0"}>Transaction Failed</SubTitle>
+                    <SubTitle style={{"fontWeight": "bold"}} color={"red"} size={"16px"} margin={"0"}>Transaction Failed</SubTitle>
                 </TitleWrapper>
                 <TitleWrapper>
                     <SubTitle color={"White"} size={"18px"}>Close this modal to try again</SubTitle>
@@ -355,7 +355,7 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
                     <Title color={"White"} size={"21px"}>Transaction Submitted</Title>
                 </TitleWrapper>
                 <TitleWrapper>
-                    <SubTitle style={{"font-weight": "bold"}} color={"rgb(33,114,229)"} size={"15px"}>view on explorer</SubTitle>
+                    <SubTitle style={{"fontWeight": "bold"}} color={"rgb(33,114,229)"} size={"15px"}>view on explorer</SubTitle>
                 </TitleWrapper>
                 <AddTokenWrapper>
                     <AddTokenTitle size={"18px"}>Add RenBTC To Metamask <img src={metaMask} width={"35px"}></img></AddTokenTitle>
@@ -398,22 +398,22 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit}) => {
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 <TitleWrapper margin={"10px"}>
-                    <SubTitle2 style={{"font-weight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = $43,647.47</SubTitle2>
+                    <SubTitle2 style={{"fontWeight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = $43,647.47</SubTitle2>
                 </TitleWrapper>
                 <Wrapper>
                     <TokenAmountWrapper height={"125px"}>
-                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} lineHieght={"80px"} paddingTop={"10px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} lineHieght={"70px"}paddingTop={"10px"} paddingRight={"0"} style={{"font-weight": "bold"}}>0.0001823 ETH</TokenAmount2>
-                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} lineHieght={"80px"}paddingTop={"3px"} paddingRight={"50px"}>Token Bridge Fee:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} lineHieght={"70px"}paddingTop={"3px"} paddingRight={"0"} style={{"font-weight": "bold"}}>0.00382 ETH</TokenAmount2>
-                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} lineHieght={"80px"}paddingTop={"20px"} paddingRight={"50px"}>Expected balance after</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} lineHieght={"70px"}paddingTop={"20px"} paddingRight={"0"} style={{"font-weight": "bold"}}>0.00382 ETH</TokenAmount2>
-                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} lineHieght={"80px"}paddingTop={"0"} paddingRight={"50px"}>calculation</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} paddingTop={"10px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"10px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>0.0001823 ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"}paddingTop={"3px"} paddingRight={"50px"}>Token Bridge Fee:</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} paddingTop={"3px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>0.00382 ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"20px"} paddingRight={"50px"}>Expected balance after</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"20px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>0.00382 ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"0"} paddingRight={"50px"}>calculation</TokenAmount2>
                         <Divider></Divider>
                     </TokenAmountWrapper>
                 </Wrapper>
                 <TitleWrapper margin={"10px"}>
-                <SubTitle2 style={{"font-weight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least 0.0003812 RenBTC after the Bridge fee.</SubTitle2>
+                <SubTitle2 style={{"fontWeight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least 0.0003812 RenBTC after the Bridge fee.</SubTitle2>
                 </TitleWrapper>
                 <ButtonWrapper margin={"40px"}>
                     <Button onClick={handleDeposit}>Confirm Transaction</Button>

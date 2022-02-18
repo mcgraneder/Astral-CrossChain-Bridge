@@ -48,6 +48,7 @@ import { StyledContainer,
          ForumIcon,
          ForumImg
 } from "./WalletModalStyles";
+import { v4 } from "uuid"
 import DepositSummary from "../AccountDetails/TransactionSummary";
 import usePendingTransaction from "../../hooks/usePendingTransaction";
 import useBalance from "../../hooks/useBalance";
@@ -152,7 +153,8 @@ export const TRANSACTION_TYPES = {
    
 const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
-
+    const [isActive, setIsActive] = useState(false)
+    const [showNotifications, setShowNotifications] = useState(false)
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
     const [text, setText] = useState("")
@@ -169,16 +171,18 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
 
-
+    
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
       const { setDeposits, deposits, currentHash, setCurrentHash} = usePendingTransaction()
 
         console.log(currentHash)
     
-      useEffect(() => {
-        setDeposits(deposits.filter(items => items.txHash==="hash"))
-      }, [])
+    //   useEffect(() => {
+    //     setDeposits(deposits.filter(items => items.txHash==="hash"))
+    //   }, [])
+
+    // localStorage.setItem("deposits", "hello")
       
       useEffect(() => {
             if(library) {
@@ -198,6 +202,19 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
     
       }, [library, text]) 
+
+     useEffect(() => {
+
+        if(library && ren) {
+            ren.on("Approval", (from, to , value) => {
+               setShowNotifications(true)
+            });
+
+            ren.on("Transfer", (from, to , value) => {
+                setShowNotifications(true)
+            });
+         }
+     }, [library])
 
     const setDropdownValue = () => {
 
@@ -356,25 +373,22 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
+                setDeposits([
+
+                    ...deposits,
+                    {
+                        id: v4(),
+                        type: "WITHDRAWAL",
+                        from: account,
+                        amount: amount,
+                        txHash: result.transactionHash,
+                        time: 2
+                    },
+                ]);
+
                 await result.wait().then((result) => {
                     beginDeposit()
                     setLoading(false)
-
-                    setDeposits([
-                        {
-                            id: deposits.length,
-                            type: "APPROVAL",
-                            from: account,
-                            amount: amount,
-                            txHash: result.transactionHash,
-                            time: 2
-                        },
-                        ...deposits
-                    ]);
-
-                    setTimeout(() => {
-                        setDeposits(deposits.filter(items => items.id!==deposits.length))
-                    }, 15000)
                 })
             });
         
@@ -408,31 +422,28 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
+
+                setDeposits([
+
+                    ...deposits,
+                    {
+                        id: v4(),
+                        type: "WITHDRAWAL",
+                        from: account,
+                        amount: amount,
+                        txHash: result.transactionHash,
+                        time: 2
+                    },
+                ]);
                
                 await result.wait().then((result) => {
                     setLoading(false)
                     console.log(result)
-                    setDeposits([
-
-                        ...deposits,
-                        {  
-                          id: deposits.length,
-                          type: "DEPOSIT",
-                          from: account,
-                          amount: amount,
-                          txHash: result.transactionHash,
-                          time: 2
-                        },
-                    ]);
                     
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(balance)
-
-                        setTimeout(() => {
-                            setDeposits(deposits.filter(items => items.id!==deposits.length))
-                        }, 15000)
                       
                     });
                 })
@@ -471,30 +482,26 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
+                setDeposits([
+
+                    ...deposits,
+                    {
+                        id: v4(),
+                        type: "WITHDRAWAL",
+                        from: account,
+                        amount: amount,
+                        txHash: result.transactionHash,
+                        time: 2
+                    },
+                ]);
+
                 await result.wait().then((result) => {
                     setLoading(false)
-
-                    setDeposits([
-
-                        ...deposits,
-                        {
-                            id: deposits.length,
-                            type: "WITHDRAWAL",
-                            from: account,
-                            amount: amount,
-                            txHash: result.transactionHash,
-                            time: 2
-                        },
-                    ]);
 
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")
                         setBalance(balance)
-
-                        setTimeout(() => {
-                            setDeposits(deposits.filter(items => items.id!==deposits.length))
-                        }, 15000)
                     });
                 })
     
@@ -529,7 +536,13 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         <>
        
-       <DepositSummary deposits={deposits}></DepositSummary>
+            <DepositSummary 
+                deposits={deposits} 
+                setIsActive={setIsActive} 
+                setDeposits={setDeposits} 
+                showNotifications={showNotifications} 
+                setShowNotifications={setShowNotifications}
+            />   
             <PendingModal 
                 close={() => setPending1(!pending1)} 
                 amount={text} 

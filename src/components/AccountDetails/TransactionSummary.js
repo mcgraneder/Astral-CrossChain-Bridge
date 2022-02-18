@@ -1,8 +1,9 @@
-import styled from "styled-components"
-import React, { useState } from "react"
+import styled, { keyframes } from "styled-components"
+import React, { useState, useCallback } from "react"
 import { CheckCircle, X } from "react-feather"
 import usePendingTransaction from "../../hooks/usePendingTransaction"
 import { useEffect } from "react/cjs/react.development"
+import usePendingTransactions from "../../hooks/usePendingTransaction"
 export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
@@ -15,13 +16,32 @@ export const TransactionPopupWrapper = styled.div`
     padding: 20px 20px;
     padding-top: 100px;
     // background: White;
-    z-index: -1;
+    // z-index: -1;
     transition: width 0.15s ease-in-out;
 `
 
 export const Container = styled.div`
 
     position: relative;
+    display: ${(props) => props.display ? "none" : "block"};
+    z-index: 100000;
+
+    animation: SlideLeft 0.3s;
+    animation-fill-mode: left;
+
+    @keyframes SlideLeft {
+
+        100% {
+
+            width: 100%;
+            
+        }
+
+        0% {
+
+            width: 0%;
+        }
+    }
 `
 export const TransactionPopupContainer = styled.div`
 
@@ -92,6 +112,12 @@ export const CloseIcon = styled(X)`
     z-index: 10;
     white-space: nowrap;
   overflow: hidden;
+  z-index: 100000;
+
+  &:hover {
+
+    cursor: pointer;
+  }
 `
 
 export const Progress = styled.div`
@@ -103,13 +129,14 @@ export const ProgressBar = styled.div`
     border-radius: 10px;
     // border: 1px solid White;
     animation animate-positive 2s;
-    position: absolute;
+    // position: absolute;
     top: 19.6%;
     right: 3.3%;
+    margin-top: 91px;
     background: rgb(23,104,219);
     width:  ${(props) => props.active ? "0px" : "350px"};
     height: 3px;
-    transition: width 16s ease-in-out;
+    transition: width 21s ease-in-out;
     
 `
 
@@ -179,19 +206,38 @@ export const ProgressValue = styled.div`
 //   }
 // }
 
-const TransactionNotification = ({transaction, active}) => {
+const TransactionNotification = ({deposits, setDeposits, setIsActive, id,}) => {
 
     const [loadBar, setLoadBar] = useState(false)
+    const [display, setDisplay]= useState(false)
+
+    // const {deposits, setDeposits} = usePendingTransactions()
+   
+    const filteredNotificationArray = deposits.filter((notification, i) => notification.id !== id)
 
     useEffect(() => {
-        if(active) setLoadBar(true)
-    }, [active])
+
+        const timeoutId = setTimeout(() => {
+            setDisplay(true)
+            setDeposits(filteredNotificationArray)
+        }, 20000)
+        
+        return () => clearTimeout(timeoutId)
+    }, [])
+
+    const click = () => {
+
+        console.log("heyy")
+        setDeposits(deposits.filter(notification => id !== notification.id))
+    }
+
 
     return (
 
-            <Container>
-                <TransactionPopupContainer active={active}>
-                    <CloseIcon strokeWidth={3}/>
+        <>
+            <Container display={display}>
+                <TransactionPopupContainer active={true}>
+                    <CloseIcon strokeWidth={3} onClick={click}/>
                     <IconContainer>
                         <CheckCircle strokeWidth={1.5} size="35" color={"rgb(38,162,91)"} />
                     </IconContainer>
@@ -203,18 +249,26 @@ const TransactionNotification = ({transaction, active}) => {
                             View on explorer
                         </Text>
                     </TextContainer>
+                    <ProgressBar1 
+                                deposits={deposits} 
+                                setDeposits={setDeposits}/>
+                        
+
                     {/* <ProgressBar1 active={loadBar}/> */}
+                    
                 </TransactionPopupContainer>
             </Container>
+            </>
            
        
     )
 }
 
-export const ProgressBar1 = ({deposits}) => {
+export const ProgressBar1 = ({deposits, key, id}) => {
 
     const [active, setActive] = useState(false)
 
+    console.log(id)
     useEffect(() => {
 
         setActive(false)
@@ -237,33 +291,34 @@ export const ProgressBar1 = ({deposits}) => {
 
 }
 
-const DepositSummary = ({deposits, counter}) => {
+const DepositSummary = ({deposits, setDeposits, setIsActive, showNotifications, setShowNotifications}) => {
 
 
-    const [isActive, setIsActive] = useState(false)
     useEffect (() => {
-
-        console.log(JSON.parse(deposits.length))
         if(deposits.length > 0) {
-
             setIsActive(true)
         }
-
+        if(deposits.length == 1) setShowNotifications(false)
     }, [deposits])
+
     return (
 
        
             <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
-                {deposits?.map((item, i) => {
+                        { deposits.length > 0 && deposits.map((item, i) => {
 
-                console.log(i)
-                if(i > 0){
-                return <div key={item.id} className="objectname">
-                    <TransactionNotification idd={item.id} amount={item.amount} active={isActive}></TransactionNotification>
-                    <ProgressBar1 deposits={deposits}/>
-                    </div>
-                
-                }})}
+                        console.log(i)
+                        if(i > 0){
+                        return <div className="objectname">
+                            <TransactionNotification 
+                                id={item.id}
+                                amount={item.amount} 
+                                setIsActive={setIsActive}
+                                deposits={deposits}
+                                setDeposits={setDeposits}/>
+                            </div>
+                        
+                        }})}
             </TransactionPopupWrapper>
     )
 }
