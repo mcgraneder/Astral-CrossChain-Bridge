@@ -52,6 +52,7 @@ import { v4 } from "uuid"
 import DepositSummary from "../AccountDetails/TransactionSummary";
 import usePendingTransaction from "../../hooks/usePendingTransaction";
 import useBalance from "../../hooks/useBalance";
+import Loader from "../Loader/Loader";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
 
 export const MintForm = styled.div`
@@ -141,6 +142,13 @@ export const CustomLightSpinner = styled(Spinner)`
   width: ${({ size }) => size};
 `
 
+export const LoaderWrapper = styled.div`
+
+  position: absolute;
+  bottom: ${(props) => props.position ? "9.8%" : "7%"};
+  right: 32%;
+`
+
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
@@ -164,6 +172,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [submitted, setSubmitted] = useState(false)
     const [rejected, setRejected] = useState(false)
     const [amount, setAmount] = useState()
+    const [transactionBlock, setTransactionBlock] = useState(true)
     const [ren, setRen] = useState()
     const [bridge, setBridge] = useState()
     const [sufficentBalance, setSufficentBalance] = useState(false)
@@ -174,12 +183,24 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
       const { setDeposits, deposits, currentHash, setCurrentHash} = usePendingTransaction()
-
-        console.log(currentHash)
     
-    //   useEffect(() => {
-    //     setDeposits(deposits.filter(items => items.txHash==="hash"))
-    //   }, [])
+      console.log(transactionBlock)
+      useEffect(() => {
+       
+         deposits.map((deposit, i) => {
+
+            if(i > 0) {
+                console.log(deposit.txHash)
+                library.getTransaction(deposit.txHash).then((result) => {
+                    console.log(result)
+                    if(result.blockNumber) {
+
+                        // setTransactionBlock(true)
+                    } 
+                })
+            }
+         })
+      }, [deposits])
 
     // localStorage.setItem("deposits", "hello")
       
@@ -315,6 +336,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
     const start = (type) => { 
 
+        if(text === "" || !transactionBlock) return
         setConfirm(true)
         setTransactionType(type)
 
@@ -360,12 +382,13 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
+                setTransactionBlock(false)
 
                
                 await result.wait().then((result) => {
                     beginDeposit()
                     setLoading(false)
-
+                    setTransactionBlock(true)
                     setDeposits([
 
                         ...deposits,
@@ -382,7 +405,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             });
         
         } catch (error) {
-            setPending1(false)
+            setPending1(true)
             setRejected(true)
             setLoading(false)
 
@@ -411,12 +434,12 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
-
+                setTransactionBlock(false)
 
                
                 await result.wait().then((result) => {
                     setLoading(false)
-                    console.log(result)
+                    setTransactionBlock(true)
 
                     setDeposits([
 
@@ -442,9 +465,10 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
             
         } catch(error) {
-            setLoading(false)
+            setLoading(true)
             setPending1(false)
             setRejected(true)
+            setTransactionBlock(true)
 
             if (error.code == 4001) {
                 setError("User denied transaction!")
@@ -472,10 +496,11 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setLoading(true)
                 setPending1(false)
                 setSubmitted(true)
+                setTransactionBlock(false)
 
                 await result.wait().then((result) => {
                     setLoading(false)
-
+                    setTransactionBlock(true)
                     setDeposits([
 
                         ...deposits,
@@ -502,6 +527,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             setPending1(false)
             setRejected(true)
             setLoading(false)
+            setTransactionBlock(true)
 
             if (error.code == 4001) {
                 setError("User denied transaction!")
@@ -513,6 +539,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     }
 
     const closeSbmissionModal = () => {
+        setSubmitted(false)
         if(TransactionType !== "APPROVAL") {
             setTimeout(() => {
                 setText("")
@@ -528,8 +555,8 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 deposits={deposits} 
                 setIsActive={setIsActive} 
                 setDeposits={setDeposits} 
-                showNotifications={showNotifications} 
-                setShowNotifications={setShowNotifications}
+                transactionBlock={transactionBlock} 
+                setTransactionBlock={setTransactionBlock}
             />   
             <PendingModal 
                 close={() => setPending1(!pending1)} 
@@ -648,7 +675,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                                     onClick={
                                         () => start(TRANSACTION_TYPES.APPROVAL)
                                     }>
-                                    Approve Token Deposit 
+                                    { active ? "Approve Token Deposit" : <div>Connecting...<Loader stroke="white" size={"18px"}/></div>}
                                     <CheckCircle/>
                                     </Button1>
                               </ButtonWrapper1>}
@@ -667,12 +694,17 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                                 () => start(TRANSACTION_TYPES.DEPOSIT)} 
                             height="60px" 
                             fontsize="17"  
+                            transactionBlock={transactionBlock}
                             text={
+                                transactionBlock ? (active ? (
                                 sufficentBalance ? 
-                                "Insufficent Balance" :
-                                (sufficentApproval ? 
+                                "Insufficent Balance" 
+                                :(sufficentApproval ? 
                                 ( text === "" ? "Enter an Amount" 
-                                : inputText +  " " + text + " BTC") : "Approve token spend first")}
+                                : inputText +  " " + text + " BTC") 
+                                : "Approve token spend first")) 
+                                : <div>Connecting... <LoaderWrapper><Loader stroke="white" size={"20px"}/></LoaderWrapper></div>) 
+                                : <div>1 Pending... <LoaderWrapper position={Boolean(text === "")}><Loader stroke="white" size={"20px"}/></LoaderWrapper></div>}
                             ></Button>
                         </ButtonWrapper>
                     </MintFormWrapper>

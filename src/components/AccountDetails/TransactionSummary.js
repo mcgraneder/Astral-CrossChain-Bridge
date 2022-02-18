@@ -7,15 +7,15 @@ import usePendingTransactions from "../../hooks/usePendingTransaction"
 export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0.75%;
     width: 350px;
-    height: 100vh;
+    height: 87vh;
     // height: 575px;
     text-align: right;
     padding: 20px 20px;
-    padding-top: 100px;
-    // background: White;
+    padding-top: 10px;
+    //background: White;
     // z-index: -1;
     transition: width 0.15s ease-in-out;
 `
@@ -23,10 +23,9 @@ export const TransactionPopupWrapper = styled.div`
 export const Container = styled.div`
 
     position: relative;
-    display: ${(props) => props.display ? "none" : "block"};
-    z-index: 100000;
-
-    animation: SlideLeft 0.3s;
+    display: ${(props) => props.displayType ? "none" : "block"};
+    overflow: hidden;
+    animation: SlideLeft 0.2s;
     animation-fill-mode: left;
 
     @keyframes SlideLeft {
@@ -81,7 +80,7 @@ export const TextContainer = styled.div`
     top: 0;
     margin-top: 11px;
     margin-right: 20px;
-    // width: 100%;
+    width: 260px;
     // height: 50%;
     // background: White;
     // white-space: nowrap;
@@ -93,6 +92,7 @@ export const Text = styled.div`
 
     margin-bottom: 10px;
     margin-right: 23px;
+    width: 260px;
     font-family: 'Open Sans', sans-serif;
     text-align: left;
     font-size: ${(props) => props.size};
@@ -136,7 +136,7 @@ export const ProgressBar = styled.div`
     background: rgb(23,104,219);
     width:  ${(props) => props.active ? "0px" : "350px"};
     height: 3px;
-    transition: width 36s ease-in-out;
+    transition: width 31s ease-in-out;
     
 `
 
@@ -169,12 +169,11 @@ export const ProgressValue = styled.div`
 const TransactionNotification = ({deposits, setDeposits}) => {
 
     const [display, setDisplay]= useState(false)
-
     useEffect(() => {
 
         const timeoutId = setTimeout(() => {
             setDisplay(true)
-        }, 35000)
+        }, 30000)
         
         return () => clearTimeout(timeoutId)
     }, [])
@@ -188,7 +187,7 @@ const TransactionNotification = ({deposits, setDeposits}) => {
     return (
 
         <>
-            <Container display={display}>
+            <Container displayType={display}>
                 <TransactionPopupContainer active={true}>
                     <CloseIcon
                          strokeWidth={3} 
@@ -242,14 +241,15 @@ export const ProgressBar1 = ({deposits}) => {
 
 }
 
-const DepositSummary = ({deposits, setDeposits}) => {
+const DepositSummary = ({deposits, setDeposits, transactionBlock, setTransactionBlock}) => {
 
     return (
         <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
             { deposits.length > 0 && deposits.map((item, i) => {
                 if(i > 0){
-                    return <div className="objectname">
+                    return <div key={item.id} className="objectname">
                                 <TransactionNotification 
+                                    key={item.id}
                                     deposits={deposits}
                                     setDeposits={setDeposits}
                                 />
