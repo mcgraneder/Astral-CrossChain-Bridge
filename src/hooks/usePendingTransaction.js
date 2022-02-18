@@ -28,21 +28,21 @@ const usePendingTransactions = () => {
       ]);
       const [currentHash, setCurrentHash] = useState()
     
-      React.useEffect(() => {
+    //   React.useEffect(() => {
 
        
 
-        const pendingDepositData = localStorage.getItem("deposits");
-        if (pendingDepositData) {
-          setDeposits(JSON.parse(pendingDepositData));
-        }
+    //     const pendingDepositData = localStorage.getItem("deposits");
+    //     if (pendingDepositData) {
+    //       setDeposits(JSON.parse(pendingDepositData));
+    //     }
 
-        const currentHashData = localStorage.getItem("currentHash");
-        if (currentHashData) {
-          setPendingTransactions(currentHashData);
-        }
+    //     const currentHashData = localStorage.getItem("currentHash");
+    //     if (currentHashData) {
+    //       setPendingTransactions(currentHashData);
+    //     }
 
-      }, []);
+    //   }, []);
     
       React.useEffect(() => {
 

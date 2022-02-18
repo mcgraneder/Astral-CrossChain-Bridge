@@ -136,7 +136,7 @@ export const ProgressBar = styled.div`
     background: rgb(23,104,219);
     width:  ${(props) => props.active ? "0px" : "350px"};
     height: 3px;
-    transition: width 21s ease-in-out;
+    transition: width 36s ease-in-out;
     
 `
 
@@ -166,69 +166,22 @@ export const ProgressValue = styled.div`
 
 `
 
+const TransactionNotification = ({deposits, setDeposits}) => {
 
-
-// function DepositSummary({ info }: { info: ExactInputSwapTransactionInfo | ExactOutputSwapTransactionInfo }) {
-//   if (info.tradeType === TradeType.EXACT_INPUT) {
-//     return (
-//       <Trans>
-//         Swap exactly{' '}
-//         <FormattedCurrencyAmountManaged
-//           rawAmount={info.inputCurrencyAmountRaw}
-//           currencyId={info.inputCurrencyId}
-//           sigFigs={6}
-//         />{' '}
-//         for{' '}
-//         <FormattedCurrencyAmountManaged
-//           rawAmount={info.expectedOutputCurrencyAmountRaw}
-//           currencyId={info.outputCurrencyId}
-//           sigFigs={6}
-//         />
-//       </Trans>
-//     )
-//   } else {
-//     return (
-//       <Trans>
-//         Swap{' '}
-//         <FormattedCurrencyAmountManaged
-//           rawAmount={info.expectedInputCurrencyAmountRaw}
-//           currencyId={info.inputCurrencyId}
-//           sigFigs={6}
-//         />{' '}
-//         for exactly{' '}
-//         <FormattedCurrencyAmountManaged
-//           rawAmount={info.outputCurrencyAmountRaw}
-//           currencyId={info.outputCurrencyId}
-//           sigFigs={6}
-//         />
-//       </Trans>
-//     )
-//   }
-// }
-
-const TransactionNotification = ({deposits, setDeposits, setIsActive, id,}) => {
-
-    const [loadBar, setLoadBar] = useState(false)
     const [display, setDisplay]= useState(false)
-
-    // const {deposits, setDeposits} = usePendingTransactions()
-   
-    const filteredNotificationArray = deposits.filter((notification, i) => notification.id !== id)
 
     useEffect(() => {
 
         const timeoutId = setTimeout(() => {
             setDisplay(true)
-            setDeposits(filteredNotificationArray)
-        }, 20000)
+        }, 35000)
         
         return () => clearTimeout(timeoutId)
     }, [])
 
     const click = () => {
 
-        console.log("heyy")
-        setDeposits(deposits.filter(notification => id !== notification.id))
+        setDisplay(true)
     }
 
 
@@ -237,9 +190,14 @@ const TransactionNotification = ({deposits, setDeposits, setIsActive, id,}) => {
         <>
             <Container display={display}>
                 <TransactionPopupContainer active={true}>
-                    <CloseIcon strokeWidth={3} onClick={click}/>
+                    <CloseIcon
+                         strokeWidth={3} 
+                         onClick={click}/>
                     <IconContainer>
-                        <CheckCircle strokeWidth={1.5} size="35" color={"rgb(38,162,91)"} />
+                        <CheckCircle 
+                            strokeWidth={1.5} 
+                            size="35" 
+                            color={"rgb(38,162,91)"} />
                     </IconContainer>
                     <TextContainer>
                         <Text size={"16px"} color={"White"} weight={true}>
@@ -250,12 +208,8 @@ const TransactionNotification = ({deposits, setDeposits, setIsActive, id,}) => {
                         </Text>
                     </TextContainer>
                     <ProgressBar1 
-                                deposits={deposits} 
-                                setDeposits={setDeposits}/>
-                        
-
-                    {/* <ProgressBar1 active={loadBar}/> */}
-                    
+                        deposits={deposits} 
+                        setDeposits={setDeposits}/>        
                 </TransactionPopupContainer>
             </Container>
             </>
@@ -264,16 +218,13 @@ const TransactionNotification = ({deposits, setDeposits, setIsActive, id,}) => {
     )
 }
 
-export const ProgressBar1 = ({deposits, key, id}) => {
+export const ProgressBar1 = ({deposits}) => {
 
     const [active, setActive] = useState(false)
 
-    console.log(id)
     useEffect(() => {
-
         setActive(false)
         setTimeout(() => {
-
             setActive(true)
         }, 100)
     }, [deposits])
@@ -291,35 +242,20 @@ export const ProgressBar1 = ({deposits, key, id}) => {
 
 }
 
-const DepositSummary = ({deposits, setDeposits, setIsActive, showNotifications, setShowNotifications}) => {
-
-
-    useEffect (() => {
-        if(deposits.length > 0) {
-            setIsActive(true)
-        }
-        if(deposits.length == 1) setShowNotifications(false)
-    }, [deposits])
+const DepositSummary = ({deposits, setDeposits}) => {
 
     return (
-
-       
-            <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
-                        { deposits.length > 0 && deposits.map((item, i) => {
-
-                        console.log(i)
-                        if(i > 0){
-                        return <div className="objectname">
-                            <TransactionNotification 
-                                id={item.id}
-                                amount={item.amount} 
-                                setIsActive={setIsActive}
-                                deposits={deposits}
-                                setDeposits={setDeposits}/>
+        <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
+            { deposits.length > 0 && deposits.map((item, i) => {
+                if(i > 0){
+                    return <div className="objectname">
+                                <TransactionNotification 
+                                    deposits={deposits}
+                                    setDeposits={setDeposits}
+                                />
                             </div>
-                        
-                        }})}
-            </TransactionPopupWrapper>
+            }})}
+        </TransactionPopupWrapper>
     )
 }
 

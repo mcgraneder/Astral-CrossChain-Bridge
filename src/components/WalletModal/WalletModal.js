@@ -140,8 +140,7 @@ export const CustomLightSpinner = styled(Spinner)`
   height: ${({ size }) => size};
   width: ${({ size }) => size};
 `
-const aId = generate()
-const unrankedId = generate();
+
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
@@ -330,29 +329,18 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     }
 
     const setToggleValue = () => {
-
         setToggle(!toggle);
-        setText(text)
 
         if(!toggle) {
             setInputText("Deposit ")
             setTransactionType("DEPOSIT") 
             beginDeposit()
-            setText("") 
         } else {
             setInputText("Withdraw ")
             setSufficentApproval(true)
             setTransactionType("WITHDRAWAL")  
-            setText("")
         }
-    }
-
-    const clearAllStates = () => {
-
-        setPending1(false)
-        setConfirm(false)
-        setSubmitted(false)
-        setRejected(false)
+        setText("")
     }
 
     const handleApproval = async() => {
@@ -373,27 +361,28 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
-                setDeposits([
-
-                    ...deposits,
-                    {
-                        id: v4(),
-                        type: "WITHDRAWAL",
-                        from: account,
-                        amount: amount,
-                        txHash: result.transactionHash,
-                        time: 2
-                    },
-                ]);
-
+               
                 await result.wait().then((result) => {
                     beginDeposit()
                     setLoading(false)
+
+                    setDeposits([
+
+                        ...deposits,
+                        {
+                            id: v4(),
+                            type: "WITHDRAWAL",
+                            from: account,
+                            amount: amount,
+                            txHash: result.transactionHash,
+                            time: 2
+                        },
+                    ]);
                 })
             });
         
         } catch (error) {
-            clearAllStates()
+            setPending1(false)
             setRejected(true)
             setLoading(false)
 
@@ -423,22 +412,24 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
-                setDeposits([
 
-                    ...deposits,
-                    {
-                        id: v4(),
-                        type: "WITHDRAWAL",
-                        from: account,
-                        amount: amount,
-                        txHash: result.transactionHash,
-                        time: 2
-                    },
-                ]);
                
                 await result.wait().then((result) => {
                     setLoading(false)
                     console.log(result)
+
+                    setDeposits([
+
+                        ...deposits,
+                        {
+                            id: v4(),
+                            type: "WITHDRAWAL",
+                            from: account,
+                            amount: amount,
+                            txHash: result.transactionHash,
+                            time: 2
+                        },
+                    ]);
                     
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
@@ -452,7 +443,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             
         } catch(error) {
             setLoading(false)
-            clearAllStates()
+            setPending1(false)
             setRejected(true)
 
             if (error.code == 4001) {
@@ -482,21 +473,21 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 setPending1(false)
                 setSubmitted(true)
 
-                setDeposits([
-
-                    ...deposits,
-                    {
-                        id: v4(),
-                        type: "WITHDRAWAL",
-                        from: account,
-                        amount: amount,
-                        txHash: result.transactionHash,
-                        time: 2
-                    },
-                ]);
-
                 await result.wait().then((result) => {
                     setLoading(false)
+
+                    setDeposits([
+
+                        ...deposits,
+                        {
+                            id: v4(),
+                            type: "WITHDRAWAL",
+                            from: account,
+                            amount: amount,
+                            txHash: result.transactionHash,
+                            time: 2
+                        },
+                    ]);
 
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
@@ -508,7 +499,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             });
 
         } catch(error) {
-            clearAllStates()
+            setPending1(false)
             setRejected(true)
             setLoading(false)
 
@@ -521,15 +512,12 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
       
     }
 
-    const a = () => {
-
-        clearAllStates()
+    const closeSbmissionModal = () => {
         if(TransactionType !== "APPROVAL") {
             setTimeout(() => {
                 setText("")
             }, 300)
         }
-       
     }
 
     return (
@@ -559,7 +547,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 }
             />
             <TransactionSubmittedModal
-                close={() => a()} 
+                close={() => closeSbmissionModal()} 
                 amount={amount} 
                 visible={submitted}
             />
