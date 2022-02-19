@@ -19,6 +19,7 @@
     "@web3-react/portis-connector": "^6.2.9",
     "@web3-react/torus-connector": "^6.2.9",
     "@web3-react/walletconnect-connector": "^6.2.10",
+    "axios": "^0.26.0",
     "ethers": "^5.5.4",
     "fortmatic": "^2.2.1",
     "immutable": "^4.0.0",

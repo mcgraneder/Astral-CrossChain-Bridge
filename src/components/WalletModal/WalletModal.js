@@ -178,17 +178,16 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [sufficentBalance, setSufficentBalance] = useState(false)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
+    const [gas, setGas] = useState(0)
 
     
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
       const { setDeposits, deposits, currentHash, setCurrentHash} = usePendingTransaction()
     
-      console.log(transactionBlock)
       useEffect(() => {
        
          deposits.map((deposit, i) => {
-
             if(i > 0) {
                 console.log(deposit.txHash)
                 library.getTransaction(deposit.txHash).then((result) => {
@@ -292,8 +291,9 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const getGas = async() => {
 
         try {
-            var gas = await ren.estimateGas.approve(account, BridgeAddress)
-            gas = Web3.utils.fromWei(gas.toString(), "Gwei")
+            var gass = await ren.estimateGas.approve(account, BridgeAddress)
+            gass = Web3.utils.fromWei(gas.toString(), "Gwei")
+            setGas(gass)
 
         } catch(error) {
             console.error(error)
@@ -369,7 +369,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         setConfirm(false)
         setPending1(true)
-
+//make this into generic function which based on trans type takes a payload
         if(text === "") return
 
         var walletBalance = await ren.balanceOf(account)
@@ -396,7 +396,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                             id: v4(),
                             type: "WITHDRAWAL",
                             from: account,
-                            amount: amount,
+                            amount: text,
                             txHash: result.transactionHash,
                             time: 2
                         },
@@ -448,7 +448,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                             id: v4(),
                             type: "WITHDRAWAL",
                             from: account,
-                            amount: amount,
+                            amount: text,
                             txHash: result.transactionHash,
                             time: 2
                         },
@@ -508,7 +508,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                             id: v4(),
                             type: "WITHDRAWAL",
                             from: account,
-                            amount: amount,
+                            amount: text,
                             txHash: result.transactionHash,
                             time: 2
                         },
@@ -565,13 +565,15 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
             />
             <ConfirmationModal
                 close={() => setConfirm(!confirm)} 
-                amount={amount} 
+                amount={text} 
                 visible={confirm}
                 handleDeposit={
                     TransactionType === "APPROVAL" ? handleApproval 
                     : TransactionType === "DEPOSIT" ? handleDeposit 
                     : handleWithdraw
                 }
+                TransactionType={setTransactionType}
+                gass={gas}
             />
             <TransactionSubmittedModal
                 close={() => closeSbmissionModal()} 
@@ -696,15 +698,24 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                             fontsize="17"  
                             transactionBlock={transactionBlock}
                             text={
-                                transactionBlock ? (active ? (
-                                sufficentBalance ? 
+                                transactionBlock ? 
+                                (active ? 
+                                (sufficentBalance ? 
                                 "Insufficent Balance" 
                                 :(sufficentApproval ? 
                                 ( text === "" ? "Enter an Amount" 
                                 : inputText +  " " + text + " BTC") 
                                 : "Approve token spend first")) 
-                                : <div>Connecting... <LoaderWrapper><Loader stroke="white" size={"20px"}/></LoaderWrapper></div>) 
-                                : <div>1 Pending... <LoaderWrapper position={Boolean(text === "")}><Loader stroke="white" size={"20px"}/></LoaderWrapper></div>}
+                                : <div>Connecting... 
+                                    <LoaderWrapper>
+                                        <Loader stroke="white" size={"20px"}/>
+                                    </LoaderWrapper>
+                                  </div>) 
+                                : <div>1 Pending... 
+                                    <LoaderWrapper position={Boolean(text === "")}>
+                                        <Loader stroke="white" size={"20px"}/>
+                                    </LoaderWrapper>
+                                   </div>}
                             ></Button>
                         </ButtonWrapper>
                     </MintFormWrapper>

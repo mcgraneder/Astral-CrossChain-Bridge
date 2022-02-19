@@ -4,12 +4,13 @@ import { CheckCircle, X } from "react-feather"
 import usePendingTransaction from "../../hooks/usePendingTransaction"
 import { useEffect } from "react/cjs/react.development"
 import usePendingTransactions from "../../hooks/usePendingTransaction"
+import axios from "axios"
 export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
     bottom: 0;
     right: 0.75%;
-    width: 350px;
+    width: 360px;
     height: 87vh;
     // height: 575px;
     text-align: right;
@@ -80,7 +81,7 @@ export const TextContainer = styled.div`
     top: 0;
     margin-top: 11px;
     margin-right: 20px;
-    width: 260px;
+    width: 230px;
     // height: 50%;
     // background: White;
     // white-space: nowrap;
@@ -92,7 +93,7 @@ export const Text = styled.div`
 
     margin-bottom: 10px;
     margin-right: 23px;
-    width: 260px;
+    width: 230px;
     font-family: 'Open Sans', sans-serif;
     text-align: left;
     font-size: ${(props) => props.size};
@@ -166,9 +167,12 @@ export const ProgressValue = styled.div`
 
 `
 
-const TransactionNotification = ({deposits, setDeposits}) => {
+const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+
+const TransactionNotification = ({deposits, setDeposits, amount}) => {
 
     const [display, setDisplay]= useState(false)
+    const [priceForAmount, setPriceForAmount] = useState(0)
     useEffect(() => {
 
         const timeoutId = setTimeout(() => {
@@ -176,6 +180,15 @@ const TransactionNotification = ({deposits, setDeposits}) => {
         }, 30000)
         
         return () => clearTimeout(timeoutId)
+    }, [])
+
+    useEffect(() => {
+        axios.get(RenBTCPriceRequestURL).then((result) => {
+            const currentPrice = Number((result.data[0].current_price + 0.25) * amount)
+            setPriceForAmount((Number(currentPrice)).toFixed(6))
+            
+        }).catch(error => console.error(error))
+
     }, [])
 
     const click = () => {
@@ -199,8 +212,8 @@ const TransactionNotification = ({deposits, setDeposits}) => {
                             color={"rgb(38,162,91)"} />
                     </IconContainer>
                     <TextContainer>
-                        <Text size={"16px"} color={"White"} weight={true}>
-                            Deposited Exactly 0.00036 Ren BTC at a price of $100
+                        <Text size={"15px"} color={"White"} weight={true}>
+                            Deposited Exactly {Number(amount).toFixed(7)} Ren BTC at a price of ${priceForAmount}
                         </Text>
                         <Text size={"15px"} color={"rgb(13,94,209)"} weight={true}>
                             View on explorer
@@ -252,6 +265,7 @@ const DepositSummary = ({deposits, setDeposits, transactionBlock, setTransaction
                                     key={item.id}
                                     deposits={deposits}
                                     setDeposits={setDeposits}
+                                    amount={item.amount}
                                 />
                             </div>
             }})}

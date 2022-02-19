@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
 import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
@@ -8,6 +8,18 @@ import metaMask from "../assets/metamask.png"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import Bitcoin from "../assets/Bitcoin.svg"
 import Dollar from "../assets/dollar.png"
+import { useEffect } from "react/cjs/react.development";
+import axios from "axios"
+import useAuth from "../../hooks/useAuth";
+import { getContract } from "../../utils/utils";
+import abi from "../../utils/Abis/ABI.json"
+import abi2 from "../../utils/Abis/AB12.json"
+import Web3	 from "web3";
+
+const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
+const renAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
+
+
 export const FormWrapper = styled.div`
 
 
@@ -85,12 +97,14 @@ const rotate = keyframes`
   to {
     transform: rotate(360deg);
   }
+  will-change: transfrom;
 `
 const Spinner = styled.img`
 
-animation: 2s ${rotate} linear infinite;
+animation: 1.8s ${rotate} linear infinite;
   width: 16px;
   height: 16px;
+  will-change: transfrom;
 `
 export const CustomLightSpinner = styled(Spinner)`
   
@@ -179,6 +193,7 @@ export const ButtonWrapper = styled.div`
 
 font-family: 'Open Sans', sans-serif;
    margin-top: ${(props) => props.margin};
+   margin-bottom: 5px;
     height: 30px;
     // margin: 0 auto;
     display: flex;
@@ -190,8 +205,8 @@ font-family: 'Open Sans', sans-serif;
 export const ErrorText = styled.div`
 
   position: absolute;
-  left: 5%;
-  top: 5%;
+  left: 4%;
+  top: 4%;
   color: White;
   font-size: 22px;
 `
@@ -279,6 +294,7 @@ export const Wrapper = styled.div`
 
 
 
+const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
 export const RejectionModal = ({visible, close, amount}) => {
     
@@ -326,7 +342,7 @@ export const PendingModal = ({visible, close, amount}) => {
                     <Title color={"White"} size={"21px"}>Waiting For Confirmation</Title>
                 </TitleWrapper>
                 <TitleWrapper margin={"5px"}>
-                    <SubTitle color={"White"} size={"18px"} margin={"0"}>Approving spend of {amount} RenBTC</SubTitle>
+                    <SubTitle color={"White"} size={"18px"} margin={"0"}>Approving spend of {Number(amount).toFixed(6)} RenBTC</SubTitle>
                 </TitleWrapper>
                 <TitleWrapper>
                     <SubTitle color={"#adadad"} size={"15px"} margin={"0"}>Confirm this transaction in your wallet</SubTitle>
@@ -369,10 +385,84 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
         </>
     )
 }
+export const ConfirmationModal = ({visible, close, amount, handleDeposit, transactionType, gass}) => {
 
-export const ConfirmationModal = ({visible, close, amount, handleDeposit}) => {
+    const [renPrice, setRenPrice] = useState(0)
+    const [priceForAmount, setPriceForAmount] = useState(0)
+    const [bridgeFee, setBridgeFee] = useState(0)
+    const [ren, setRen] = useState()
+    const [bridge, setBridge] = useState()
+    const [gas, setGas] = useState(0)
+    const [txCost, setTxCost] = useState(0)
+    const [expectedBalance, setExpectedBalance] = useState(0)
 
-    const transactionType = handleDeposit
+    const {library, account} = useAuth()
+
+    useEffect(() => {
+        if(library) {
+
+            const bridgeContract = getContract(BridgeAddress, abi, library, account);
+            const renContract = getContract(renAddress, abi2, library, account);
+            setBridge(bridgeContract)
+            setRen(renContract)
+        }    
+    }, [library])
+
+    useEffect(() => {
+        axios.get(RenBTCPriceRequestURL).then((result) => {
+            const currentPrice = result.data[0].current_price + 0.25
+            setRenPrice(currentPrice)
+            setPriceForAmount(currentPrice * Number(amount).toFixed(6))
+            
+        }).catch(error => console.error(error))
+
+        calculateBridgeFee()
+        calculateExpectedTransactionCost()
+        calculateExpectedBalance()
+
+    }, [close])
+
+    const calculateBridgeFee = () => {
+
+        const fee = (amount * 0.003).toFixed(8)
+        setBridgeFee(fee)
+    }
+
+    const estimateGasForTransaction = async(transactionType) => {
+
+        var transactionGas
+        if(transactionType === "APPROVAL") {
+            transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
+            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+            console.log(transactionGas)
+             setGas(transactionGas)
+        }
+        if(transactionType === "DEPOSIT") {
+            transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
+            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+            console.log(transactionGas)
+             setGas(transactionGas)
+        }
+        if(transactionType === "WITHDRAW") {
+            transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
+            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+            console.log(transactionGas)
+             setGas(transactionGas)
+        }
+        console.log(gas)
+    }
+
+    const calculateExpectedTransactionCost = () => {
+
+        const expectedCost = Number(amount + gass).toFixed(7);
+        setTxCost(expectedCost)
+    }
+
+    const calculateExpectedBalance = () => {
+
+        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
+        setExpectedBalance(calculatedBalanceAfterFee)
+    }
     
     return (
         <>
@@ -383,39 +473,40 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit}) => {
                 <ArrowDownContainer>
                     <ArrowDown color={"White"} size={"15px"}/>
                 </ArrowDownContainer>
-                <TokenAmountWrapper height={"70px"} marginTop={"40px"}>
-                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>0.0003826</TokenAmount>
+                <TokenAmountWrapper height={"70px"} marginTop={"40px"} marginBottom={"0px"}>
+                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>{amount}</TokenAmount>
                     <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>RenBTC</TokenAmount>
                     <ImgWrapper padding={"17px"} float={"right"}>
                         <img src={Bitcoin} width={"35px"}></img>
                     </ImgWrapper>
                 </TokenAmountWrapper>
-                <TokenAmountWrapper height={"70px"} marginTop={"4px"}>
-                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>432.78</TokenAmount>
+                <TokenAmountWrapper height={"70px"} marginTop={"4px"} marginBottom={"0px"}>
+                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>{priceForAmount}</TokenAmount>
                     <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>Dollars</TokenAmount>
                     <ImgWrapper padding={"20px"} float={"right"}>
                         <img src={Dollar} height={"30px"}></img>
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 <TitleWrapper margin={"10px"}>
-                    <SubTitle2 style={{"fontWeight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = $43,647.47</SubTitle2>
+                    <SubTitle2 style={{"fontWeight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = ${renPrice}</SubTitle2>
                 </TitleWrapper>
                 <Wrapper>
-                    <TokenAmountWrapper height={"125px"}>
+                    <TokenAmountWrapper height={"135px"} marginTop={"15px"}>
                         <TokenAmount2 float={"left"} size={"15px"} colour={"White"} paddingTop={"10px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"10px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>0.0001823 ETH</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"10px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{gass} ETH</TokenAmount2>
                         <TokenAmount2 float={"left"} size={"15px"} colour={"White"}paddingTop={"3px"} paddingRight={"50px"}>Token Bridge Fee:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} paddingTop={"3px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>0.00382 ETH</TokenAmount2>
-                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"20px"} paddingRight={"50px"}>Expected balance after</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"20px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>0.00382 ETH</TokenAmount2>
-                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"0"} paddingRight={"50px"}>calculation</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} paddingTop={"3px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{bridgeFee} ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"30px"} paddingRight={"0px"}>Expected cost to execute transaction</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"30px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{txCost} ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0px"}>Expected balance after Bridge Fee</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{expectedBalance} ETH</TokenAmount2>
                         <Divider></Divider>
                     </TokenAmountWrapper>
                 </Wrapper>
                 <TitleWrapper margin={"10px"}>
-                <SubTitle2 style={{"fontWeight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least 0.0003812 RenBTC after the Bridge fee.</SubTitle2>
+                <SubTitle2 style={{"fontWeight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least {expectedBalance} RenBTC after the Bridge fee.</SubTitle2>
                 </TitleWrapper>
-                <ButtonWrapper margin={"40px"}>
+                <ButtonWrapper margin={"45px"}>
                     <Button onClick={handleDeposit}>Confirm Transaction</Button>
                 </ButtonWrapper>
                 
