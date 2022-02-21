@@ -40,7 +40,7 @@ import DropdownMenu3 from "./DropdownMenu3";
 // import { ChainSelectorIcon } from "../BridgeModal/BridgeModalStyles";
 import Nav from "../Navbar/Navbar";
 import { Ethereum } from "@renproject/chains";
-
+import TransactionList from "./TransactionList/TransactionList";
 const TransactionModal = ({close}) => {
 
     const [toggle, setToggle] = useState(true)
@@ -168,6 +168,7 @@ const TransactionModal = ({close}) => {
                                 <ToggleButton2>Completed</ToggleButton2>
                             </ToggleButtonWrapper>
                     </ToggleContainer> */}
+                    <TransactionList/>
                 </TransactionDetails>
             </BridgeModalContainer>
         </StyledContainer>

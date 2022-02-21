@@ -22,7 +22,7 @@ export const HeaderContainer = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 14.5%;
+    top: 12.5%;
     width: 900px;
     height: 500px;
     // background: rgb(14, 22, 39);
@@ -103,7 +103,7 @@ export const TransactionDetails = styled.div`
     // position: absolute;
     // top: 28%;
     width: 100%;
-    height: 500px;
+    height: 575px;
     background: rgb(14, 22, 39);
     // text-align: right;
     // padding: 10px 10px;

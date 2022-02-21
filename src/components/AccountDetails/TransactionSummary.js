@@ -26,7 +26,7 @@ export const Container = styled.div`
     position: relative;
     display: ${(props) => props.displayType ? "none" : "block"};
     overflow: hidden;
-    animation: SlideLeft 0.2s;
+    animation: SlideLeft 0.35s;
     animation-fill-mode: left;
 
     @keyframes SlideLeft {
@@ -48,11 +48,11 @@ export const TransactionPopupContainer = styled.div`
     
     height: 90px;
     width: 100%;
-    background-color: rgb(17,20,39); //b 72
+    background-color: rgb(7,10,29); //b 72
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 30px;
-    border: 1px solid  rgb(25,30,82);
+    // border: 1px solid  rgb(25,30,82);
     transition: width 0.15s ease-in-out;
     // white-space: nowrap;
   overflow: hidden;
@@ -169,8 +169,9 @@ export const ProgressValue = styled.div`
 
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
-const TransactionNotification = ({deposits, setDeposits, amount}) => {
 
+    const TransactionNotification = ({deposits, setDeposits, amount}) => {
+    
     const [display, setDisplay]= useState(false)
     const [priceForAmount, setPriceForAmount] = useState(0)
     useEffect(() => {

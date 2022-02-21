@@ -54,7 +54,7 @@ import usePendingTransaction from "../../hooks/usePendingTransaction";
 import useBalance from "../../hooks/useBalance";
 import Loader from "../Loader/Loader";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
-
+import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -292,7 +292,8 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
         try {
             var gass = await ren.estimateGas.approve(account, BridgeAddress)
-            gass = Web3.utils.fromWei(gas.toString(), "Gwei")
+            gass = Web3.utils.fromWei(gass.toString(), "Gwei")
+            console.log(gass)
             setGas(gass)
 
         } catch(error) {
@@ -337,6 +338,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const start = (type) => { 
 
         if(text === "" || !transactionBlock) return
+        getGas()
         setConfirm(true)
         setTransactionType(type)
 
@@ -394,7 +396,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                         ...deposits,
                         {
                             id: v4(),
-                            type: "WITHDRAWAL",
+                            type: "APPROVAL",
                             from: account,
                             amount: text,
                             txHash: result.transactionHash,
@@ -446,7 +448,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                         ...deposits,
                         {
                             id: v4(),
-                            type: "WITHDRAWAL",
+                            type: "DEPOSIT",
                             from: account,
                             amount: text,
                             txHash: result.transactionHash,
@@ -550,7 +552,9 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     return (
 
         <>
-       
+       {/* <AccountDetailsModal>
+
+       </AccountDetailsModal> */}
             <DepositSummary 
                 deposits={deposits} 
                 setIsActive={setIsActive} 

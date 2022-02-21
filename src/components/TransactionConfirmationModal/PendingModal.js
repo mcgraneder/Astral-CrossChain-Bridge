@@ -284,7 +284,7 @@ export const Divider = styled.div`
     width: 91%;
     height: 0.3px;
     background: #adadad;
-    top: 55%;
+    top: 50%;
 `
 
 export const Wrapper = styled.div`
@@ -454,12 +454,15 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
 
     const calculateExpectedTransactionCost = () => {
 
-        const expectedCost = Number(amount + gass).toFixed(7);
-        setTxCost(expectedCost)
+        const expectedCost = Number(amount) + gas
+        console.log(amount)
+        console.log(gass)
+        setTxCost(expectedCost.toFixed(7))
     }
 
     const calculateExpectedBalance = () => {
 
+        console.log(amount)
         const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
         setExpectedBalance(calculatedBalanceAfterFee)
     }
@@ -491,13 +494,13 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
                     <SubTitle2 style={{"fontWeight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = ${renPrice}</SubTitle2>
                 </TitleWrapper>
                 <Wrapper>
-                    <TokenAmountWrapper height={"135px"} marginTop={"15px"}>
-                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} paddingTop={"10px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"10px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{gass} ETH</TokenAmount2>
+                    <TokenAmountWrapper height={"140px"} marginTop={"15px"}>
+                        <TokenAmount2 float={"left"} size={"15px"} colour={"White"} paddingTop={"15px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"15px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{gass} ETH</TokenAmount2>
                         <TokenAmount2 float={"left"} size={"15px"} colour={"White"}paddingTop={"3px"} paddingRight={"50px"}>Token Bridge Fee:</TokenAmount2>
                         <TokenAmount2 float={"right"} size={"15px"} colour={"White"} paddingTop={"3px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{bridgeFee} ETH</TokenAmount2>
-                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"30px"} paddingRight={"0px"}>Expected cost to execute transaction</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"30px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{txCost} ETH</TokenAmount2>
+                        <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"25px"} paddingRight={"0px"}>Expected cost to execute transaction</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"25px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{txCost} ETH</TokenAmount2>
                         <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0px"}>Expected balance after Bridge Fee</TokenAmount2>
                         <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{expectedBalance} ETH</TokenAmount2>
                         <Divider></Divider>
