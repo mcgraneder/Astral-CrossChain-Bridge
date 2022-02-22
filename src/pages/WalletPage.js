@@ -6,16 +6,15 @@ import useBalance from "../hooks/useBalance";
 import { TransactionPopupWrapper } from "../components/AccountDetails/TransactionSummary";
 import DepositSummary from "../components/AccountDetails/TransactionSummary";
 import TransactionProcess from "../components/TransactionConfirmationModal/PendingModal";
+import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModal";
 const WalletPage = () => {
 
     const [show1, setShow1] = useState(false);
-    const [confirm, setConfirm] = useState(false)
-    const [pending1, setPending1] = useState(false)
-    const [submitted, setSubmitted] = useState(false)
-    const [rejected, setRejected] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [showAccountsModal, setShowAccountsModal] = useState(false)
 
     const toggle1 = () => setShow1(!show1);
+    const toggleAccountsModal = () => setShowAccountsModal(!showAccountsModal)
 
     const [amount, setAmount] = useState()
     const [showPending, setShowPending] = useState(false)
@@ -28,11 +27,10 @@ const WalletPage = () => {
     return (
 
         <>
-            
             {/* <PendingModal visible={showPending} close={togglePending} amount={amount}></PendingModal> */}
             <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
-            <Web3Modal visible={show1} close={toggle1}></Web3Modal>
-            <WalletModal setShow={setShow1} close={togglePending} visible={showPending} setLoading={setLoading} loading={loading}></WalletModal>
+            <Web3Modal toggleAccount={toggleAccountsModal} visible={show1} close={toggle1}></Web3Modal>
+            <WalletModal setShow={setShow1} close={togglePending} visible={showPending} setLoading={setLoading} loading={loading} toggleAccount={toggleAccountsModal}></WalletModal>
         </>
     )
 }

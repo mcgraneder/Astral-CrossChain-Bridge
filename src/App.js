@@ -29,10 +29,7 @@ function App() {
 
     <div>
       {loading && <PageLoad></PageLoad>}
-
-      <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
-        {/* <Nav bcolour={"rgb(34,43,68)"} bcolour1={"rgb(14, 22, 39)"} bcolour2={"rgb(14, 22, 39)"} visible={true}></Nav> */}
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>
@@ -42,8 +39,6 @@ function App() {
           </Switch>
           <Footer colour={"rgb(24,33,58)"} colour1={"rgb(7, 16, 33)"} colour2={"rgb(7, 16, 33)"}></Footer>
         </Router>
-        {/* <BridgePage></BridgePage> */}
-      </Web3ReactProvider>
     </div>
   )
 

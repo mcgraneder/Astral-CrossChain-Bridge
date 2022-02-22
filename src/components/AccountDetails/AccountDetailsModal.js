@@ -4,7 +4,12 @@ import Circle from "../assets/blue-loader.svg"
 import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
 // import { walletconnect } from "web3modal/dist/providers/connectors";
 import {X, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle, Copy, ExternalLink} from "react-feather"
-import metaMask from "../assets/metamask.png"
+import metamask from "../assets/metamask.svg"
+import walletConnect from "../assets/wallet_connect.svg"
+import coinbase from "../assets/coinbase.svg"
+import fortmatic from "../assets/fortmatic.svg"
+import torus from "../assets/torus.svg"
+import portis from "../assets/portis.svg"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import Bitcoin from "../assets/Bitcoin.svg"
 import Dollar from "../assets/dollar.png"
@@ -384,13 +389,33 @@ export const Container = styled.div`
 `
 
 
-const AccountDetailsModal = () => {
+const AccountDetailsModal = ({close, visible}) => {
+
+    const { account, onPageLoading, connectOn, disconnect, loading} = useAuth()
+
+    var logo
+
+    if(localStorage.getItem("provider") === "injected") {
+        logo = metamask;
+    }
+    if(localStorage.getItem("provider") === "walletconnect") {
+        logo = walletConnect;
+    }
+    if(localStorage.getItem("provider") === "fortmatic") {
+        logo = fortmatic;
+    }
+    if(localStorage.getItem("provider") === "portis") {
+        logo = portis;
+    }
+    if(localStorage.getItem("provider") === "torus") {
+        logo = torus;
+    }
 
     return(
 
-        <Backdrop visible={true}>
+        <Backdrop visible={visible} onClick={close}>
            
-            <FormWrapper visible={true} trueFade={true}>
+            <FormWrapper visible={visible} trueFade={true}>
                 <ErrorText>Account</ErrorText>
                 <CloseIcon></CloseIcon>
                 <TokenAmountWrapper height={"120px"} marginTop={"40px"} marginBottom={"0px"}>
@@ -401,10 +426,12 @@ const AccountDetailsModal = () => {
                         </DisconnectButtonWrapper>
                     </TitleWrapper>
                     <TitleWrapper spacing={"left"}>
-                    <LogoWrapper marginRight={"2px"}>
-                        <img src={metaMask} width={"40px"}></img>
+                    <LogoWrapper marginRight={"8px"}>
+                        <img src={logo} width={"25px"}></img>
                     </LogoWrapper>
-                        <Title size={"20px"} color={"White"}>0x1263...17353</Title>
+                        <Title size={"20px"} color={"White"}>
+                            {account ? (account.substring(0, 6) + "..." +account.substring(account.length - 4)) : "connecting"}
+                        </Title>
                     </TitleWrapper>
                     <TitleWrapper spacing={"left"}>
                         <LogoWrapper marginRight={"5px"}>

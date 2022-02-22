@@ -595,9 +595,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     return (
 
         <>
-       <AccountDetailsModal>
-
-       </AccountDetailsModal>
             <DepositSummary 
                 deposits={deposits} 
                 setIsActive={setIsActive} 

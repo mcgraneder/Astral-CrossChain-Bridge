@@ -2,13 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import NotificationProvider from "./components/Notifications/NotificationsProvider"
+import Web3 from "web3";
+import { Web3ReactProvider } from "@web3-react/core";
+
+import { Web3Provider } from "@ethersproject/providers";
+
+function getLibrary(provider) {
+  return new Web3Provider(provider)
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <NotificationProvider> */}
+     <Web3ReactProvider getLibrary={getLibrary}>
       <App />
-    {/* </NotificationProvider> */}
+    </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
