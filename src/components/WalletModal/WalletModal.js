@@ -183,7 +183,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
-      const { setDeposits, deposits, currentHash, setCurrentHash} = usePendingTransaction()
+      const { setDeposits, deposits,  transactions, setTransactions,} = usePendingTransaction()
     
       useEffect(() => {
        
@@ -227,9 +227,11 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
         if(library && ren) {
             ren.on("Approval", (from, to , value) => {
                setShowNotifications(true)
+               
             });
 
-            ren.on("Transfer", (from, to , value) => {
+            ren.on("Transfer", (result) => {
+                console.log(result)
                 setShowNotifications(true)
             });
          }
@@ -391,9 +393,23 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                     beginDeposit()
                     setLoading(false)
                     setTransactionBlock(true)
+                    const id = v4()
                     setDeposits([
 
                         ...deposits,
+                        {
+                            id: id,
+                            type: "APPROVAL",
+                            from: account,
+                            amount: text,
+                            txHash: result.transactionHash,
+                            time: 2
+                        },
+                    ]);
+
+                    setTransactions([
+
+                        ...transactions,
                         {
                             id: v4(),
                             type: "APPROVAL",
@@ -442,13 +458,26 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 await result.wait().then((result) => {
                     setLoading(false)
                     setTransactionBlock(true)
-
+                    const id= v4()
                     setDeposits([
 
                         ...deposits,
                         {
-                            id: v4(),
+                            id: id,
                             type: "DEPOSIT",
+                            from: account,
+                            amount: text,
+                            txHash: result.transactionHash,
+                            time: 2
+                        },
+                    ]);
+
+                    setTransactions([
+
+                        ...transactions,
+                        {
+                            id: id,
+                            type: "APPROVAL",
                             from: account,
                             amount: text,
                             txHash: result.transactionHash,
@@ -503,12 +532,26 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 await result.wait().then((result) => {
                     setLoading(false)
                     setTransactionBlock(true)
+                    const id = v4()
                     setDeposits([
 
                         ...deposits,
                         {
-                            id: v4(),
+                            id: id,
                             type: "WITHDRAWAL",
+                            from: account,
+                            amount: text,
+                            txHash: result.transactionHash,
+                            time: 2
+                        },
+                    ]);
+
+                    setTransactions([
+
+                        ...transactions,
+                        {
+                            id: id,
+                            type: "APPROVAL",
                             from: account,
                             amount: text,
                             txHash: result.transactionHash,
@@ -552,9 +595,9 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     return (
 
         <>
-       {/* <AccountDetailsModal>
+       <AccountDetailsModal>
 
-       </AccountDetailsModal> */}
+       </AccountDetailsModal>
             <DepositSummary 
                 deposits={deposits} 
                 setIsActive={setIsActive} 

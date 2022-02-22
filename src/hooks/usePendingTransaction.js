@@ -18,41 +18,37 @@ const usePendingTransactions = () => {
         txHash: "hash",
         time: "date",
       }])
-    const [pendingTransactions, setPendingTransactions] = React.useState([
+    const [transactions, setTransactions] = React.useState([
         {
-            id: unrankedId,
-            from: "address",
-            amount: "number",
-            time: "Date"
+          id: v4(),
+          type: "type",
+          from: "from",
+          to: "to",
+          amount: "amount",
+          txHash: "hash",
+          time: "date",
           }
       ]);
       const [currentHash, setCurrentHash] = useState()
     
-    //   React.useEffect(() => {
+      React.useEffect(() => {
 
-       
+        const transactionData = localStorage.getItem("transactions");
+        if (transactionData) {
+          setTransactions(JSON.parse(transactionData));
+        }
 
-    //     const pendingDepositData = localStorage.getItem("deposits");
-    //     if (pendingDepositData) {
-    //       setDeposits(JSON.parse(pendingDepositData));
-    //     }
-
-    //     const currentHashData = localStorage.getItem("currentHash");
-    //     if (currentHashData) {
-    //       setPendingTransactions(currentHashData);
-    //     }
-
-    //   }, []);
+      }, []);
     
       React.useEffect(() => {
 
         localStorage.setItem("deposits", JSON.stringify(deposits));
-        localStorage.setItem("pending-deposits", JSON.stringify(pendingTransactions));
+        localStorage.setItem("transactions", JSON.stringify(transactions));
         localStorage.setItem("currentHash", currentHash);
 
       });
 
-      return { pendingTransactions, setPendingTransactions, deposits, setDeposits, currentHash, setCurrentHash}
+      return { transactions, setTransactions, deposits, setDeposits, currentHash, setCurrentHash}
 }
 
 export default usePendingTransactions

@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components"
 import React, { useState, useCallback } from "react"
 import { CheckCircle, X } from "react-feather"
 import axios from "axios"
+import usePendingTransactions from "../../../hooks/usePendingTransaction"
 export const TransactionListContainer = styled.div`
 
     
@@ -140,14 +141,14 @@ export const TransactionItemContainer = styled.div`
     // width: 100%;
     display: flex;
     // height: 80px;
-    height: 100px;
-    background: rgb(21, 29, 46);
-    border: 0.5px solid rgb(53,134,249);
+    height: 70px;
+    background: rgb(17, 25, 42);
+    border: 0.2px solid rgba(53,134,249, 0.5);
     border-radius: 10px;
 
     &:hover {
 
-        background: rgb(22, 27, 44);
+        background: rgb(25, 30, 47);
     }
 `
 
@@ -174,39 +175,47 @@ export const SubtitleContainer = styled.div`
 `
 const TransactionList = () => {
 
-    return (
+    const { transactions, setTransactions } = usePendingTransactions()
 
+    
+    return (
+       
+        <>
         <TransactionListContainer>
-            <TransactionItemContainer>
+
+        {transactions.map((item, i) => {
+                if(i >= 0){
+                    return <div key={item.id} className="objectname">
+                                <TransactionItemContainer>
                 <IconContainer>
                 <CheckCircle 
                             strokeWidth={1.5} 
-                            size="40" 
+                            size="30" 
                             color={"rgb(38,162,91)"} />
                 </IconContainer>
                 <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
+                <Text size={"17px"} marginB={"5px"} color={"White"} weight={true}>
+                            Deposit ID: {item.id}
                         </Text>
                         <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
+                        <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
+                        <span style={{"fontWeight": "bold"}}>From:</span> {item.from.substring(0, 6)}...{item.from.substring(item.from.length - 4)}
                         </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
+                        <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
                         <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
                         </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
+                        <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
+                        <span style={{"fontWeight": "bold"}}>Amount:</span> {item.amount} ($ 7:46)
                         </Text>
                         </SubtitleContainer>
                         <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
+                        <Text size={"13px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
                             <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
                         </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
+                        <Text size={"13px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
+                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> {item.txHash.substring(0, 10)}...{item.txHash.substring(item.txHash.length - 10)}
                         </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
+                        <Text size={"13px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
                             View on explorer
                         </Text>
                         </SubtitleContainer>
@@ -218,300 +227,17 @@ const TransactionList = () => {
                             color={"rgb(38,162,91)"} />
                 </IconContainer> */}
             </TransactionItemContainer>
+                            </div>
+            }})}
+            
+            
            
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-           
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-            <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"19px"} marginB={"20px"} color={"White"} weight={true}>
-                            Deposit ID: 372553 
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> 0x1234...9273
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> 0.0003457 ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> 1A735E...2G45
-                        </Text>
-                        <Text size={"14px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-           
+            
            
 
 
         </TransactionListContainer>
+        </>
     )
 }
 
