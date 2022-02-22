@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
 import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
 // import { walletconnect } from "web3modal/dist/providers/connectors";
-import {X, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle, Copy, ExternalLink} from "react-feather"
+import {X, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle, CheckCircle, Copy, ExternalLink} from "react-feather"
 import metamask from "../assets/metamask.svg"
 import walletConnect from "../assets/wallet_connect.svg"
 import coinbase from "../assets/coinbase.svg"
@@ -20,7 +20,8 @@ import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
-
+import Loader from "../Loader/Loader";
+import usePendingTransactions from "../../hooks/usePendingTransaction";
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 const renAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
@@ -71,7 +72,7 @@ export const Backdrop = styled.div`
     pointer-events: none;
     backdrop-filter: blur(3px);
     // background: rgba(2,8,26, 0.65);
-// background: -webkit-linear-gradient(top, #23233999, #040717);
+background: -webkit-linear-gradient(top, #23233999, #040717);
 // background: -moz-linear-gradient(top, #23233999, #040717);
 // background: linear-gradient(to bottom, rgba(112,128,136, 0.1), rgba(2,8,26, 0.75));
 transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
@@ -389,9 +390,13 @@ export const Container = styled.div`
 `
 
 
-const AccountDetailsModal = ({close, visible}) => {
+const AccountDetailsModal = ({close, visible, toggle2}) => {
 
     const { account, onPageLoading, connectOn, disconnect, loading} = useAuth()
+
+    const [load, setLoad] = useState(true)
+
+    const { transactions, setTransactions } = usePendingTransactions()
 
     var logo
 
@@ -411,23 +416,28 @@ const AccountDetailsModal = ({close, visible}) => {
         logo = torus;
     }
 
+    const closeAll = () => {
+
+        close()
+        toggle2()
+    }
     return(
 
-        <Backdrop visible={visible} onClick={close}>
+        <Backdrop visible={visible} onClick={close} trueFade={true}>
            
-            <FormWrapper visible={visible} trueFade={true}>
+            <FormWrapper visible={visible} trueFade={false}>
                 <ErrorText>Account</ErrorText>
                 <CloseIcon></CloseIcon>
                 <TokenAmountWrapper height={"120px"} marginTop={"40px"} marginBottom={"0px"}>
                     <TitleWrapper spacing={"space-between"}>
                         <Title size={"13px"} color={"#adadad"}>Connected With Metamask</Title>
-                        <DisconnectButtonWrapper>
-                            <DisconnectButtonText>Disconnect</DisconnectButtonText>
+                        <DisconnectButtonWrapper onClick={closeAll}>
+                            <DisconnectButtonText>Change Wallet</DisconnectButtonText>
                         </DisconnectButtonWrapper>
                     </TitleWrapper>
                     <TitleWrapper spacing={"left"}>
                     <LogoWrapper marginRight={"8px"}>
-                        <img src={logo} width={"25px"}></img>
+                        {account ? <img src={logo} width={"25px"}></img> : <Loader stroke="white" size={"25px"}/>}
                     </LogoWrapper>
                         <Title size={"20px"} color={"White"}>
                             {account ? (account.substring(0, 6) + "..." +account.substring(account.length - 4)) : "connecting"}
@@ -450,7 +460,20 @@ const AccountDetailsModal = ({close, visible}) => {
                 <TitleWrapper spacing={"space-between"}>
                         <Title size={"17px"} color={"White"}>Recent Transactions</Title>
                         <Title size={"14px"} color={"rgb(2,52,152)"}>(Clear All)</Title>                        
-                    </TitleWrapper>
+                </TitleWrapper>
+
+               
+                {transactions.length > 0 && transactions.map((item, i) => {
+                if(i > transactions.length - 5){
+                    return <TitleWrapper spacing={"space-between"}>
+                                <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Deposit {item.amount} RenBTC 25 minutes ago</Title>
+                                <LogoWrapper marginRight={"5px"}>
+                                    <CheckCircle size={20} color={"rgb(35,145,85)"}></CheckCircle>
+                                </LogoWrapper>             
+                                </TitleWrapper>
+                    }})}
+                                
+               
 
                 </TransactionWrapper>
                

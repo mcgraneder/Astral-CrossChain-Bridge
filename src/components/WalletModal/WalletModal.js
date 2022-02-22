@@ -185,6 +185,15 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
       const { balance, setBalance } = useBalance()
       const { setDeposits, deposits,  transactions, setTransactions,} = usePendingTransaction()
     
+      React.useEffect(() => {
+
+        const transactionData = localStorage.getItem("transactions");
+        console.log(transactions)
+        if (transactionData) {
+          setTransactions(JSON.parse(transactionData));
+        }
+
+      }, [transactions]);
       useEffect(() => {
        
          deposits.map((deposit, i) => {

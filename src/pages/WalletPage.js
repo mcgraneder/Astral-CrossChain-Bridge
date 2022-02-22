@@ -10,11 +10,11 @@ import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModa
 const WalletPage = () => {
 
     const [show1, setShow1] = useState(false);
+    const [show2, setShow2] = useState(false);
     const [loading, setLoading] = useState(false)
-    const [showAccountsModal, setShowAccountsModal] = useState(false)
 
     const toggle1 = () => setShow1(!show1);
-    const toggleAccountsModal = () => setShowAccountsModal(!showAccountsModal)
+    const toggle2 = () => setShow2(!show2);
 
     const [amount, setAmount] = useState()
     const [showPending, setShowPending] = useState(false)
@@ -27,10 +27,11 @@ const WalletPage = () => {
     return (
 
         <>
+            <AccountDetailsModal visible={show1} close={toggle1} toggle2={toggle2}/>
             {/* <PendingModal visible={showPending} close={togglePending} amount={amount}></PendingModal> */}
             <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
-            <Web3Modal toggleAccount={toggleAccountsModal} visible={show1} close={toggle1}></Web3Modal>
-            <WalletModal setShow={setShow1} close={togglePending} visible={showPending} setLoading={setLoading} loading={loading} toggleAccount={toggleAccountsModal}></WalletModal>
+            <Web3Modal visible={show2} close={toggle2} bac={toggle1}></Web3Modal>
+            <WalletModal setShow={setShow2} close={show2} visible={show1} setLoading={setLoading} loading={loading}></WalletModal>
         </>
     )
 }

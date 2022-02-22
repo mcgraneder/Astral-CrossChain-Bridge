@@ -1,4 +1,4 @@
-import React, { useState }from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import metamask from "../assets/metamask.svg"
 import walletConnect from "../assets/wallet_connect.svg"
@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import ConnectSpinner from "./ConnectSpinner";
 // import { walletconnect } from "web3modal/dist/providers/connectors";
 import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
-
+import { ArrowLeft, X } from "react-feather"
 export const FormWrapper = styled.div`
 
 
@@ -24,6 +24,7 @@ export const FormWrapper = styled.div`
     background-color: rgb(27,32,52);
     text-align: right;
     padding: 30px 20px;
+    padding-top: 60px;
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 10px;
     pointer-events: none;
@@ -320,35 +321,76 @@ export const IconContents = styled.i`
     color: rgb(141,141,149);
 `
 
+export const ErrorText = styled.div`
 
-const Web3Modal = ({visible, close }) => {
+  position: absolute;
+  left: 11%;
+  top: 2.5%;
+  color: White;
+  font-size: 17px;
+
+  &:hover {
+
+    cursor:pointer;
+}
+`
+
+export const BackIcon = styled(ArrowLeft)`
+
+    position: absolute;
+    left: 5%;
+    top: 2.5%;
+    cursor: pointer;
+    color: White;
+
+    &:hover {
+
+        cursor:pointer;
+    }
+`
+
+export const CloseIcon = styled(X)`
+
+    position: absolute;
+    left: 90%;
+    top: 2%;
+    cursor: pointer;
+    color: White;
+
+    &:hover {
+
+        cursor:pointer;
+    }
+`
+
+
+
+const Web3Modal = ({visible, close, bac}) => {
     
     const { connectOn, disconnect, active, loading } = useAuth()
 
-    const [showAccountsModal, setShowAccountsModal] = useState(false)
+    const back= () => {
 
-    const toggleAccountsModal = () => setShowAccountsModal(!showAccountsModal)
-
-    const connect = (provider) => {
-
-        toggleAccountsModal()
+        bac()
         close()
-        connectOn(provider)
+
     }
   
     const provider = localStorage.getItem("provider")
     return (
         <>
-        <AccountDetailsModal visible={showAccountsModal} close={toggleAccountsModal}></AccountDetailsModal>
          <Backdrop visible={visible} onClick={close}></Backdrop>
             <FormWrapper visible={visible}>
+            <ErrorText onClick={back}>Back</ErrorText>
+                <BackIcon size={20} onClick={back}></BackIcon>
+                <CloseIcon size={25} onClick={close}></CloseIcon>
                 <DisclaimerContainer>
                     <ModalTextWrapper>
                             <ModalText>Welcome to the <span style={{color:"rgb(77, 102, 235)"}}>Ren Bridge.</span> You can connect and use our app with the<span style={{color:"rgb(77, 102, 235)"}}> Wallet Providers</span> below.</ModalText>
                     </ModalTextWrapper>
                 </DisclaimerContainer>
                 <ButtonContainer>
-                    <ConnectButton active={active && provider==="injected"} onClick={() => connect("injected")}>
+                    <ConnectButton active={active && provider==="injected"} onClick={() => connectOn("injected")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={metamask} width={30} /></Logo>
                             <ModalTitle>
@@ -358,7 +400,7 @@ const Web3Modal = ({visible, close }) => {
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="fortmatic"} onClick={() => connect("fortmatic")}>
+                    <ConnectButton active={active && provider==="fortmatic"} onClick={() => connectOn("fortmatic")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={fortmatic} width={27} /></Logo>
                             <ModalTitle>
@@ -368,7 +410,7 @@ const Web3Modal = ({visible, close }) => {
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="torus"} onClick={() => connect("torus")}>
+                    <ConnectButton active={active && provider==="torus"} onClick={() => connectOn("torus")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={torus} width={27} /></Logo>
                             <ModalTitle>
@@ -378,7 +420,7 @@ const Web3Modal = ({visible, close }) => {
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="portis"} onClick={() => connect("portis")}>
+                    <ConnectButton active={active && provider==="portis"} onClick={() => connectOn("portis")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={portis} width={25} /></Logo>
                             <ModalTitle>
@@ -388,7 +430,7 @@ const Web3Modal = ({visible, close }) => {
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    <ConnectButton active={active && provider==="walletconnect"} onClick={() => connect("walletconnect")}>
+                    <ConnectButton active={active && provider==="walletconnect"} onClick={() => connectOn("walletconnect")}>
                         <TitleContainer margin={"20px"}>
                             <Logo width={50}><img src={walletConnect} width={35} /></Logo>
                             <ModalTitle>
@@ -406,7 +448,7 @@ const Web3Modal = ({visible, close }) => {
                     <Disconnect to={"/"} margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect}></Disconnect>
                 </ButtonContainer>
             </FormWrapper>
-            {/* {loading ? <AccountDetailsModal loading={loading}></AccountDetailsModal> : <div></div>} */}
+            {loading ? <ConnectSpinner loading={loading}></ConnectSpinner> : <div></div>}
         </>
     )
 }

@@ -175,8 +175,29 @@ export const SubtitleContainer = styled.div`
 `
 const TransactionList = () => {
 
-    const { transactions, setTransactions } = usePendingTransactions()
+    const [transactions, setTransactions] = React.useState([
+        {
+          id: "co",
+          type: "type",
+          from: "from",
+          to: "to",
+          amount: "amount",
+          txHash: "hash",
+          time: "date",
+          }
+      ]);
+    React.useEffect(() => {
 
+        const transactionData = localStorage.getItem("transactions");
+        console.log(transactions)
+        if (transactionData) {
+          setTransactions(JSON.parse(transactionData));
+        }
+
+      }, [transactions]);
+
+
+    
     
     return (
        
