@@ -48,10 +48,10 @@ export const Backdrop = styled.div`
     opacity: 0;
     pointer-events: none;
     backdrop-filter: blur(5px);
-    background: #23233999;
-background: -webkit-linear-gradient(top, #23233999, #040717);
-background: -moz-linear-gradient(top, #23233999, #040717);
-background: linear-gradient(to bottom, #23233999, #040717);
+    // background: #23233999;
+/background: -webkit-linear-gradient(top, #23233999, #040717);
+/background: -moz-linear-gradient(top, #23233999, #040717);
+background: rgba(2,8,26, 0.65);
     transition: opacity 0.2s ease-in-out !important;
     z-index: 10000;
     ${(props) => props.visible && css`
@@ -448,6 +448,7 @@ const Web3Modal = ({visible, close, bac}) => {
                     <Disconnect to={"/"} margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect}></Disconnect>
                 </ButtonContainer>
             </FormWrapper>
+            
             {loading ? <ConnectSpinner loading={loading}></ConnectSpinner> : <div></div>}
         </>
     )

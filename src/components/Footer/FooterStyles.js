@@ -15,7 +15,7 @@ export const NavWrapper = styled.div`
 
     // background:  rgb(35,35,52);
     height: 50px;
-    padding: 20px 20px;
+    padding: 5px 20px;
     display: flex;
     z-index: 99;
     
@@ -135,7 +135,7 @@ export const NavButton2Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
+    width: 60px;
     height: 40px;
 `
 
@@ -144,8 +144,8 @@ export const NavButton2 = styled.img`
     
     display: inline;
     // background: ${(props) => props.color};
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     // margin-left: 15px;
     // border-radius: 18px;
     // height: 93%;

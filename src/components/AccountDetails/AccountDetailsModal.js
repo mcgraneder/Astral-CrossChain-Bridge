@@ -21,7 +21,7 @@ import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
 import Loader from "../Loader/Loader";
-import usePendingTransactions from "../../hooks/usePendingTransaction";
+import usePendingTransaction from "../../hooks/usePendingTransaction";
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 const renAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
@@ -42,6 +42,7 @@ export const FormWrapper = styled.div`
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 20px;
     pointer-events: none;
+    z-index: 10000;
     transition: ${(props) => props.trueFade ? "opacity 0.3s ease-in-out !important;": "none"};
     ${(props) => props.visible && css`
         z-index: 10000;
@@ -71,14 +72,15 @@ export const Backdrop = styled.div`
     opacity: 0;
     pointer-events: none;
     backdrop-filter: blur(3px);
-    // background: rgba(2,8,26, 0.65);
-background: -webkit-linear-gradient(top, #23233999, #040717);
+    background: rgba(2,8,26, 0.65);
+// background: -webkit-linear-gradient(top, #23233999, #040717);
 // background: -moz-linear-gradient(top, #23233999, #040717);
 // background: linear-gradient(to bottom, rgba(112,128,136, 0.1), rgba(2,8,26, 0.75));
 transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
-    z-index: 10000;
+    z-index: 1;
     ${(props) => props.visible && css`
 
+        z-index: 1;
         opacity: 1;
         pointer-events: all;
         transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
@@ -390,13 +392,13 @@ export const Container = styled.div`
 `
 
 
-const AccountDetailsModal = ({close, visible, toggle2}) => {
+const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
 
     const { account, onPageLoading, connectOn, disconnect, loading} = useAuth()
 
     const [load, setLoad] = useState(true)
 
-    const { transactions, setTransactions } = usePendingTransactions()
+    //  const { transactions } = usePendingTransaction()
 
     var logo
 
@@ -462,8 +464,14 @@ const AccountDetailsModal = ({close, visible, toggle2}) => {
                         <Title size={"14px"} color={"rgb(2,52,152)"}>(Clear All)</Title>                        
                 </TitleWrapper>
 
+                <TitleWrapper spacing={"space-between"}>
+                                <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Deposit {2} RenBTC 25 minutes ago</Title>
+                                <LogoWrapper marginRight={"5px"}>
+                                    <CheckCircle size={20} color={"rgb(35,145,85)"}></CheckCircle>
+                                </LogoWrapper>             
+                                </TitleWrapper>
                
-                {transactions.length > 0 && transactions.map((item, i) => {
+                {/* {transactions.length > 0 && transactions.map((item, i) => {
                 if(i > transactions.length - 5){
                     return <TitleWrapper spacing={"space-between"}>
                                 <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Deposit {item.amount} RenBTC 25 minutes ago</Title>
@@ -471,7 +479,7 @@ const AccountDetailsModal = ({close, visible, toggle2}) => {
                                     <CheckCircle size={20} color={"rgb(35,145,85)"}></CheckCircle>
                                 </LogoWrapper>             
                                 </TitleWrapper>
-                    }})}
+                    }})} */}
                                 
                
 

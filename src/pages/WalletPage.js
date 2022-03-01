@@ -7,7 +7,7 @@ import { TransactionPopupWrapper } from "../components/AccountDetails/Transactio
 import DepositSummary from "../components/AccountDetails/TransactionSummary";
 import TransactionProcess from "../components/TransactionConfirmationModal/PendingModal";
 import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModal";
-const WalletPage = () => {
+const WalletPage = ({}) => {
 
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);

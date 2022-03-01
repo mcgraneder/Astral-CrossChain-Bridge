@@ -14,7 +14,7 @@ export const NavWrapper = styled.div`
 
     // background:  rgb(35,35,52);
     height: 60px;
-    padding: 20px 30px;
+    padding: 10px 30px;
     display: flex;
     z-index: 99;
     

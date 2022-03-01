@@ -13,6 +13,7 @@ import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import { Web3Provider } from "@ethersproject/providers";
+
 import { OrderMap } from "immutable"
 
 function getLibrary(provider) {

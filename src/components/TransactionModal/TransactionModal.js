@@ -41,7 +41,7 @@ import DropdownMenu3 from "./DropdownMenu3";
 import Nav from "../Navbar/Navbar";
 import { Ethereum } from "@renproject/chains";
 import TransactionList from "./TransactionList/TransactionList";
-const TransactionModal = ({close}) => {
+const TransactionModal = ({close, transactions}) => {
 
     const [toggle, setToggle] = useState(true)
     const [dropDownActive0, setDropDownActive0] = useState(false)
@@ -168,7 +168,7 @@ const TransactionModal = ({close}) => {
                                 <ToggleButton2>Completed</ToggleButton2>
                             </ToggleButtonWrapper>
                     </ToggleContainer> */}
-                    <TransactionList/>
+                    <TransactionList transactions={transactions}/>
                 </TransactionDetails>
             </BridgeModalContainer>
         </StyledContainer>

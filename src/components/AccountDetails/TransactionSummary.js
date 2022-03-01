@@ -186,7 +186,7 @@ const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs
     useEffect(() => {
         axios.get(RenBTCPriceRequestURL).then((result) => {
             const currentPrice = Number((result.data[0].current_price + 0.25) * amount)
-            setPriceForAmount((Number(currentPrice)).toFixed(6))
+            setPriceForAmount((Number(currentPrice)).toFixed(2))
             
         }).catch(error => console.error(error))
 

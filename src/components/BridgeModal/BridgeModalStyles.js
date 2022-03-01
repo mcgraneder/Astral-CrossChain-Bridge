@@ -18,7 +18,7 @@ export const FormWrapper = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 15%;
+    top: 12%;
     // width: 470px;
     // height: 575px;
     background: rgb(14, 22, 39);
@@ -119,13 +119,16 @@ export const DropdownContainer = styled.div`
 `
 export const BalanceContainer = styled.div`
 
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
-    height: 60px;
+    // height: 60px;
     // width: 100%;
+    display: flex;
+    align-items center;
+    justify-content: center;
     background: transaprent;
     border: 1px solid rgb(34,43,68);
     border-radius: 10px;
@@ -160,14 +163,18 @@ export const MintFormContainer = styled.div`
 `
 
 
+
 export const BalanceWrapper = styled.div`
 
-    height: 100%;
-    width: 100%;
-    line-height: 60px;
-    display: flex;
-    padding-left: 25px;
-    padding-right: 5px;
+    // height: 100%;
+    // width: 100%;
+    line-height: 45px;
+    text-align: center;
+    // display: flex;
+    // padding-left: 25px;
+    // padding-right: 5px;
+    padding-top: 25px;
+    padding-bottom: 10px;
 `
 
 export const ButtonWrapper = styled.div`
@@ -403,7 +410,12 @@ export const ArrowLogo12 = styled.img`
 
 export const Balancetext = styled.div`
 
-    font-family: 'Open Sans', sans-serif;    
+    font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
+    font-size: ${(props) => props.size};
+    text-align: center;
+    font-weight: 100;
+    color: ${(props) => props.colour}
+
 `
 
 

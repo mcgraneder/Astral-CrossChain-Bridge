@@ -26,7 +26,7 @@ const useBalance = () => {
             bridgeContract.getContractTokenbalance("BTC")
             .then((result) => {
                 console.log(result)
-                result = Web3.utils.fromWei(result.toString(), "Gwei")
+                result = Web3.utils.fromWei(result.toString(), "Gwei") 
                 var balance = new Number(result)
                 balance = balance.toFixed(6)
                 setBalance(balance)

@@ -5,7 +5,7 @@ export const NavButton2 = styled.div`
 
     
     display: inline;
-    background: rgb(33,114,229);
+    background: rgb(13,94,209);
     width: ${(props) => props.width};
     border-radius: 18px;
     height: ${(props) => props.height};
@@ -16,7 +16,7 @@ export const NavButton2 = styled.div`
     margin-right: ${(props) => props.active ? "7px" : "0px"};
     font-weight: bold;
 
-    border: 1px solid rgb(3,184,189);
+    // border: 1px solid rgb(3,184,189);
 
     &:hover {
 

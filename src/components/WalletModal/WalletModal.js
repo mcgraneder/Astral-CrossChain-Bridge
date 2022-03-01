@@ -13,6 +13,8 @@ import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
 import { generate } from "shortid";
 import { CheckCircle } from "react-feather"
+import MyListbox from "./ListBox";
+import axios from "axios";
 import { PendingModal, RejectionModal, TransactionSubmittedModal, ConfirmationModal} from "../TransactionConfirmationModal/PendingModal"
 import { StyledContainer, 
          BridgeModalContainer, 
@@ -55,6 +57,8 @@ import useBalance from "../../hooks/useBalance";
 import Loader from "../Loader/Loader";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
 import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
+import { Loading, SelectMarket } from "@renproject/react-components";
+
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -96,7 +100,7 @@ export const Button1 = styled.div`
 
 export const ButtonWrapper1 = styled.div`
 
-font-family: 'Open Sans', sans-serif;
+font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
    margin-top: 40px;
    margin-bottom: 10px;
 //    margin-ledt: 10px;
@@ -148,6 +152,13 @@ export const LoaderWrapper = styled.div`
   bottom: ${(props) => props.position ? "9.8%" : "7%"};
   right: 32%;
 `
+const SelectMarket1 = styled(SelectMarket)`
+
+  background: black;
+  color: black;
+  cursor: pointer;
+  z-index: 10000000;
+`
 
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
@@ -157,7 +168,31 @@ export const TRANSACTION_TYPES = {
     DEPOSIT: "DEPOSIT",
     WITHDRAWAL: "WITHDRAWAL"
 };
-   
+
+export const Asset = {
+    BTC: "BTC",
+    ZEC: "ZEC",
+    BCH: "BCH",
+    FIL: "FIL",
+    LUNA: "LUNA",
+    DOGE: "DOGE",
+}
+const Assets = [
+
+    {
+        name: "Bitcoin",
+        symbol: Asset.BTC
+        
+    },
+    {
+        name: "Zcash",
+        symbol: Asset.ZEC
+        
+    }
+]
+
+const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+
 const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
     const [isActive, setIsActive] = useState(false)
@@ -178,37 +213,14 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [sufficentBalance, setSufficentBalance] = useState(false)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [sufficentApproval, setSufficentApproval] = useState(true)
+    const [renPrice, setRenPrice] = useState(0)
     const [gas, setGas] = useState(0)
+    const [asset, setAsset] = React.useState(Asset.BTC);
 
     
       const { library, account, active } = useAuth()
       const { balance, setBalance } = useBalance()
-      const { setDeposits, deposits,  transactions, setTransactions,} = usePendingTransaction()
-    
-      React.useEffect(() => {
-
-        const transactionData = localStorage.getItem("transactions");
-        console.log(transactions)
-        if (transactionData) {
-          setTransactions(JSON.parse(transactionData));
-        }
-
-      }, [transactions]);
-      useEffect(() => {
-       
-         deposits.map((deposit, i) => {
-            if(i > 0) {
-                console.log(deposit.txHash)
-                library.getTransaction(deposit.txHash).then((result) => {
-                    console.log(result)
-                    if(result.blockNumber) {
-
-                        // setTransactionBlock(true)
-                    } 
-                })
-            }
-         })
-      }, [deposits])
+      const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
 
     // localStorage.setItem("deposits", "hello")
       
@@ -231,20 +243,37 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     
       }, [library, text]) 
 
-     useEffect(() => {
+      useEffect(() => {
 
-        if(library && ren) {
-            ren.on("Approval", (from, to , value) => {
-               setShowNotifications(true)
-               
-            });
+        if(library) {
+ 
+             axios.get(RenBTCPriceRequestURL).then((result) => {
+                 const currentPrice = (result.data[0].current_price + 0.25) * balance
+                 var currentBal = new Number(currentPrice)
+                 currentBal = currentBal.toFixed(2)
+                 setRenPrice(currentBal)
+                 
+             }).catch(error => console.error(error))
+        }
+ 
+     }, [library, balance])
+ 
+    //    useEffect(() => {
+        
+    //       deposits.map((deposit, i) => {
+    //          if(i > 0) {
+    //              console.log(deposit.txHash)
+    //              library.getTransaction(deposit.txHash).then((result) => {
+    //                  console.log(result)
+    //                  if(result.blockNumber) {
+ 
+    //                      // setTransactionBlock(true)
+    //                  } 
+    //              })
+    //          }
+    //       })
+    //    }, [deposits])
 
-            ren.on("Transfer", (result) => {
-                console.log(result)
-                setShowNotifications(true)
-            });
-         }
-     }, [library])
 
     const setDropdownValue = () => {
 
@@ -266,14 +295,12 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
 
     const getMaxDeposit = async() => {
 
-        var walletBalance = await ren.balanceOf(account)
-        walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
-        setText(walletBalance)
+        if(TransactionType === "DEPOSIT") {
+            var walletBalance = await ren.balanceOf(account)
+            walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
+            setText(walletBalance)
 
-        if(inputText === "Deposit ") {
-
-        } else if (inputText === "Withdraw ") {
-
+        } else if (TransactionType === "WITHDRAWAL") {
             var walletBalance = await bridge.getContractTokenbalance("BTC")
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
@@ -497,7 +524,9 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")
-                        setBalance(balance)
+                        var bal = new Number(balance)
+                        bal = bal.toFixed(6)
+                        setBalance(bal)
                       
                     });
                 })
@@ -571,7 +600,9 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")
-                        setBalance(balance)
+                        var bal = new Number(balance)
+                        bal = bal.toFixed(6)
+                        setBalance(bal)
                     });
                 })
     
@@ -648,7 +679,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>Token</ChainSelectorText>
+                            <ChainSelectorText>RenBTC</ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
@@ -656,12 +687,15 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                        
                     </ChainSelectorWrapper>
                     { dropDownActive && <DropdownMenu height={"64px;"}></DropdownMenu>}
+             
                 </ChainSelector>
                 <BalanceContainer>
                     <BalanceWrapper>
-                        <Balancetext>Balance: {balance} RenBTC</Balancetext>
+                        <Balancetext size={"45px"} colour={"#adadad"}>{balance} renBTC</Balancetext>
+                        <Balancetext size={"17px"} colour={"White"}>= ${renPrice} </Balancetext>
                     </BalanceWrapper>                
                 </BalanceContainer>
+                
                 <ArrowContainer>
                     <ArrowLogoContainer>
                         <ArrowLogo src={arrowDown}></ArrowLogo>
@@ -683,7 +717,15 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                     <MintFormWrapper>
                         <FromContainer>
                             <WalletInputWrapper>
-                                <WalletInput onKeyPress={preventMinus} name="number" type="number" id="in"  value={text} onChange={(e) => setText(e.target.value)} placeholder="amount"></WalletInput>
+                                <WalletInput 
+                                    onKeyPress={preventMinus} 
+                                    name="number" 
+                                    type="number" 
+                                    id="in"  
+                                    value={text} 
+                                    onChange={(e) => setText(e.target.value)} 
+                                    placeholder="amount">
+                                </WalletInput>
                                 <ForumIcon>
                                     <ForumImg src={walletIcon}></ForumImg>
                                 </ForumIcon>
@@ -730,8 +772,17 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                                     onClick={
                                         () => start(TRANSACTION_TYPES.APPROVAL)
                                     }>
-                                    { active ? "Approve Token Deposit" : <div>Connecting...<Loader stroke="white" size={"18px"}/></div>}
-                                    <CheckCircle/>
+                                    { active ? (!loading ? 
+                                    "Approve Token Deposit" 
+                                    :  <div>1 Pending... 
+                                            {/* <LoaderWrapper position={Boolean(text === "")}>
+                                                <Loader stroke="white" size={"20px"}/>
+                                            </LoaderWrapper> */}
+                                        </div>) 
+                                    :   <div>
+                                            Connecting...
+                                            <Loader stroke="white" size={"18px"}/>
+                                        </div>}
                                     </Button1>
                               </ButtonWrapper1>}
                         </SpinnerWrapper>}

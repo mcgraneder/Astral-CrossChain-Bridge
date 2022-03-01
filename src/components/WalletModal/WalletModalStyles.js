@@ -18,7 +18,7 @@ export const FormWrapper = styled.div`
 export const BridgeModalContainer = styled.div`
 
     position: absolute;
-    top: 15%;
+    top: 12%;
     width: 470px;
     // height: 575px;
     background: rgb(14, 22, 39);
@@ -121,13 +121,16 @@ export const DropdownContainer = styled.div`
 `
 export const BalanceContainer = styled.div`
 
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
-    height: 60px;
+    // height: 60px;
     // width: 100%;
+    display: flex;
+    align-items center;
+    justify-content: center;
     background: transaprent;
     border: 1px solid rgb(34,43,68);
     border-radius: 10px;
@@ -149,7 +152,7 @@ export const MintFormWrapper = styled.div`
 
 export const MintFormContainer = styled.div`
 
-    margin-top: 20px;
+    margin-top: 10px;
     padding-bottom: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
@@ -167,10 +170,13 @@ export const BalanceWrapper = styled.div`
 
     // height: 100%;
     // width: 100%;
-    line-height: 60px;
-    display: flex;
-    padding-left: 25px;
-    padding-right: 5px;
+    line-height: 45px;
+    text-align: center;
+    // display: flex;
+    // padding-left: 25px;
+    // padding-right: 5px;
+    padding-top: 25px;
+    padding-bottom: 10px;
 `
 
 export const ButtonWrapper = styled.div`
@@ -232,7 +238,7 @@ export const MintFormTextWrapper = styled.div`
 
 export const MintFormText = styled.div`
 
-// font-family: 'Open Sans', sans-serif;
+font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
 
  font-size: 15px;
  padding-left: 10px;
@@ -326,7 +332,7 @@ export const MintFormTextWrapper2 = styled.div`
 `
 
 export const MintFormText2 = styled.div`
-
+font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
  font-size: 17px;
  padding-left: 10px;
 
@@ -408,7 +414,12 @@ export const ArrowLogo12 = styled.img`
 
 export const Balancetext = styled.div`
 
-    font-family: 'Open Sans', sans-serif;    
+    font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
+    font-size: ${(props) => props.size};
+    text-align: center;
+    font-weight: 100;
+    color: ${(props) => props.colour}
+
 `
 
 export const FromContainer = styled.form`
@@ -471,7 +482,7 @@ padding-left: 20px;
 border-radius: 10px;
 padding-left: 60px;
 font-size: 14px;
-font-family: 'Open Sans', sans-serif; 
+font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
 // border: 3px solid: blue;
 -webkit-appearance: none;
 input[type=number]::-webkit-inner-spin-button, 
@@ -542,7 +553,7 @@ export const StatustTextIcon = styled.img`
 
 export const StatusText = styled.div`
 
-    font-family: 'Open Sans', sans-serif;
+font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
     height: 20px;
     display: flex;
     font-size: 15px;
@@ -563,7 +574,7 @@ export const CompletionTextWrapper = styled.div`
 
 export const CompletionTextContainer = styled.div`
 
-    font-family: 'Open Sans', sans-serif;
+font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
     display: flex;
     // height: 100%;
     justify-content: center;
@@ -591,7 +602,7 @@ export const LoaderContainer = styled.div`
 export const MaxOption = styled.div`
 
     position: absolute;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
     height: 30px;
     width: 50px;
     left: 77%;
@@ -616,7 +627,7 @@ export const MaxOption = styled.div`
 export const ForumIcon = styled.div`
 
     position: absolute;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
     height: 25px;
     margin-top: 3px;
     // padding-bottom: 10px;

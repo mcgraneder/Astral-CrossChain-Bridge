@@ -129,11 +129,12 @@ const BrideModal = ({close, balance, setBalance}) => {
                     </ChainSelectorWrapper>
                     </ChainSelector>
 
-                <BalanceContainer>
-                    <BalanceWrapper>
-                        {loading ? <Balancetext>Balance: {balance} RenBTC</Balancetext> :  <Balancetext>Balance: {balance} RenBTC</Balancetext>}
-                    </BalanceWrapper>
-                </BalanceContainer>
+                    <BalanceContainer>
+                        <BalanceWrapper>
+                            <Balancetext size={"45px"} colour={"#adadad"}>{balance} renBTC</Balancetext>
+                            <Balancetext size={"17px"} colour={"White"}>= $368.46 </Balancetext>
+                        </BalanceWrapper>                
+                    </BalanceContainer>
                 {/* <ArrowContainer>
                     <ArrowLogoContainer>
                         <ArrowLogo src={arrowDown}></ArrowLogo>
