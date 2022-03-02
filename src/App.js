@@ -14,6 +14,7 @@ import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import { Web3Provider } from "@ethersproject/providers";
 import DexPage from "./pages/DexPage"
+import ERC20BridgePage from "./pages/ERC20BrifgePage";
 import { OrderMap } from "immutable"
 
 function getLibrary(provider) {
@@ -41,7 +42,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>
-            
+            <Route exact path="/erc20bridge" component={ERC20BridgePage}></Route>
             <Route exact path="/wallet" component={WalletPage}></Route>
             <Route exact path="/transactions" component={TransactionPage}></Route>
             <Route exact path="/dex" component={DexPage}></Route>

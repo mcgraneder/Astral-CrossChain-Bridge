@@ -7,6 +7,8 @@ import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
 import DropdownMenu from "../WalletModal/DropdownMenu";
+import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router'
 import { ArrowContainer12, 
          ArrowLogo12, 
          ArrowLogoContainer12, 
@@ -64,20 +66,21 @@ export const BridgeSelectorContainer = styled.div`
     // border: 1px solid rgb(34,43,68);
 `
 
-export const ERC20BridgeToggleButton = styled.div`
+export const ERC20BridgeToggleButton = styled(Link)`
 
    
     width: 50%;
     height: 100%;
     border-top-${(props) => props.side}-radius: 10px;
     // border-right: 1.5px solid rgb(14, 22, 39);
-    background: ${(props) => props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
+    background: rgb(27,32,52);
     font-size: 18px;
     font-weight: bold;
-    // font-family: 'Open Sans', sans-serif;
-    // border: 1px solid ${(props) => props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
+    font-family: 'Open Sans', sans-serif;
+    // border: 1px solid rgb(27,32,52);
     // border-bottom: 1.5px solid rgb(75,135,220);
-    color: ${(props) => props.active ? "rgb(75,135,220)" : "rgb(77,82,102)"};
+    color: rgb(77,82,102);
+    text-decoration: none;
     &:hover {
 
         cursor: pointer
@@ -91,13 +94,14 @@ export const LegacyBridgeToggleButton = styled.div`
     height: 100%;
     border-top-${(props) => props.side}-radius: 10px;
     // border-right: 1.5px solid rgb(14, 22, 39);
-    background: ${(props) => !props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
+    background: rgb(14, 22, 39);
     font-size: 18px;
     font-weight: bold;
     font-family: 'Open Sans', sans-serif;
-    // border: 1px solid ${(props) => !props.active ? "rgb(75,135,220)" : "none"};
+    // border: 1px solid rgb(75,135,220);
     // border-bottom: 1.5px solid rgb(75,135,220);
-    color: ${(props) => !props.active ? "rgb(75,135,220)" : "rgb(77,82,102)"};
+    color: rgb(75,135,220);
+    text-decoration: none;
 
     &:hover {
 
@@ -150,12 +154,12 @@ const BrideModal = ({close, balance, setBalance}) => {
             
             <BridgeModalContainer>
             <BridgeSelectorContainer>
-            <LegacyBridgeToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>
+            <LegacyBridgeToggleButton side={"left"} colour={"rgb(14, 22, 39)"}>
                             <MintFormTextWrapper2>
                                 <MintFormText2>Legacy Bridge</MintFormText2>
                             </MintFormTextWrapper2>
                         </LegacyBridgeToggleButton>
-                        <ERC20BridgeToggleButton side={"right"} active={toggle} onClick={setToggleValue}>
+                        <ERC20BridgeToggleButton side={"right"} to="/erc20bridge">
                             <MintFormTextWrapper2>
                                 <MintFormText2>ERC20 Bridge</MintFormText2>
                             </MintFormTextWrapper2>

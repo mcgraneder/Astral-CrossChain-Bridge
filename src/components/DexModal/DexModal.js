@@ -24,8 +24,11 @@ import { ArrowContainer12,
          MintFormText2,
          Balancetext
 } from "./DexModalStyles";
+import EthereumLogo from "../assets/ethereum-logo.png"
 import {Settings, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
 import { useWeb3React } from "@web3-react/core";
+import UniswapLogoPink from "../assets/logo_pink.svg"
+import UniswapLogo from "../assets/logo.svg"
 
 
 export const TokenAmountWrapper = styled.div`
@@ -33,15 +36,16 @@ export const TokenAmountWrapper = styled.div`
     // width: 100%;
     height: ${(props) => props.height};
     background: rgb(27,32,52);
+    border: 1.3px solid  rgb(27,32,52);
     border-radius: 15px;
-    border: ${(props) => props.borderTrue ? "1px solid rgb(41, 50, 67)" : "none"};
     margin-top: ${(props) => props.marginTop};
     padding-left: 15px;
     padding-right: 20px;
-    // margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    // align-items: center;
+
+    &:hover {
+
+        border: 1.3px solid rgb(41, 50, 67);
+    }
 
 `
 
@@ -73,8 +77,8 @@ export const ImgWrapper = styled.div`
 export const ErrorText = styled.div`
 
   position: absolute;
-  left: 4%;
-  top: 4%;
+  left: 10.5%;
+  top: 5%;
   color: #adadad;
   font-size: 18px;
 `
@@ -83,10 +87,21 @@ export const CloseIcon = styled(Settings)`
 
     position: absolute;
     left: 91%;
-    top: 4%;
+    top: 5%;
     cursor: pointer;
     color: White;
     width: 20px;
+    color: #adadad;
+`
+
+export const UniswapIcon = styled.img`
+
+    position: absolute;
+    left: 4%;
+    top: 4%;
+    cursor: pointer;
+    color: White;
+    width: 23px;
     color: #adadad;
 `
 
@@ -142,43 +157,110 @@ font-family: 'Open Sans', sans-serif;
 export const DisclaimerContainer = styled.div`
 
     font-family: 'Open Sans', sans-serif;
-    margin-top: 60px;
+    margin-top: 70px;
     width: 100%;
     height: 30px;
-    font-size: 14px;
+    font-size: 15px;
     // background: White;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #adadad
+    font-weight: bold;
 `
 
+export const InfoWrapper = styled.div`
+
+    display: flex;
+    padding: 1rem 0;
+    justify-content: space-between;
+    flex-flow: row nowrap;
+    align-items: center;
+    // background: white;
+`   
 
 export const TokenInput = styled.input`
 
-    height: 30px;
+font-family: 'Inter custom',sans-serif;
     width: 100%;
     background: transparent;
     border: none;
     font-size: 30px;
     color: #adadad;
-    // background: White;
-    margin-top: 10px;
-    input[type=any]::-webkit-border { 
-    -webkit-appearance: none; 
-    }
+    outline: none;
+`
 
-    &::focus {
+export const TokenSelectButton = styled.div`
 
-        border: none;
-    }
-
-    &::active {
-
-        border: none;
-    }
+font-family: 'Open Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    background: ${(props) => props.color};
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 16px;
+    box-shadow: rgb(0 0 0 / 8%) 0px 6px 10px;
+    outline: none;
+    user-select: none;
+    border: none;
+    font-size: 24px;
+    font-weight: 500;
+    height: 2.4rem;
+    // width: 100%;
+    // width: 100%;
+    padding: 0px 8px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-left: 12px;
+    visibility: visible;
     
 `
+export const SelectedTokenContainer = styled.div`
+
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+`
+
+export const TokenImg = styled.img`
+
+    width: 24px;
+    height: 24px;
+    background: radial-gradient(white 50%, rgba(255, 255, 255, 0) calc(75% + 1px), rgba(255, 255, 255, 0) 100%);
+    border-radius: 50%;
+    box-shadow: white 0px 0px 1px;
+    border: 0px solid rgba(255, 255, 255, 0);
+    margin-right: 5px;
+`
+
+export const SelectedToken = styled.span`
+
+    margin: 0px 0.25rem;
+    font-size: 18px;
+    width: ${(props) => props.initialWidth ? "initial" : "120px"};
+    
+`
+
+export const ChevronDownImg = styled.img`
+
+    margin: 0px 0.25rem 0px 0.35rem;
+    height: 35%;
+`
+
+export const ButtonContents = styled.span`
+
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+`
+
 
 
 const DexModal = () => {
@@ -191,30 +273,44 @@ const DexModal = () => {
         <>
         <StyledContainer>
             <BridgeModalContainer>
+            <UniswapIcon src={UniswapLogoPink}></UniswapIcon>
             <ErrorText>Swap</ErrorText>
                 <CloseIcon></CloseIcon>
                 <ArrowDownContainer>
                     <ArrowDown color={"White"} size={"15px"}/>
                 </ArrowDownContainer>
-            <TokenAmountWrapper height={"100px"} marginTop={"40px"} marginBottom={"0px"} borderTrue={true}>
-                   <TokenInput></TokenInput>
+            <TokenAmountWrapper height={"100px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
+                    <InfoWrapper>
+                        <TokenInput placeholder={"0.0"}></TokenInput>
+                        <TokenSelectButton color={"rgb(57,62,82)"}>
+                            <ButtonContents>
+                                <SelectedTokenContainer>
+                                    <TokenImg src={EthereumLogo}></TokenImg>
+                                    <SelectedToken initialWidth={true}>ETH</SelectedToken>
+                                </SelectedTokenContainer>
+                                <ChevronDown size={"25px"}></ChevronDown>
+                            </ButtonContents>
+                        </TokenSelectButton>
+                    </InfoWrapper>
                 </TokenAmountWrapper>
                 <TokenAmountWrapper height={"70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
-                    {/* <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>{amount}</TokenAmount>
-                    <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>RenBTC</TokenAmount>
-                    <ImgWrapper padding={"17px"} float={"right"}>
-                        <img src={Bitcoin} width={"35px"}></img>
-                    </ImgWrapper> */}
+                <InfoWrapper>
+                        <TokenInput placeholder={"0.0"}></TokenInput>
+                        <TokenSelectButton color={"rgb(13,94,209)"}>
+                            <ButtonContents>
+                                <SelectedTokenContainer>
+                                    <SelectedToken initialWidth={false}>Select a token</SelectedToken>
+                                </SelectedTokenContainer>
+                                <ChevronDown size={"25px"}></ChevronDown>
+                            </ButtonContents>
+                        </TokenSelectButton>
+                    </InfoWrapper>
                 </TokenAmountWrapper>
-                {/* <TokenAmountWrapper height={"58px"} marginTop={"20px"} marginBottom={"0px"} borderTrue={false}>
-                   
-                </TokenAmountWrapper> */}
                 <ButtonWrapper>
                     <Button>Enter An Amount</Button>
                 </ButtonWrapper>
-                {/* <DisclaimerContainer>Hello</DisclaimerContainer> */}
             </BridgeModalContainer>
-            <DisclaimerContainer>Interfacing with the <div>{" "}</div><div style={{"color": "rgb(13,94,209)", "margin-left": "4px"}}> Uniswap protocl</div></DisclaimerContainer>
+            <DisclaimerContainer>Interfacing with the <div>{" "}</div><div style={{"color": "rgb(13,94,209)", "margin-left": "4px", "fontWeight": "bold"}}> Uniswap protocol</div><img style={{"margin-left": "4px", "margin-top": "0px"}} src={UniswapLogo} width={"15px"}></img></DisclaimerContainer>
         </StyledContainer>
         </>
     )
