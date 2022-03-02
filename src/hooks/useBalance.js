@@ -4,14 +4,14 @@ import { getContract } from "../utils/utils";
 import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
 import Web3 from "web3";
-
+import { useWeb3React } from "@web3-react/core"
 const useBalance = () => {
 
     const [ren1, setRen1] = useState()
     const [bridge, setBridge] = useState()
     const [balance, setBalance] = useState();
   
-    const { library, account } = useAuth()
+    const { library, account } = useWeb3React()
 
     const getBalance = React.useCallback(() => {
 

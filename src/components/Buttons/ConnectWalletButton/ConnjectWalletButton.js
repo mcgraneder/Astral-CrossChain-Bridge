@@ -13,7 +13,7 @@ import portis from "../../assets/portis.svg"
 import { NavButton2 } from "../../Navbar/NavbarStyles"
 import Circle from "../../assets/blue-loader.svg"
 import Loader from "../../Loader/Loader"
-
+import { useWeb3React } from "@web3-react/core"
 export const Logo1 = styled.div`
 
     // position: absolute;
@@ -59,7 +59,8 @@ export const CustomLightSpinner = styled(Spinner)`
 
 const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top, onclick, loading}) => {
 
-    const { account, onPageLoading} = useAuth()
+     const { account } = useWeb3React()
+    const { onPageLoading} = useAuth()
     var logo
     var width1;
     var width2;

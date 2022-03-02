@@ -21,6 +21,7 @@ import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
 import Loader from "../Loader/Loader";
+import { useWeb3React } from "@web3-react/core";
 import usePendingTransaction from "../../hooks/usePendingTransaction";
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 const renAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
@@ -394,7 +395,7 @@ export const Container = styled.div`
 
 const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
 
-    const { account, onPageLoading, connectOn, disconnect, loading} = useAuth()
+    const {account} = useWeb3React()
 
     const [load, setLoad] = useState(true)
 

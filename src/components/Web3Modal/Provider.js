@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import useAuth from "../../hooks/useAuth";
-
+import { useWeb3React } from "@web3-react/core";
 
 export const ConnectButton = styled.div`
 
@@ -87,7 +87,7 @@ const providers = [
 
 const Provider = ({margin, width1, logo, width2, title, connect, activee}) => {
 
-    const { active } = useAuth();
+    const { active } = useWeb3React()
 
     const provider = localStorage.getItem("provider")
 

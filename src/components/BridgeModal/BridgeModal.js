@@ -32,7 +32,7 @@ import { ArrowContainer12,
          MintFormText2,
          Balancetext
 } from "./BridgeModalStyles";
-
+import { useWeb3React } from "@web3-react/core";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -60,7 +60,7 @@ const BrideModal = ({close, balance, setBalance}) => {
     const [web3, setWeb3] = useState()
     const [loading, setLoading] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
-    const { active, library, context, account } = useAuth()
+    const { active } = useWeb3React()
 
     const setToggleValue = () => {
 

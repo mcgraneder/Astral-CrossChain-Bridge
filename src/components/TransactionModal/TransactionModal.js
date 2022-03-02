@@ -50,7 +50,7 @@ const TransactionModal = ({close, transactions}) => {
     const [dropDownActive2, setDropDownActive2] = useState(false)
     const [text, setText] = useState("Deposit History")
     const [inputText, setInputText] = useState("Deposit Amount")
-    const { active, onPageLoading, account } = useAuth()
+
 
     const setToggleValue = () => {
 

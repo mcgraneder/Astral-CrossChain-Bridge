@@ -11,6 +11,7 @@ import ConnectSpinner from "./ConnectSpinner";
 // import { walletconnect } from "web3modal/dist/providers/connectors";
 import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
 import { ArrowLeft, X } from "react-feather"
+import { useWeb3React } from "@web3-react/core"
 export const FormWrapper = styled.div`
 
 
@@ -367,7 +368,8 @@ export const CloseIcon = styled(X)`
 
 const Web3Modal = ({visible, close, bac}) => {
     
-    const { connectOn, disconnect, active, loading } = useAuth()
+    const { active } = useWeb3React()
+    const { connectOn, disconnect, loading } = useAuth()
 
     const back= () => {
 

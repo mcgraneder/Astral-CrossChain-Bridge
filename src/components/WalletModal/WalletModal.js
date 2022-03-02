@@ -58,7 +58,7 @@ import Loader from "../Loader/Loader";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
 import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
 import { Loading, SelectMarket } from "@renproject/react-components";
-
+import { useWeb3React } from "@web3-react/core"
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -218,7 +218,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     const [asset, setAsset] = React.useState(Asset.BTC);
 
     
-      const { library, account, active } = useAuth()
+      const { library, account, active } = useWeb3React()
       const { balance, setBalance } = useBalance()
       const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
 

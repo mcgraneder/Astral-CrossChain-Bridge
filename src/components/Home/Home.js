@@ -10,10 +10,10 @@ import BridgePage from "../../pages/BridgePage";
 import Video from "../assets/videos/video - Copy.mp4"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import HomeConnectButton from "./HomeConnectButton";
-
+import { useWeb3React } from "@web3-react/core";
 const Home = ({close}) => {
 
-    const { active, library } = useAuth()
+    const { active } = useWeb3React()
     
    
     return(

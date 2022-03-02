@@ -20,6 +20,7 @@ import { NavContainer,
 import useAuth from '../../hooks/useAuth';
 import threeDots from "../assets/threeDots.svg"
 import Web3 from 'web3';
+import { useWeb3React } from '@web3-react/core';
 import {ethers} from "ethers"
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { formatEther } from 'ethers/lib/utils';
@@ -32,7 +33,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
     const [transaction, setTransaction] = useState(false);
     const bal = useRef(null)
 
-    const { active, library, account } = useAuth()
+    const { library, account, active } = useWeb3React()
 
     useEffect(() => {
 

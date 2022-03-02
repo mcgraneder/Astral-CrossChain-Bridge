@@ -15,7 +15,7 @@ import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
-
+import { useWeb3React } from "@web3-react/core"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 const renAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
@@ -298,7 +298,6 @@ const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs
 
 export const RejectionModal = ({visible, close, amount}) => {
     
-    // const { connectOn, disconnect, active, loading } = useAuth()
   
     const provider = localStorage.getItem("provider")
 
@@ -354,8 +353,6 @@ export const PendingModal = ({visible, close, amount}) => {
 
 export const TransactionSubmittedModal = ({visible, close, amount}) => {
     
-    // const { connectOn, disconnect, active, loading } = useAuth()
-  
     const provider = localStorage.getItem("provider")
 
    
@@ -396,7 +393,7 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
     const [txCost, setTxCost] = useState(0)
     const [expectedBalance, setExpectedBalance] = useState(0)
 
-    const {library, account} = useAuth()
+    const { library, account  } = useWeb3React()
 
     useEffect(() => {
         if(library) {

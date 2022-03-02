@@ -30,7 +30,6 @@ export default function Footer({colour, colour1, colour2, bcolour, bcolour1, bco
     const [transaction, setTransaction] = useState(false);
 
 
-  const { active } = useAuth()
   return (
       
         <div>

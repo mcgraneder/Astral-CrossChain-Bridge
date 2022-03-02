@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useWeb3React } from "@web3-react/core"
 const useWalletTransaction = (text, inputText) => {
 
     const [text, setText] = useState(" ")
@@ -7,7 +7,7 @@ const useWalletTransaction = (text, inputText) => {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const { library, account } = useAuth()
+    const { library, account } = useWeb3React()
 
     const handleDeposit = async() => {
 

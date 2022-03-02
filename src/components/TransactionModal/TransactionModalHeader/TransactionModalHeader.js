@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 // import ConnectWalletButton from '../Buttons/ConnectWalletButton';
 import RenLogo from "../../assets/RenLogo.svg"
 import ConnectWalletButton from '../../Buttons/ConnectWalletButton/ConnjectWalletButton';
+import { useWeb3React } from '@web3-react/core';
 import { NavContainer, 
          NavWrapper,
          NavLogoContainer,
@@ -27,8 +28,6 @@ export default function TransactionModalHeader({colour, colour1, colour2, bcolou
     const [wallet, setWallet] = useState(false);
     const [transaction, setTransaction] = useState(false);
 
-
-  const { active } = useAuth()
   return (
       
             <NavContainer>
