@@ -46,7 +46,7 @@ export const BridgeModalWrapper = styled.div`
 export const ChainSelector = styled.div`
 
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: ${(props) => props.marginbottom};
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
@@ -124,7 +124,7 @@ export const DropdownContainer = styled.div`
 export const BalanceContainer = styled.div`
 
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;

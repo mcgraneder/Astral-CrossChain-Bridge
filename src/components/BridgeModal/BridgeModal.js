@@ -163,7 +163,7 @@ const BrideModal = ({close, balance, setBalance}) => {
             </BridgeSelectorContainer>
             <BridgeModalWrapper>
             {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
-                <ChainSelector>
+                <ChainSelector marginbottom={"12px"}>
                     <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
@@ -182,7 +182,7 @@ const BrideModal = ({close, balance, setBalance}) => {
                         <ArrowLogo12 src={arrowDown}></ArrowLogo12>
                     </ArrowLogoContainer12>
                 </ArrowContainer12>
-                <ChainSelector>
+                <ChainSelector marginbottom={"30px"}>
                     <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
                         <ChainSelectorIconWrapper >
                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
