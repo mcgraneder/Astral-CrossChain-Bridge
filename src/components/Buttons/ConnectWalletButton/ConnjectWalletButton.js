@@ -95,12 +95,34 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
 
     
    // <ConnectButton height={height} fontsize={fontsize} col={color} col2={true} onClick={close}><ButtonText style={{"fontWeight": "bold"}}><Logo1 left={left} top={top}><Loader stroke="white" size={"18px"}/></Logo1>1 Pending....</ButtonText></ConnectButton> 
-
+    const currentAccount = localStorage.getItem("currentAccount")
     return (
 
         <>
 
-            {loading ? <ConnectButton height={height} fontsize={fontsize} col={color} col2={true} onClick={close}><ButtonText style={{"fontWeight": "bold"}}><Logo1 left={left} top={top}><Loader stroke="white" size={"18px"}/></Logo1>1 Pending....</ButtonText></ConnectButton> : (active ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton>: (!onPageLoading ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> :  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}><Logo1 left={left} top={top}><Loader style={{paddingTop: "5px"}} type="Oval" width={"18px"} height={18} color="rgb(89,115,254)"></Loader></Logo1>Connecting...</NavButton2>))}
+            {loading ? 
+            <ConnectButton 
+                height={height} 
+                fontsize={fontsize} 
+                col={color} 
+                col2={true} 
+                onClick={close}>
+            <ButtonText 
+                style={{"fontWeight": "bold"}}>
+            <Logo1 
+                left={left} 
+                top={top}>
+            <Loader 
+                stroke="white" 
+                size={"18px"}/>
+            </Logo1>
+                1 Pending....
+            </ButtonText>
+            </ConnectButton> 
+            : 
+            (active ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton>
+            : (!onPageLoading ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> 
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount.substring(0, 6)}...{currentAccount.substring(currentAccount.length - 4)}</ButtonText></ConnectButton>))}
         </>
     )
 }

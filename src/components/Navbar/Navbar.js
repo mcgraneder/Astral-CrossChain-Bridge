@@ -52,7 +52,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
 
     }, [library, account])
 
-
+    const provider = localStorage.getItem("provider")
   return (
       
         <div>
@@ -71,7 +71,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                     </NavMenu>
                     <NavMenu2>
                     <NavItem2 active={active}>
-                        {active &&  <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
+                        {provider && <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
                             <ConnectWalletButton loading={loading} active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>

@@ -26,6 +26,11 @@ export default function useAuth() {
     var loggedInAccount = localStorage.getItem("account")
     var provider = localStorage.getItem("provider")
     // console.log(localStorage.getItem("provider"))
+
+    useEffect(() => {
+        if(library) localStorage.setItem("currentAccount", account);
+    }, [library])
+
     async function connectOnLoad() {
 
         if ( localStorage.getItem("provider") == null)  {
@@ -131,6 +136,8 @@ export default function useAuth() {
         web3 = undefined;
         setLoading(false)
         localStorage.removeItem("account");
+        localStorage.removeItem("currentAccount");
+
         localStorage.removeItem("provider");
 
         } catch (err) {
