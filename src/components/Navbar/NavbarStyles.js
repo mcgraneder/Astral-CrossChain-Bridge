@@ -29,7 +29,7 @@ export const NavMenu = styled.div`
     list-style: none;
     align-items: center;
     margin: 10px;
-    margin-left: 120px;
+    margin-left: 30px;
     opacity: ${(props) => props.visible ? "1" : "0"};
 `
 
@@ -87,7 +87,7 @@ export const NavButton = styled(Link)`
 
     display: inline;
     background: ${(props) => props.color};
-    width: 140px;
+    width: 110px;
     border-radius: 18px;
     height: 93%;
     text-align: center;

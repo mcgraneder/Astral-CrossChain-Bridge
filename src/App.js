@@ -22,6 +22,9 @@ function getLibrary(provider) {
 
 function App() { 
 
+  const [show1, setShow1] = useState(false);
+  const toggle1 = () => setShow1(!show1);
+
   const loading = useOnPageLoad()
 
   
@@ -33,6 +36,7 @@ function App() {
 
       <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
+          {/* <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav> */}
         {/* <Nav bcolour={"rgb(34,43,68)"} bcolour1={"rgb(14, 22, 39)"} bcolour2={"rgb(14, 22, 39)"} visible={true}></Nav> */}
           <Switch>
             <Route exact path="/" component={HomePage}></Route>

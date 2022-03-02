@@ -52,6 +52,60 @@ export const MintForm = styled.div`
     }
 `
 
+export const BridgeSelectorContainer = styled.div`
+
+    // width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    // background: White;
+    display: flex;
+    height: 45px;
+    padding-bottom: 10px;
+    // border: 1px solid rgb(34,43,68);
+`
+
+export const ERC20BridgeToggleButton = styled.div`
+
+   
+    width: 50%;
+    height: 100%;
+    border-top-${(props) => props.side}-radius: 10px;
+    border-right: 1.5px solid rgb(14, 22, 39);
+    background: ${(props) => props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
+    font-size: 18px;
+    font-weight: bold;
+    // font-family: 'Open Sans', sans-serif;
+    // border: 1px solid ${(props) => props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
+    // border-bottom: 1.5px solid rgb(75,135,220);
+    color: ${(props) => props.active ? "rgb(75,135,220)" : "White"};
+    &:hover {
+
+        cursor: pointer
+    }
+
+`
+export const LegacyBridgeToggleButton = styled.div`
+
+   
+    width: 50%;
+    height: 100%;
+    border-top-${(props) => props.side}-radius: 10px;
+    // border-right: 1.5px solid rgb(14, 22, 39);
+    background: ${(props) => !props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    // border: 1px solid ${(props) => !props.active ? "rgb(75,135,220)" : "none"};
+    // border-bottom: 1.5px solid rgb(75,135,220);
+    color: ${(props) => !props.active ? "rgb(75,135,220)" : "White"};
+
+    &:hover {
+
+        cursor: pointer
+    }
+
+`
+
 const BrideModal = ({close, balance, setBalance}) => {
 
     const [toggle, setToggle] = useState(true)
@@ -95,7 +149,20 @@ const BrideModal = ({close, balance, setBalance}) => {
         <StyledContainer onClick={() => setDropdownValue3()}>
             
             <BridgeModalContainer>
+            <BridgeSelectorContainer>
+            <LegacyBridgeToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>
+                            <MintFormTextWrapper2>
+                                <MintFormText2>Legacy Bridge</MintFormText2>
+                            </MintFormTextWrapper2>
+                        </LegacyBridgeToggleButton>
+                        <ERC20BridgeToggleButton side={"right"} active={toggle} onClick={setToggleValue}>
+                            <MintFormTextWrapper2>
+                                <MintFormText2>ERC20 Bridge</MintFormText2>
+                            </MintFormTextWrapper2>
+                        </ERC20BridgeToggleButton>
+            </BridgeSelectorContainer>
             <BridgeModalWrapper>
+            {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
                 <ChainSelector>
                     <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
                         <ChainSelectorIconWrapper>
