@@ -13,7 +13,7 @@ import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import { Web3Provider } from "@ethersproject/providers";
-
+import DexPage from "./pages/DexPage"
 import { OrderMap } from "immutable"
 
 function getLibrary(provider) {
@@ -44,6 +44,7 @@ function App() {
             
             <Route exact path="/wallet" component={WalletPage}></Route>
             <Route exact path="/transactions" component={TransactionPage}></Route>
+            <Route exact path="/dex" component={DexPage}></Route>
           </Switch>
           <Footer colour={"rgb(24,33,58)"} colour1={"rgb(7, 16, 33)"} colour2={"rgb(7, 16, 33)"}></Footer>
         </Router>

@@ -65,9 +65,8 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                     <NavMenu visible={visible}>
                         <NavItem>
                             <NavButton to="/" color={colour} bbcolour={bcolour}>Bridge</NavButton>
-                            {/* <NavButton to="/" color={colour1} bbcolour={bcolour1}>ERC20 Bridge</NavButton> */}
                             <NavButton to="/wallet" color={colour1} bbcolour={bcolour1}>Wallet</NavButton>
-                            <NavButton to="/" color={colour1} bbcolour={bcolour1}>Trade</NavButton>
+                            <NavButton to="/dex" color={colour1} bbcolour={bcolour1}>Trade</NavButton>
                             <NavButton to="/transactions" color={colour2} bbcolour={bcolour2}>History</NavButton>
                         </NavItem>
                     </NavMenu>
