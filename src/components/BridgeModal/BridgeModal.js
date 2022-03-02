@@ -60,7 +60,7 @@ export const BridgeSelectorContainer = styled.div`
     // background: White;
     display: flex;
     height: 45px;
-    padding-bottom: 10px;
+    padding-bottom: 35px;
     // border: 1px solid rgb(34,43,68);
 `
 
@@ -70,14 +70,14 @@ export const ERC20BridgeToggleButton = styled.div`
     width: 50%;
     height: 100%;
     border-top-${(props) => props.side}-radius: 10px;
-    border-right: 1.5px solid rgb(14, 22, 39);
+    // border-right: 1.5px solid rgb(14, 22, 39);
     background: ${(props) => props.active ? "rgb(14, 22, 39)" : "rgb(27,32,52)"};
     font-size: 18px;
     font-weight: bold;
     // font-family: 'Open Sans', sans-serif;
     // border: 1px solid ${(props) => props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
     // border-bottom: 1.5px solid rgb(75,135,220);
-    color: ${(props) => props.active ? "rgb(75,135,220)" : "White"};
+    color: ${(props) => props.active ? "rgb(75,135,220)" : "rgb(77,82,102)"};
     &:hover {
 
         cursor: pointer
@@ -97,7 +97,7 @@ export const LegacyBridgeToggleButton = styled.div`
     font-family: 'Open Sans', sans-serif;
     // border: 1px solid ${(props) => !props.active ? "rgb(75,135,220)" : "none"};
     // border-bottom: 1.5px solid rgb(75,135,220);
-    color: ${(props) => !props.active ? "rgb(75,135,220)" : "White"};
+    color: ${(props) => !props.active ? "rgb(75,135,220)" : "rgb(77,82,102)"};
 
     &:hover {
 

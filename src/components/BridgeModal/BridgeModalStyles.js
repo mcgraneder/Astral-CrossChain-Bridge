@@ -35,9 +35,9 @@ export const BridgeModalWrapper = styled.div`
     // width: 100%;
     height: 100%;
     padding: 10px 10px;
-    border: 1px solid  rgb(37, 46, 63);
+    // border: 1px solid  rgb(37, 46, 63);
     border-top: none;
-    border-radius: 10px;
+    // border-radius: 10px;
 
 `
 
@@ -291,7 +291,7 @@ export const MintToggleButton = styled.div`
     // font-family: 'Open Sans', sans-serif;
     border: 1px solid ${(props) => props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
     // border-bottom: 1.5px solid rgb(75,135,220);
-    color: ${(props) => props.active ? "rgb(75,135,220)" : "White"};
+    color: ${(props) => props.active ? "rgb(75,135,220)" : "rgb(77,82,102)"};
     &:hover {
 
         cursor: pointer
@@ -311,7 +311,7 @@ export const ReleaseToggleButton = styled.div`
     font-family: 'Open Sans', sans-serif;
     border: 1px solid ${(props) => !props.active ? "rgb(75,135,220)" : "rgb(27,32,52)"};
     // border-bottom: 1.5px solid rgb(75,135,220);
-    color: ${(props) => !props.active ? "rgb(75,135,220)" : "White"};
+    color: ${(props) => !props.active ? "rgb(75,135,220)" : "rgb(77,82,102)"};
 
     &:hover {
 
@@ -384,7 +384,7 @@ export const ArrowLogo = styled.img`
 export const ArrowContainer12 = styled.div`
 
     position: absolute;
-    top: 21.2%;
+    top: 10.5%;
     left: 0;
     width: 100%;
     height: 25px;

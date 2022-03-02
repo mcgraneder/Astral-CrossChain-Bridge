@@ -16,7 +16,7 @@ export const walletconnect1 = new WalletConnectConnector({
 export default function useAuth() {
 
     const [loading, setLoading] = useState(false);
-    const [onPageLoading, setOnPageLoading] = useState(false)
+    const [onPageLoading, setOnPageLoading] = useState(true)
     const [acc, setAcc] = useState("")
     const web32 = useRef(null)
     const [address, setAddress] = useState()
@@ -48,18 +48,22 @@ export default function useAuth() {
         if ( localStorage.getItem("provider") == "portis") provider = portis
         if ( localStorage.getItem("provider") == "torus") provider = torus 
 
-        setOnPageLoading(true)
+        setOnPageLoading(false)
 
          try {
            
-            await activate(provider, undefined, true);
-            await deactivate()
-            await activate(provider, undefined, true);
+            // await deactivate()
+            setTimeout(async () => {
+                await activate(provider, undefined, true);
+            }, 2000)
+
+            // await deactivate()
+            // await activate(provider, undefined, true);
         
           } catch (err) {
 
             console.error(err)
-            deactivate()
+            disconnect()
             // localStorage.removeItem("provider");
 
             setOnPageLoading(false)
@@ -121,7 +125,8 @@ export default function useAuth() {
             } catch (err) {
 
                 console.log(err)
-                deactivate()
+                disconnect()
+                setOnPageLoading(false)
                 localStorage.removeItem("provider");
 
                 setLoading(false)

@@ -29,7 +29,7 @@ export const NavMenu = styled.div`
     list-style: none;
     align-items: center;
     margin: 10px;
-    margin-left: 30px;
+    margin-left: 118px;
     opacity: ${(props) => props.visible ? "1" : "0"};
 `
 
