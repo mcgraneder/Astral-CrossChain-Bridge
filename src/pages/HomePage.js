@@ -18,8 +18,6 @@ const HomePage = () => {
 
         <>
              {loading && <PageLoad></PageLoad>}
-            <Nav colour={"rgb(24,33,58)"} colour1={"rgb(7, 16, 33)"} colour2={"rgb(7, 16, 33)"} close={toggle1} visible={false}></Nav>
-            <Web3Modal visible={show1} close={toggle1}></Web3Modal>
             <LoginStyledContainer>
                 <Home close={toggle1}></Home>
             </LoginStyledContainer>

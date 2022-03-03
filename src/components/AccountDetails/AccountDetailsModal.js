@@ -393,12 +393,18 @@ export const Container = styled.div`
 `
 
 
-const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
+const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccountDetails, error}) => {
 
-    const {account} = useWeb3React()
+    const {account } = useWeb3React()
 
     const [load, setLoad] = useState(true)
 
+    const closeAllModals = () => {
+
+        close()
+        toggleAccountDetails()
+    }
+   
     //  const { transactions } = usePendingTransaction()
 
     var logo
@@ -419,11 +425,7 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
         logo = torus;
     }
 
-    const closeAll = () => {
-
-        close()
-        toggle2()
-    }
+    
     return(
 
         <>
@@ -435,7 +437,7 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
                 <TokenAmountWrapper height={"120px"} marginTop={"40px"} marginBottom={"0px"}>
                     <TitleWrapper spacing={"space-between"}>
                         <Title size={"13px"} color={"#adadad"}>Connected With Metamask</Title>
-                        <DisconnectButtonWrapper onClick={closeAll}>
+                        <DisconnectButtonWrapper onClick={!localStorage.getItem("provider") ? close : toggleAccountDetails}>
                             <DisconnectButtonText>Change Wallet</DisconnectButtonText>
                         </DisconnectButtonWrapper>
                     </TitleWrapper>

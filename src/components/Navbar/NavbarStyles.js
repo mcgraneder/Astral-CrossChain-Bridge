@@ -86,7 +86,8 @@ export const NavLogo = styled.img`
 export const NavButton = styled(Link)`
 
     display: inline;
-    background: ${(props) => props.color};
+    background: ${(props) => props.active ? "rgb(14,22,39)" : "rgb(27,32,52)"};
+    border: 2px solid ${(props) => !props.active ? "rgb(34,43,68)" : "rgb(14, 22, 39)"};
     width: 110px;
     border-radius: 18px;
     height: 93%;
@@ -96,15 +97,11 @@ export const NavButton = styled(Link)`
     // font-weight: bold;
     font-size: 17px;
     text-decoration: none;
-    border: 2px solid ${(props) => props.bbcolour};
-
 
     &:hover {
 
         cursor: pointer;
-     
     }
-
 `
 
 export const NavMenu2 = styled.div`

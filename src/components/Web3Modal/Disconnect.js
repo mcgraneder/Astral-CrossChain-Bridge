@@ -25,10 +25,15 @@ const providers = [
     },
 ]
 
-const Disconnect = ({connect, to}) => {
+const Disconnect = ({connect, to, close}) => {
 
+    function disconnect() {
+        close()
+        connect()
+
+    }
     return (
-        <ConnectButton onClick={connect} >
+        <ConnectButton onClick={() => disconnect()} >
             <StyledLink to={to}>
                 <i className="fas fa-sign-out"></i>
                 <span className="label">Disconnect</span>

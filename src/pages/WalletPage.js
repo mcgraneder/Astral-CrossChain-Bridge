@@ -31,10 +31,6 @@ const WalletPage = ({}) => {
     return (
 
         <>
-            <AccountDetailsModal visible={show1} close={toggle1} toggle2={toggle2}/>
-            {/* <PendingModal visible={showPending} close={togglePending} amount={amount}></PendingModal> */}
-            <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
-            <Web3Modal visible={show2} close={toggle2} bac={toggle1}></Web3Modal>
             <TokenListModal visible={showTokenModal} close={toggleTokenModal}></TokenListModal>
             <WalletModal setShow={setShow2} close={show2} visible={show1} setLoading={setLoading} loading={loading} toggleTokenModal={toggleTokenModal}></WalletModal>
         </>

@@ -25,14 +25,14 @@ import {ethers} from "ethers"
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { formatEther } from 'ethers/lib/utils';
 
-export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible, loading}) {
+export default function Nav({ close, visible, loading, toggleAccountDetails}) {
 
-    const [bridge, setBridge] = useState(false);
-    const [wallet, setWallet] = useState(false);
+    const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
     const [balance, setBalance] = useState(0.000)
-    const [transaction, setTransaction] = useState(false);
-    const bal = useRef(null)
-
+    const toggleTab = (index) => {
+        localStorage.setItem("state", index)
+        setToggleState(index)
+    }
     const { library, account, active } = useWeb3React()
 
     useEffect(() => {
@@ -64,10 +64,10 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                     </NavLogoContainer>
                     <NavMenu visible={visible}>
                         <NavItem>
-                            <NavButton to="/" color={colour} bbcolour={bcolour}>Bridge</NavButton>
-                            <NavButton to="/wallet" color={colour1} bbcolour={bcolour1}>Wallet</NavButton>
-                            <NavButton to="/dex" color={colour1} bbcolour={bcolour1}>Trade</NavButton>
-                            <NavButton to="/transactions" color={colour2} bbcolour={bcolour2}>History</NavButton>
+                            <NavButton active={toggleState != 1 ? true : false} to="/" onClick={() => toggleTab(1)}>Bridge</NavButton>
+                            <NavButton active={toggleState != 2 ? true : false} to="/wallet" onClick={() => toggleTab(2)}>Wallet</NavButton>
+                            <NavButton active={toggleState != 3 ? true : false} to="/dex" onClick={() => toggleTab(3)}>Trade</NavButton>
+                            <NavButton active={toggleState != 4 ? true : false} to="/transactions" onClick={() => toggleTab(4 )}>History</NavButton>
                         </NavItem>
                     </NavMenu>
                     <NavMenu2>
@@ -75,7 +75,7 @@ export default function Nav({colour, colour1, colour2, bcolour, bcolour1, bcolou
                         {provider && <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
-                            <ConnectWalletButton loading={loading} active={active} left={"82.3%"} top={"31.5%"} close={close} onclick={close} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
+                            <ConnectWalletButton loading={loading} active={active} left={"82.3%"} top={"31.5%"} close={!localStorage.getItem("provider") ? close : toggleAccountDetails} onclick={!localStorage.getItem("provider") ? close : toggleAccountDetails} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
                     </NavItem2>
                     
                         <NavItem3 active={active} visible={visible}>

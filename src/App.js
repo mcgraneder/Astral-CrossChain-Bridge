@@ -15,7 +15,11 @@ import Footer from "./components/Footer/Footer";
 import { Web3Provider } from "@ethersproject/providers";
 import DexPage from "./pages/DexPage"
 import ERC20BridgePage from "./pages/ERC20BrifgePage";
+import Web3Modal from "./components/Web3Modal/Web3Modal";
 import { OrderMap } from "immutable"
+import useAuth from "./hooks/useAuth";
+import AccountDetailsModal from "./components/AccountDetails/AccountDetailsModal";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 function getLibrary(provider) {
   return new Web3Provider(provider)
@@ -23,10 +27,14 @@ function getLibrary(provider) {
 
 function App() { 
 
-  const [show1, setShow1] = useState(false);
-  const toggle1 = () => setShow1(!show1);
+  const [showWalletModal, setShowWalletModal] = useState(false);
+  const [showAccountDetails, setshowAccountDetails] = useState(false);
+
+  const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
+  const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
 
   const loading = useOnPageLoad()
+  const { connectOn, disconnect, error } = useAuth()
 
   
  
@@ -34,11 +42,10 @@ function App() {
 
     <div>
       {loading && <PageLoad></PageLoad>}
-
-      <Web3ReactProvider getLibrary={getLibrary}>
         <Router>
-          {/* <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav> */}
-        {/* <Nav bcolour={"rgb(34,43,68)"} bcolour1={"rgb(14, 22, 39)"} bcolour2={"rgb(14, 22, 39)"} visible={true}></Nav> */}
+          <AccountDetailsModal visible={showAccountDetails} close={toggleAccountDetails} toggleAccountDetails={toggleWalletModal} error={error}/>
+          <Nav close={toggleWalletModal} visible={true} toggleAccountDetails={toggleAccountDetails}></Nav>
+          <Web3Modal visible={showWalletModal} close={toggleWalletModal} toggleAccountDetails={toggleAccountDetails} connectOn={connectOn} disconnect={disconnect} setshowAccountDetails={setshowAccountDetails}></Web3Modal>
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>
@@ -49,8 +56,6 @@ function App() {
           </Switch>
           <Footer colour={"rgb(24,33,58)"} colour1={"rgb(7, 16, 33)"} colour2={"rgb(7, 16, 33)"}></Footer>
         </Router>
-        {/* <BridgePage></BridgePage> */}
-      </Web3ReactProvider>
     </div>
   )
 

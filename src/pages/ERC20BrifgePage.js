@@ -22,9 +22,6 @@ const ERC20BridgePage = () => {
     return (
 
         <>
-         <AccountDetailsModal visible={show1} close={toggle1} toggle2={toggle2}/>
-            <Nav colour={"rgb(27,32,52);;"} colour1={"rgb(14, 22, 39)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(34,43,68)"} bcolour1={"rgb(14, 22, 39)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
-            <Web3Modal visible={show2} close={toggle2} bac={toggle1}></Web3Modal>
             <ERC20BridgeModal close={toggle1} balance={balance} setBalance={setBalance}></ERC20BridgeModal>
         </>
     )

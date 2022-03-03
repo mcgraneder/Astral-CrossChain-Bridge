@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useWeb3React } from "@web3-react/core"
 import { injected, 
          fortmatic, 
@@ -14,12 +14,13 @@ export const walletconnect1 = new WalletConnectConnector({
     qrcode: true
 })
 
-export default function useAuth() {
+function useAuth() {
 
     const [loading, setLoading] = useState(false);
     const [onPageLoading, setOnPageLoading] = useState(true)
     const history = useHistory();
     const [address, setAddress] = useState()
+    const [error, setError] = useState(false)
 
     var { active, account, library, activate, deactivate } = useWeb3React()
     var provider = localStorage.getItem("provider")
@@ -107,6 +108,7 @@ export default function useAuth() {
                 console.log(err)
                 disconnect()
                 setOnPageLoading(false)
+                setError(true)
                 localStorage.removeItem("provider");
 
                 setLoading(false)
@@ -130,5 +132,7 @@ export default function useAuth() {
     }
 
 
-  return { connectOnLoad, disconnect, connectOn, address, setAddress, active, account, loading, library, onPageLoading}
+  return { connectOnLoad, disconnect, connectOn, address, setAddress, loading, onPageLoading, error}
 }
+
+export default useAuth
