@@ -123,7 +123,7 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
             : 
             (active ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton>
             : (onPageLoading ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> 
-            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount.substring(0, 6)}...{currentAccount.substring(currentAccount.length - 4)}</ButtonText></ConnectButton>))}
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>))}
         </>
     )
 }

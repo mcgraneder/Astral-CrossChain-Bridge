@@ -77,14 +77,14 @@ export const Backdrop = styled.div`
 // background: -webkit-linear-gradient(top, #23233999, #040717);
 // background: -moz-linear-gradient(top, #23233999, #040717);
 // background: linear-gradient(to bottom, rgba(112,128,136, 0.1), rgba(2,8,26, 0.75));
-transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
+// transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
     z-index: 1;
     ${(props) => props.visible && css`
 
         z-index: 1;
         opacity: 1;
         pointer-events: all;
-        transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
+        // transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
     `}
 
    
@@ -393,7 +393,7 @@ export const Container = styled.div`
 `
 
 
-const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccountDetails, error}) => {
+const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccountDetails}) => {
 
     const {account } = useWeb3React()
 

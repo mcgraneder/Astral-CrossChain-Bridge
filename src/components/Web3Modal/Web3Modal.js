@@ -367,7 +367,7 @@ export const CloseIcon = styled(X)`
 
 
 
-const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect, setshowAccountDetails}) => {
+const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect}) => {
     
     const { active, error } = useWeb3React()
     const history = useHistory();

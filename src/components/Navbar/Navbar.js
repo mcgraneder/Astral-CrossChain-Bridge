@@ -25,7 +25,7 @@ import {ethers} from "ethers"
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { formatEther } from 'ethers/lib/utils';
 
-export default function Nav({ close, visible, loading, toggleAccountDetails}) {
+export default function Nav({ close, loading, toggleAccountDetails}) {
 
     const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
     const [balance, setBalance] = useState(0.000)
@@ -62,8 +62,8 @@ export default function Nav({ close, visible, loading, toggleAccountDetails}) {
                         <NavLogo src={RenLogo} height="70px" width="70px"></NavLogo>
                         <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
                     </NavLogoContainer>
-                    <NavMenu visible={visible}>
-                        <NavItem>
+                    <NavMenu visible={localStorage.getItem("provider")}>
+                        <NavItem >
                             <NavButton active={toggleState != 1 ? true : false} to="/" onClick={() => toggleTab(1)}>Bridge</NavButton>
                             <NavButton active={toggleState != 2 ? true : false} to="/wallet" onClick={() => toggleTab(2)}>Wallet</NavButton>
                             <NavButton active={toggleState != 3 ? true : false} to="/dex" onClick={() => toggleTab(3)}>Trade</NavButton>
@@ -78,7 +78,7 @@ export default function Nav({ close, visible, loading, toggleAccountDetails}) {
                             <ConnectWalletButton loading={loading} active={active} left={"82.3%"} top={"31.5%"} close={!localStorage.getItem("provider") ? close : toggleAccountDetails} onclick={!localStorage.getItem("provider") ? close : toggleAccountDetails} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
                     </NavItem2>
                     
-                        <NavItem3 active={active} visible={visible}>
+                        <NavItem3 active={active} visible={localStorage.getItem("provider")}>
                         <BalanceContainer active={active}>
                         <NavLogo src={threeDots} height="30px" width="30px"></NavLogo></BalanceContainer>
                       
