@@ -7,11 +7,15 @@ import { TransactionPopupWrapper } from "../components/AccountDetails/Transactio
 import DepositSummary from "../components/AccountDetails/TransactionSummary";
 import TransactionProcess from "../components/TransactionConfirmationModal/PendingModal";
 import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModal";
+import TokenListModal from "../components/TokenListModal/TokenListModal";
 const WalletPage = ({}) => {
 
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);
     const [loading, setLoading] = useState(false)
+    const [showTokenModal, setShowTokenModal] = useState(false)
+
+    const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
 
     const toggle1 = () => setShow1(!show1);
     const toggle2 = () => setShow2(!show2);
@@ -31,7 +35,8 @@ const WalletPage = ({}) => {
             {/* <PendingModal visible={showPending} close={togglePending} amount={amount}></PendingModal> */}
             <Nav loading={loading} colour={"rgb(14, 22, 39)"} colour1={"rgb(27,32,52)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(14, 22, 39)"} bcolour1={"rgb(34,43,68)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
             <Web3Modal visible={show2} close={toggle2} bac={toggle1}></Web3Modal>
-            <WalletModal setShow={setShow2} close={show2} visible={show1} setLoading={setLoading} loading={loading}></WalletModal>
+            <TokenListModal visible={showTokenModal} close={toggleTokenModal}></TokenListModal>
+            <WalletModal setShow={setShow2} close={show2} visible={show1} setLoading={setLoading} loading={loading} toggleTokenModal={toggleTokenModal}></WalletModal>
         </>
     )
 }

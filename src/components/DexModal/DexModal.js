@@ -268,7 +268,7 @@ export const ButtonContents = styled.span`
 
 
 
-const DexModal = ({ visible, close }) => {
+const DexModal = ({ close }) => {
 
     const [swapState, setSwapState] = useState(0)
     const toggleSwapState = () => setSwapState(!swapState)

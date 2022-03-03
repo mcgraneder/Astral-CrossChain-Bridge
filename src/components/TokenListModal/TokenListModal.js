@@ -38,6 +38,10 @@ export const Backdrop = styled.div`
 
 export const TokenListFromContainer = styled.div`
 
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
     margin: 0px 0px 2rem;
     // position: absolute;
     // background: rgb(14, 22, 39);
@@ -48,12 +52,21 @@ export const TokenListFromContainer = styled.div`
     align-self: center;
     max-width: 420px;
     max-height: 80vh;
-    min-height: 80vh;
+    // min-height: 80vh;
+    opacity: 0;
     display: flex;
     border-radius: 20px;
     outline: none;
     box-sizing: border-box;
     font-family: 'Inter custom',sans-serif;
+
+    ${(props) => props.visible && css`
+
+    z-index: 1;
+    opacity: 1;
+    pointer-events: all;
+    transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
+`}
     
 `
 export const TokenListFormWrapper = styled.div`
@@ -238,7 +251,7 @@ export const Divider = styled.div`
 
 export const TokenListSection = styled.div`
 
-    flex: 1 1 0%;
+    // flex: 1 1 0%;
     position: relative;
     display: block
 `
@@ -255,7 +268,9 @@ export const TokenListSelectionWrapper = styled.div`
 
     display: block;
     position: relative;
-    height: 458px;
+    // height: 400px;
+    height: 320px;
+    overflow-y: auto;
     width: 100%;
     overflow: auto;
     will-change: transform;
@@ -284,7 +299,7 @@ export const TokenListSelectionWrapper = styled.div`
 
 export const OverallContainer = styled.div`
 
-    height: 1288px;
+    // height: 488px;
     width: 100%;
     display: block;
 `
@@ -437,7 +452,7 @@ const TokenListModal = ({ visible, close }) => {
     return(
 
         <>
-            <Backdrop visible={visible} onClick={close} trueFade={true}>
+            <Backdrop visible={visible} onClick={close} trueFade={true}/>
                 <TokenListFromContainer visible={visible}>
                     <TokenListFormWrapper>
                         <TopSection>
@@ -509,6 +524,28 @@ const TokenListModal = ({ visible, close }) => {
                                                 <BalanceText>0</BalanceText>
                                             </BalanceContainer>
                                         </ListTokenContainer>
+                                        <ListTokenContainer opacTrue={false}>
+                                            <TokenImg src={ChainlinkLogo}></TokenImg>
+                                            <TokenNameContainer>
+                                                <TokenTitle>LINK</TokenTitle>
+                                                <TokenSubtitle>Chainlink</TokenSubtitle>
+                                            </TokenNameContainer>
+                                            <Spacer/>
+                                            <BalanceContainer>
+                                                <BalanceText>0</BalanceText>
+                                            </BalanceContainer>
+                                        </ListTokenContainer>
+                                        <ListTokenContainer opacTrue={false}>
+                                            <TokenImg src={ChainlinkLogo}></TokenImg>
+                                            <TokenNameContainer>
+                                                <TokenTitle>LINK</TokenTitle>
+                                                <TokenSubtitle>Chainlink</TokenSubtitle>
+                                            </TokenNameContainer>
+                                            <Spacer/>
+                                            <BalanceContainer>
+                                                <BalanceText>0</BalanceText>
+                                            </BalanceContainer>
+                                        </ListTokenContainer>
                                     </OverallContainer>
                                 </TokenListSelectionWrapper>
                             </TokenListSelectionContainer>
@@ -527,7 +564,7 @@ const TokenListModal = ({ visible, close }) => {
                         </BottomSection>
                     </TokenListFormWrapper>
                 </TokenListFromContainer>
-            </Backdrop>
+            {/* </Backdrop> */}
         </>
     )
 }

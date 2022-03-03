@@ -110,7 +110,7 @@ export const LegacyBridgeToggleButton = styled.div`
 
 `
 
-const BrideModal = ({close, balance, setBalance}) => {
+const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
 
     const [toggle, setToggle] = useState(true)
     const [height, setHeight] = useState("")
@@ -120,37 +120,13 @@ const BrideModal = ({close, balance, setBalance}) => {
     const [dropDownActive, setDropDownActive] = useState(false)
     const { active } = useWeb3React()
 
-    const setToggleValue = () => {
-
-        setToggle(!toggle);
-    }
-
-    const setDropdownValue1 = () => {
-
-        
-       
-        setDropDownActive(!dropDownActive);
-        setHeight("64px")
-    }
-
-    const setDropdownValue2 = () => {
-
-        console.log("hello")
-        setDropDownActive(!dropDownActive);
-        setHeight("128px")
-    }
-
-    const setDropdownValue3 = () => {
-
-        if(!dropDownActive) return
-        setDropDownActive(!dropDownActive);
-        setHeight("128px")
-    }
+    const setToggleValue = () => setToggle(!toggle);
+    
 
     return (
 
         <>
-        <StyledContainer onClick={() => setDropdownValue3()}>
+        <StyledContainer>
             
             <BridgeModalContainer>
             <BridgeSelectorContainer>
@@ -168,7 +144,7 @@ const BrideModal = ({close, balance, setBalance}) => {
             <BridgeModalWrapper>
             {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
                 <ChainSelector marginbottom={"12px"}>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
+                    <ChainSelectorWrapper onClick={toggleTokenModal}>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
@@ -180,14 +156,13 @@ const BrideModal = ({close, balance, setBalance}) => {
                         </DropdownContainer>
                     </ChainSelectorWrapper>
                 </ChainSelector>
-                { dropDownActive && <DropdownMenu height={height}></DropdownMenu>}
                  <ArrowContainer12>
                     <ArrowLogoContainer12>
                         <ArrowLogo12 src={arrowDown}></ArrowLogo12>
                     </ArrowLogoContainer12>
                 </ArrowContainer12>
                 <ChainSelector marginbottom={"30px"}>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
+                    <ChainSelectorWrapper onClick={toggleTokenModal}>
                         <ChainSelectorIconWrapper >
                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>

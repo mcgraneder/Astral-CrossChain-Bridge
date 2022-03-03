@@ -426,7 +426,8 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
     }
     return(
 
-        <Backdrop visible={visible} onClick={close} trueFade={true}>
+        <>
+        <Backdrop visible={visible} onClick={close} trueFade={true}/>
            
             <FormWrapper visible={visible} trueFade={false}>
                 <ErrorText>Account</ErrorText>
@@ -487,7 +488,8 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions}) => {
                 </TransactionWrapper>
                
             </FormWrapper>
-        </Backdrop>
+            </>
+       
 
     )
 }

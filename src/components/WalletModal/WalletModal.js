@@ -193,7 +193,7 @@ const Assets = [
 
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
-const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
+const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenModal}) => {
 
     const [isActive, setIsActive] = useState(false)
     const [showNotifications, setShowNotifications] = useState(false)
@@ -275,17 +275,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
     //    }, [deposits])
 
 
-    const setDropdownValue = () => {
-
-        setDropDownActive(!dropDownActive);
-    }
-
-
-    const setDropdownValue3 = () => {
-
-        if(!dropDownActive) return
-        setDropDownActive(!dropDownActive);
-    }
 
     const preventMinus = (e) => {
         if (e.code === 'Minus') {
@@ -669,11 +658,11 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                 amount={amount} 
                 visible={rejected}
             />
-        <StyledContainer onClick={() => setDropdownValue3()}>
+        <StyledContainer>
             
             <BridgeModalContainer>
             <BridgeModalWrapper>
-                <ChainSelector onClick={() => setDropdownValue()}>
+                <ChainSelector onClick={toggleTokenModal}>
                     <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
@@ -686,7 +675,6 @@ const WalletModal = ({setShow, visible, close, setLoading, loading}) => {
                         </DropdownContainer>
                        
                     </ChainSelectorWrapper>
-                    { dropDownActive && <DropdownMenu height={"64px;"}></DropdownMenu>}
              
                 </ChainSelector>
                 <BalanceContainer>

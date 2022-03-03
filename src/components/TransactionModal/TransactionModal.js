@@ -41,7 +41,7 @@ import DropdownMenu3 from "./DropdownMenu3";
 import Nav from "../Navbar/Navbar";
 import { Ethereum } from "@renproject/chains";
 import TransactionList from "./TransactionList/TransactionList";
-const TransactionModal = ({close, transactions}) => {
+const TransactionModal = ({close, transactions, toggleTokenModal}) => {
 
     const [toggle, setToggle] = useState(true)
     const [dropDownActive0, setDropDownActive0] = useState(false)
@@ -76,23 +76,10 @@ const TransactionModal = ({close, transactions}) => {
         setDropDownActive(!dropDownActive);
     }
 
-    const setDropdownValue1 = () => {
-
-        setDropDownActive(!dropDownActive);
-    }
-
-    const setDropdownValue2 = () => {
-
-        setDropDownActive(!dropDownActive);
-    }
-
     const setDropdownValue3 = () => {
-
-        if(!dropDownActive && !dropDownActive1 && !dropDownActive2 && !dropDownActive0) return
+        if(!dropDownActive  && !dropDownActive0) return
         setDropDownActive0(false);
         setDropDownActive(false);
-        setDropDownActive1(false);
-        setDropDownActive2(false);
     }
     // console.log(text)
 
@@ -135,7 +122,7 @@ const TransactionModal = ({close, transactions}) => {
                                     Viewing history from
                                 </Transactiontext>
                                 <HeaderContainerr>
-                                    <HeaderButton onClick={e => setDropDownActive1(!dropDownActive1)}>
+                                    <HeaderButton onClick={toggleTokenModal}>
                                         <ChainSelectorIconWrapper>
                                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
                                             Bitcoin
@@ -143,13 +130,12 @@ const TransactionModal = ({close, transactions}) => {
                                             <ChainSelectorIcon src={chevronDownLogo} width={"13px"}></ChainSelectorIcon>
                                         </ChainSelectorIconWrapper>
                                     </HeaderButton>
-                                    <DropdownMenu2 active={dropDownActive1} width={"80px"} height={"100px"} top={"143px"}></DropdownMenu2>
                                 </HeaderContainerr>
                                 <Transactiontext>
                                     to
                                 </Transactiontext>
                                 <HeaderContainerr>
-                                    <HeaderButton onClick={e => setDropDownActive2(!dropDownActive2)}>
+                                    <HeaderButton onClick={toggleTokenModal}>
                                         <ChainSelectorIconWrapper>
                                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
                                             Ethereum
@@ -157,7 +143,6 @@ const TransactionModal = ({close, transactions}) => {
                                             <ChainSelectorIcon src={chevronDownLogo} width={"13px"}></ChainSelectorIcon>
                                         </ChainSelectorIconWrapper>
                                     </HeaderButton>
-                                    <DropdownMenu2 active={dropDownActive2} width={"90px"} height={"100px"} top={"143px"}></DropdownMenu2>
                                 </HeaderContainerr>
                             </TransactionHeader>
                         </TransactionSelector>
