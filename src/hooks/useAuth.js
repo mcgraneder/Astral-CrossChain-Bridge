@@ -54,7 +54,13 @@ export default function useAuth() {
            
             // await deactivate()
             setTimeout(async () => {
-                await activate(provider, undefined, true);
+                await activate(provider, undefined, true).catch((error) => {
+                    console.log('Tx signature error:', error);;
+                    setOnPageLoading(true)
+                    disconnect()
+                   
+                    
+                })
             }, 2000)
 
             // await deactivate()
@@ -64,9 +70,10 @@ export default function useAuth() {
 
             console.error(err)
             disconnect()
+            console.log("aaaaaaaaaaaaaaa")
             // localStorage.removeItem("provider");
 
-            setOnPageLoading(false)
+            setOnPageLoading(true)
           }
           setOnPageLoading(false)
        

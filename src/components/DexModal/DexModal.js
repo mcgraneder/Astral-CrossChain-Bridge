@@ -36,7 +36,7 @@ export const TokenAmountWrapper = styled.div`
     // width: 100%;
     height: ${(props) => props.height};
     background: rgb(27,32,52);
-    border: 1.3px solid  rgb(27,32,52);
+    border: 1.5px solid  rgb(27,32,52);
     border-radius: 15px;
     margin-top: ${(props) => props.marginTop};
     padding-left: 15px;
@@ -108,7 +108,7 @@ export const UniswapIcon = styled.img`
 export const ArrowDownContainer = styled.div`
 
     position: absolute;
-    top: 44.5%;
+    top: ${(props) => props.swapState == 0 ? "44.5%" : "36.5%"};
     left: 46.3%;
     // color: White;
     background: White;
@@ -120,6 +120,11 @@ export const ArrowDownContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:hover {
+
+        cursor: pointer;
+    }
 `
 
 export const Button = styled.div`
@@ -263,8 +268,10 @@ export const ButtonContents = styled.span`
 
 
 
-const DexModal = () => {
+const DexModal = ({ visible, close }) => {
 
+    const [swapState, setSwapState] = useState(0)
+    const toggleSwapState = () => setSwapState(!swapState)
     const { active } = useWeb3React()
 
 
@@ -276,31 +283,40 @@ const DexModal = () => {
             <UniswapIcon src={UniswapLogoPink}></UniswapIcon>
             <ErrorText>Swap</ErrorText>
                 <CloseIcon></CloseIcon>
-                <ArrowDownContainer>
+                <ArrowDownContainer onClick={toggleSwapState} swapState={swapState}>
                     <ArrowDown color={"White"} size={"15px"}/>
                 </ArrowDownContainer>
-            <TokenAmountWrapper height={"100px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
+            <TokenAmountWrapper height={swapState == 0 ? "100px" : "70px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
                     <InfoWrapper>
                         <TokenInput placeholder={"0.0"}></TokenInput>
-                        <TokenSelectButton color={"rgb(57,62,82)"}>
+                        <TokenSelectButton color={swapState == 0 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
                             <ButtonContents>
+                                {swapState == 0 ?
                                 <SelectedTokenContainer>
                                     <TokenImg src={EthereumLogo}></TokenImg>
                                     <SelectedToken initialWidth={true}>ETH</SelectedToken>
-                                </SelectedTokenContainer>
+                                </SelectedTokenContainer> :
+                                <SelectedTokenContainer>
+                                    <SelectedToken initialWidth={false}>Select a token</SelectedToken>
+                                </SelectedTokenContainer>}
                                 <ChevronDown size={"25px"}></ChevronDown>
                             </ButtonContents>
                         </TokenSelectButton>
                     </InfoWrapper>
                 </TokenAmountWrapper>
-                <TokenAmountWrapper height={"70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
+                <TokenAmountWrapper height={swapState == 1 ? "100px" : "70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
                 <InfoWrapper>
                         <TokenInput placeholder={"0.0"}></TokenInput>
-                        <TokenSelectButton color={"rgb(13,94,209)"}>
+                        <TokenSelectButton color={swapState == 1 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
                             <ButtonContents>
+                            {swapState == 1 ?
+                                <SelectedTokenContainer>
+                                    <TokenImg src={EthereumLogo}></TokenImg>
+                                    <SelectedToken initialWidth={true}>ETH</SelectedToken>
+                                </SelectedTokenContainer> :
                                 <SelectedTokenContainer>
                                     <SelectedToken initialWidth={false}>Select a token</SelectedToken>
-                                </SelectedTokenContainer>
+                                </SelectedTokenContainer>}
                                 <ChevronDown size={"25px"}></ChevronDown>
                             </ButtonContents>
                         </TokenSelectButton>

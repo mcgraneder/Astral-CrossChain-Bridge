@@ -4,28 +4,28 @@ import Nav from "../components/Navbar/Navbar";
 import DexModal from "../components/DexModal/DexModal";
 import useBalance from "../hooks/useBalance";
 import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModal";
-
+import TokenListModal from "../components/TokenListModal/TokenListModal";
 const DexPage = () => {
 
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [showTokenModal, setShowTokenModal] = useState(false)
 
+    const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
     const toggle1 = () => setShow1(!show1);
     const toggle2 = () => setShow2(!show2);
 
-    const [amount, setAmount] = useState()
     const [showPending, setShowPending] = useState(false)
-    const togglePending = () => setShowPending(!showPending)
-    const { balance, setBalance } = useBalance()
+
 
     return (
 
         <>
+            <TokenListModal visible={showTokenModal} close={toggleTokenModal}></TokenListModal>
             <AccountDetailsModal visible={show1} close={toggle1} toggle2={toggle2}/>
             <Nav colour={"rgb(27,32,52);;"} colour1={"rgb(14, 22, 39)"} colour2={"rgb(14, 22, 39)"} bcolour={"rgb(34,43,68)"} bcolour1={"rgb(14, 22, 39)"} bcolour2={"rgb(14, 22, 39)"} close={toggle1} visible={true}></Nav>
             <Web3Modal visible={show2} close={toggle2} bac={toggle1}></Web3Modal>
-            <DexModal></DexModal>
+            <DexModal visible={showTokenModal} close={toggleTokenModal}></DexModal>
         </>
     )
 }
