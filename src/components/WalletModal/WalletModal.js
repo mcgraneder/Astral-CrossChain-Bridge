@@ -15,6 +15,7 @@ import { generate } from "shortid";
 import { CheckCircle } from "react-feather"
 import MyListbox from "./ListBox";
 import axios from "axios";
+import EthereumLogo from "../assets/Ethereum.svg"
 import { PendingModal, RejectionModal, TransactionSubmittedModal, ConfirmationModal} from "../TransactionConfirmationModal/PendingModal"
 import { StyledContainer, 
          BridgeModalContainer, 
@@ -193,9 +194,10 @@ const Assets = [
 
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
-const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenModal}) => {
+const WalletModal = ({close}) => {
 
     const [isActive, setIsActive] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [showNotifications, setShowNotifications] = useState(false)
     const [toggle, setToggle] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
@@ -275,6 +277,17 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
     //    }, [deposits])
 
 
+    const setDropdownValue = () => {
+
+        setDropDownActive(!dropDownActive);
+    }
+
+
+    const setDropdownValue3 = () => {
+
+        if(!dropDownActive) return
+        setDropDownActive(!dropDownActive);
+    }
 
     const preventMinus = (e) => {
         if (e.code === 'Minus') {
@@ -418,6 +431,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                     beginDeposit()
                     setLoading(false)
                     setTransactionBlock(true)
+                    console.log("helloooooooooo")
                     const id = v4()
                     setDeposits([
 
@@ -444,6 +458,8 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                             time: 2
                         },
                     ]);
+
+                    console.log(transactions)
                 })
             });
         
@@ -483,6 +499,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                 await result.wait().then((result) => {
                     setLoading(false)
                     setTransactionBlock(true)
+                    console.log("helloooooooooo")
                     const id= v4()
                     setDeposits([
 
@@ -509,6 +526,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                             time: 2
                         },
                     ]);
+                    console.log(transactions)
                     
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
@@ -560,6 +578,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                     setLoading(false)
                     setTransactionBlock(true)
                     const id = v4()
+                    console.log("helloooooooooo")
                     setDeposits([
 
                         ...deposits,
@@ -658,11 +677,27 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                 amount={amount} 
                 visible={rejected}
             />
-        <StyledContainer>
+        <StyledContainer onClick={() => setDropdownValue3()}>
             
             <BridgeModalContainer>
             <BridgeModalWrapper>
-                <ChainSelector onClick={toggleTokenModal}>
+            <ChainSelector marginB={"5px"} onClick={() => setDropdownValue()}>
+                    <ChainSelectorWrapper>
+                        <ChainSelectorIconWrapper>
+                            <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
+                        </ChainSelectorIconWrapper>
+                        <ChainSelectorTextWrapper>
+                            <ChainSelectorText>Ethereum</ChainSelectorText>
+                        </ChainSelectorTextWrapper>
+                        <DropdownContainer>
+                            <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
+                        </DropdownContainer>
+                       
+                    </ChainSelectorWrapper>
+                    { dropDownActive && <DropdownMenu height={"64px;"}></DropdownMenu>}
+             
+                </ChainSelector>
+                <ChainSelector marginB={"25px"} onClick={() => setDropdownValue()}>
                     <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
@@ -675,6 +710,7 @@ const WalletModal = ({setShow, visible, close, setLoading, loading, toggleTokenM
                         </DropdownContainer>
                        
                     </ChainSelectorWrapper>
+                    { dropDownActive && <DropdownMenu height={"64px;"}></DropdownMenu>}
              
                 </ChainSelector>
                 <BalanceContainer>

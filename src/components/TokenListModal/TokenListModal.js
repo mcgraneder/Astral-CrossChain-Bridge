@@ -44,8 +44,8 @@ top: 50%;
 transform: translate(-50%, -50%);
     margin: 0px 0px 2rem;
     // position: absolute;
-    // background: rgb(14, 22, 39);
-    background-color: rgb(21,28,48);
+    // background: rgb(17, 52,42);
+    background-color: rgb(17, 25, 42);
     box-shadow: rgb(0 0 0 / 5%) 0px 4px 8px 0px;
     padding: 0px;
     width: 50vw;
@@ -98,7 +98,7 @@ export const TopSection = styled.div`
     row-gap: 16px;
     box-sizing: border-box;
     font-family: 'Inter custom',sans-serif;
-    background-color: rgb(14, 22, 39);;
+    background-color:  rgb(27,32,52);;
     border: 1px solid  rgb(57,62,82);
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
@@ -156,7 +156,7 @@ export const TokenInput = styled.input`
     align-items: center;
     width: 100%;
     white-space: nowrap;
-    background: none;
+    background: rgb(17, 25, 42);
     outline: none;
     border-radius: 20px;
     color: rgb(255, 255, 255);
@@ -205,9 +205,11 @@ padding: 6px;
 -webkit-box-align: center;
 align-items: center;
 color: rgb(143, 150, 172);
-background-color: rgb(14, 22, 39);
+
+background-color:  rgb(47,52,72);
 // filter: grayscale(1);
 margin: 4px !important;
+margin-right: 10px !important;
 `
 
 export const TokenImg = styled.img`
@@ -322,7 +324,7 @@ export const ListTokenContainer = styled.div`
 
     &:hover {
 
-       background: rgb(35,40,60);
+       background: rgb(25, 33, 50);
        cursor: pointer;
     }
 `
@@ -391,7 +393,7 @@ export const BottomSection = styled.div`
     // width: 100%;
     border-radius: 0px 0px 20px 20px;
     padding: 20px;
-    background-color: rgb(14, 22, 39);;
+    background-color:  rgb(27,32,52);;
     border: 1px solid  rgb(57,62,82);
     border-top: 1px solid rgb(57,62,82);
 `

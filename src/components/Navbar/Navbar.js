@@ -25,7 +25,7 @@ import {ethers} from "ethers"
 import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 import { formatEther } from 'ethers/lib/utils';
 
-export default function Nav({ close, loading, toggleAccountDetails}) {
+export default function Nav({ close, toggleAccountDetails}) {
 
     const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
     const [balance, setBalance] = useState(0.000)
@@ -75,7 +75,7 @@ export default function Nav({ close, loading, toggleAccountDetails}) {
                         {provider && <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
                       
                             {/* <NavButton2 color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> */}
-                            <ConnectWalletButton loading={loading} active={active} left={"82.3%"} top={"31.5%"} close={!localStorage.getItem("provider") ? close : toggleAccountDetails} onclick={!localStorage.getItem("provider") ? close : toggleAccountDetails} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
+                            <ConnectWalletButton active={active} left={"82.3%"} top={"31.5%"} close={!localStorage.getItem("provider") ? close : toggleAccountDetails} onclick={!localStorage.getItem("provider") ? close : toggleAccountDetails} height="160" fontsize="17" colour="rgb(20, 29, 49)" width="40"></ConnectWalletButton>
                     </NavItem2>
                     
                         <NavItem3 active={active} visible={localStorage.getItem("provider")}>

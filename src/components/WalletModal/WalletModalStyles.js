@@ -42,7 +42,7 @@ export const BridgeModalWrapper = styled.div`
 export const ChainSelector = styled.div`
 
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: ${(props) => props.marginB};
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;

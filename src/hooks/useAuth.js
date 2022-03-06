@@ -19,7 +19,6 @@ function useAuth() {
     const [loading, setLoading] = useState(false);
     const [onPageLoading, setOnPageLoading] = useState(true)
     const history = useHistory();
-    const [address, setAddress] = useState()
     const [error, setError] = useState(false)
 
     var { active, account, library, activate, deactivate } = useWeb3React()
@@ -27,6 +26,9 @@ function useAuth() {
  
     useEffect(() => {
         if(library) localStorage.setItem("currentAccount", account);
+        if (!library) {
+            connectOnLoad()
+       }
     }, [library])
 
     async function connectOnLoad() {
@@ -64,16 +66,6 @@ function useAuth() {
          
        
     }
-
-
-    useEffect(() => {
- 
-        if (!active) {
-             connectOnLoad()
-        }
-        setAddress(account);
-        localStorage.setItem("account", account)
-    }, [])
 
 
     async function connectOn(provider1) {
@@ -132,7 +124,7 @@ function useAuth() {
     }
 
 
-  return { connectOnLoad, disconnect, connectOn, address, setAddress, loading, onPageLoading, error}
+  return { connectOnLoad, disconnect, connectOn, loading, onPageLoading, error}
 }
 
 export default useAuth

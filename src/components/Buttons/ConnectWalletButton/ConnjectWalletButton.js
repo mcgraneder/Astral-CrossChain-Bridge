@@ -57,11 +57,12 @@ export const CustomLightSpinner = styled(Spinner)`
    
 
 
-const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top, onclick, loading}) => {
+const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top, onclick }) => {
 
      const { account } = useWeb3React()
     const { onPageLoading} = useAuth()
     console.log(onPageLoading)
+    const loading = false;
     var logo
     var width1;
     var width2;
@@ -119,11 +120,15 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
             </Logo1>
                 1 Pending....
             </ButtonText>
-            </ConnectButton> 
+            {/* </ConnectButton> 
             : 
             (active ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{account.substring(0, 6)}...{account.substring(account.length - 4)}</ButtonText></ConnectButton>
             : (onPageLoading ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> 
-            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>))}
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>))} */}
+             </ConnectButton> 
+            : 
+            (!active ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> 
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>)}
         </>
     )
 }

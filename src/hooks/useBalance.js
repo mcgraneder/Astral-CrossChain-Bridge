@@ -9,7 +9,7 @@ const useBalance = () => {
 
     const [ren1, setRen1] = useState()
     const [bridge, setBridge] = useState()
-    const [balance, setBalance] = useState();
+    const [balance, setBalance] = useState(0);
   
     const { library, account } = useWeb3React()
 
@@ -30,6 +30,9 @@ const useBalance = () => {
                 var balance = new Number(result)
                 balance = balance.toFixed(6)
                 setBalance(balance)
+            })
+            .catch((error) => {
+                console.log(error)
             });
         }
         
