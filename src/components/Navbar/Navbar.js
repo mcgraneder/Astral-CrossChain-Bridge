@@ -64,7 +64,7 @@ export default function Nav({ close, toggleAccountDetails}) {
                     </NavLogoContainer>
                     <NavMenu visible={localStorage.getItem("provider")}>
                         <NavItem >
-                            <NavButton active={toggleState != 1 ? true : false} to="/" onClick={() => toggleTab(1)}>Bridge</NavButton>
+                            <NavButton active={toggleState != 1 ? true : false} to="/bridge" onClick={() => toggleTab(1)}>Bridge</NavButton>
                             <NavButton active={toggleState != 2 ? true : false} to="/wallet" onClick={() => toggleTab(2)}>Wallet</NavButton>
                             <NavButton active={toggleState != 3 ? true : false} to="/dex" onClick={() => toggleTab(3)}>Trade</NavButton>
                             <NavButton active={toggleState != 4 ? true : false} to="/transactions" onClick={() => toggleTab(4 )}>History</NavButton>

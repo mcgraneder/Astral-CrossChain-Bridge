@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
 import BridgePage from "./pages/BridgePage";
 import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
@@ -9,19 +8,12 @@ import WalletPage from "./pages/WalletPage";
 import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
-import { Web3Provider } from "@ethersproject/providers";
 import DexPage from "./pages/DexPage"
 import ERC20BridgePage from "./pages/ERC20BrifgePage";
 import Web3Modal from "./components/Web3Modal/Web3Modal";
 import useAuth from "./hooks/useAuth";
 import AccountDetailsModal from "./components/AccountDetails/AccountDetailsModal";
-import { useWeb3React } from "@web3-react/core";
-import { getContract } from "./utils/utils";
-import abi2 from "./utils/Abis/AB12.json"
-import abi from "./utils/Abis/ABI.json"
-
-const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
-const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
+import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
 
 function App() { 
 
@@ -33,7 +25,7 @@ function App() {
   const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
 
   const loading = useOnPageLoad()
-  const { connectOn, connectOnLoad, disconnect, error } = useAuth()
+  const { connectOn, disconnect} = useAuth()
   // const history = useHistory();
  
   return (
@@ -58,6 +50,7 @@ function App() {
             connectOn={connectOn} 
             disconnect={disconnect}
           />
+          <AccountsChangeModal/>
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>

@@ -28,6 +28,7 @@ const providers = [
 const Disconnect = ({connect, to, close}) => {
 
     function disconnect() {
+        localStorage.setItem("state", 1)
         close()
         connect()
 

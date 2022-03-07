@@ -150,7 +150,7 @@ export const CustomLightSpinner = styled(Spinner)`
 export const LoaderWrapper = styled.div`
 
   position: absolute;
-  bottom: ${(props) => props.position ? "9.8%" : "7%"};
+  bottom: ${(props) => props.position ? "7.8%" : "7.8%"};
   right: 32%;
 `
 const SelectMarket1 = styled(SelectMarket)`

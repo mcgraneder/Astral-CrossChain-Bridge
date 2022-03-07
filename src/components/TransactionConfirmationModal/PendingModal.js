@@ -30,7 +30,7 @@ export const FormWrapper = styled.div`
     width: 380px;
     // height: 30px;
     opacity: 0;
-    background-color: rgb(27,32,52);
+    background-color: ;
     padding: 28px 15px;
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 20px;

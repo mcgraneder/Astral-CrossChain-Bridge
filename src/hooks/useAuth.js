@@ -6,7 +6,7 @@ import { injected,
          torus, 
          walletconnect 
 } from "../connectors/provider";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 export const walletconnect1 = new WalletConnectConnector({
     rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
@@ -31,6 +31,7 @@ function useAuth() {
        }
     }, [library])
 
+    //use network pollinhg intervak to warn usr their offline
     async function connectOnLoad() {
 
         if ( localStorage.getItem("provider") == null) return
@@ -48,10 +49,11 @@ function useAuth() {
          try {
            
             setTimeout(async () => {
-                await activate(provider, undefined, true).catch((error) => {
+                activate(provider, undefined, true).then(() => console.log("hey")).catch((error) => {
                     setOnPageLoading(true)
-                    history.push("/");
-                    disconnect()   
+                    disconnect()
+                    window.location.href = "/" 
+                    
                 })
             }, 2000)
         
@@ -62,6 +64,7 @@ function useAuth() {
             console.log("aaaaaaaaaaaaaaa")
 
             setOnPageLoading(true)
+            
           }
          
        
