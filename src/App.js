@@ -18,42 +18,15 @@ import { useWeb3React } from "@web3-react/core";
 
 function App() { 
 
-  const [showWalletModal, setShowWalletModal] = useState(false);
-  const [showAccountDetails, setshowAccountDetails] = useState(false);
   const [pending, setPending] = useState(false)
-  
-  const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
-  const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
-
   const loading = useOnPageLoad()
-  const { connectOn, disconnect} = useAuth()
-  const { connector } = useWeb3React()
 
-  console.log(connector)
-  // const history = useHistory();
- 
   return (
 
     <div>
       {loading && <PageLoad></PageLoad>}
         <Router>
-          <AccountDetailsModal 
-            visible={showAccountDetails} 
-            close={toggleAccountDetails} 
-            toggleAccountDetails={toggleWalletModal}
-          />
-          <Nav 
-            // loading={pending}
-            close={toggleWalletModal} 
-            toggleAccountDetails={toggleAccountDetails}
-          />
-          <Web3Modal 
-            visible={showWalletModal} 
-            close={toggleWalletModal} 
-            toggleAccountDetails={toggleAccountDetails} 
-            connectOn={connectOn} 
-            disconnect={disconnect}
-          />
+          <Nav/>
           <AccountsChangeModal/>
           <Switch>
             <Route exact path="/" component={HomePage}></Route>

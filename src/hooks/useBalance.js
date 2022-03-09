@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import useAuth from "../hooks/useAuth";
 import { getContract } from "../utils/utils";
 import abi from "../utils/Abis/ABI.json"
@@ -47,7 +47,7 @@ const useBalance = () => {
         })().catch(console.error);
         
 
-    }, [getBalance]);
+    }, [balance]);
 
 
     return { balance, setBalance}
