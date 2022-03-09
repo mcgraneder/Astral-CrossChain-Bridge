@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import chevronDownLogo1 from "../assets/cheverondownB.png"
@@ -40,6 +40,10 @@ const TransactionModal = ({close, transactions, toggleTokenModal}) => {
         setDropDownActive(false);
     }
     // console.log(text)
+    useEffect(() => {
+        if(!localStorage.getItem("provider")) window.location.href = "/" 
+      }, [])
+    
 
     return (
 

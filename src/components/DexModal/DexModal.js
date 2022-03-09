@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ArrowContainer12, 
          ArrowLogo12, 
@@ -44,7 +44,7 @@ export const TokenAmountWrapper = styled.div`
 
     &:hover {
 
-        border: 1.3px solid rgb(41, 50, 67);
+        border: 1.2px solid rgb(61, 70, 87);
     }
 
 `
@@ -273,6 +273,11 @@ const DexModal = ({ close }) => {
     const [swapState, setSwapState] = useState(0)
     const toggleSwapState = () => setSwapState(!swapState)
     const { active } = useWeb3React()
+
+    useEffect(() => {
+        if(!localStorage.getItem("provider")) window.location.href = "/" 
+      }, [])
+    
 
 
     return (

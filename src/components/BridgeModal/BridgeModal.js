@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
@@ -121,6 +121,11 @@ const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
     const { active } = useWeb3React()
 
     const setToggleValue = () => setToggle(!toggle);
+
+    useEffect(() => {
+        if(!localStorage.getItem("provider")) window.location.href = "/" 
+    }, [])
+    
     
 
     return (

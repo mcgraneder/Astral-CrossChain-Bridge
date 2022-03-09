@@ -121,8 +121,7 @@ export const DropdownContainer = styled.div`
 `
 export const BalanceContainer = styled.div`
 
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
@@ -142,7 +141,7 @@ export const MintFormWrapper = styled.div`
     // height: 200px;
     // height: 100%;
     width: 100%;
-    padding-top: 10px;
+    // padding-top: 10px;
     // display: inline;
     // display: flex;
     // margin-left: 5px;
@@ -154,7 +153,7 @@ export const MintFormContainer = styled.div`
 
     margin-top: 10px;
     padding-bottom: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
     // padding: 3px;
@@ -538,7 +537,7 @@ export const StatusTextWrapper = styled.div`
     // justify-content: center;
     // background: White;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: ${(props) => props.marginB};
     padding-left: 10px;
 
 `

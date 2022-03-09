@@ -355,3 +355,19 @@
 // }
 
 // export default App;
+
+ //    useEffect(() => {
+        
+    //       deposits.map((deposit, i) => {
+    //          if(i > 0) {
+    //              console.log(deposit.txHash)
+    //              library.getTransaction(deposit.txHash).then((result) => {
+    //                  console.log(result)
+    //                  if(result.blockNumber) {
+ 
+    //                      // setTransactionBlock(true)
+    //                  } 
+    //              })
+    //          }
+    //       })
+    //    }, [deposits])

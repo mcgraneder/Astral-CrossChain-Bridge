@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
 import BridgePage from "./pages/BridgePage";
 import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
@@ -14,6 +14,7 @@ import Web3Modal from "./components/Web3Modal/Web3Modal";
 import useAuth from "./hooks/useAuth";
 import AccountDetailsModal from "./components/AccountDetails/AccountDetailsModal";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
+import { useWeb3React } from "@web3-react/core";
 
 function App() { 
 
@@ -26,6 +27,9 @@ function App() {
 
   const loading = useOnPageLoad()
   const { connectOn, disconnect} = useAuth()
+  const { connector } = useWeb3React()
+
+  console.log(connector)
   // const history = useHistory();
  
   return (

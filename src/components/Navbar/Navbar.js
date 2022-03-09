@@ -29,30 +29,25 @@ export default function Nav({ close, toggleAccountDetails}) {
 
     const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
     const [balance, setBalance] = useState(0.000)
-    const toggleTab = (index) => {
-        localStorage.setItem("state", index)
-        setToggleState(index)
-    }
     const { library, account, active } = useWeb3React()
-
+    const provider = localStorage.getItem("provider")
+    
     useEffect(() => {
-
         if(account) {
-
             library.getBalance(account).then((result) => {
-
                 result = Web3.utils.fromWei(result.toString(), "ether")
                 var balance = new Number(result)
                 balance = balance.toFixed(4)
                 setBalance(balance)
             })
         }
-
-        // return balance ? `${formatEther(balance)} ETH` : null;
-
     }, [library, account])
 
-    const provider = localStorage.getItem("provider")
+    const toggleTab = (index) => {
+        localStorage.setItem("state", index)
+        setToggleState(index)
+    }
+
   return (
       
         <div>

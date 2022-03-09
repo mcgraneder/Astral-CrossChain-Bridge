@@ -395,11 +395,17 @@ const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect}
     const provider = localStorage.getItem("provider")
     return (
         <>
-         <Backdrop visible={visible} onClick={localStorage.getItem("provider") ? () => closeAllModals() : close}></Backdrop>
-            <FormWrapper visible={visible}>
+         <Backdrop 
+            visible={visible} 
+            onClick={localStorage.getItem("provider") ? () => closeAllModals() : close}
+        ></Backdrop>
+        <FormWrapper visible={visible}>
             <ErrorText onClick={close}>Back</ErrorText>
                 <BackIcon size={20} onClick={close}></BackIcon>
-                <CloseIcon size={25} onClick={localStorage.getItem("provider") ? () => closeAllModals() : close}></CloseIcon>
+                <CloseIcon 
+                    size={25} 
+                    onClick={localStorage.getItem("provider") ? () => closeAllModals() : close}
+                ></CloseIcon>
                 <DisclaimerContainer>
                     <ModalTextWrapper>
                             <ModalText>Welcome to the <span style={{color:"rgb(77, 102, 235)"}}>Ren Bridge.</span> You can connect and use our app with the<span style={{color:"rgb(77, 102, 235)"}}> Wallet Providers</span> below.</ModalText>
@@ -456,11 +462,6 @@ const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect}
                             </ModalTitle>
                         </TitleContainer>
                     </ConnectButton>
-                    {/* <Provider active={active && provider==="injected"} margin={"20px"} width1={50} logo={metamask} width2={30} title={"MetaMask"} connect={connectOnClick}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={fortmatic} width2={27} title={"Fortmatic"} connect={connectOnClickFortmatic}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={torus} width2={27} title={"Torus"} connect={connectOnClickTorus}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={portis} width2={25} title={"Portis"} connect={connectOnClickPortis}></Provider>
-                    <Provider margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Wallet Connect"} connect={connectOnClickWalletConnect}></Provider> */}
                     <Disconnect to={"/"} margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect} close={closeAllModals} toggleAccountDetails={toggleAccountDetails}></Disconnect>
                 </ButtonContainer>
             </FormWrapper>

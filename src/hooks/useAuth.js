@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useWeb3React } from "@web3-react/core"
+import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core"
 import { injected, 
          fortmatic, 
          portis, 
@@ -37,37 +37,43 @@ function useAuth() {
         if ( localStorage.getItem("provider") == null) return
         if ( localStorage.getItem("provider") == "fortmatic") provider = fortmatic
         if ( localStorage.getItem("provider") == "injected") provider = injected
-        if ( localStorage.getItem("provider") == "walletconnect") {
-            provider = walletconnect
-            return;  
-        }
+        if ( localStorage.getItem("provider") == "walletconnect") return
         if ( localStorage.getItem("provider") == "portis") provider = portis
         if ( localStorage.getItem("provider") == "torus") provider = torus 
 
         setOnPageLoading(false)
 
-         try {
-           
-            setTimeout(async () => {
-                activate(provider, undefined, true).then(() => console.log("hey")).catch((error) => {
-                    setOnPageLoading(true)
-                    disconnect()
-                    window.location.href = "/" 
-                    
-                })
-            }, 2000)
-        
-          } catch (err) {
+        try {
+            if (provider == injected) {
 
+                activate(provider, undefined, true).catch((error) => {
+                    if (error instanceof UnsupportedChainIdError) {
+                        activate(provider) // a little janky...can't use setError because the connector isn't set
+                      } else {
+                        setOnPageLoading(true)
+                        disconnect()
+                        window.location.href = "/" 
+                      } 
+                })
+            } else {
+                setTimeout(async () => {
+                    activate(provider, undefined, true).catch((error) => {
+                        if (error instanceof UnsupportedChainIdError) {
+                            activate(provider) // a little janky...can't use setError because the connector isn't set
+                          } else {
+                            setOnPageLoading(true)
+                            disconnect()
+                            window.location.href = "/" 
+                          } 
+                    })
+                }, 2000)
+            }   
+        } catch (err) {
             console.error(err)
             disconnect()
-            console.log("aaaaaaaaaaaaaaa")
-
             setOnPageLoading(true)
             
           }
-         
-       
     }
 
 
@@ -80,34 +86,40 @@ function useAuth() {
 
         if (provider1 === "fortmatic") provider = fortmatic
         if (provider1 === "injected") provider = injected
-        if (provider1 === "walletconnect") {
-            provider = walletconnect1  
-        }
+        if (provider1 === "walletconnect") provider = walletconnect  
         if (provider1 === "portis") provider = portis
         if (provider1 === "torus") provider = torus 
 
         setLoading(true)
 
-            try {
-                await activate(provider, undefined, true)
-                localStorage.setItem("provider", provider1);
-               
+        try {
+            activate(provider, undefined, true)
+            .then(() => localStorage.setItem("provider", provider1))
+            .catch((error) => {
+                if (error instanceof UnsupportedChainIdError) {
+                    activate(provider) // a little janky...can't use setError because the connector isn't set
+                  } else {
+                    disconnect()
+                    setOnPageLoading(false)
+                    setError(true)
+                    localStorage.removeItem("provider");
+                    setLoading(false) 
+                  } 
+            })
                 setTimeout(() => {
-
-                    setLoading(false)
-                    console.log(account)
-                }, 800)
-                
-            } catch (err) {
-
-                console.log(err)
-                disconnect()
-                setOnPageLoading(false)
-                setError(true)
-                localStorage.removeItem("provider");
-
                 setLoading(false)
-            }
+                console.log(account)
+            }, 800)
+                
+        } catch (err) {
+
+            console.log(err)
+            disconnect()
+            setOnPageLoading(false)
+            setError(true)
+            localStorage.removeItem("provider");
+            setLoading(false)
+        }
     }
 
 

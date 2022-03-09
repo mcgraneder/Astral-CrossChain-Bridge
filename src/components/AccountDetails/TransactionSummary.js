@@ -255,7 +255,7 @@ export const ProgressBar1 = ({deposits}) => {
 
 }
 
-const DepositSummary = ({deposits, setDeposits, transactionBlock, setTransactionBlock}) => {
+const DepositSummary = ({deposits, setDeposits }) => {
 
     return (
         <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
