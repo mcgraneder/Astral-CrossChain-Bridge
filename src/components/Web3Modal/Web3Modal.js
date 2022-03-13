@@ -369,27 +369,21 @@ export const CloseIcon = styled(X)`
 
 const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect}) => {
     
-    const { active, error } = useWeb3React()
-    const history = useHistory();
-
+    const { active } = useWeb3React()
 
     const closeAllModals = () => { 
-    
         toggleAccountDetails()
         close()
     }
 
     const back= (provider) => {
-
         if(!localStorage.getItem("provider")) {
             close()
             toggleAccountDetails()
         }
-
         setTimeout(() => {
             connectOn(provider)
         }, 500)
-
     }
   
     const provider = localStorage.getItem("provider")
@@ -465,8 +459,6 @@ const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect}
                     <Disconnect to={"/"} margin={"20px"} width1={50} logo={walletConnect} width2={35} title={"Disconnect"} connect={disconnect} close={closeAllModals} toggleAccountDetails={toggleAccountDetails}></Disconnect>
                 </ButtonContainer>
             </FormWrapper>
-            
-            {/* {loading ? <ConnectSpinner loading={loading}></ConnectSpinner> : <div></div>} */}
         </>
     )
 }

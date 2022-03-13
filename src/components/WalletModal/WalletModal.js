@@ -2,18 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import styled, { keyframes } from "styled-components";
-import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
-import DropdownMenu from "./DropdownMenu";
 import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
 import Web3	 from "web3";
 import Button from "./Button";
 import walletIcon from "../assets/depositIcon2.png"
-import { generate } from "shortid";
-import { CheckCircle } from "react-feather"
-import MyListbox from "./ListBox";
 import axios from "axios";
 import EthereumLogo from "../assets/Ethereum.svg"
 import { PendingModal, RejectionModal, TransactionSubmittedModal, ConfirmationModal} from "../TransactionConfirmationModal/PendingModal"
@@ -57,9 +52,8 @@ import usePendingTransaction from "../../hooks/usePendingTransaction";
 import useBalance from "../../hooks/useBalance";
 import Loader from "../Loader/Loader";
 import { ArrowRight, ArrowUpCircle } from "react-feather"
-import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
-import { Loading, SelectMarket } from "@renproject/react-components";
 import { useWeb3React } from "@web3-react/core"
+
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -150,16 +144,10 @@ export const CustomLightSpinner = styled(Spinner)`
 export const LoaderWrapper = styled.div`
 
   position: absolute;
-  bottom: ${(props) => props.position ? "7.8%" : "7.8%"};
+  bottom: ${(props) => props.position ? "6.8%" : "6.8%"};
   right: 32%;
 `
-const SelectMarket1 = styled(SelectMarket)`
 
-  background: black;
-  color: black;
-  cursor: pointer;
-  z-index: 10000000;
-`
 
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
@@ -178,19 +166,6 @@ export const Asset = {
     LUNA: "LUNA",
     DOGE: "DOGE",
 }
-const Assets = [
-
-    {
-        name: "Bitcoin",
-        symbol: Asset.BTC
-        
-    },
-    {
-        name: "Zcash",
-        symbol: Asset.ZEC
-        
-    }
-]
 
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 

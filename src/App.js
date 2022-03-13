@@ -10,11 +10,9 @@ import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import DexPage from "./pages/DexPage"
 import ERC20BridgePage from "./pages/ERC20BrifgePage";
-import Web3Modal from "./components/Web3Modal/Web3Modal";
-import useAuth from "./hooks/useAuth";
-import AccountDetailsModal from "./components/AccountDetails/AccountDetailsModal";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
 import { useWeb3React } from "@web3-react/core";
+import useBalance from "./hooks/useBalance";
 
 function App() { 
 
@@ -32,11 +30,7 @@ function App() {
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/bridge" component={BridgePage}></Route>
             <Route exact path="/erc20bridge" component={ERC20BridgePage}></Route>
-            <Route exact path="/wallet" component={() => 
-              <WalletPage 
-                pending={pending} 
-                setPending={setPending}
-              />}
+            <Route exact path="/wallet" component={WalletPage}
             />
             <Route exact path="/transactions" component={TransactionPage}></Route>
             <Route exact path="/dex" component={DexPage}></Route>

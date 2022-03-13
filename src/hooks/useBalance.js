@@ -11,7 +11,7 @@ const useBalance = () => {
     const [bridge, setBridge] = useState()
     const [balance, setBalance] = useState(0);
   
-    const { library, account } = useWeb3React()
+    const { library, account, chainId } = useWeb3React()
 
     const getBalance = React.useCallback(() => {
 
@@ -47,7 +47,7 @@ const useBalance = () => {
         })().catch(console.error);
         
 
-    }, [balance]);
+    }, [getBalance, library, chainId]);
 
 
     return { balance, setBalance}

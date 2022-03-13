@@ -62,7 +62,7 @@ export const BridgeSelectorContainer = styled.div`
     // background: White;
     display: flex;
     height: 45px;
-    padding-bottom: 35px;
+    padding-bottom: -px;
     // border: 1px solid rgb(34,43,68);
 `
 
@@ -161,11 +161,11 @@ const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
                         </DropdownContainer>
                     </ChainSelectorWrapper>
                 </ChainSelector>
-                 <ArrowContainer12>
+                 {/* <ArrowContainer12>
                     <ArrowLogoContainer12>
                         <ArrowLogo12 src={arrowDown}></ArrowLogo12>
                     </ArrowLogoContainer12>
-                </ArrowContainer12>
+                </ArrowContainer12> */}
                 <ChainSelector marginbottom={"30px"}>
                     <ChainSelectorWrapper onClick={toggleTokenModal}>
                         <ChainSelectorIconWrapper >

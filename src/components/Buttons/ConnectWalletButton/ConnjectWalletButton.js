@@ -59,9 +59,6 @@ export const CustomLightSpinner = styled(Spinner)`
 
 const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top, onclick }) => {
 
-     const { account } = useWeb3React()
-    const { onPageLoading} = useAuth()
-    console.log(onPageLoading)
     const loading = false;
     var logo
     var width1;
@@ -127,7 +124,7 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
             :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>))} */}
              </ConnectButton> 
             : 
-            (!active ?  <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2> 
+            (!active ?  (provider ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton> : <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>) 
             :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>)}
         </>
     )

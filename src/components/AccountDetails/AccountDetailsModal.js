@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
 import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
@@ -13,7 +13,6 @@ import portis from "../assets/portis.svg"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import Bitcoin from "../assets/Bitcoin.svg"
 import Dollar from "../assets/dollar.png"
-import { useEffect } from "react/cjs/react.development";
 import axios from "axios"
 import useAuth from "../../hooks/useAuth";
 import { getContract } from "../../utils/utils";
@@ -395,35 +394,23 @@ export const Container = styled.div`
 
 const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccountDetails}) => {
 
-    const {account } = useWeb3React()
+    const {account, active, error } = useWeb3React()
 
-    const [load, setLoad] = useState(true)
+    useEffect(() => {
 
-    const closeAllModals = () => {
-
-        close()
-        toggleAccountDetails()
-    }
-   
+        console.log(error)
+    }, [error])
     //  const { transactions } = usePendingTransaction()
 
     var logo
 
-    if(localStorage.getItem("provider") === "injected") {
-        logo = metamask;
-    }
-    if(localStorage.getItem("provider") === "walletconnect") {
-        logo = walletConnect;
-    }
-    if(localStorage.getItem("provider") === "fortmatic") {
-        logo = fortmatic;
-    }
-    if(localStorage.getItem("provider") === "portis") {
-        logo = portis;
-    }
-    if(localStorage.getItem("provider") === "torus") {
-        logo = torus;
-    }
+    if(localStorage.getItem("provider") === "injected") logo = metamask;
+    if(localStorage.getItem("provider") === "walletconnect")  logo = walletConnect;
+    if(localStorage.getItem("provider") === "fortmatic") logo = fortmatic;
+    if(localStorage.getItem("provider") === "portis") logo = portis;
+    if(localStorage.getItem("provider") === "torus") logo = torus;
+
+
 
     
     return(
@@ -433,7 +420,7 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccou
            
             <FormWrapper visible={visible} trueFade={false}>
                 <ErrorText>Account</ErrorText>
-                <CloseIcon></CloseIcon>
+                <CloseIcon onClick={close}></CloseIcon>
                 <TokenAmountWrapper height={"120px"} marginTop={"40px"} marginBottom={"0px"}>
                     <TitleWrapper spacing={"space-between"}>
                         <Title size={"13px"} color={"#adadad"}>Connected With Metamask</Title>
@@ -443,10 +430,10 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccou
                     </TitleWrapper>
                     <TitleWrapper spacing={"left"}>
                     <LogoWrapper marginRight={"8px"}>
-                        {account ? <img src={logo} width={"25px"}></img> : <Loader stroke="white" size={"25px"}/>}
+                        {account ? <img src={logo} width={"25px"}></img> : <Loader stroke="white" size={"20px"}/>}
                     </LogoWrapper>
                         <Title size={"20px"} color={"White"}>
-                            {account ? (account.substring(0, 6) + "..." +account.substring(account.length - 4)) : "connecting"}
+                            {account ? (account.substring(0, 6) + "..." +account.substring(account.length - 4)) :  "connecting..."}
                         </Title>
                     </TitleWrapper>
                     <TitleWrapper spacing={"left"}>

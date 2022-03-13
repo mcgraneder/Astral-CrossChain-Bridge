@@ -8,7 +8,7 @@ import DepositSummary from "../components/AccountDetails/TransactionSummary";
 import TransactionProcess from "../components/TransactionConfirmationModal/PendingModal";
 import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModal";
 import TokenListModal from "../components/TokenListModal/TokenListModal";
-const WalletPage = ({pending, setPending}) => {
+const WalletPage = ({}) => {
 
     const [show1, setShow1] = useState(false);
     const [show2, setShow2] = useState(false);
@@ -27,7 +27,6 @@ const WalletPage = ({pending, setPending}) => {
                 setShow={setShow2} 
                 close={show2} 
                 visible={show1} 
-               
                 toggleTokenModal={toggleTokenModal}
             />
         </>

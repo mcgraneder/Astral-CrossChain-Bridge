@@ -32,7 +32,7 @@ export default function Nav() {
     const { connectOn, disconnect } = useAuth()
     const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
     const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
-  
+
     
     useEffect(() => {
         if(account) {
@@ -99,10 +99,10 @@ export default function Nav() {
                         </NavItem>
                     </NavMenu>
                     <NavMenu2>
-                    <NavItem2 active={active}>
+                    <NavItem2 active={provider}>
                         {provider && <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
                             <ConnectWalletButton 
-                                active={active} 
+                                active={provider} 
                                 left={"82.3%"} 
                                 top={"31.5%"} 
                                 close={!localStorage.getItem("provider") ? toggleWalletModal : toggleAccountDetails} 
@@ -113,8 +113,8 @@ export default function Nav() {
                                 width="40">
                             </ConnectWalletButton>
                     </NavItem2>
-                        <NavItem3 active={active} visible={localStorage.getItem("provider")}>
-                        <BalanceContainer active={active}>
+                        <NavItem3 active={provider} visible={localStorage.getItem("provider")}>
+                        <BalanceContainer active={provider}>
                         <NavLogo src={threeDots} height="30px" width="30px"></NavLogo></BalanceContainer> 
                     </NavItem3>
                     </NavMenu2>
