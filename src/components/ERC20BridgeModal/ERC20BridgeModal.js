@@ -61,7 +61,7 @@ export const BridgeSelectorContainer = styled.div`
     // background: White;
     display: flex;
     height: 45px;
-    padding-bottom: -px;
+    // padding-bottom: -px;
     // border: 1px solid rgb(34,43,68);
 `
 
@@ -70,7 +70,7 @@ export const ERC20BridgeToggleButton = styled.div`
    
     width: 50%;
     height: 100%;
-    border-top-${(props) => props.side}-radius: 10px;
+    border-top-${(props) => props.side}-radius: 20px;
     // border-right: 1.5px solid rgb(14, 22, 39);
     background: rgb(14, 22, 39);
     font-size: 18px;
@@ -91,7 +91,7 @@ export const LegacyBridgeToggleButton = styled(Link)`
    
     width: 50%;
     height: 100%;
-    border-top-${(props) => props.side}-radius: 10px;
+    border-top-${(props) => props.side}-radius: 20px;
     // border-right: 1.5px solid rgb(14, 22, 39);
     background: rgb(27,32,52);
     font-size: 18px;
@@ -166,7 +166,7 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
             </BridgeSelectorContainer>
             <BridgeModalWrapper>
             {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
-                <ChainSelector marginbottom={"12px"}>
+                <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
@@ -185,7 +185,7 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
                         <ArrowLogo12 src={arrowDown}></ArrowLogo12>
                     </ArrowLogoContainer12>
                 </ArrowContainer12> */}
-                <ChainSelector marginbottom={"12px"}>
+                <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
                         <ChainSelectorIconWrapper >
                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>

@@ -34,7 +34,8 @@ function useAuth() {
         try {
             if (provider == injected) {
 
-                activate(provider, undefined, true).catch((error) => {
+                activate(provider, undefined, true)
+                .catch((error) => {
                     if (error instanceof UnsupportedChainIdError) {
                         activate(provider) // a little janky...can't use setError because the connector isn't set
                       } else {
@@ -44,7 +45,8 @@ function useAuth() {
                 })
             } else {
                 setTimeout(async () => {
-                    activate(provider, undefined, true).catch((error) => {
+                    activate(provider, undefined, true)
+                    .catch((error) => {
                         if (error instanceof UnsupportedChainIdError) {
                             activate(provider) // a little janky...can't use setError because the connector isn't set
                           } else {

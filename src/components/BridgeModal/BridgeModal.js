@@ -57,12 +57,13 @@ export const MintForm = styled.div`
 export const BridgeSelectorContainer = styled.div`
 
     // width: 100%;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    // border-top-right-radius: 20px;
+    // border-top-left-radius: 20px;
+    // border-radius: 20px;
     // background: White;
     display: flex;
     height: 45px;
-    padding-bottom: -px;
+    // padding-bottom: -px;
     // border: 1px solid rgb(34,43,68);
 `
 
@@ -71,7 +72,7 @@ export const ERC20BridgeToggleButton = styled(Link)`
    
     width: 50%;
     height: 100%;
-    border-top-${(props) => props.side}-radius: 10px;
+    border-top-${(props) => props.side}-radius: 20px;
     // border-right: 1.5px solid rgb(14, 22, 39);
     background: rgb(27,32,52);
     font-size: 18px;
@@ -92,7 +93,7 @@ export const LegacyBridgeToggleButton = styled.div`
    
     width: 50%;
     height: 100%;
-    border-top-${(props) => props.side}-radius: 10px;
+    border-top-${(props) => props.side}-radius: 20px;
     // border-right: 1.5px solid rgb(14, 22, 39);
     background: rgb(14, 22, 39);
     font-size: 18px;
@@ -148,7 +149,7 @@ const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
             </BridgeSelectorContainer>
             <BridgeModalWrapper>
             {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
-                <ChainSelector marginbottom={"12px"}>
+                <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={toggleTokenModal}>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>

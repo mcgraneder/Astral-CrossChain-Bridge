@@ -23,7 +23,7 @@ export const BridgeModalContainer = styled.div`
     background: rgb(14, 22, 39);
     text-align: right;
     // padding: 0px 10px;
-    // border: 1px solid  rgb(57,62,82);;
+    border: 1px solid  rgb(57,62,82);;
     border-radius: 20px;
     // -webkit-box-shadow: -2px -1px 15px 7px rgba(255,0,0,0.5);
     // -moz-box-shadow: -3px -2px 30px 14px rgba(255,0,0,0.425);
