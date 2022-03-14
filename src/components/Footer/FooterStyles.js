@@ -30,6 +30,7 @@ export const NavMenu = styled.div`
     list-style: none;
     align-items: center;
     // margin: 10px;
+    font-family: 'Open Sans', sans-serif;
     opacity: ${(props) => props.visible ? "1" : "1"};
 `
 
@@ -44,7 +45,7 @@ export const NavItem = styled.div`
     justify-content: center;
     // border: 3.5px solid rgb(14, 22, 39);
     // float: left;
-    margin-left: 60px;
+    margin-left: ${(props) => props.marginL};
     
 `
 
@@ -70,7 +71,7 @@ export const NavButton = styled(Link)`
 
     display: inline;
     // background: ${(props) => props.color};
-    width: 80px;
+    width: 70px;
     // border-radius: 18px;
     // height: 93%;
     text-align: center;

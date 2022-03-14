@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import RenLogo from "../assets/RenLogo.svg"
 import ConnectWalletButton from '../Buttons/ConnectWalletButton/ConnjectWalletButton';
+import Ethereum from "../assets/ethereum-logo.png"
 import { NavContainer, 
          NavWrapper,
          NavLogoContainer,
@@ -21,12 +23,49 @@ import { useWeb3React } from '@web3-react/core';
 import AccountDetailsModal from '../AccountDetails/AccountDetailsModal';
 import Web3Modal from '../Web3Modal/Web3Modal';
 
+export const ChainSelectorIconWrapper = styled.div`
+
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const ChainSelectorIcon = styled.img`
+
+    // display: flex;
+    // display: flex;
+    // justify-content: left;
+    // align-items: center;
+    width: ${(props) => props.width};
+    height:  ${(props) => props.width};
+    line-height: 0px;
+    padding-top: 1px;
+    padding-left: 15px;
+
+    // float: left;
+`
+export const ChainText = styled.div`
+
+    // display: inline-block;
+    padding-left: 10px;
+`
+
+export const Wrapper = styled.div`
+
+display: flex;
+justify-content: left;
+align-items: center;
+
+`
+
 export default function Nav() {
 
+    const provider = localStorage.getItem("provider")
     const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
     const [balance, setBalance] = useState(0.000)
     const { library, account, active } = useWeb3React()
-    const provider = localStorage.getItem("provider")
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);
     const { connectOn, disconnect } = useAuth()
@@ -68,29 +107,42 @@ export default function Nav() {
             <NavContainer>
                 <NavWrapper>
                     <NavLogoContainer>
-                        <NavLogo src={RenLogo} height="70px" width="70px"></NavLogo>
+                        <NavLogo src={RenLogo} height="65px" width="65px"></NavLogo>
                         <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
                     </NavLogoContainer>
-                    <NavMenu visible={localStorage.getItem("provider")}>
-                        <NavItem >
-                            <NavButton 
+                    <NavMenu visible={localStorage.getItem("provider")} marginL={"40px"} marginR={"118px"}>
+                        <NavItem  marginL={"0px"} >
+                            <NavButton width={"130px"} 
+                                active={true} 
+                                to="/bridge" onClick={() => toggleTab(1)}
+                                >
+                            <Wrapper>
+                            <ChainSelectorIcon src={Ethereum} width={"24px"}></ChainSelectorIcon>
+                            <ChainText>Kovan</ChainText>
+                            </Wrapper>
+                            </NavButton>
+                        </NavItem>
+                    </NavMenu>
+                    <NavMenu visible={localStorage.getItem("provider")} marginL={"0px"} marginR={"118px"}>
+                        <NavItem  marginL={"0px"} >
+                            <NavButton  width={"110px"}
                                 active={toggleState != 1 ? true : false} 
                                 to="/bridge" onClick={() => toggleTab(1)}
                                 >Bridge
                             </NavButton>
-                            <NavButton 
+                            <NavButton width={"110px"} 
                                 active={toggleState != 2 ? true : false} 
                                 to="/wallet" 
                                 onClick={() => toggleTab(2)}
                                 >Wallet
                             </NavButton>
-                            <NavButton 
+                            <NavButton width={"110px"}
                                 active={toggleState != 3 ? true : false} 
                                 to="/dex" 
                                 onClick={() => toggleTab(3)}
                                 >Trade
                             </NavButton>
-                            <NavButton 
+                            <NavButton width={"110px"}
                                 active={toggleState != 4 ? true : false} 
                                 to="/transactions" 
                                 onClick={() => toggleTab(4 )}

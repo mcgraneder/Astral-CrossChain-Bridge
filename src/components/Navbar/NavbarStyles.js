@@ -14,7 +14,7 @@ export const NavWrapper = styled.div`
 
     // background:  rgb(35,35,52);
     height: 60px;
-    padding: 10px 30px;
+    padding: 15px 30px;
     display: flex;
     z-index: 99;
     
@@ -29,7 +29,7 @@ export const NavMenu = styled.div`
     list-style: none;
     align-items: center;
     margin: 10px;
-    margin-left: 118px;
+    margin-left: ${(props) => props.marginL};
     opacity: ${(props) => props.visible ? "1" : "0"};
 `
 
@@ -44,7 +44,7 @@ export const NavItem = styled.div`
     justify-content: center;
     border: 3.5px solid rgb(14, 22, 39);
     float: left;
-    margin-left: 150px;
+    margin-left: ${(props) => props.marginL};
     
 `
 
@@ -56,7 +56,8 @@ export const NavLogoContainer = styled.div`
     align-items: center;
     justify-content: center;
     float: left;
-    padding-left: 100px;
+    padding-left: 90px;
+    margin-right: 20px;
     // padding-top: 5px;
     color: White;
     font-size: 35px;
@@ -88,7 +89,7 @@ export const NavButton = styled(Link)`
     display: inline;
     background: ${(props) => props.active ? "rgb(14,22,39)" : "rgb(27,32,52)"};
     border: 2px solid ${(props) => !props.active ? "rgb(34,43,68)" : "rgb(14, 22, 39)"};
-    width: 110px;
+    width: ${(props) => props.width};
     border-radius: 18px;
     height: 93%;
     text-align: center;
