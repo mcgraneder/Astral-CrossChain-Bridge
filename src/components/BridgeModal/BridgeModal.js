@@ -6,7 +6,6 @@ import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
-import DropdownMenu from "../WalletModal/DropdownMenu";
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router'
 import { ArrowContainer12, 

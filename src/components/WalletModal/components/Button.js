@@ -1,15 +1,4 @@
-import React, { useState } from "react"
-import { ConnectButton, Logo, ButtonText, ButtonText1 } from "../Home/HomeConnectButtonStyles"
-import useAuth from "../../hooks/useAuth"
-import logo1 from "../assets/metamask.png"
-import Loader from "react-loader-spinner"
 import styled from "styled-components"
-import metamask from "../assets/metamask.svg"
-import walletConnect from "../assets/wallet_connect.svg"
-import coinbase from "../assets/coinbase.svg"
-import fortmatic from "../assets/fortmatic.svg"
-import torus from "../assets/torus.svg"
-import portis from "../assets/portis.svg"
 
 
 export const NavButton2 = styled.div`
@@ -66,17 +55,21 @@ export const Logo1 = styled.div`
 
 const Button = ({ state, active, height, click, width, text, input, balanceState, transactionBlock}) => {
 
-    var logo
-    var width1;
-    var width2;
-
-
     return (
 
         <>
-
-            <NavButton2  transactionBlock={transactionBlock} state={state} balanceState={balanceState} width={width} height={height} input={input} active={active} color={"rgb(23,42,66)"} onClick={click} >{text}</NavButton2>
-           
+            <NavButton2  t
+                ransactionBlock={transactionBlock} 
+                state={state} 
+                balanceState={balanceState} 
+                width={width} 
+                height={height} 
+                input={input} 
+                active={active} 
+                color={"rgb(23,42,66)"}
+                 onClick={click}>
+                     {text}
+            </NavButton2>
         </>
     )
 }

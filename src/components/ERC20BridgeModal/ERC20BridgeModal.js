@@ -6,7 +6,6 @@ import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
 import arrowDown from "../assets/arrowDown.svg"
-import DropdownMenu from "../WalletModal/DropdownMenu";
 import { Link } from "react-router-dom";
 import { ArrowContainer12, 
          ArrowLogo12, 
@@ -179,7 +178,6 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
                         </DropdownContainer>
                     </ChainSelectorWrapper>
                 </ChainSelector>
-                { dropDownActive && <DropdownMenu height={height}></DropdownMenu>}
                  {/* <ArrowContainer12>
                     <ArrowLogoContainer12>
                         <ArrowLogo12 src={arrowDown}></ArrowLogo12>
