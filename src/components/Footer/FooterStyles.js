@@ -145,8 +145,8 @@ export const NavButton2 = styled.img`
     
     display: inline;
     // background: ${(props) => props.color};
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     // margin-left: 15px;
     // border-radius: 18px;
     // height: 93%;
@@ -164,8 +164,8 @@ export const NavButton2 = styled.img`
     cursor: pointer;
     font-size: 19px;
     color: #fff;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
  
 }
 

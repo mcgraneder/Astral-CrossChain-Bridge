@@ -456,7 +456,7 @@ const AccountDetailsModal = ({close, visible, toggle2, transactions, toggleAccou
                 </TitleWrapper>
 
                 <TitleWrapper spacing={"space-between"}>
-                                <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Deposit {2} RenBTC 25 minutes ago</Title>
+                                <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Withdraw 0.002 RenBTC 0 minutes ago</Title>
                                 <LogoWrapper marginRight={"5px"}>
                                     <CheckCircle size={20} color={"rgb(35,145,85)"}></CheckCircle>
                                 </LogoWrapper>             

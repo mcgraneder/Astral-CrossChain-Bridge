@@ -191,7 +191,7 @@ const WalletModal = ({close}) => {
     const [gas, setGas] = useState(0)
 
     
-    const { library, account, active } = useWeb3React()
+    const { library, account, active, chainId } = useWeb3React()
     const { balance, setBalance } = useBalance()
     const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
 
@@ -239,11 +239,8 @@ const WalletModal = ({close}) => {
             var walletBalance = await ren.balanceOf(account)
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
-        } else if (TransactionType === "WITHDRAWAL") {
-            var walletBalance = await bridge.getContractTokenbalance("BTC")
-            walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
-            setText(walletBalance)
-        }
+        } else if (TransactionType === "WITHDRAWAL") setText(balance)
+        
     }
 
     const getAllowance = async(amount) => {

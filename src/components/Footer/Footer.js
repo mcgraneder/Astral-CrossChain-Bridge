@@ -38,7 +38,7 @@ export default function Footer({colour, colour1, colour2, bcolour, bcolour1, bco
     const [transaction, setTransaction] = useState(false);
     const {library, chainId} = useWeb3React()
     const [blockNumber, setBlockNumber] = React.useState();
-    
+
     useEffect(() => {
         console.log('running')
         if (library) {
@@ -91,7 +91,7 @@ export default function Footer({colour, colour1, colour2, bcolour, bcolour1, bco
                     </NavMenu>
                     <NavMenu visible={visible}>
                         <NavItem marginL={"0px"} style={{"position": "absolute", "left": "93.5%"}}>
-                            <GreenCircle></GreenCircle>
+                            {library && <GreenCircle></GreenCircle>}
                             <NavButton style={{"color": "rgb(35,100,66)", "fontSize": "13px"}} to="/" color={"colour"} bbcolour={bcolour}>{blockNumber}</NavButton>
                             
                         </NavItem>

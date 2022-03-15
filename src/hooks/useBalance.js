@@ -33,10 +33,11 @@ const useBalance = () => {
             })
             .catch((error) => {
                 console.log(error)
+                setBalance(0)
             });
         }
         
-    }, [library])
+    }, [library, chainId])
 
     useEffect(() => {
 
