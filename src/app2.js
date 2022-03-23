@@ -371,3 +371,38 @@ export default App;
     //          }
     //       })
     //    }, [deposits])
+import React, { useState } from "react"
+import JSONDATA from "../data"
+
+    function App() {
+
+      const [searchTerm, setSearchTerm] = useState("")
+
+      return (
+
+        <div>
+          <Input
+            type="text"
+            placeholder="Search.."
+            onChange={(event) => {
+              setSearchTerm(event.target.value)
+            }}
+          >
+            {JSONDATA.filter((val) => {
+              if (searchTerm === "") return val
+              else if (val.tokenName.toLowerCase().includes(searchTerm)) {
+                return val
+              }
+            }).map((val, key) => {
+              return(
+                <div key={key}>
+                  <p>
+                    {val.tokenName}
+                  </p>
+                </div>
+              )
+            })}
+          </Input>
+        </div>
+      )
+    }

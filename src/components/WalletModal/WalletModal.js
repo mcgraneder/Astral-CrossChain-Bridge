@@ -156,7 +156,7 @@ export const Asset = {
 
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
-const WalletModal = ({close,  setConfirm, setText, text, TransactionType, setTransactionType, setGas, bridge, ren, loading}) => {
+const WalletModal = ({setConfirm, setText, text, TransactionType, setTransactionType, setGas, bridge, ren, loading}) => {
 
     const [toggle, setToggle] = useState(true)
     const [inputText, setInputText] = useState("Deposit ")
@@ -168,47 +168,35 @@ const WalletModal = ({close,  setConfirm, setText, text, TransactionType, setTra
     const { library, account, active} = useWeb3React()
     const { balance } = useBalance()
   
-
-    // localStorage.setItem("deposits", "hello")
-
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 
       }, [])
-    
-      
-    useEffect(() => {
+
+      useEffect(() => {
+        if(library) {
+ 
+            axios.get(RenBTCPriceRequestURL).then((result) => {
+                const currentPrice = (result.data[0].current_price) * balance
+                var currentBal = new Number(currentPrice)
+                currentBal = currentBal.toFixed(2)
+                setRenPrice(currentBal) 
+            }).catch(error => console.error(error))
+        }
+
         if(inputText === "Deposit ") {
             if(ren) beginDeposit()
         } else {
             setSufficentApproval(true)
             getBalance(text)
         }
-    }, [text]) 
-
-      useEffect(() => {
-        if(library) {
- 
-             axios.get(RenBTCPriceRequestURL).then((result) => {
-                 const currentPrice = (result.data[0].current_price + 0.25) * balance
-                 var currentBal = new Number(currentPrice)
-                 currentBal = currentBal.toFixed(2)
-                 setRenPrice(currentBal)
-                 
-             }).catch(error => console.error(error))
-        }
-     }, [library, balance])
-
-    const preventMinus = (e) => {
-        if (e.code === 'Minus')  e.preventDefault(); 
-    };
+     }, [library, balance, text])
 
     const getMaxDeposit = async() => {
         if(TransactionType === "DEPOSIT") {
             var walletBalance = await ren.balanceOf(account)
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
-        } else if (TransactionType === "WITHDRAWAL") setText(balance)
-        
+        } else if (TransactionType === "WITHDRAWAL") setText(balance) 
     }
 
     const getAllowance = async(amount) => {
@@ -224,7 +212,6 @@ const WalletModal = ({close,  setConfirm, setText, text, TransactionType, setTra
             setSufficentApproval(true)
             console.error(error)
         }
-
     }
 
     const getGas = async() => {
@@ -266,6 +253,7 @@ const WalletModal = ({close,  setConfirm, setText, text, TransactionType, setTra
     const start = (type) => { 
         if(text === "" || !transactionBlock) return
         getGas()
+        console.log("ts")
         setConfirm(true)
         setTransactionType(type)
     }
@@ -290,6 +278,10 @@ const WalletModal = ({close,  setConfirm, setText, text, TransactionType, setTra
         }
         setText("")
     }
+
+    const preventMinus = (e) => {
+        if (e.code === 'Minus')  e.preventDefault(); 
+    };
 
     return (
 
@@ -393,7 +385,6 @@ const WalletModal = ({close,  setConfirm, setText, text, TransactionType, setTra
                             balanceState={sufficentBalance}
                             width={"440px"} 
                             active={active} 
-                            close={close} 
                             input={text}
                             click={
                                 inputText === "Withdraw " ? 

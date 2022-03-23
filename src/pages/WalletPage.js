@@ -21,17 +21,24 @@ export const TRANSACTION_TYPES = {
     WITHDRAWAL: "WITHDRAWAL"
 };
 
-export const MODAL_STATES = {
+export const MODAL_VIEWS = {
+    NONE: "NONE",
     CONFIRM: "CONFIRM",
     PENDING: "PENDING",
     SUBMITTED: "SUBMITTED",
     REJECTED: "REJECTED"
 };
 
+export const BUTTON_STATES = {
+    ENTER_AMOUNT: "ENTER_AMOUNT",
+    INSUFFICENT_BALANCE: "INSUFFICENT_BALANCE",
+    INSUFFICENT_APPROVAL: "INSUFFICENT_APPROVAL",
+    PENDING: "PENDING"
+}
+
 
 const WalletPage = ({}) => {
 
-    const [show2, setShow2] = useState(false);
     const [confirm, setConfirm] = useState(false)
     const [pending1, setPending1] = useState(false)
     const [submitted, setSubmitted] = useState(false)
@@ -43,13 +50,13 @@ const WalletPage = ({}) => {
     const [ren, setRen] = useState()
     const [bridge, setBridge] = useState()
     const [transactionBlock, setTransactionBlock] = useState(true)
-    const [loading, setLoading] = useState(true)
-    const {library, account} = useWeb3React()
-    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-    const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
+    const {library, account} = useWeb3React()
     const { balance, setBalance } = useBalance()
     const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
+
+    const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
 
     useEffect(() => {
         if(library) {
@@ -61,32 +68,27 @@ const WalletPage = ({}) => {
     }, [library]) 
 
     const handleTransaction = async(contractFunction) => {
-
         setConfirm(false)
         setPending1(true)
       
         if(text === "") return
 
-        var walletBalance
-        var amount
         var params
-        if(TransactionType === TRANSACTION_TYPES.APPROVAL) {
-            walletBalance = await ren.balanceOf(account)
-            walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
-            amount = Web3.utils.toWei(text.toString(), "Gwei")
-            params = [BridgeAddress, amount]
+        var walletBalance = await ren.balanceOf(account)
+        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
+        var amount = Web3.utils.toWei(text.toString(), "Gwei")
 
-        } else if (TransactionType === TRANSACTION_TYPES.DEPOSIT) {
-            walletBalance = await ren.balanceOf(account)
-            walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
-            amount = Web3.utils.toWei(text.toString(), "Gwei")
-            params = [account, BridgeAddress, amount, "BTC"]
-
-        } else {
-            walletBalance = await bridge.getContractTokenbalance("BTC")
+        if(TransactionType === TRANSACTION_TYPES.WITHDRAWAL) {
+            walletBalance = await bridge.getUserTokenBalance("BTC", account)
             walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
             amount = Web3.utils.toWei(text.toString(), "Gwei")
             params = [account, amount, "BTC"]
+
+        } else if (TransactionType === TRANSACTION_TYPES.DEPOSIT) {
+            params = [account, BridgeAddress, amount, "BTC"]
+
+        } else {
+            params = [BridgeAddress, amount]
         }
 
         try {
@@ -98,6 +100,10 @@ const WalletPage = ({}) => {
                 setTransactionBlock(false)
 
                 await result.wait().then((result) => {
+
+                    // if (TransactionType == TransactionType.APPROVAL) {
+                    //     setSufficentApproval(true)
+                    // }
                     setLoading(false)
                     setTransactionBlock(true)
                     const id = v4()
@@ -127,7 +133,7 @@ const WalletPage = ({}) => {
 
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
-                        balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+                        balance = Web3.utils.fromWei(balance.toString(), "Gwei")             
                         var bal = new Number(balance)
                         bal = bal.toFixed(6)
                         setBalance(bal)
@@ -141,12 +147,6 @@ const WalletPage = ({}) => {
             setRejected(true)
             setLoading(false)
             setTransactionBlock(true)
-
-            if (error.code == 4001) {
-                setError("User denied transaction!")
-            } else {
-                setError(error.message)
-            }
         }
     }
 
@@ -199,7 +199,6 @@ const WalletPage = ({}) => {
                 close={toggleTokenModal}
             />
             <WalletModal  
-                close={show2} 
                 setConfirm={setConfirm}
                 setText={setText}
                 text={text}
@@ -211,6 +210,7 @@ const WalletPage = ({}) => {
                 bridge={bridge}
                 loading={loading}
                 transactionBlock={transactionBlock}
+                balance={balance}
             />
             
         </>

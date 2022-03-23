@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useCallback, useMemo } from "react"
 import styled, { css } from "styled-components"
 import EthereumLogo from "../assets/ethereum-logo.png"
 import {X,ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
@@ -8,6 +8,9 @@ import UniswapLogo from "../assets/logo.svg"
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import ChainlinkLogo from "../assets/chainlink.png"
 import Edit from "../assets/edit.svg"
+import tokenList from "./tokenList.json"
+import abi from "../../utils/Abis/AB12.json"
+import { getContract } from "../../utils/utils";
 export const Backdrop = styled.div`
 
     position: fixed;
@@ -448,9 +451,27 @@ export const Img = styled.img`
     color: rgb(80, 144, 234);
     margin-right: 5px;
 `
+const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
 const TokenListModal = ({ visible, close }) => {
 
+    const [selectedToken, setSelectedToken] = useState(null)
+    const { library, account } = useWeb3React()
+    const getBalance = (tokenAddress) => {
+
+        const tokenContract = getContract(tokenAddress, abi, library, account);
+        const balance = tokenContract.balanceOf(account)
+
+        return balance
+    }
+
+    const gb = (tokenAddress) => {
+
+        getBalance(tokenAddress)
+
+        return <div>{tokenAddress}</div>
+    }
+    const [searchTerm, setSearchTerm] = useState("")
     return(
 
         <>
@@ -463,7 +484,10 @@ const TokenListModal = ({ visible, close }) => {
                                 <CloseIcon onClick={close}/>
                             </HeaderContainer>
                             <TokenInputContainer>
-                                <TokenInput placeholder={"Search name or paste address"}></TokenInput>
+                                <TokenInput 
+                                    placeholder={"Search name or paste address"}
+                                    onChange={(e) => setSearchTerm(e.currentTarget.value)}
+                                />
                             </TokenInputContainer>
                             <CommonTokensContainer>
                                 <CommonTokensWrapper>
@@ -482,18 +506,29 @@ const TokenListModal = ({ visible, close }) => {
                             <TokenListSelectionContainer>
                                 <TokenListSelectionWrapper>
                                     <OverallContainer>
-                                        <ListTokenContainer opacTrue={true}>
-                                            <TokenImg src={EthereumLogo}></TokenImg>
+                                    {tokenList.filter((val) => {
+                                        if (searchTerm === "") {
+                                        return val
+                                        } else if (val.symbol.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                        return val
+                                        }
+                                    }).map((val, key) => {
+                                        return (
+                                            <ListTokenContainer opacTrue={false} onClick={() => setSelectedToken(val.address)}>
+                                            <TokenImg src={val.logoURI}></TokenImg>
                                             <TokenNameContainer>
-                                                <TokenTitle>ETH</TokenTitle>
-                                                <TokenSubtitle>Ether</TokenSubtitle>
+                                                <TokenTitle>{val.symbol}</TokenTitle>
+                                                <TokenSubtitle>{val.name}</TokenSubtitle>
                                             </TokenNameContainer>
                                             <Spacer/>
                                             <BalanceContainer>
-                                                <BalanceText>0.12434</BalanceText>
+                                                <BalanceText></BalanceText>
                                             </BalanceContainer>
                                         </ListTokenContainer>
-                                        <ListTokenContainer opacTrue={false}>
+                                        )
+                                    })}
+                                        
+                                        {/* <ListTokenContainer opacTrue={false}>
                                             <TokenImg src={BitcoinLogo}></TokenImg>
                                             <TokenNameContainer>
                                                 <TokenTitle>BTC</TokenTitle>
@@ -547,7 +582,7 @@ const TokenListModal = ({ visible, close }) => {
                                             <BalanceContainer>
                                                 <BalanceText>0</BalanceText>
                                             </BalanceContainer>
-                                        </ListTokenContainer>
+                                        </ListTokenContainer> */}
                                     </OverallContainer>
                                 </TokenListSelectionWrapper>
                             </TokenListSelectionContainer>

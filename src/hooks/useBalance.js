@@ -9,7 +9,7 @@ const useBalance = () => {
 
     const [ren1, setRen1] = useState()
     const [bridge, setBridge] = useState()
-    const [balance, setBalance] = useState(0);
+    const [balance, setBalance] = useState(0.0000);
   
     const { library, account, chainId } = useWeb3React()
 

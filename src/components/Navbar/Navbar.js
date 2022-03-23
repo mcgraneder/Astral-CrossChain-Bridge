@@ -64,7 +64,7 @@ export default function Nav() {
 
     const provider = localStorage.getItem("provider")
     const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
-    const [balance, setBalance] = useState(0.000)
+    const [balance, setBalance] = useState("0.0000")
     const { library, account, active } = useWeb3React()
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);

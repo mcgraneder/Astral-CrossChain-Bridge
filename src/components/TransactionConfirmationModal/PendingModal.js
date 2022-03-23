@@ -35,12 +35,12 @@ export const FormWrapper = styled.div`
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 20px;
     pointer-events: none;
-    transition: ${(props) => props.trueFade ? "opacity 0.3s ease-in-out !important;": "none"};
+    transition: ${(props) => props.trueFade ? "opacity 0.15s ease-in-out !important;": "none"};
     ${(props) => props.visible && css`
         z-index: 10000;
         opacity: 1;
         pointer-events: all;
-        transition: ${(props) => props.trueFade ? "opacity 0.3s ease-in-out !important;": "none"};
+        transition: ${(props) => props.trueFade ? "opacity 0.15s ease-in-out !important;": "none"};
     `}
 
 `
@@ -68,13 +68,13 @@ export const Backdrop = styled.div`
 // background: -webkit-linear-gradient(top, #23233999, #040717);
 // background: -moz-linear-gradient(top, #23233999, #040717);
 // background: linear-gradient(to bottom, rgba(112,128,136, 0.1), rgba(2,8,26, 0.75));
-transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
+transition: ${(props) => props.trueFade ? "opacity 0.15s ease-in-out !important;": "none"};
     z-index: 10000;
     ${(props) => props.visible && css`
 
         opacity: 1;
         pointer-events: all;
-        transition: ${(props) => props.trueFade ? "opacity 0.2s ease-in-out !important;": "none"};
+        transition: ${(props) => props.trueFade ? "opacity 0.15s ease-in-out !important;": "none"};
     `}
 
    
