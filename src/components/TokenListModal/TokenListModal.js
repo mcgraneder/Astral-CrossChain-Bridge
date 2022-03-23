@@ -356,6 +356,7 @@ export const TokenSubtitle = styled.div`
     min-width: 0px;
     font-weight: 300;
     font-size: 12px;
+    width: 200px;
 `
 
 export const BalanceContainer = styled.div`
@@ -453,25 +454,24 @@ export const Img = styled.img`
 `
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
-const TokenListModal = ({ visible, close }) => {
+const TokenListModal = ({ visible, close, setFromToken, setToToken, type }) => {
 
-    const [selectedToken, setSelectedToken] = useState(null)
-    const { library, account } = useWeb3React()
-    const getBalance = (tokenAddress) => {
-
-        const tokenContract = getContract(tokenAddress, abi, library, account);
-        const balance = tokenContract.balanceOf(account)
-
-        return balance
-    }
-
-    const gb = (tokenAddress) => {
-
-        getBalance(tokenAddress)
-
-        return <div>{tokenAddress}</div>
-    }
     const [searchTerm, setSearchTerm] = useState("")
+    const { library, account } = useWeb3React()
+   
+    const setSelectedToken = (option, type) => {
+
+        console.log(type)
+        if (type === "from") {
+            setFromToken(option)
+        }
+        else if (type === "to") {
+            setToToken(option)
+        }
+        setSearchTerm("")
+        close()
+    }
+   
     return(
 
         <>
@@ -486,6 +486,9 @@ const TokenListModal = ({ visible, close }) => {
                             <TokenInputContainer>
                                 <TokenInput 
                                     placeholder={"Search name or paste address"}
+                                    value={searchTerm}
+                                    name={"search"}
+                                    type={"text"}
                                     onChange={(e) => setSearchTerm(e.currentTarget.value)}
                                 />
                             </TokenInputContainer>
@@ -509,12 +512,12 @@ const TokenListModal = ({ visible, close }) => {
                                     {tokenList.filter((val) => {
                                         if (searchTerm === "") {
                                         return val
-                                        } else if (val.symbol.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                        } else if (val.symbol.toLowerCase().includes(searchTerm.toLowerCase()) || val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                                         return val
                                         }
                                     }).map((val, key) => {
                                         return (
-                                            <ListTokenContainer opacTrue={false} onClick={() => setSelectedToken(val.address)}>
+                                            <ListTokenContainer opacTrue={false} onClick={() => setSelectedToken(val, type)}>
                                             <TokenImg src={val.logoURI}></TokenImg>
                                             <TokenNameContainer>
                                                 <TokenTitle>{val.symbol}</TokenTitle>
@@ -527,62 +530,6 @@ const TokenListModal = ({ visible, close }) => {
                                         </ListTokenContainer>
                                         )
                                     })}
-                                        
-                                        {/* <ListTokenContainer opacTrue={false}>
-                                            <TokenImg src={BitcoinLogo}></TokenImg>
-                                            <TokenNameContainer>
-                                                <TokenTitle>BTC</TokenTitle>
-                                                <TokenSubtitle>Bitcoin</TokenSubtitle>
-                                            </TokenNameContainer>
-                                            <Spacer/>
-                                            <BalanceContainer>
-                                                <BalanceText>2.1234</BalanceText>
-                                            </BalanceContainer>
-                                        </ListTokenContainer>
-                                        <ListTokenContainer opacTrue={false}>
-                                            <TokenImg src={UniswapLogoPink}></TokenImg>
-                                            <TokenNameContainer>
-                                                <TokenTitle>UNI</TokenTitle>
-                                                <TokenSubtitle>Uniswap</TokenSubtitle>
-                                            </TokenNameContainer>
-                                            <Spacer/>
-                                            <BalanceContainer>
-                                                <BalanceText>223.367</BalanceText>
-                                            </BalanceContainer>
-                                        </ListTokenContainer>
-                                        <ListTokenContainer opacTrue={false}>
-                                            <TokenImg src={ChainlinkLogo}></TokenImg>
-                                            <TokenNameContainer>
-                                                <TokenTitle>LINK</TokenTitle>
-                                                <TokenSubtitle>Chainlink</TokenSubtitle>
-                                            </TokenNameContainer>
-                                            <Spacer/>
-                                            <BalanceContainer>
-                                                <BalanceText>0</BalanceText>
-                                            </BalanceContainer>
-                                        </ListTokenContainer>
-                                        <ListTokenContainer opacTrue={false}>
-                                            <TokenImg src={ChainlinkLogo}></TokenImg>
-                                            <TokenNameContainer>
-                                                <TokenTitle>LINK</TokenTitle>
-                                                <TokenSubtitle>Chainlink</TokenSubtitle>
-                                            </TokenNameContainer>
-                                            <Spacer/>
-                                            <BalanceContainer>
-                                                <BalanceText>0</BalanceText>
-                                            </BalanceContainer>
-                                        </ListTokenContainer>
-                                        <ListTokenContainer opacTrue={false}>
-                                            <TokenImg src={ChainlinkLogo}></TokenImg>
-                                            <TokenNameContainer>
-                                                <TokenTitle>LINK</TokenTitle>
-                                                <TokenSubtitle>Chainlink</TokenSubtitle>
-                                            </TokenNameContainer>
-                                            <Spacer/>
-                                            <BalanceContainer>
-                                                <BalanceText>0</BalanceText>
-                                            </BalanceContainer>
-                                        </ListTokenContainer> */}
                                     </OverallContainer>
                                 </TokenListSelectionWrapper>
                             </TokenListSelectionContainer>

@@ -59,6 +59,7 @@ export const ChainSelector = styled.div`
     &:hover {
 
         background:  rgb(34,43,68);
+        cursor: pointer;
     }
 `
 
@@ -90,6 +91,7 @@ export const ChainSelectorIcon = styled.img`
     width: ${(props) => props.width};
     height:  ${(props) => props.width};
     line-height: 20px;
+    border-radius: 50%;
 
     // float: left;
 `

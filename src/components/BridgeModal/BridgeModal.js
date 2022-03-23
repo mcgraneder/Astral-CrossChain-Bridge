@@ -110,24 +110,29 @@ export const LegacyBridgeToggleButton = styled.div`
 
 `
 
-const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
+const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFromToken, setType}) => {
 
     const [toggle, setToggle] = useState(true)
-    const [height, setHeight] = useState("")
-    const [ac, setAc] = useState(false)
-    const [web3, setWeb3] = useState()
-    const [loading, setLoading] = useState(true)
-    const [dropDownActive, setDropDownActive] = useState(false)
-    const { active } = useWeb3React()
 
+    const { active } = useWeb3React()
     const setToggleValue = () => setToggle(!toggle);
 
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 
     }, [])
-    
-    
 
+    useEffect(() => {
+        if(fromToken != null && toToken != null) {
+            if(fromToken?.symbol === toToken?.symbol) setFromToken(null)
+        }
+    }, [fromToken, toToken])
+
+    const openTokenList = (type) => {
+
+        setType(type)
+        toggleTokenModal()
+    }
+    
     return (
 
         <>
@@ -149,12 +154,12 @@ const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
             <BridgeModalWrapper>
             {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
                 <ChainSelector marginbottom={"2px"}>
-                    <ChainSelectorWrapper onClick={toggleTokenModal}>
+                    <ChainSelectorWrapper onClick={() => openTokenList("from")}>
                         <ChainSelectorIconWrapper>
-                            <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
+                            <ChainSelectorIcon src={fromToken == null ? BitcoinLogo : fromToken.logoURI} width={fromToken == null ? "30px" : "24px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>Origin Chain</ChainSelectorText>
+                            <ChainSelectorText>{fromToken == null ? "From Chain" : fromToken.name}</ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
@@ -167,12 +172,12 @@ const BrideModal = ({close, balance, setBalance, toggleTokenModal}) => {
                     </ArrowLogoContainer12>
                 </ArrowContainer12> */}
                 <ChainSelector marginbottom={"30px"}>
-                    <ChainSelectorWrapper onClick={toggleTokenModal}>
+                    <ChainSelectorWrapper onClick={() => openTokenList("to")}>
                         <ChainSelectorIconWrapper >
-                            <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
+                            <ChainSelectorIcon src={toToken == null ? EthereumLogo : toToken.logoURI} width={toToken == null ? "30px" : "24px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText> Destination Chain</ChainSelectorText>
+                            <ChainSelectorText>{toToken == null ? "Destination Chain" : toToken.name}</ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
