@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
-import styled from "styled-components";
 import Web3	 from "web3";
 import Button from "./components/Button";
 import axios from "axios";
 import EthereumLogo from "../assets/Ethereum.svg"
-import { MintForm,
-         StyledContainer, 
+import { StyledContainer, 
          BridgeModalContainer, 
          MintFormWrapper, 
          ButtonWrapper, 

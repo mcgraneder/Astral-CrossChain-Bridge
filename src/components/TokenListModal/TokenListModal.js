@@ -1,16 +1,11 @@
-import React, { useState, useCallback, useMemo } from "react"
+import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import EthereumLogo from "../assets/ethereum-logo.png"
-import {X,ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
-import { useWeb3React } from "@web3-react/core";
-import UniswapLogoPink from "../assets/logo_pink.svg"
-import UniswapLogo from "../assets/logo.svg"
+import { X } from "react-feather"
 import BitcoinLogo from "../assets/Bitcoin.svg"
-import ChainlinkLogo from "../assets/chainlink.png"
 import Edit from "../assets/edit.svg"
 import tokenList from "./tokenList.json"
-import abi from "../../utils/Abis/AB12.json"
-import { getContract } from "../../utils/utils";
+
 export const Backdrop = styled.div`
 
     position: fixed;
@@ -452,16 +447,12 @@ export const Img = styled.img`
     color: rgb(80, 144, 234);
     margin-right: 5px;
 `
-const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 
 const TokenListModal = ({ visible, close, setFromToken, setToToken, type }) => {
 
     const [searchTerm, setSearchTerm] = useState("")
-    const { library, account } = useWeb3React()
    
     const setSelectedToken = (option, type) => {
-
-        console.log(type)
         if (type === "from") {
             setFromToken(option)
         }
@@ -517,7 +508,7 @@ const TokenListModal = ({ visible, close, setFromToken, setToToken, type }) => {
                                         }
                                     }).map((val, key) => {
                                         return (
-                                            <ListTokenContainer opacTrue={false} onClick={() => setSelectedToken(val, type)}>
+                                            <ListTokenContainer key={key} opacTrue={false} onClick={() => setSelectedToken(val, type)}>
                                             <TokenImg src={val.logoURI}></TokenImg>
                                             <TokenNameContainer>
                                                 <TokenTitle>{val.symbol}</TokenTitle>
@@ -548,7 +539,6 @@ const TokenListModal = ({ visible, close, setFromToken, setToToken, type }) => {
                         </BottomSection>
                     </TokenListFormWrapper>
                 </TokenListFromContainer>
-            {/* </Backdrop> */}
         </>
     )
 }

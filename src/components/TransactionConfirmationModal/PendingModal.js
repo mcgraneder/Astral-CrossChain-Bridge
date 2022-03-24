@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
-import { TitleContainer } from "../Web3Modal/Web3ModalStyles";
-// import { walletconnect } from "web3modal/dist/providers/connectors";
-import {X, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
+
+import {X, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
 import metaMask from "../assets/metamask.png"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import Bitcoin from "../assets/Bitcoin.svg"

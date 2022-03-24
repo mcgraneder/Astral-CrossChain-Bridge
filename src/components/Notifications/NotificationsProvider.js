@@ -1,13 +1,9 @@
 import { v4 } from "uuid"
-import Notification from "./Notification"
-// import "./Notification.css"
-
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import React, { useState } from "react"
 import { CheckCircle, X } from "react-feather"
-import usePendingTransaction from "../../hooks/usePendingTransaction"
 import { useEffect } from "react/cjs/react.development"
-import usePendingTransactions from "../../hooks/usePendingTransaction"
+
 export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
@@ -181,8 +177,6 @@ export const ProgressValue = styled.div`
 const TransactionNotification = () => {
 
     const [loadBar, setLoadBar] = useState(false)
-
-    // setTimeout(() => setLoadBar(true), 1000)
     const [exit, setExit] = useState(false);
     const [width, setWidth] = useState(0);
     const [intervalID, setIntervalID] = useState(null);
@@ -202,9 +196,6 @@ const TransactionNotification = () => {
         setIntervalID(id);
     };
 
-    const handlePauseTimer = () => {
-        clearInterval(intervalID);
-    };
 
     React.useEffect(() => {
         handleStartTimer();
@@ -212,13 +203,11 @@ const TransactionNotification = () => {
 
       React.useEffect(() => {
         if(width > 50) {
-
             setTimeout(() => {
                 setExit(true)
                 console.log(exit)
             }, 1000)
         }
-       
         console.log(exit)
       }, [width]);
 
@@ -249,7 +238,7 @@ const TransactionNotification = () => {
     )
 }
 
-export const ProgressBar1 = ({deposits, key, id, width}) => {
+export const ProgressBar1 = ({deposits, id, width}) => {
 
     const [active, setActive] = useState(false)
 
@@ -268,7 +257,6 @@ export const ProgressBar1 = ({deposits, key, id, width}) => {
         <Progress>
             <ProgressBar width={width} active={active}>
                 <ProgressValue>
-
                 </ProgressValue>
             </ProgressBar>
         </Progress>
@@ -309,10 +297,8 @@ const NotificationProvider = ({children}) => {
         <div> {children}
         <TransactionPopupWrapper active={true}>
             {notifications.map(notification => {
-
                 return <TransactionNotification key={notification.id}/>
             })}
-           
         </TransactionPopupWrapper>
         </div>
     )

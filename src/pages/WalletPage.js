@@ -41,7 +41,7 @@ export const BUTTON_STATES = {
 }
 
 
-const WalletPage = ({}) => {
+const WalletPage = () => {
 
     const [confirm, setConfirm] = useState(false)
     const [pending1, setPending1] = useState(false)
@@ -69,7 +69,7 @@ const WalletPage = ({}) => {
             setRen(renContract)
             setBridge(bridgeContract)
         }
-    }, [library]) 
+    }, [library, account]) 
 
     const handleTransaction = async(contractFunction) => {
         setConfirm(false)

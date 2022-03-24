@@ -87,7 +87,7 @@ export const NavLogo = styled.img`
 export const NavButton = styled(Link)`
 
     display: inline;
-    background: ${(props) => props.active ? "rgb(14,22,39)" : "rgb(27,32,52)"};
+    background: ${(props) => props.active  ? "rgb(14,22,39)" : "rgb(27,32,52)"};
     border: 2px solid ${(props) => !props.active ? "rgb(34,43,68)" : "rgb(14, 22, 39)"};
     width: ${(props) => props.width};
     border-radius: 18px;

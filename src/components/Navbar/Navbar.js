@@ -69,10 +69,10 @@ export default function Nav() {
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);
     const { connectOn, disconnect } = useAuth()
+
     const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
     const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
 
-    
     useEffect(() => {
         if(account) {
             library.getBalance(account).then((result) => {
@@ -126,24 +126,24 @@ export default function Nav() {
                     <NavMenu visible={localStorage.getItem("provider")} marginL={"0px"} marginR={"118px"}>
                         <NavItem  marginL={"0px"} >
                             <NavButton  width={"110px"}
-                                active={toggleState != 1 ? true : false} 
+                                active={toggleState !== 1 ? true : false} 
                                 to="/bridge" onClick={() => toggleTab(1)}
                                 >Bridge
                             </NavButton>
                             <NavButton width={"110px"} 
-                                active={toggleState != 2 ? true : false} 
+                                active={toggleState !== 2 ? true : false} 
                                 to="/wallet" 
                                 onClick={() => toggleTab(2)}
                                 >Wallet
                             </NavButton>
                             <NavButton width={"110px"}
-                                active={toggleState != 3 ? true : false} 
+                                active={toggleState !== 3 ? true : false} 
                                 to="/dex" 
                                 onClick={() => toggleTab(3)}
                                 >Trade
                             </NavButton>
                             <NavButton width={"110px"}
-                                active={toggleState != 4 ? true : false} 
+                                active={toggleState !== 4 ? true : false} 
                                 to="/transactions" 
                                 onClick={() => toggleTab(4 )}
                                 >History

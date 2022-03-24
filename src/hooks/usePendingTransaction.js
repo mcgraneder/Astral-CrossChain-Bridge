@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { generate } from "shortid";
+import React, { useState  } from "react"
 import { v4 } from "uuid"
-const aId = generate()
-const unrankedId = generate();
-
-
 
 const usePendingTransactions = () => {
 
-
+    const [currentHash, setCurrentHash] = useState()
     const [deposits, setDeposits] = useState([ {
         id: v4(),
         type: "type",
@@ -29,23 +24,18 @@ const usePendingTransactions = () => {
           time: "date",
           }
       ]);
-      const [currentHash, setCurrentHash] = useState()
     
       React.useEffect(() => {
-
         const transactionData = localStorage.getItem("transactions");
         if (transactionData) {
           setTransactions(JSON.parse(transactionData));
         }
-
       }, []);
     
       React.useEffect(() => {
-
         localStorage.setItem("deposits", JSON.stringify(deposits));
         localStorage.setItem("transactions", JSON.stringify(transactions));
         localStorage.setItem("currentHash", currentHash);
-
       });
 
       return { transactions, setTransactions, deposits, setDeposits, currentHash, setCurrentHash}

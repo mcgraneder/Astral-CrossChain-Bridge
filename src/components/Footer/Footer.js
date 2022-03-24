@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-// import ConnectWalletButton from '../Buttons/ConnectWalletButton';
-import RenLogo from "../assets/RenLogo.svg"
-import ConnectWalletButton from '../Buttons/ConnectWalletButton/ConnjectWalletButton';
 import { NavContainer, 
          NavWrapper,
-         NavLogoContainer,
-         NavLogo,
          NavMenu,
          NavItem, 
          NavButton,
          NavButton2,
          NavItem2,
          NavMenu2,
-         BalanceContainer,
-         NavLogoLink,
          NavButton2Container	
 } from './FooterStyles';
-import useAuth from '../../hooks/useAuth';
 import TwitterIcon from "../assets/TwitterIcon.svg"
 import GithubIcon from "../assets/twitter.png"
 import discordIcon from "../assets/discordIcon.png"
@@ -31,11 +23,8 @@ export const GreenCircle = styled.div`
     border-radius: 50%;
     background: rgb(14,209,69);
 `
-export default function Footer({colour, colour1, colour2, bcolour, bcolour1, bcolour2, close, visible}) {
+export default function Footer({ visible}) {
 
-    const [bridge, setBridge] = useState(false);
-    const [wallet, setWallet] = useState(false);
-    const [transaction, setTransaction] = useState(false);
     const {library, chainId} = useWeb3React()
     const [blockNumber, setBlockNumber] = React.useState();
 
@@ -77,22 +66,18 @@ export default function Footer({colour, colour1, colour2, bcolour, bcolour1, bco
         <div>
             <NavContainer>
                 <NavWrapper>
-                    {/* <NavLogoContainer>
-                        <NavLogo src={RenLogo} height="70px" width="70px"></NavLogo>
-                        <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
-                    </NavLogoContainer> */}
                     <NavMenu visible={visible}>
                         <NavItem marginL={"60px"}>
-                            <NavButton to="/" color={colour} bbcolour={bcolour}>About</NavButton>
-                            <NavButton to="/wallet" color={colour1} bbcolour={bcolour1}>Docs</NavButton>
-                            <NavButton to="/transactions" color={colour2} bbcolour={bcolour2}>FAQS</NavButton>
-                            <NavButton to="/transactions" color={colour2} bbcolour={bcolour2}>Wiki</NavButton>
+                            <NavButton to="/" >About</NavButton>
+                            <NavButton to="/wallet" >Docs</NavButton>
+                            <NavButton to="/transactions" >FAQS</NavButton>
+                            <NavButton to="/transactions">Wiki</NavButton>
                         </NavItem>
                     </NavMenu>
                     <NavMenu visible={visible}>
                         <NavItem marginL={"0px"} style={{"position": "absolute", "left": "93.5%"}}>
                             {library && <GreenCircle></GreenCircle>}
-                            <NavButton style={{"color": "rgb(35,100,66)", "fontSize": "13px"}} to="/" color={"colour"} bbcolour={bcolour}>{blockNumber}</NavButton>
+                            <NavButton style={{"color": "rgb(35,100,66)", "fontSize": "13px"}} to="/" color={"colour"}>{blockNumber}</NavButton>
                             
                         </NavItem>
                     </NavMenu>
@@ -112,7 +97,6 @@ export default function Footer({colour, colour1, colour2, bcolour, bcolour1, bco
                             </NavButton2Container>
                         </NavItem2>
                     </NavMenu2>
-                    
                 </NavWrapper>
             </NavContainer>
            

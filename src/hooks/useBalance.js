@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import useAuth from "../hooks/useAuth";
+import React, { useState, useEffect } from "react";
 import { getContract } from "../utils/utils";
 import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
 import Web3 from "web3";
 import { useWeb3React } from "@web3-react/core"
+
 const useBalance = () => {
 
     const [ren1, setRen1] = useState()

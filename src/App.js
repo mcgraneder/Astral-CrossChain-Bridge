@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import React from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
 import BridgePage from "./pages/BridgePage";
 import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
@@ -11,14 +11,9 @@ import Footer from "./components/Footer/Footer";
 import DexPage from "./pages/DexPage"
 import ERC20BridgePage from "./pages/ERC20BrifgePage";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
-import { useWeb3React } from "@web3-react/core";
-import useBalance from "./hooks/useBalance";
-
 function App() { 
 
-  const [pending, setPending] = useState(false)
   const loading = useOnPageLoad()
-  let history = useHistory()
 
   return (
 

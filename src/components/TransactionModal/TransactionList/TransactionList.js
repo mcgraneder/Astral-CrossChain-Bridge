@@ -1,8 +1,7 @@
-import styled, { keyframes } from "styled-components"
-import React, { useState, useCallback } from "react"
+import styled from "styled-components"
+import React from "react"
 import { CheckCircle, X } from "react-feather"
-import axios from "axios"
-import usePendingTransaction from "../../../hooks/usePendingTransaction";
+
 export const TransactionListContainer = styled.div`
 
     
@@ -174,69 +173,52 @@ export const SubtitleContainer = styled.div`
 //   background: White;
 `
 const TransactionList = ({transactions}) => {
-
-    // const { transactions } = usePendingTransaction()
-
     
     return (
        
         <>
-        <TransactionListContainer>
-
-        {transactions.map((item, i) => {
-                if(i >= 0){
-                    return <div key={item.id} className="objectname">
-                                <TransactionItemContainer>
-                <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="30" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer>
-                <TextContainer>
-                <Text size={"17px"} marginB={"5px"} color={"White"} weight={true}>
-                            Deposit ID: {item.id}
-                        </Text>
-                        <SubtitleContainer>
-                        <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>From:</span> {item.from.substring(0, 6)}...{item.from.substring(item.from.length - 4)}
-                        </Text>
-                        <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
-                        </Text>
-                        <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Amount:</span> {item.amount} ($ 7:46)
-                        </Text>
-                        </SubtitleContainer>
-                        <SubtitleContainer>
-                        <Text size={"13px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                            <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
-                        </Text>
-                        <Text size={"13px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
-                        <span style={{"fontWeight": "bold"}}>Tx Hash:</span> {item.txHash.substring(0, 10)}...{item.txHash.substring(item.txHash.length - 10)}
-                        </Text>
-                        <Text size={"13px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
-                            View on explorer
-                        </Text>
-                        </SubtitleContainer>
-                </TextContainer>
-                {/* <IconContainer>
-                <CheckCircle 
-                            strokeWidth={1.5} 
-                            size="40" 
-                            color={"rgb(38,162,91)"} />
-                </IconContainer> */}
-            </TransactionItemContainer>
-                            </div>
-            }})}
-            
-            
-           
-            
-           
-
-
-        </TransactionListContainer>
+            <TransactionListContainer>
+                {transactions.map((item, i) => {
+                        if(i >= 0){
+                            return <div key={item.id} className="objectname">
+                                        <TransactionItemContainer>
+                        <IconContainer>
+                        <CheckCircle 
+                                    strokeWidth={1.5} 
+                                    size="30" 
+                                    color={"rgb(38,162,91)"} />
+                        </IconContainer>
+                        <TextContainer>
+                        <Text size={"17px"} marginB={"5px"} color={"White"} weight={true}>
+                                    Deposit ID: {item.id}
+                                </Text>
+                                <SubtitleContainer>
+                                <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
+                                <span style={{"fontWeight": "bold"}}>From:</span> {item.from.substring(0, 6)}...{item.from.substring(item.from.length - 4)}
+                                </Text>
+                                <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
+                                <span style={{"fontWeight": "bold"}}>Asset:</span> RenBTC
+                                </Text>
+                                <Text size={"13px"} marginB={"2px"} color={"rgb(166, 166, 166)"} weight={false}>
+                                <span style={{"fontWeight": "bold"}}>Amount:</span> {item.amount} ($ 7:46)
+                                </Text>
+                                </SubtitleContainer>
+                                <SubtitleContainer>
+                                <Text size={"13px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
+                                    <span style={{"fontWeight": "bold"}}>Time:</span> 25 minutes ago
+                                </Text>
+                                <Text size={"13px"} marginB={"5px"} color={"rgb(166, 166, 166)"} weight={false}>
+                                <span style={{"fontWeight": "bold"}}>Tx Hash:</span> {item.txHash.substring(0, 10)}...{item.txHash.substring(item.txHash.length - 10)}
+                                </Text>
+                                <Text size={"13px"} marginB={"5px"} color={"rgb(53,134,249)"} weight={true}>
+                                    View on explorer
+                                </Text>
+                                </SubtitleContainer>
+                        </TextContainer>
+                    </TransactionItemContainer>
+                                    </div>
+                    }})}
+            </TransactionListContainer>
         </>
     )
 }

@@ -1,32 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ArrowContainer12, 
-         ArrowLogo12, 
-         ArrowLogoContainer12, 
-         StyledContainer, 
+import { StyledContainer, 
          BridgeModalContainer, 
-         BridgeModalWrapper, 
-         ChainSelector, 
-         ChainSelectorWrapper, 
-         ChainSelectorIcon, 
-         ChainSelectorIconWrapper, 
-         ChainSelectorText, 
-         ChainSelectorTextWrapper, 
-         DropdownContainer, 
-         BalanceContainer, 
-         BalanceWrapper, 
-         MintFormWrapper,  
-         MintFormContainer, 
-         MintToggleButton, 
-         ReleaseToggleButton, 
-         MinFormToggleButtonContainer, 
-         MintFormTextWrapper2, 
-         MintFormText2,
-         Balancetext
 } from "./DexModalStyles";
 import EthereumLogo from "../assets/ethereum-logo.png"
-import {Settings, ChevronDown, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
-import { useWeb3React } from "@web3-react/core";
+import {Settings, ChevronDown, ArrowDown } from "react-feather"
 import UniswapLogoPink from "../assets/logo_pink.svg"
 import UniswapLogo from "../assets/logo.svg"
 
@@ -108,7 +86,7 @@ export const UniswapIcon = styled.img`
 export const ArrowDownContainer = styled.div`
 
     position: absolute;
-    top: ${(props) => props.swapState == 0 ? "44.5%" : "36.5%"};
+    top: ${(props) => props.swapState === 0 ? "44.5%" : "36.5%"};
     left: 46.3%;
     // color: White;
     background: White;
@@ -272,14 +250,11 @@ const DexModal = ({ close }) => {
 
     const [swapState, setSwapState] = useState(0)
     const toggleSwapState = () => setSwapState(!swapState)
-    const { active } = useWeb3React()
 
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 
       }, [])
     
-
-
     return (
 
         <>
@@ -291,14 +266,14 @@ const DexModal = ({ close }) => {
                 <ArrowDownContainer onClick={toggleSwapState} swapState={swapState}>
                     <ArrowDown color={"White"} size={"15px"}/>
                 </ArrowDownContainer>
-            <TokenAmountWrapper height={swapState == 0 ? "100px" : "70px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
+            <TokenAmountWrapper height={swapState === 0 ? "100px" : "70px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
                     <InfoWrapper>
                         <TokenInput placeholder={"0.0"}></TokenInput>
-                        <TokenSelectButton color={swapState == 0 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
+                        <TokenSelectButton color={swapState === 0 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
                             <ButtonContents>
-                                {swapState == 0 ?
+                                {swapState === 0 ?
                                 <SelectedTokenContainer>
-                                    <TokenImg src={EthereumLogo}></TokenImg>
+                                    <TokenImg src={EthereumLogo} alt="#"></TokenImg>
                                     <SelectedToken initialWidth={true}>ETH</SelectedToken>
                                 </SelectedTokenContainer> :
                                 <SelectedTokenContainer>
@@ -309,14 +284,14 @@ const DexModal = ({ close }) => {
                         </TokenSelectButton>
                     </InfoWrapper>
                 </TokenAmountWrapper>
-                <TokenAmountWrapper height={swapState == 1 ? "100px" : "70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
+                <TokenAmountWrapper height={swapState === 1 ? "100px" : "70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
                 <InfoWrapper>
                         <TokenInput placeholder={"0.0"}></TokenInput>
-                        <TokenSelectButton color={swapState == 1 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
+                        <TokenSelectButton color={swapState === 1 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
                             <ButtonContents>
-                            {swapState == 1 ?
+                            {swapState === 1 ?
                                 <SelectedTokenContainer>
-                                    <TokenImg src={EthereumLogo}></TokenImg>
+                                    <TokenImg src={EthereumLogo} alt="#"></TokenImg>
                                     <SelectedToken initialWidth={true}>ETH</SelectedToken>
                                 </SelectedTokenContainer> :
                                 <SelectedTokenContainer>

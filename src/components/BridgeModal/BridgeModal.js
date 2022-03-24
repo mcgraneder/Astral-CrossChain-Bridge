@@ -5,14 +5,8 @@ import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
-import useAuth from "../../hooks/useAuth";
-import arrowDown from "../assets/arrowDown.svg"
 import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router'
-import { ArrowContainer12, 
-         ArrowLogo12, 
-         ArrowLogoContainer12, 
-         StyledContainer, 
+import { StyledContainer, 
          BridgeModalContainer, 
          BridgeModalWrapper, 
          ChainSelector, 
@@ -35,6 +29,7 @@ import { ArrowContainer12,
          Balancetext
 } from "./BridgeModalStyles";
 import { useWeb3React } from "@web3-react/core";
+
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -120,13 +115,13 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
 
     useEffect(() => {
         if(!localStorage.getItem("provider")) history.push("/") 
-    }, [])
+    }, [history])
 
     useEffect(() => {
         if(fromToken != null && toToken != null) {
             if(fromToken?.symbol === toToken?.symbol) setFromToken(null)
         }
-    }, [fromToken, toToken])
+    }, [fromToken, toToken, setFromToken])
 
     const openTokenList = (type) => {
 
@@ -153,7 +148,6 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                         </ERC20BridgeToggleButton>
             </BridgeSelectorContainer>
             <BridgeModalWrapper>
-            {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
                 <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("from")}>
                         <ChainSelectorIconWrapper>
@@ -167,11 +161,6 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                         </DropdownContainer>
                     </ChainSelectorWrapper>
                 </ChainSelector>
-                 {/* <ArrowContainer12>
-                    <ArrowLogoContainer12>
-                        <ArrowLogo12 src={arrowDown}></ArrowLogo12>
-                    </ArrowLogoContainer12>
-                </ArrowContainer12> */}
                 <ChainSelector marginbottom={"30px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("to")}>
                         <ChainSelectorIconWrapper >
@@ -192,11 +181,6 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             <Balancetext size={"17px"} colour={"White"}>= $368.46 </Balancetext>
                         </BalanceWrapper>                
                     </BalanceContainer>
-                {/* <ArrowContainer>
-                    <ArrowLogoContainer>
-                        <ArrowLogo src={arrowDown}></ArrowLogo>
-                    </ArrowLogoContainer>
-                </ArrowContainer> */}
                 <MintFormContainer>
                     <MinFormToggleButtonContainer>
                         <MintToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>
@@ -211,17 +195,6 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                         </ReleaseToggleButton>
                     </MinFormToggleButtonContainer>
                     <MintFormWrapper>
-                        {/* <MintForm>
-                        <MintFormmWrapper>
-                            <MintFormTextWrapper>
-                                <MintFormText>0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113</MintFormText>
-                            </MintFormTextWrapper>
-                            <DropdownContainer2>
-                                <MintFormIcon src={chainLogo} width={"18px"}></MintFormIcon>
-                            </DropdownContainer2>
-                            </MintFormmWrapper>
-                            
-                        </MintForm> */}
                         <ButtonWrapper>
                             <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
                         </ButtonWrapper>

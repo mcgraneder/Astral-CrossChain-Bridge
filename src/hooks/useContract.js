@@ -15,7 +15,6 @@ const useContract = () => {
     const { account, library } = useWeb3React()
 
     useEffect(() => {
-
         if(library) {
             const bridgeContract = getContract(BridgeAddress, abi, library, account);
             const renContract = getContract(RenAddress, abi2, library, account);
@@ -23,10 +22,9 @@ const useContract = () => {
             setRen(renContract)
             setBridge(bridgeContract)
         }
-
     }, [library]) 
 
-    return bridge, ren
+    return { bridge, ren }
 
 }
 

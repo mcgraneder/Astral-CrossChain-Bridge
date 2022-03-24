@@ -26,20 +26,18 @@ import { StyledContainer,
 import DropdownMenu3 from "./DropdownMenu3";
 import TransactionList from "./TransactionList/TransactionList";
 
-const TransactionModal = ({close, transactions, toggleTokenModal}) => {
+const TransactionModal = ({ transactions, toggleTokenModal }) => {
 
     const [dropDownActive0, setDropDownActive0] = useState(false)
     const [dropDownActive, setDropDownActive] = useState(false)
     const [text, setText] = useState("Deposit History")
-
-
 
     const setDropdownValue3 = () => {
         if(!dropDownActive  && !dropDownActive0) return
         setDropDownActive0(false);
         setDropDownActive(false);
     }
-    // console.log(text)
+
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 
       }, [])

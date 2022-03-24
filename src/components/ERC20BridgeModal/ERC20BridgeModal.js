@@ -4,13 +4,8 @@ import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
-import useAuth from "../../hooks/useAuth";
-import arrowDown from "../assets/arrowDown.svg"
 import { Link } from "react-router-dom";
-import { ArrowContainer12, 
-         ArrowLogo12, 
-         ArrowLogoContainer12, 
-         StyledContainer, 
+import { StyledContainer, 
          BridgeModalContainer, 
          BridgeModalWrapper, 
          ChainSelector, 
@@ -33,6 +28,7 @@ import { ArrowContainer12,
          Balancetext
 } from "./ERC20BridgeModalStyles";
 import { useWeb3React } from "@web3-react/core";
+
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -108,38 +104,28 @@ export const LegacyBridgeToggleButton = styled(Link)`
 
 `
 
-const ERC20BridgeModal = ({close, balance, setBalance}) => {
+const ERC20BridgeModal = ({close, balance }) => {
 
     const [toggle, setToggle] = useState(true)
     const [height, setHeight] = useState("")
-    const [ac, setAc] = useState(false)
-    const [web3, setWeb3] = useState()
-    const [loading, setLoading] = useState(true)
     const [dropDownActive, setDropDownActive] = useState(false)
     const { active } = useWeb3React()
 
     const setToggleValue = () => {
-
         setToggle(!toggle);
     }
 
     const setDropdownValue1 = () => {
-
-        
-       
         setDropDownActive(!dropDownActive);
         setHeight("64px")
     }
 
     const setDropdownValue2 = () => {
-
-        console.log("hello")
         setDropDownActive(!dropDownActive);
         setHeight("128px")
     }
 
     const setDropdownValue3 = () => {
-
         if(!dropDownActive) return
         setDropDownActive(!dropDownActive);
         setHeight("128px")
@@ -164,7 +150,6 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
                         </ERC20BridgeToggleButton>
             </BridgeSelectorContainer>
             <BridgeModalWrapper>
-            {/* <BridgeSelectorContainer></BridgeSelectorContainer> */}
                 <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
                         <ChainSelectorIconWrapper>
@@ -178,11 +163,6 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
                         </DropdownContainer>
                     </ChainSelectorWrapper>
                 </ChainSelector>
-                 {/* <ArrowContainer12>
-                    <ArrowLogoContainer12>
-                        <ArrowLogo12 src={arrowDown}></ArrowLogo12>
-                    </ArrowLogoContainer12>
-                </ArrowContainer12> */}
                 <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
                         <ChainSelectorIconWrapper >
@@ -216,11 +196,6 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
                             <Balancetext size={"17px"} colour={"White"}>= $368.46 </Balancetext>
                         </BalanceWrapper>                
                     </BalanceContainer>
-                {/* <ArrowContainer>
-                    <ArrowLogoContainer>
-                        <ArrowLogo src={arrowDown}></ArrowLogo>
-                    </ArrowLogoContainer>
-                </ArrowContainer> */}
                 <MintFormContainer>
                     <MinFormToggleButtonContainer>
                         <MintToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>
@@ -235,22 +210,10 @@ const ERC20BridgeModal = ({close, balance, setBalance}) => {
                         </ReleaseToggleButton>
                     </MinFormToggleButtonContainer>
                     <MintFormWrapper>
-                        {/* <MintForm>
-                        <MintFormmWrapper>
-                            <MintFormTextWrapper>
-                                <MintFormText>0x13480Ea818fE2F27b82DfE7DCAc3Fd3E63A94113</MintFormText>
-                            </MintFormTextWrapper>
-                            <DropdownContainer2>
-                                <MintFormIcon src={chainLogo} width={"18px"}></MintFormIcon>
-                            </DropdownContainer2>
-                            </MintFormmWrapper>
-                            
-                        </MintForm> */}
                         <ButtonWrapper>
                             <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
                         </ButtonWrapper>
                     </MintFormWrapper>
-                    
                 </MintFormContainer>
             </BridgeModalWrapper>
             </BridgeModalContainer>

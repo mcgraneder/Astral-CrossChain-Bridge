@@ -1,10 +1,9 @@
-import styled, { keyframes } from "styled-components"
-import React, { useState, useCallback } from "react"
+import styled  from "styled-components"
+import React, { useState } from "react"
 import { CheckCircle, X } from "react-feather"
-import usePendingTransaction from "../../hooks/usePendingTransaction"
 import { useEffect } from "react/cjs/react.development"
-import usePendingTransactions from "../../hooks/usePendingTransaction"
 import axios from "axios"
+
 export const TransactionPopupWrapper = styled.div`
 
     position: absolute;
@@ -169,8 +168,7 @@ export const ProgressValue = styled.div`
 
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
-
-    const TransactionNotification = ({deposits, setDeposits, amount}) => {
+const TransactionNotification = ({deposits, setDeposits, amount}) => {
     
     const [display, setDisplay]= useState(false)
     const [priceForAmount, setPriceForAmount] = useState(0)
@@ -190,7 +188,7 @@ const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs
             
         }).catch(error => console.error(error))
 
-    }, [])
+    }, [amount])
 
     const click = () => {
 
@@ -261,14 +259,14 @@ const DepositSummary = ({deposits, setDeposits }) => {
         <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
             { deposits.length > 0 && deposits.map((item, i) => {
                 if(i > 0){
-                    return <div key={item.id} className="objectname">
+                    return (<div key={item.id} className="objectname">
                                 <TransactionNotification 
                                     key={item.id}
                                     deposits={deposits}
                                     setDeposits={setDeposits}
                                     amount={item.amount}
                                 />
-                            </div>
+                            </div>)
             }})}
         </TransactionPopupWrapper>
     )

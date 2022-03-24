@@ -1,5 +1,4 @@
 import { ethers } from 'ethers'
-import Web3	 from 'web3'
 // import FACTORY_ABI from '../constants/abis/factory'
 // import EXCHANGE_ABI from '../constants/abis/exchange'
 // import ERC20_ABI from '../constants/abis/erc20'

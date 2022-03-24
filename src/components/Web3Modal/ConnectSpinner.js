@@ -12,11 +12,8 @@ const ConnectSpinner = (props) => {
     const [text, setText] = useState("Connecting...")
 
     useEffect(() => {
-
         if(props.loading) {
-
             setTimeout(() => {
-
                 setText("Please Wait...")
             }, 5000)
         }

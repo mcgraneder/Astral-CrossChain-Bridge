@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
 import metamask from "../assets/metamask.svg"
 import walletConnect from "../assets/wallet_connect.svg"
@@ -6,13 +6,9 @@ import fortmatic from "../assets/fortmatic.svg"
 import torus from "../assets/torus.svg"
 import portis from "../assets/portis.svg"
 import Disconnect from "./Disconnect";
-import useAuth from "../../hooks/useAuth";
-import ConnectSpinner from "./ConnectSpinner";
-// import { walletconnect } from "web3modal/dist/providers/connectors";
-import AccountDetailsModal from "../AccountDetails/AccountDetailsModal";
 import { ArrowLeft, X } from "react-feather"
 import { useWeb3React } from "@web3-react/core"
-import { useHistory } from "react-router-dom";
+
 export const FormWrapper = styled.div`
 
 

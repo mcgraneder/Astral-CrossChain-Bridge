@@ -21,17 +21,17 @@ function useAuth() {
         if (!library) {
             connectOnLoad()
        }
-    }, [library])
+    }, [library, account, connectOnLoad])
 
     //use network pollinhg intervak to warn usr their offline
     async function connectOnLoad() {
 
         if ( localStorage.getItem("provider") == null) return
-        if ( localStorage.getItem("provider") == "fortmatic") provider = fortmatic
-        if ( localStorage.getItem("provider") == "injected") provider = injected
-        if ( localStorage.getItem("provider") == "walletconnect") return
-        if ( localStorage.getItem("provider") == "portis") provider = portis
-        if ( localStorage.getItem("provider") == "torus") provider = torus 
+        if ( localStorage.getItem("provider") === "fortmatic") provider = fortmatic
+        if ( localStorage.getItem("provider") === "injected") provider = injected
+        if ( localStorage.getItem("provider") === "walletconnect") return
+        if ( localStorage.getItem("provider") === "portis") provider = portis
+        if ( localStorage.getItem("provider") === "torus") provider = torus 
 
         try {
             if (provider == injected) {
@@ -96,12 +96,10 @@ function useAuth() {
 
     async function disconnect() {
         try {
-
-        deactivate()
-        localStorage.removeItem("account");
-        localStorage.removeItem("currentAccount");
-        localStorage.removeItem("provider");
-
+            deactivate()
+            localStorage.removeItem("account");
+            localStorage.removeItem("currentAccount");
+            localStorage.removeItem("provider");
         } catch (err) {
             console.error(err)
         }

@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import useAuth from "../../hooks/useAuth";
 import { useWeb3React } from "@web3-react/core";
 
 export const ConnectButton = styled.div`
@@ -85,26 +84,13 @@ const providers = [
 ]
 
 
-const Provider = ({margin, width1, logo, width2, title, connect, activee}) => {
+const Provider = ({width1, logo, width2, title, connect }) => {
 
     const { active } = useWeb3React()
 
     const provider = localStorage.getItem("provider")
 
     return (
-
-        // <ConnectButton onClick={connect}>
-        //     <TitleContainer margin={margin}>
-                
-        //         <Logo width={width1}><img src={logo} width={width2} /></Logo>
-        //        <ModalTitle>
-        //        {active && <a href='https://svgshare.com/s/A_d' ><img width="10px" src='https://svgshare.com/i/A_d.svg' title='green-dot' /></a>}
-        //        <span className="sp"></span>
-        //            {title}
-        //            </ModalTitle>
-               
-        //     </TitleContainer>
-        // </ConnectButton>
         <ConnectButton active={active && provider=== provider} onClick={connect}>
             <TitleContainer margin={"20px"}>
                 <Logo width={width1}><img src={logo} width={width2} /></Logo>
