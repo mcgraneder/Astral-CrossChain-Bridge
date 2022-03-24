@@ -18,6 +18,7 @@ function App() {
 
   const [pending, setPending] = useState(false)
   const loading = useOnPageLoad()
+  let history = useHistory()
 
   return (
 

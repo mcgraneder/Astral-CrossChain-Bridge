@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import WalletModal from "../components/WalletModal/WalletModal";
 import useBalance from "../hooks/useBalance";
 import TokenListModal from "../components/TokenListModal/TokenListModal";
-import { ConfirmationModal, PendingModal, TransactionSubmittedModal, RejectionModal } from "../components/TransactionConfirmationModal/PendingModal";
 import { getContract } from "../utils/utils";
 import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
@@ -11,6 +10,11 @@ import { v4 } from "uuid"
 import DepositSummary from "../components/AccountDetails/TransactionSummary";
 import usePendingTransaction from "../hooks/usePendingTransaction";
 import Web3 from "web3";
+import { ConfirmationModal, 
+        PendingModal, 
+        TransactionSubmittedModal, 
+        RejectionModal 
+} from "../components/TransactionConfirmationModal/PendingModal";
 
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"

@@ -55,6 +55,8 @@ export const ChainSelector = styled.div`
     background: rgb(27,32,52);;
     border: 2px solid rgb(34,43,68);
     border-radius: 10px;
+    
+// font-family: 'Open Sans', sans-serif;
 
     &:hover {
 

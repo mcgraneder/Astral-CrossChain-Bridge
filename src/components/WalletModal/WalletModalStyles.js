@@ -193,6 +193,25 @@ export const ButtonWrapper = styled.div`
   
     
 `
+export const MintForm = styled.div`
+
+    margin-top: 10px;
+    // margin-bottom: -20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    // padding: 3px;
+    height: 50px;
+    // width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 1px solid rgb(34,43,68);
+    border-radius: 10px;
+
+    &:hover {
+
+        background:  rgb(34,43,68);
+    }
+`
 
 
 export const MintFormmWrapper = styled.div`

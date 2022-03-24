@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { StyledTitle, StyledSubTitle, ButtonWrapper, VideoBackground, Container } from "./HomeStyles";
 // import { Button, ButtonWrapper } from "../ButtomStyles";
+import { useHistory } from "react-router-dom";
 import { Wrapper } from "./HomeStyles";
 import Disconnect from "../Web3Modal/Disconnect";
 import useAuth from "../../hooks/useAuth";
@@ -14,7 +15,11 @@ import { useWeb3React } from "@web3-react/core";
 const Home = ({close}) => {
 
     const { active } = useWeb3React()
+    let history = useHistory()
     
+    useEffect(() => {
+        if(localStorage.getItem("provider")) history.push("/bridge") 
+    }, [])
    
     return(
         <>

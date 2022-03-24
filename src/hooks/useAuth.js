@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core"
 import { injected, fortmatic, portis, torus, walletconnect } from "../connectors/provider";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { useHistory } from 'react-router-dom';
 
 export const walletconnect1 = new WalletConnectConnector({
     rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
@@ -13,6 +14,7 @@ function useAuth() {
 
     var { active, account, library, activate, deactivate } = useWeb3React()
     var provider = localStorage.getItem("provider")
+    let history = useHistory()
  
     useEffect(() => {
         if(library) localStorage.setItem("currentAccount", account);
@@ -40,7 +42,7 @@ function useAuth() {
                         activate(provider) // a little janky...can't use setError because the connector isn't set
                       } else {
                         disconnect()
-                        window.location.href = "/" 
+                        history.push("/")
                       } 
                 })
             } else {
@@ -51,7 +53,7 @@ function useAuth() {
                             activate(provider) // a little janky...can't use setError because the connector isn't set
                           } else {
                             disconnect()
-                            window.location.href = "/" 
+                            history.push("/")
                           } 
                     })
                 }, 2000)
@@ -61,8 +63,6 @@ function useAuth() {
             disconnect()
           }
     }
-
-
     async function connectOn(provider1) {
         
         if(active) {

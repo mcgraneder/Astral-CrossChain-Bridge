@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
@@ -113,12 +114,12 @@ export const LegacyBridgeToggleButton = styled.div`
 const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFromToken, setType}) => {
 
     const [toggle, setToggle] = useState(true)
-
+    let history = useHistory()
     const { active } = useWeb3React()
     const setToggleValue = () => setToggle(!toggle);
 
     useEffect(() => {
-        if(!localStorage.getItem("provider")) window.location.href = "/" 
+        if(!localStorage.getItem("provider")) history.push("/") 
     }, [])
 
     useEffect(() => {

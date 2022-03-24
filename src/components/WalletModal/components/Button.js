@@ -1,5 +1,6 @@
 import styled from "styled-components"
-
+import { ButtonText } from "../../Buttons/ConnectWalletButton/ConnectWalletButtonStyles";
+import Loader from "../../Loader/Loader";
 
 export const NavButton2 = styled.div`
 
@@ -76,14 +77,34 @@ export const Logo1 = styled.div`
     background: rgb(77, 102, 235);
 }
 
-
-
-
-   
 `;
 
-const Button = ({ state, active, height, click, width, text, input, balanceState, transactionBlock}) => {
+export const LoaderWrapper = styled.div`
 
+  position: absolute;
+  bottom: ${(props) => props.position ? "6.8%" : "6.8%"};
+  right: 32%;
+`
+
+
+
+const Button = ({ state, active, height, click, width, text, input, balanceState, transactionBlock, inputText}) => {
+
+    const buttonText = () => {
+
+        return(
+            <>
+            {transactionBlock ? (active ? (balanceState ? 
+            "Insufficent Balance" 
+            :(state ? 
+            ( text === "" ? "Enter an Amount" 
+            : inputText +  " " + text + " BTC") 
+            : "Approve token spend first")) 
+            : <div>Connecting... <LoaderWrapper><Loader stroke="white" size={"20px"}/></LoaderWrapper></div>) 
+            : <div>1 Pending... <LoaderWrapper position={Boolean(text === "")}><Loader stroke="white" size={"20px"}/></LoaderWrapper></div>}
+            </>
+        )
+    }
     return (
 
         <>
@@ -98,7 +119,7 @@ const Button = ({ state, active, height, click, width, text, input, balanceState
             active={active} 
             color={"rgb(23,42,66)"}
             onClick={click}>
-                {text}
+                {<ButtonText/>}
         </NavButton3> 
         :
             <NavButton2  t
@@ -111,7 +132,7 @@ const Button = ({ state, active, height, click, width, text, input, balanceState
                 active={active} 
                 color={"rgb(23,42,66)"}
                  onClick={click}>
-                     {text}
+                     {buttonText()}
             </NavButton2>}
         </>
     )
