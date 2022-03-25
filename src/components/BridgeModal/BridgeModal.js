@@ -29,6 +29,7 @@ import { StyledContainer,
          Balancetext
 } from "./BridgeModalStyles";
 import { useWeb3React } from "@web3-react/core";
+import BridgeFees from "./Steps/BridgeFees";
 
 export const MintForm = styled.div`
 
@@ -109,8 +110,11 @@ export const LegacyBridgeToggleButton = styled.div`
 const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFromToken, setType}) => {
 
     const [toggle, setToggle] = useState(true)
+    const [showFees, setShowFees] = useState(false)
+    const toggleFees = () => setShowFees(!showFees)
     let history = useHistory()
     const { active } = useWeb3React()
+    console.log(showFees)
     const setToggleValue = () => setToggle(!toggle);
 
     useEffect(() => {
@@ -129,6 +133,16 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
         toggleTokenModal()
     }
     
+    if (showFees) return (
+        <StyledContainer>
+            
+            <BridgeModalContainer>
+            <BridgeModalWrapper>
+        <BridgeFees back={toggleFees}/>
+        </BridgeModalWrapper>
+        </BridgeModalContainer>
+        </StyledContainer>
+    )
     return (
 
         <>
@@ -194,11 +208,11 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             </MintFormTextWrapper2>
                         </ReleaseToggleButton>
                     </MinFormToggleButtonContainer>
-                    <MintFormWrapper>
-                        <ButtonWrapper>
-                            <HomeConnectButton width={"440px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
+                    <MintFormWrapper paddingBottom={"0"}>
+                        <ButtonWrapper width={"90%"}>
+                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
                         </ButtonWrapper>
-                    </MintFormWrapper>
+                </MintFormWrapper>
                     
                 </MintFormContainer>
             </BridgeModalWrapper>

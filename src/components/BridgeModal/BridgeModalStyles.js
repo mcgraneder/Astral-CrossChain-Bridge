@@ -18,11 +18,11 @@ export const BridgeModalContainer = styled.div`
 
     position: absolute;
     top: 12%;
-    // width: 470px;
+    width: 490px;
     // height: 575px;
     background: rgb(14, 22, 39);
     text-align: right;
-    // padding: 0px 10px;
+    // padding: 10px 10px;
     border: 1px solid  rgb(57,62,82);;
     border-radius: 20px;
     // -webkit-box-shadow: -2px -1px 15px 7px rgba(255,0,0,0.5);
@@ -148,6 +148,7 @@ export const MintFormWrapper = styled.div`
     height: 100%;
     width: 100%;
     padding-top: 10px;
+    padding-bottom: ${(props) => props.paddingBottom};
     // display: inline;
     // display: flex;
     // margin-left: 5px;
@@ -193,7 +194,7 @@ export const ButtonWrapper = styled.div`
     margin: 0 auto;
     // padding-left: 20px;
     // padding-right: 20px;
-    width: 90%;
+    width: ${(props) => props.width};
 
   
     
