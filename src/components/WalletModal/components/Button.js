@@ -119,7 +119,7 @@ const Button = ({ state, active, height, click, width, text, input, balanceState
             active={active} 
             color={"rgb(23,42,66)"}
             onClick={click}>
-                {<ButtonText/>}
+                {buttonText()}
         </NavButton3> 
         :
             <NavButton2  t

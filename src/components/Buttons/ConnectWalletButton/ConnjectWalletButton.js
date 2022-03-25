@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { ConnectButton, Logo, ButtonText } from "./ConnectWalletButtonStyles"
 import styled, { keyframes } from "styled-components"
 import metamask from "../../assets/metamask.svg"
@@ -8,6 +8,7 @@ import torus from "../../assets/torus.svg"
 import portis from "../../assets/portis.svg"
 import { NavButton2 } from "../../Navbar/NavbarStyles"
 import Loader from "../../Loader/Loader"
+import { TransactionStateContext } from "../../../contexts/transactionContext"
 
 export const Logo1 = styled.div`
 
@@ -50,6 +51,7 @@ export const CustomLightSpinner = styled(Spinner)`
 
 const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top }) => {
 
+    const { pending } = useContext(TransactionStateContext)
     const loading = false;
     var logo
     var width1;
@@ -86,7 +88,7 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
     return (
 
         <>
-            {loading ? 
+            {pending ? 
             <ConnectButton 
                 height={height} 
                 fontsize={fontsize} 

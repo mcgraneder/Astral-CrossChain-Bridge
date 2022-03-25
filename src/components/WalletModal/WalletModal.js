@@ -46,18 +46,20 @@ const WalletModal = (
         setGas, 
         bridge, 
         ren, 
-        loading
+        loading,
+        balance,
+        sufficentApproval,
+        setSufficentApproval
     }
 ) => {
     const [toggle, setToggle] = useState(true)
     const [inputText, setInputText] = useState("Deposit ")
     const [transactionBlock, setTransactionBlock] = useState(true)
     const [sufficentBalance, setSufficentBalance] = useState(false)
-    const [sufficentApproval, setSufficentApproval] = useState(true)
+    // const [sufficentApproval, setSufficentApproval] = useState(true)
     const [renPrice, setRenPrice] = useState(0)
     
     const { library, account, active} = useWeb3React()
-    const { balance } = useBalance()
   
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 

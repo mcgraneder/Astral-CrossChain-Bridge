@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import WalletModal from "../components/WalletModal/WalletModal";
 import useBalance from "../hooks/useBalance";
 import TokenListModal from "../components/TokenListModal/TokenListModal";
@@ -15,6 +15,7 @@ import { ConfirmationModal,
         TransactionSubmittedModal, 
         RejectionModal 
 } from "../components/TransactionConfirmationModal/PendingModal";
+import { TransactionStateContext } from "../contexts/transactionContext";
 
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
@@ -55,8 +56,11 @@ const WalletPage = () => {
     const [bridge, setBridge] = useState()
     const [transactionBlock, setTransactionBlock] = useState(true)
     const [loading, setLoading] = useState(false)
-
+    const [sufficentApproval, setSufficentApproval] = useState(true)
     const {library, account} = useWeb3React()
+
+    const { pending, setPending } = useContext(TransactionStateContext)
+    console.log(pending)
     const { balance, setBalance } = useBalance()
     const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
 
@@ -100,14 +104,17 @@ const WalletPage = () => {
             .then(async (result) => {
                 setLoading(true)
                 setPending1(false)
+                setPending(true)
                 setSubmitted(true)
                 setTransactionBlock(false)
 
                 await result.wait().then((result) => {
 
-                    // if (TransactionType == TransactionType.APPROVAL) {
-                    //     setSufficentApproval(true)
-                    // }
+                    setPending(false)
+                    if (TransactionType == TRANSACTION_TYPES.APPROVAL) {
+                        setSufficentApproval(true)
+                    }
+                    console.log("hellllllllllllllllllllllllllllllllll")
                     setLoading(false)
                     setTransactionBlock(true)
                     const id = v4()
@@ -134,7 +141,8 @@ const WalletPage = () => {
                             time: 2
                         },
                     ]);
-
+                    console.log(deposits)
+                    console.log(transactions)
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")             
@@ -215,6 +223,8 @@ const WalletPage = () => {
                 loading={loading}
                 transactionBlock={transactionBlock}
                 balance={balance}
+                setSufficentApproval={setSufficentApproval}
+                sufficentApproval={sufficentApproval}
             />
             
         </>
