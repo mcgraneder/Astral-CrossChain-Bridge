@@ -3,29 +3,15 @@ import { useHistory } from "react-router-dom";
 import HomeConnectButton from "../../Home/HomeConnectButton";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ArrowLeft, X } from "react-feather"
+import { ArrowLeft, X, ExternalLink } from "react-feather"
 import { useWeb3React } from "@web3-react/core";
 import BitcoinLogo from "../../assets/Bitcoin.svg"
 import chevronDownLogo from "../../assets/cheverondown.png"
 import EthereumLogo from "../../assets/Ethereum.svg"
-import { StyledContainer, 
-    BridgeModalContainer, 
-    BridgeModalWrapper, 
-    ChainSelector, 
-    ChainSelectorWrapper, 
-    ChainSelectorText, 
-    ChainSelectorTextWrapper, 
-    DropdownContainer, 
-    // BalanceContainer, 
+import { 
     BalanceWrapper, 
     MintFormWrapper, 
     ButtonWrapper, 
-    MintFormContainer, 
-    MintToggleButton, 
-    ReleaseToggleButton, 
-    MinFormToggleButtonContainer, 
-    MintFormTextWrapper2, 
-    MintFormText2,
     Balancetext
 } from "../BridgeModalStyles";
 
@@ -33,8 +19,8 @@ export const BalanceContainer = styled.div`
 
     margin-top: 10px;
     // margin-bottom: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     // padding: 3px;
     // height: 60px;
     // width: 100%;
@@ -101,6 +87,7 @@ export const HeaderText = styled.div`
     text-align: center;
     justify-self: center;
     display: block;
+    font-size: 17px;
 `
 export const HeaderRight = styled.div`
 
@@ -129,7 +116,7 @@ export const FeeCalculatorWrapper = styled.div`
     flex-grow: 0;
     max-width: 58.333333%;
     // flex-basis: 58.333333%;
-    // margin-left: 10px;
+    margin-left: 10px;
     box-sizing: border-box;
     // display: block;
 `
@@ -157,7 +144,7 @@ export const FeeCalculatorInputContainer = styled.div`
     justify-content: space-between;
     max-width: 41.666667%;
     flex-basis: 41.666667%;
-    margin-left: 85px;
+    margin-left: 70px;
     box-sizing: border-box;
     // display: block;
 `
@@ -302,6 +289,18 @@ export const ChainSelectorIconWrapper = styled.div`
     align-items: right;
 `
 
+export const DetailsSection = styled.div`
+
+    background:  rgb(27,32,52);
+    border: 1px solid  rgb(47,52,72);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 15px;
+    margin-top: 20px;
+`
+
 export const ChainSelectorIcon = styled.img`
 
     // display: flex;
@@ -368,14 +367,14 @@ export const TokenAmount = styled.div`
 `
 export const SummarySectionContainer = styled.div`
 
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     padding-left: 15px;
     padding-right: 15px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 `
 
-const BridgeFees = ({ back }) => {
+const BridgeFees = ({ back, balance, toggleGateway }) => {
 
     let history = useHistory()
 
@@ -396,7 +395,7 @@ const BridgeFees = ({ back }) => {
         </HeaderContainer>
         <BalanceContainer>
             <BalanceWrapper>
-                <Balancetext size={"45px"} colour={"#adadad"}>0.000 renBTC</Balancetext>
+                <Balancetext size={"45px"} colour={"#adadad"}>{balance} renBTC</Balancetext>
                 <Balancetext size={"17px"} colour={"White"}>= $368.46 </Balancetext>
             </BalanceWrapper>                
         </BalanceContainer>
@@ -416,7 +415,8 @@ const BridgeFees = ({ back }) => {
                     </FeeInput>
                 </FeeCalculatorInputContainer>
             </FeeCalculatorContainer>
-            <Spacer/>
+            {/* <Spacer/> */}
+            <DetailsSection>
             <FeeDetailsHeaderText>Details</FeeDetailsHeaderText>
             <FeeDetailsTextContainer>
                 <FeeDetailsTextWrapper>Sending</FeeDetailsTextWrapper>
@@ -459,6 +459,7 @@ const BridgeFees = ({ back }) => {
                     <FeeDetailsAssetText>0.0058 ETH ($18.5332)</FeeDetailsAssetText>
                 </FeeDetailsAssetConatiner>
             </FeeDetailsTextContainer>
+            </DetailsSection>
         </FeesSection>
         <SummarySectionContainer>
         <TokenAmountWrapper height={"70px"} marginTop={"5px"} marginBottom={"0px"}>
@@ -471,7 +472,7 @@ const BridgeFees = ({ back }) => {
                 </SummarySectionContainer>
                 <MintFormWrapper paddingBottom={"15px"}>
                         <ButtonWrapper width={"94%"}>
-                            <HomeConnectButton width={"460px"} left={"70%"} top={"31%"}  onclick={back} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
+                            <HomeConnectButton width={"460px"} left={"70%"} top={"31%"}  click={toggleGateway} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Confirm to start mint process"}></HomeConnectButton>
                         </ButtonWrapper>
                 </MintFormWrapper>
         

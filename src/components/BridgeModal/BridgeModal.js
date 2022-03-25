@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import BitcoinLogo from "../assets/Bitcoin.svg"
+import BitcoinLogo from "../assets/BTC.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
@@ -30,7 +30,8 @@ import { StyledContainer,
 } from "./BridgeModalStyles";
 import { useWeb3React } from "@web3-react/core";
 import BridgeFees from "./Steps/BridgeFees";
-
+import ConfirmationStep from "./Steps/ConfirmationStep";
+import { ConfirmationModal } from "../TransactionConfirmationModal/PendingModal";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -110,11 +111,14 @@ export const LegacyBridgeToggleButton = styled.div`
 const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFromToken, setType}) => {
 
     const [toggle, setToggle] = useState(true)
+    const [confirm, setConfirm] = useState(false)
     const [showFees, setShowFees] = useState(false)
     const toggleFees = () => setShowFees(!showFees)
+    const [showGateway, setShowGateway] = useState(false)
+    const toggleGateway = () => setShowGateway(!showGateway)
     let history = useHistory()
     const { active } = useWeb3React()
-    console.log(showFees)
+    console.log(showGateway)
     const setToggleValue = () => setToggle(!toggle);
 
     useEffect(() => {
@@ -133,17 +137,42 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
         toggleTokenModal()
     }
     
-    if (showFees) return (
+    if (showGateway) return(
+        <StyledContainer>
+            
+        <BridgeModalContainer>
+        <BridgeModalWrapper>
+    <ConfirmationStep back={toggleGateway} balance={balance}/>
+    </BridgeModalWrapper>
+    </BridgeModalContainer>
+    </StyledContainer>
+    )
+
+    else if (showFees) return (
+
+        <>
+         <ConfirmationModal
+            close={() => setConfirm(!confirm)} 
+            amount={"1.23"} 
+            visible={confirm}
+            handleDeposit={toggleGateway}
+            TransactionType={"APPROVAL"}
+            gass={"0.000354"}
+        />
         <StyledContainer>
             
             <BridgeModalContainer>
             <BridgeModalWrapper>
-        <BridgeFees back={toggleFees}/>
+        <BridgeFees back={toggleFees} toggleGateway={() => setConfirm(true)} balance={balance}/>
         </BridgeModalWrapper>
         </BridgeModalContainer>
         </StyledContainer>
+        </>
     )
-    return (
+
+
+   
+   else return (
 
         <>
         <StyledContainer>
@@ -210,7 +239,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                     </MinFormToggleButtonContainer>
                     <MintFormWrapper paddingBottom={"0"}>
                         <ButtonWrapper width={"90%"}>
-                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Start Mint"}></HomeConnectButton>
+                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Next"}></HomeConnectButton>
                         </ButtonWrapper>
                 </MintFormWrapper>
                     
