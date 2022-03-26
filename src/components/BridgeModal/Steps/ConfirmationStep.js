@@ -126,8 +126,8 @@ export const AssetLogoContainer = styled.div`
 `
 export const AssetLogoWrapper = styled.div`
 
-width: 75px;
-    height: 75px;
+width: 90px;
+    height: 90px;
     transform: rotate(0deg);
     transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     display: inline-block;
@@ -137,7 +137,7 @@ export const Asset = styled.img`
 
 // display: block;
 overflow: hidden;
-width: 75px;
+width: 90px;
 `
 export const Asset2 = styled.img`
 
@@ -180,7 +180,7 @@ export const GatewayBoxContainer = styled.div`
     max-width: 420px;
     height: 45px;
     margin-left: 10px;
-    margin-bottom: 20px;
+    margin-bottom: ${(props) => props.marginB};
 `
 export const GatewayAddressContainer = styled.div`
 
@@ -317,7 +317,7 @@ export const LinkLogo = styled(ExternalLink)`
 export const Spacer = styled.hr`
 
     position: absolute;
-    margin-top: 15px;
+    margin-top: 25px;
     // margin-left: 20px;
     // margin-right: 20px;
     border: none;
@@ -383,7 +383,7 @@ export const DetailsSection = styled.div`
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 15px;
-    margin-top: 40px;
+    margin-top: 50px;
     margin-bottom: 10px;
 `
 export const FeesSection = styled.div`
@@ -437,7 +437,7 @@ const ConfirmationStep = ({ back, balance }) => {
                         </AssetSubTitleText>
                     </AssetSubTitle>
                 </AssetTitleContainer>
-                <GatewayBoxContainer>
+                <GatewayBoxContainer marginB={"20px"}>
                 <GatewayAddressContainer>
                         <GatewayAddressTextContainer>
                             <GatewayAddressTextWrapper>
@@ -457,7 +457,7 @@ const ConfirmationStep = ({ back, balance }) => {
                     </CopyButtonWrapper>
                 </CopyContainer>
                 </GatewayBoxContainer>
-                <GatewayBoxContainer>
+                <GatewayBoxContainer marginB={"0px"}>
                 <GatewayAddressContainer>
                         <GatewayAddressTextContainer>
                             <GatewayAddressTextWrapper>
@@ -479,6 +479,12 @@ const ConfirmationStep = ({ back, balance }) => {
                 </GatewayBoxContainer>
             </GatewaySectionWrapper>
         </GatewaySection>
+        <BalanceContainer>
+            <BalanceWrapper>
+                <Balancetext size={"45px"} colour={"#adadad"}>{balance} renBTC</Balancetext>
+                <Balancetext size={"17px"} colour={"White"}>= $368.46 </Balancetext>
+            </BalanceWrapper>                
+        </BalanceContainer>
         <Spacer/>
         <FeesSection>
             <DetailsSection>

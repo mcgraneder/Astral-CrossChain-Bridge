@@ -28,6 +28,7 @@ import { StyledContainer,
          MintFormText2,
          Balancetext
 } from "./BridgeModalStyles";
+import { PendingModal } from "../TransactionConfirmationModal/PendingModal";
 import { useWeb3React } from "@web3-react/core";
 import BridgeFees from "./Steps/BridgeFees";
 import ConfirmationStep from "./Steps/ConfirmationStep";
@@ -112,10 +113,20 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
 
     const [toggle, setToggle] = useState(true)
     const [confirm, setConfirm] = useState(false)
+    const [pending, setPending] = useState(false)
     const [showFees, setShowFees] = useState(false)
     const toggleFees = () => setShowFees(!showFees)
     const [showGateway, setShowGateway] = useState(false)
-    const toggleGateway = () => setShowGateway(!showGateway)
+    const toggleGateway = () => {
+        setConfirm(false)
+        setPending(true)
+        setTimeout(() => {
+            setShowGateway(!showGateway)
+            setPending(false)
+        }, 2500)
+       
+       
+    }
     let history = useHistory()
     const { active } = useWeb3React()
     console.log(showGateway)
@@ -138,19 +149,24 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     }
     
     if (showGateway) return(
-        <StyledContainer>
-            
-        <BridgeModalContainer>
-        <BridgeModalWrapper>
-    <ConfirmationStep back={toggleGateway} balance={balance}/>
-    </BridgeModalWrapper>
-    </BridgeModalContainer>
-    </StyledContainer>
+        <StyledContainer>    
+            <BridgeModalContainer>
+                <BridgeModalWrapper>
+                    <ConfirmationStep back={() =>  setShowGateway(!showGateway)} balance={balance}/>
+                </BridgeModalWrapper>
+            </BridgeModalContainer>
+        </StyledContainer>
     )
 
     else if (showFees) return (
 
         <>
+        <PendingModal 
+            close={() => setPending(!pending)} 
+            amount={"0.0005"} 
+            visible={pending}
+        />
+
          <ConfirmationModal
             close={() => setConfirm(!confirm)} 
             amount={"1.23"} 
@@ -160,12 +176,11 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
             gass={"0.000354"}
         />
         <StyledContainer>
-            
             <BridgeModalContainer>
-            <BridgeModalWrapper>
-        <BridgeFees back={toggleFees} toggleGateway={() => setConfirm(true)} balance={balance}/>
-        </BridgeModalWrapper>
-        </BridgeModalContainer>
+                <BridgeModalWrapper>
+                    <BridgeFees back={toggleFees} toggleGateway={() => setConfirm(true)} balance={balance}/>
+                </BridgeModalWrapper>
+            </BridgeModalContainer>
         </StyledContainer>
         </>
     )
