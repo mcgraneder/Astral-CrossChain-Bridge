@@ -180,8 +180,7 @@ const WalletPage = () => {
             setRejected(true)
             setLoading(false)
             setTransactionBlock(true)
-            
-            const title ="Transaction Failed Unexpectedly"
+            const title = "Transaction Failed"
             HandleNewNotification(title, false)
         }
     }
