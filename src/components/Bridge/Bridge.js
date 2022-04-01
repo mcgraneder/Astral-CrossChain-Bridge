@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import useAuth from "../../hooks/useAuth";
 import Web3Modal from "../Web3Modal/Web3Modal";
 import Nav from "../Navbar/Navbar";
 

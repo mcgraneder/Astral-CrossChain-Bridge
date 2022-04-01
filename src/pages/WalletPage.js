@@ -16,6 +16,8 @@ import { ConfirmationModal,
         RejectionModal 
 } from "../components/TransactionConfirmationModal/PendingModal";
 import { TransactionStateContext } from "../contexts/transactionContext";
+import { useNotification } from "../contexts/NotificationsContext";
+import EthereumLogo from "../components/assets/eth.png"
 
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
@@ -60,9 +62,21 @@ const WalletPage = () => {
     const {library, account} = useWeb3React()
 
     const { pending, setPending } = useContext(TransactionStateContext)
-    console.log(pending)
     const { balance, setBalance } = useBalance()
     const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
+
+    const dispatch = useNotification();
+
+    const HandleNewNotification = (title, success) => {
+        dispatch({
+            type: 'info',
+            message: 'view transaction on explorer',
+            title: title,
+            EthereumLogo,
+            position: "topR" || 'topR',
+            success: success
+        });
+    }
 
     const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
 
@@ -85,18 +99,22 @@ const WalletPage = () => {
         var walletBalance = await ren.balanceOf(account)
         walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         var amount = Web3.utils.toWei(text.toString(), "Gwei")
+        var title
 
         if(TransactionType === TRANSACTION_TYPES.WITHDRAWAL) {
             walletBalance = await bridge.getUserTokenBalance("BTC", account)
             walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
             amount = Web3.utils.toWei(text.toString(), "Gwei")
             params = [account, amount, "BTC"]
+            title = `withdrawed Exactly ${amount} Ren BTC at a price of $200`
 
         } else if (TransactionType === TRANSACTION_TYPES.DEPOSIT) {
             params = [account, BridgeAddress, amount, "BTC"]
+            title = `deposited Exactly ${amount} Ren BTC at a price of $200`
 
         } else {
             params = [BridgeAddress, amount]
+            title = `Approved Contract for renBTC`
         }
 
         try {
@@ -141,6 +159,9 @@ const WalletPage = () => {
                             time: 2
                         },
                     ]);
+
+                    HandleNewNotification(title, true)
+
                     console.log(deposits)
                     console.log(transactions)
                     bridge.getContractTokenbalance("BTC")
@@ -159,6 +180,9 @@ const WalletPage = () => {
             setRejected(true)
             setLoading(false)
             setTransactionBlock(true)
+            
+            const title ="Transaction Failed Unexpectedly"
+            HandleNewNotification(title, false)
         }
     }
 
@@ -174,10 +198,6 @@ const WalletPage = () => {
     return (
 
         <>
-        <DepositSummary 
-                deposits={deposits} 
-                setDeposits={setDeposits} 
-            />   
         <PendingModal 
                 close={() => setPending1(!pending1)} 
                 amount={text} 

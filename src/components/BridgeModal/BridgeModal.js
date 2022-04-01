@@ -114,16 +114,21 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     const [toggle, setToggle] = useState(true)
     const [confirm, setConfirm] = useState(false)
     const [pending, setPending] = useState(false)
+    const [complete, setComplete] = useState(false)
     const [showFees, setShowFees] = useState(false)
     const toggleFees = () => setShowFees(!showFees)
     const [showGateway, setShowGateway] = useState(false)
     const toggleGateway = () => {
         setConfirm(false)
+        setComplete(false)
         setPending(true)
         setTimeout(() => {
-            setShowGateway(!showGateway)
-            setPending(false)
-        }, 2500)
+            setComplete(true)
+            setTimeout(() => {
+                setShowGateway(!showGateway)
+               setPending(false)
+            }, 1000)
+        }, 2200)
        
        
     }
@@ -162,9 +167,10 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
 
         <>
         <PendingModal 
-            close={() => setPending(!pending)} 
+            close={null} 
             amount={"0.0005"} 
             visible={pending}
+            complete={complete}
         />
 
          <ConfirmationModal
@@ -209,7 +215,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                 <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("from")}>
                         <ChainSelectorIconWrapper>
-                            <ChainSelectorIcon src={fromToken == null ? BitcoinLogo : fromToken.logoURI} width={fromToken == null ? "30px" : "24px"}></ChainSelectorIcon>
+                            <ChainSelectorIcon src={fromToken == null ? BitcoinLogo : fromToken.logoURI} width={fromToken == null ? "30px" : "24px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
                             <ChainSelectorText>{fromToken == null ? "From Chain" : fromToken.name}</ChainSelectorText>
@@ -222,7 +228,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                 <ChainSelector marginbottom={"30px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("to")}>
                         <ChainSelectorIconWrapper >
-                            <ChainSelectorIcon src={toToken == null ? EthereumLogo : toToken.logoURI} width={toToken == null ? "30px" : "24px"}></ChainSelectorIcon>
+                            <ChainSelectorIcon src={toToken == null ? EthereumLogo : toToken.logoURI} width={toToken == null ? "30px" : "24px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
                             <ChainSelectorText>{toToken == null ? "Destination Chain" : toToken.name}</ChainSelectorText>

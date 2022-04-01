@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
 
-import {X, ArrowDown, ArrowUpCircle, AlertTriangle} from "react-feather"
+import {X, ArrowDown, ArrowUpCircle, AlertTriangle, CheckCircle} from "react-feather"
 import metaMask from "../assets/metamask.png"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import Bitcoin from "../assets/Bitcoin.svg"
 import Dollar from "../assets/dollar.png"
 import { useEffect } from "react/cjs/react.development";
 import axios from "axios"
-import useAuth from "../../hooks/useAuth";
 import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
@@ -100,7 +99,7 @@ const rotate = keyframes`
 `
 const Spinner = styled.img`
 
-animation: 1.8s ${rotate} linear infinite;
+animation: 1.2s ${rotate} linear infinite;
   width: 16px;
   height: 16px;
   will-change: transfrom;
@@ -326,7 +325,7 @@ export const RejectionModal = ({visible, close, amount}) => {
     )
 }
 
-export const PendingModal = ({visible, close, amount}) => {
+export const PendingModal = ({visible, close, amount, complete}) => {
 
     return (
         <>
@@ -334,7 +333,8 @@ export const PendingModal = ({visible, close, amount}) => {
             <FormWrapper visible={visible} trueFade={false}>
                 <CloseIcon onClick={close}></CloseIcon>
                 <ImgWrapper padding={"40px"}  paddingBottom={"40px"} float={""}>
-                    <CustomLightSpinner src={Circle} size={"100px"}></CustomLightSpinner>
+                    {!complete ? <CustomLightSpinner src={Circle} size={"100px"}></CustomLightSpinner>
+                               :     <CheckCircle size={"100px"} strokeWidth={0.7} color={"rgb(35, 140, 75)"}></CheckCircle>}
                 </ImgWrapper>
                 <TitleWrapper>
                     <Title color={"White"} size={"21px"}>Waiting For Confirmation</Title>
@@ -451,14 +451,10 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
     const calculateExpectedTransactionCost = () => {
 
         const expectedCost = Number(amount) + gas
-        console.log(amount)
-        console.log(gass)
         setTxCost(expectedCost.toFixed(7))
     }
 
     const calculateExpectedBalance = () => {
-
-        console.log(amount)
         const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
         setExpectedBalance(calculatedBalanceAfterFee)
     }

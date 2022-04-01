@@ -86,7 +86,7 @@ export const UniswapIcon = styled.img`
 export const ArrowDownContainer = styled.div`
 
     position: absolute;
-    top: ${(props) => props.swapState === 0 ? "44.5%" : "36.5%"};
+    top: ${(props) => props.swapState === true ? "44.5%" : "36.5%"};
     left: 46.3%;
     // color: White;
     background: White;
@@ -248,7 +248,7 @@ export const ButtonContents = styled.span`
 
 const DexModal = ({ close }) => {
 
-    const [swapState, setSwapState] = useState(0)
+    const [swapState, setSwapState] = useState(true)
     const toggleSwapState = () => setSwapState(!swapState)
 
     useEffect(() => {
@@ -266,12 +266,12 @@ const DexModal = ({ close }) => {
                 <ArrowDownContainer onClick={toggleSwapState} swapState={swapState}>
                     <ArrowDown color={"White"} size={"15px"}/>
                 </ArrowDownContainer>
-            <TokenAmountWrapper height={swapState === 0 ? "100px" : "70px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
+            <TokenAmountWrapper height={swapState === true ? "100px" : "70px"} marginTop={"45px"} marginBottom={"0px"} borderTrue={true}>
                     <InfoWrapper>
                         <TokenInput placeholder={"0.0"}></TokenInput>
-                        <TokenSelectButton color={swapState === 0 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
+                        <TokenSelectButton color={swapState === true ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
                             <ButtonContents>
-                                {swapState === 0 ?
+                                {swapState === true ?
                                 <SelectedTokenContainer>
                                     <TokenImg src={EthereumLogo} alt="#"></TokenImg>
                                     <SelectedToken initialWidth={true}>ETH</SelectedToken>
@@ -284,12 +284,12 @@ const DexModal = ({ close }) => {
                         </TokenSelectButton>
                     </InfoWrapper>
                 </TokenAmountWrapper>
-                <TokenAmountWrapper height={swapState === 1 ? "100px" : "70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
+                <TokenAmountWrapper height={swapState === false ? "100px" : "70px"} marginTop={"7px"} marginBottom={"0px"} borderTrue={false}>
                 <InfoWrapper>
                         <TokenInput placeholder={"0.0"}></TokenInput>
-                        <TokenSelectButton color={swapState === 1 ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
+                        <TokenSelectButton color={swapState === false ? "rgb(57,62,82)" : "rgb(13,94,209)"} onClick={close}>
                             <ButtonContents>
-                            {swapState === 1 ?
+                            {swapState === false ?
                                 <SelectedTokenContainer>
                                     <TokenImg src={EthereumLogo} alt="#"></TokenImg>
                                     <SelectedToken initialWidth={true}>ETH</SelectedToken>

@@ -1,14 +1,7 @@
 import { useEffect } from 'react';
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core"
 import { injected, fortmatic, portis, torus, walletconnect } from "../connectors/provider";
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { useHistory } from 'react-router-dom';
-
-export const walletconnect1 = new WalletConnectConnector({
-    rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
-    bridge: 'https://bridge.walletconnect.org',
-    qrcode: true
-})
 
 function useAuth() {
 
@@ -50,7 +43,9 @@ function useAuth() {
                     activate(provider, undefined, true)
                     .catch((error) => {
                         if (error instanceof UnsupportedChainIdError) {
-                            activate(provider) // a little janky...can't use setError because the connector isn't set
+                            // activate(provider) // a little janky...can't use setError because the connector isn't set
+                            disconnect()
+                            history.push("/")
                           } else {
                             disconnect()
                             history.push("/")

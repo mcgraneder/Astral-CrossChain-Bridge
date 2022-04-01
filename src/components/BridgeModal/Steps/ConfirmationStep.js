@@ -420,7 +420,7 @@ const ConfirmationStep = ({ back, balance }) => {
                     <AssetLogoContainer>
                         <AssetLogoWrapper>
                            
-                            <Asset src={BTC2}/>
+                            <Asset src={BTC2} loading="lazy"/>
                         </AssetLogoWrapper>
                     </AssetLogoContainer>
                 </AssetContainer>

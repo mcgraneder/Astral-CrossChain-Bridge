@@ -15,7 +15,6 @@ import WalletInputForm from "./components/WalletInput";
 import WalletTxDetails from "./components/WalletTxDetails";
 import DisplayBalance from "./components/DisplayBalance";
 import DropdownMenu from "./components/DropdownMenu";
-import useBalance from "../../hooks/useBalance";
 import { useWeb3React } from "@web3-react/core"
 
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
@@ -58,6 +57,7 @@ const WalletModal = (
     const [sufficentBalance, setSufficentBalance] = useState(false)
     // const [sufficentApproval, setSufficentApproval] = useState(true)
     const [renPrice, setRenPrice] = useState(0)
+    
     
     const { library, account, active} = useWeb3React()
   
@@ -111,7 +111,6 @@ const WalletModal = (
         try {
             var gass = await ren.estimateGas.approve(account, BridgeAddress)
             gass = Web3.utils.fromWei(gass.toString(), "Gwei")
-            console.log(gass)
             setGas(gass)
         } catch(error) {
             console.error(error)

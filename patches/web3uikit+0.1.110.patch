@@ -1,0 +1,74 @@
+diff --git a/node_modules/web3uikit/src/components/Notification/Notification.styles.tsx b/node_modules/web3uikit/src/components/Notification/Notification.styles.tsx
+index b2466cd..dc5e933 100644
+--- a/node_modules/web3uikit/src/components/Notification/Notification.styles.tsx
++++ b/node_modules/web3uikit/src/components/Notification/Notification.styles.tsx
+@@ -59,7 +59,7 @@ const CloseWrapperStyled = styled.div`
+ `;
+ 
+ const BarStyled = styled.div`
+-    background-color: rgba(158, 204, 234, 0.3);
++    background-color: ${(props) => props.barBackgroundColour || `rgba(158, 204, 234, 0.3)`};
+     bottom: 0;
+     height: 6px;
+     left: 0;
+@@ -70,7 +70,7 @@ const NotificationStyled = styled.div<INotificationStyled>`
+     ${resetCSS}
+     ${fonts.text}
+     animation-fill-mode: forwards;
+-    background-color: ${color.white};
++    background-color: black;
+     border-radius: 20px;
+     box-shadow: 0px 4px 10px rgba(48, 71, 105, 0.1);
+     color: ${color.grey};
+diff --git a/node_modules/web3uikit/src/components/Notification/Notification.tsx b/node_modules/web3uikit/src/components/Notification/Notification.tsx
+index 2565485..b17bc1f 100644
+--- a/node_modules/web3uikit/src/components/Notification/Notification.tsx
++++ b/node_modules/web3uikit/src/components/Notification/Notification.tsx
+@@ -24,6 +24,8 @@ const Notification: React.FC<NotificationProps> = ({
+     title = 'New Message',
+     type = 'info',
+     position = 'topL',
++    barBackgroundColour = "rgba(158, 204, 234, 0.3)",
++    notificationBackgroundColour,
+ }: NotificationProps) => {
+     const [isClosing, setIsClosing] = useState(false);
+     const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
+@@ -91,6 +93,7 @@ const Notification: React.FC<NotificationProps> = ({
+             onMouseLeave={startTimer}
+             type={type}
+             position={position}
++            notificationBackgroundColour={notificationBackgroundColour}
+         >
+             <IconWrapperStyled data-testid={'test-notification-icon-wrapper'}>
+                 <Icon size={24} svg={getIcon()} fill={getIconColor()} />
+@@ -109,7 +112,7 @@ const Notification: React.FC<NotificationProps> = ({
+                     {message}
+                 </SpanStyled>
+             </TextContentStyled>
+-            <BarStyled style={{ width: barWidth }} />
++            <BarStyled style={{ width: barWidth }} barBackgroundColour={barBackgroundColour} />
+         </NotificationStyled>
+     );
+ };
+diff --git a/node_modules/web3uikit/src/components/Notification/types.ts b/node_modules/web3uikit/src/components/Notification/types.ts
+index aeb40b3..bac08cf 100644
+--- a/node_modules/web3uikit/src/components/Notification/types.ts
++++ b/node_modules/web3uikit/src/components/Notification/types.ts
+@@ -32,6 +32,17 @@ export interface NotificationProps extends INotificationStyled {
+      */
+ 
+     dispatch: (value: NotificationActionType) => void;
++
++    /**
++     * set colour of Bar
++     */
++    barBackgroundColour?: string;
++
++    
++    /**
++     * set colour of notification box
++     */
++    notificationBackgroundColour?: string;
+ }
+ 
+ export interface INotificationStyled extends INotificationContainer {

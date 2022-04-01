@@ -5,6 +5,7 @@ import App from './App';
 import { Web3ReactProvider } from "@web3-react/core";
 import { TransactionStateContext } from './contexts/transactionContext';
 import { Web3Provider } from "@ethersproject/providers";
+import NotificationProvider from './contexts/NotificationsContext';
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -15,7 +16,9 @@ function getLibrary(provider) {
 ReactDOM.render(
   <React.StrictMode>
      <Web3ReactProvider getLibrary={getLibrary}>
+       <NotificationProvider>
       <App />
+      </NotificationProvider>
     </Web3ReactProvider>
   </React.StrictMode>,
   document.getElementById('root')
