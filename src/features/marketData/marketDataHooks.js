@@ -48,7 +48,7 @@ export const useExchangeRates = () => {
         `/coins/markets?vs_currency=usd&ids=${coingeckoSymbols.join(",")}`
     )
       .then((response) => response.json())
-      .then((data: Array<CoingeckoReferenceData>) => {
+      .then((data) => {
         dispatch(
           setSystemMonitorStatus({
             type: SystemType.Coingecko,
@@ -57,7 +57,7 @@ export const useExchangeRates = () => {
         );
         return mapCoingeckoToExchangeData(data);
       })
-      .catch((error: any) => {
+      .catch((error) => {
         dispatch(
           setSystemMonitorStatus({
             type: SystemType.Coingecko,

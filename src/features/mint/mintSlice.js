@@ -1,12 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store/rootReducer";
 import BridgeCurrency from "../../utils/AssetConfigs"
 
-type MintState = {
-  currency: BridgeCurrency;
-};
-
-let initialState: MintState = {
+let initialState = {
   currency: BridgeCurrency.BTC,
 };
 
@@ -14,10 +9,10 @@ const slice = createSlice({
   name: "mint",
   initialState,
   reducers: {
-    setMintCurrency(state, action: PayloadAction<BridgeCurrency>) {
+    setMintCurrency(state, action) {
       state.currency = action.payload;
     },
-    resetMint(state, action: PayloadAction<MintState | undefined>) {
+    resetMint(state, action) {
       if (action.payload) {
         state.currency = action.payload.currency;
       } else {
@@ -31,5 +26,5 @@ export const { setMintCurrency, resetMint } = slice.actions;
 
 export const mintReducer = slice.reducer;
 
-export const $mint = (state: RootState) => state.mint;
+export const $mint = (state) => state.mint;
 export const $mintCurrency = createSelector($mint, (mint) => mint.currency);

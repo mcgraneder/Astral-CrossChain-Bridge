@@ -1,4 +1,3 @@
-import { ReferenceData } from "@bandprotocol/bandchain.js/lib/data";
 import { env } from "../../constants/environmentVariables";
 import {
   BridgeChain,
@@ -10,14 +9,14 @@ import {
 
 // move to assetConfig
 
-const mapBandchainToCurrencySymbol = (symbol: string) => {
+const mapBandchainToCurrencySymbol = (symbol) => {
   const config = getCurrencyConfigByBandchainSymbol(symbol);
   return config.symbol;
 };
 
 export const USD_SYMBOL = "USD";
 
-const getPair = (base: string, quote: string) => `${base}/${quote}`;
+const getPair = (base, quote) => `${base}/${quote}`;
 
 export const bandchainReferencePairs = [];
 
@@ -25,20 +24,10 @@ export const coingeckoSymbols = Object.values(currenciesConfig)
   .filter((entry) => Boolean(entry.coingeckoSymbol))
   .map((entry) => entry.coingeckoSymbol);
 
-export type BandchainReferenceData = ReferenceData;
-
-export type CoingeckoReferenceData = {
-  id: string;
-  symbol: string;
-  current_price: number;
-};
-
-export const mapBandchainToExchangeData = (
-  referenceData: Array<BandchainReferenceData>
-) => {
-  return referenceData.map((entry: any) => {
+export const mapBandchainToExchangeData = (referenceData) => {
+  return referenceData.map((entry) => {
     const [base, quote] = entry.pair.split("/");
-    const data: ExchangeRate = {
+    const data= {
       pair: getPair(mapBandchainToCurrencySymbol(base), quote),
       rate: entry.rate,
     };
@@ -46,10 +35,8 @@ export const mapBandchainToExchangeData = (
   });
 };
 
-export const mapCoingeckoToExchangeData = (
-  entries: Array<CoingeckoReferenceData>
-) => {
-  return entries.map((entry: any) => {
+export const mapCoingeckoToExchangeData = (entries) => {
+  return entries.map((entry) => {
     const assetConfig = getCurrencyConfigByCoingeckoSymbol(entry.id);
     return {
       pair: getPair(assetConfig.symbol, "USD"),
@@ -58,39 +45,15 @@ export const mapCoingeckoToExchangeData = (
   });
 };
 
-export type ExchangeRate = {
-  pair: string;
-  rate: number;
-};
-
-export type GasPrice = {
-  chain: string;
-  standard: number;
-};
-
-export const findExchangeRate = (
-  exchangeRates: Array<ExchangeRate>,
-  base: BridgeCurrency,
-  quote = USD_SYMBOL
-) => {
+export const findExchangeRate = (exchangeRates, base, quote = USD_SYMBOL) => {
   let symbol = base;
   if (base.indexOf("REN") === 0 && base.length > 3) {
-    symbol = base.substr(3) as BridgeCurrency;
+    symbol = base.substr(3);
   }
   const rateEntry = exchangeRates.find(
     (entry) => entry.pair === getPair(symbol, quote)
   );
   return rateEntry?.rate || 0;
-};
-
-export type AnyBlockGasPrices = {
-  health: boolean;
-  blockNumber: number;
-  blockTime: number;
-  slow: number;
-  standard: number;
-  fast: number;
-  instant: number;
 };
 
 export const fetchMarketDataGasPrices = async () => {
@@ -147,10 +110,10 @@ export const fetchMarketDataGasPrices = async () => {
     maticPrice,
     solanaPrice,
     arbPrice,
-  ] as Array<GasPrice>;
+  ];
 };
 
-export const findGasPrice = (gasPrices: Array<GasPrice>, chain: string) => {
+export const findGasPrice = (gasPrices, chain) => {
   const gasEntry = gasPrices.find((entry) => entry.chain === chain);
   return gasEntry?.standard || 0;
 };

@@ -1,25 +1,14 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store/rootReducer";
 import { ExchangeRate, GasPrice } from "./marketDataUtils";
-
-type MarketDataState = {
-  exchangeRates: Array<ExchangeRate>;
-  gasPrices: Array<GasPrice>;
-};
-
-let initialState: MarketDataState = {
-  exchangeRates: [],
-  gasPrices: [],
-};
 
 const slice = createSlice({
   name: "marketData",
   initialState,
   reducers: {
-    setExchangeRates(state, action: PayloadAction<Array<ExchangeRate>>) {
+    setExchangeRates(state, action) {
       state.exchangeRates = action.payload;
     },
-    setGasPrices(state, action: PayloadAction<Array<GasPrice>>) {
+    setGasPrices(state, action) {
       state.gasPrices = action.payload;
     },
   },
@@ -29,7 +18,7 @@ export const { setExchangeRates, setGasPrices } = slice.actions;
 
 export const marketDataReducer = slice.reducer;
 
-export const $marketData = (state: RootState) => state.marketData;
+export const $marketData = (state) => state.marketData;
 export const $exchangeRates = createSelector(
   $marketData,
   (marketData) => marketData.exchangeRates
