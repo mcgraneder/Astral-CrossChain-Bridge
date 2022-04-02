@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import BitcoinLogo from "../assets/BTC.svg"
+import BitcoinLogo from "../assets/icons/btc-icon.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
@@ -34,9 +34,15 @@ import BridgeFees from "./Steps/BridgeFees";
 import ConfirmationStep from "./Steps/ConfirmationStep";
 import { ConfirmationModal } from "../TransactionConfirmationModal/PendingModal";
 import { currenciesConfig } from "../../utils/AssetConfigs";
-import { chainsConfig } from "../../utils/AssetConfigs";
+import { chainsConfig,  BridgeChain,
+    BridgeChainConfig,
+    BridgeCurrency,
+    BridgeCurrencyConfig} from "../../utils/AssetConfigs";
 import { useDispatch, useSelector } from "react-redux";
 import { $mint, setMintCurrency } from "../../features/mint/mintSlice";
+import { $wallet } from "../../features/wallet/walletSlice";
+import { setChain } from "../../features/wallet/walletSlice";
+import { EmptyCircleIcon } from "../Icons/RenIcons";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -122,14 +128,22 @@ const getOptions = (mode) => {
   
 const getOptionBySymbol = (symbol, mode) =>
     getOptions(mode).find((option) => option.symbol === symbol);
-  
-const createAvailabilityFilter = (available) => (option) => {
-    if (!available) {
-      return true;
-    }
-    return available.includes(option.symbol);
-};
 
+const getAssetData = (selected) => {
+    let full
+    let short;
+    let Icon
+    if (selected) {
+        full = selected.full;
+        short = selected.short;
+      Icon = selected.MainIcon;
+    }
+    return {
+      full,
+    short,
+      Icon,
+    };
+};
 const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFromToken, setType}) => {
 
     const [toggle, setToggle] = useState(true)
@@ -153,7 +167,14 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     }
 
     const { currency } = useSelector($mint);
-    console.log(currency)
+    const { chain } = useSelector($wallet);
+    const selectedCurrency = getOptionBySymbol(currency, "currency");
+    console.log(selectedCurrency)
+    const selectedChain = getOptionBySymbol(chain, "chain");
+    const { currencyIcon, currencyfull, currencyshort } = getAssetData(selectedCurrency);
+    const { chainIcon, chainfull, chainshort } = getAssetData(selectedChain);
+    
+
     let history = useHistory()
     const { active } = useWeb3React()
     console.log(showGateway)
@@ -174,6 +195,14 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
         setType(type)
         toggleTokenModal()
     }
+
+    // const handleCurrencyChange = React.useCallback((event) => {
+    //     dispatch(setMintCurrency(event.target.value))
+    // }, [dispatch])
+
+    // const handleChainChange = React.useCallback((event) => {
+    //     dispatch(setChain(event.target.value))
+    // }, [dispatch])
     
     if (showGateway) return(
         <StyledContainer>    
@@ -237,10 +266,10 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                 <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("from")}>
                         <ChainSelectorIconWrapper>
-                            <ChainSelectorIcon src={fromToken == null ? BitcoinLogo : fromToken.logoURI} width={fromToken == null ? "30px" : "24px"} loading="lazy"></ChainSelectorIcon>
+                            <ChainSelectorIcon src={selectedCurrency.MainIcon} width={"30px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>{fromToken == null ? "From Chain" : fromToken.name}</ChainSelectorText>
+                            <ChainSelectorText>{selectedCurrency.symbol}</ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
@@ -250,10 +279,10 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                 <ChainSelector marginbottom={"30px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("to")}>
                         <ChainSelectorIconWrapper >
-                            <ChainSelectorIcon src={toToken == null ? EthereumLogo : toToken.logoURI} width={toToken == null ? "30px" : "24px"} loading="lazy"></ChainSelectorIcon>
+                            <ChainSelectorIcon src={selectedChain.MainIcon} width={"30px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>{toToken == null ? "Destination Chain" : toToken.name}</ChainSelectorText>
+                            <ChainSelectorText>{selectedChain.symbol}</ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>

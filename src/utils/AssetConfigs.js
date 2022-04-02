@@ -58,6 +58,23 @@ import {
     ZecGreyIcon,
     ZecIcon,
 } from "../components/Icons/RenIcons"
+
+import btc from "../components/assets/icons/btc-icon.svg"
+import bch from "../components/assets/icons/bch-icon.svg"
+import doge from "../components/assets/icons/doge-icon.svg"
+import zec from "../components/assets/icons/zec-icon.svg"
+import dgb from "../components/assets/icons/dgb-icon.svg"
+import fil from "../components/assets/icons/fil-icon.svg"
+import luna from "../components/assets/icons/luna-icon.svg"
+
+import matic from "../components/assets/icons/polygon-colour-icon.svg"
+import eth from "../components/assets/Ethereum.svg"
+import bsc from "../components/assets/icons/binancesmartchain-colour-icon.svg"
+import ftm from "../components/assets/icons/fantom-colour-icon.svg"
+import avax from "../components/assets/icons/avalanche-colour-icon.svg"
+import sol from "../components/assets/icons/solana-colour-icon.svg"
+import arbi from "../components/assets/icons/arbitrum-color.svg"
+
 import * as customColors from "../theme/colors";
 
 export const RenChain = {
@@ -183,7 +200,27 @@ export const supportedLockCurrencies =
         BridgeCurrency.FIL,
         BridgeCurrency.LUNA,
         BridgeCurrency.ZEC,
-    ]
+]
+
+export const supportedMintDestinationChains = [
+    BridgeChain.ETHC,
+    BridgeChain.BSCC,
+    BridgeChain.MATICC,
+    BridgeChain.FTMC,
+    BridgeChain.AVAXC,
+    BridgeChain.SOLC,
+    BridgeChain.ARBITRUMC,
+];
+  
+  export const supportedBurnChains = [
+    BridgeChain.ETHC,
+    BridgeChain.MATICC,
+    BridgeChain.FTMC,
+    BridgeChain.AVAXC,
+    BridgeChain.SOLC,
+    BridgeChain.BSCC,
+    BridgeChain.ARBITRUMC,
+]
 
 export const chainsConfig = {
         [BridgeChain.BTCC]: {
@@ -192,7 +229,7 @@ export const chainsConfig = {
           full: "Bitcoin",
           FullIcon: NotSetIcon,
           Icon: BitcoinIcon,
-          MainIcon: BitcoinIcon,
+          MainIcon: btc,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.bitcoin,
           blockTime: 10,
@@ -205,8 +242,8 @@ export const chainsConfig = {
           full: "Bitcoin Cash",
           FullIcon: BchFullIcon,
           GreyIcon: BchGreyIcon,
-          Icon: BchIcon,
-          MainIcon: BchFullIcon,
+          Icon: bch,
+          MainIcon: bch,
           rentxName: RenChain.bitcoinCash,
           blockTime: 10,
           targetConfirmations: 6,
@@ -219,7 +256,7 @@ export const chainsConfig = {
           FullIcon: ZecFullIcon,
           GreyIcon: ZecGreyIcon,
           Icon: ZecIcon,
-          MainIcon: ZecFullIcon,
+          MainIcon: zec,
           rentxName: RenChain.zcash,
           blockTime: 2.5,
           nativeCurrency: BridgeCurrency.ZEC,
@@ -232,7 +269,7 @@ export const chainsConfig = {
           FullIcon: DogeFullIcon,
           GreyIcon: DogeGreyIcon,
           Icon: DogeIcon,
-          MainIcon: DogeFullIcon,
+          MainIcon: doge,
           rentxName: RenChain.dogecoin,
           blockTime: 1,
           targetConfirmations: 40,
@@ -245,7 +282,7 @@ export const chainsConfig = {
           FullIcon: DgbFullIcon,
           GreyIcon: DgbGreyIcon,
           Icon: DgbIcon,
-          MainIcon: DgbFullIcon,
+          MainIcon: dgb,
           rentxName: RenChain.digibyte,
           blockTime: 1,
           targetConfirmations: 40,
@@ -258,7 +295,7 @@ export const chainsConfig = {
           FullIcon: FilFullIcon,
           GreyIcon: FilGreyIcon,
           Icon: FilIcon,
-          MainIcon: FilFullIcon,
+          MainIcon: fil,
           rentxName: RenChain.filecoin,
           blockTime: 1,
           targetConfirmations: 40,
@@ -271,7 +308,7 @@ export const chainsConfig = {
           FullIcon: LunaFullIcon,
           GreyIcon: LunaGreyIcon,
           Icon: LunaIcon,
-          MainIcon: LunaFullIcon,
+          MainIcon: luna,
           rentxName: RenChain.terra,
           blockTime: 1,
           targetConfirmations: 40,
@@ -284,7 +321,7 @@ export const chainsConfig = {
           full: "Binance Smart Chain",
           FullIcon: BinanceChainFullIcon,
           Icon: BinanceChainIcon,
-          MainIcon: BinanceChainFullIcon,
+          MainIcon: bsc,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.binanceSmartChain,
           blockTime: 3,
@@ -297,7 +334,7 @@ export const chainsConfig = {
           full: "Fantom",
           FullIcon: FantomCircleIcon,
           Icon: FantomGreyIcon,
-          MainIcon: FantomCircleIcon,
+          MainIcon: ftm,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.fantom,
           blockTime: 3,
@@ -310,7 +347,7 @@ export const chainsConfig = {
           full: "Polygon",
           FullIcon: PolygonCircleIcon,
           Icon: PolygonGreyIcon,
-          MainIcon: PolygonCircleIcon,
+          MainIcon: matic,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.polygon,
           blockTime: 3,
@@ -323,7 +360,7 @@ export const chainsConfig = {
           full: "Avalanche",
           FullIcon: AvalancheChainCircleIcon,
           Icon: AvalancheChainCircleIcon,
-          MainIcon: AvalancheChainCircleIcon,
+          MainIcon: avax,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.avalanche,
           blockTime: 3,
@@ -336,7 +373,7 @@ export const chainsConfig = {
           full: "Ethereum",
           FullIcon: EthereumChainFullIcon,
           Icon: EthereumIcon,
-          MainIcon: EthereumChainFullIcon,
+          MainIcon: eth,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.ethereum,
           blockTime: 0.25,
@@ -349,7 +386,7 @@ export const chainsConfig = {
           full: "Solana",
           FullIcon: SolanaCircleIcon,
           Icon: SolanaGreyIcon,
-          MainIcon: SolanaCircleIcon,
+          MainIcon: sol,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.solana,
           blockTime: 0.25,
@@ -362,7 +399,7 @@ export const chainsConfig = {
           full: "Arbitrum",
           FullIcon: ArbitrumCircleIcon,
           Icon: ArbitrumColorIcon,
-          MainIcon: ArbitrumCircleIcon,
+          MainIcon: arbi,
           GreyIcon: NotSetIcon,
           rentxName: RenChain.arbitrum,
           blockTime: 0.25,
@@ -406,8 +443,8 @@ export const currenciesConfig = {
       color: customColors.bitcoinOrange,
       FullIcon: BtcFullIcon,
       GreyIcon: BtcGreyIcon,
-      Icon: BtcIcon,
-      MainIcon: BtcFullIcon,
+      Icon: btc,
+      MainIcon: btc,
       rentxName: "btc",
       sourceChain: BridgeChain.BTCC,
       networkMappings: oldNetworkMappings,
@@ -419,7 +456,7 @@ export const currenciesConfig = {
       full: "Ren Bitcoin",
       FullIcon: BtcFullIcon,
       GreyIcon: BtcGreyIcon,
-      Icon: BtcIcon,
+      Icon: btc,
       MainIcon: BtcDashedIcon,
       rentxName: "renBTC",
       sourceChain: BridgeChain.ETHC,
@@ -433,8 +470,8 @@ export const currenciesConfig = {
       color: customColors.bitcoinCashGreen,
       FullIcon: BchFullIcon,
       GreyIcon: BchGreyIcon,
-      Icon: BchIcon,
-      MainIcon: BchFullIcon,
+      Icon: bch,
+      MainIcon: bch,
       rentxName: "BCH",
       sourceChain: BridgeChain.BCHC,
       networkMappings: oldNetworkMappings,
@@ -474,7 +511,7 @@ export const currenciesConfig = {
       FullIcon: DogeFullIcon,
       GreyIcon: DogeGreyIcon,
       Icon: DogeIcon,
-      MainIcon: DogeFullIcon,
+      MainIcon: doge,
       sourceChain: BridgeChain.DOGC,
       rentxName: "doge",
       networkMappings: newNetworkMappings,
@@ -502,7 +539,7 @@ export const currenciesConfig = {
       FullIcon: ZecFullIcon,
       GreyIcon: ZecGreyIcon,
       Icon: ZecIcon,
-      MainIcon: ZecFullIcon,
+      MainIcon: zec,
       rentxName: "zec",
       sourceChain: BridgeChain.ZECC,
       networkMappings: oldNetworkMappings,
@@ -529,7 +566,7 @@ export const currenciesConfig = {
       FullIcon: DgbFullIcon,
       GreyIcon: DgbGreyIcon,
       Icon: DgbIcon,
-      MainIcon: DgbFullIcon,
+      MainIcon: dgb,
       sourceChain: BridgeChain.DGBC,
       rentxName: "DGB",
       networkMappings: newNetworkMappings,
@@ -556,7 +593,7 @@ export const currenciesConfig = {
       FullIcon: FilFullIcon,
       GreyIcon: FilGreyIcon,
       Icon: FilIcon,
-      MainIcon: FilFullIcon,
+      MainIcon: fil,
       sourceChain: BridgeChain.FILC,
       rentxName: "FIL",
       networkMappings: newNetworkMappings,
@@ -583,7 +620,7 @@ export const currenciesConfig = {
       FullIcon: LunaFullIcon,
       GreyIcon: LunaGreyIcon,
       Icon: LunaIcon,
-      MainIcon: LunaFullIcon,
+      MainIcon: luna,
       sourceChain: BridgeChain.LUNAC,
       rentxName: "LUNA",
       networkMappings: newNetworkMappings,
@@ -623,7 +660,7 @@ export const currenciesConfig = {
       FullIcon: AvaIcon,
       GreyIcon: NotSetIcon,
       Icon: AvaIcon,
-      MainIcon: AvaFullIcon,
+      MainIcon: avax,
       rentxName: "ava",
       sourceChain: BridgeChain.AVAXC,
       networkMappings: newNetworkMappings,
@@ -637,7 +674,7 @@ export const currenciesConfig = {
       FullIcon: PolygonFullIcon,
       GreyIcon: NotSetIcon,
       Icon: PolygonFullIcon,
-      MainIcon: PolygonFullIcon,
+      MainIcon: matic,
       rentxName: "matic",
       sourceChain: BridgeChain.MATICC,
       networkMappings: newNetworkMappings,
@@ -651,7 +688,7 @@ export const currenciesConfig = {
       FullIcon: FantomFullIcon,
       GreyIcon: NotSetIcon,
       Icon: FantomFullIcon,
-      MainIcon: BtcFullIcon,
+      MainIcon: ftm,
       rentxName: "ftm",
       sourceChain: BridgeChain.FTMC,
       networkMappings: newNetworkMappings,
@@ -665,7 +702,7 @@ export const currenciesConfig = {
       FullIcon: EthereumIcon,
       GreyIcon: NotSetIcon,
       Icon: EthereumIcon,
-      MainIcon: BtcFullIcon,
+      MainIcon: bsc,
       rentxName: "eth",
       sourceChain: BridgeChain.BSCC,
       networkMappings: newNetworkMappings,
@@ -679,7 +716,7 @@ export const currenciesConfig = {
       FullIcon: EthereumIcon,
       GreyIcon: NotSetIcon,
       Icon: EthereumIcon,
-      MainIcon: BtcFullIcon,
+      MainIcon: sol,
       rentxName: "sol",
       sourceChain: BridgeChain.SOLC,
       networkMappings: newNetworkMappings,
@@ -693,7 +730,7 @@ export const currenciesConfig = {
       FullIcon: ArbitrumBlackIcon,
       GreyIcon: NotSetIcon,
       Icon: ArbitrumBlackIcon,
-      MainIcon: BtcFullIcon,
+      MainIcon: arbi,
       rentxName: "sol",
       sourceChain: BridgeChain.ARBITRUMC,
       bandchainSymbol: "ETH",

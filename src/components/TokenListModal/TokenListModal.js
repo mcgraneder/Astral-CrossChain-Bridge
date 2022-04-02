@@ -8,7 +8,10 @@ import tokenList from "./tokenList.json"
 import { currenciesConfig } from "../../utils/AssetConfigs"
 import { chainsConfig } from "../../utils/AssetConfigs"
 import { EmptyCircleIcon } from "../Icons/RenIcons"
-
+import { supportedLockCurrencies, supportedMintDestinationChains } from "../../utils/AssetConfigs"
+import { useDispatch, useSelector } from "react-redux"
+import { setMintCurrency } from "../../features/mint/mintSlice"
+import { setChain } from "../../features/wallet/walletSlice"
 export const Backdrop = styled.div`
 
     position: fixed;
@@ -216,11 +219,11 @@ margin-right: 10px !important;
 export const TokenImg = styled.img`
 
     margin-right: 8px;
-    width: 24px;
-    height: 24px;
-    background: radial-gradient(white 50%, rgba(255, 255, 255, 0) calc(75% + 1px), rgba(255, 255, 255, 0) 100%);
+    width: 35px;
+    height: 35px;
+    // background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
-    box-shadow: white 0px 0px 1px;
+    // box-shadow: white 0px 0px 1px;
     border: 0px solid rgba(255, 255, 255, 0);
 
 `
@@ -493,17 +496,17 @@ const TokenListModal = ({
     setToToken, 
     type,
     mode = "currency",
-    available,
     condensed = false,
     label,
     balances,
     assetLabel = "Asset",
     blockchainLabel = "Blockchain",
+    setShowTokenModal,
     ...rest 
 }) => {
 
     const [searchTerm, setSearchTerm] = useState("")
-   
+    const dispatch = useDispatch()
     const setSelectedToken = (option, type) => {
         if (type === "from") {
             setFromToken(option)
@@ -514,6 +517,30 @@ const TokenListModal = ({
         setSearchTerm("")
         close()
     }
+
+    const available = type === "from" ? supportedLockCurrencies : supportedMintDestinationChains;
+    const x = getOptions("currency")
+    console.log(x)
+
+    const availabilityFilter = React.useMemo(
+        () => createAvailabilityFilter(available),
+        [available]
+    );
+
+    const handleCurrencyChange = React.useCallback((currency, option, type) => {
+        setSelectedToken(option, type)
+        dispatch(setMintCurrency(currency))
+        setShowTokenModal(false)
+    }, [dispatch])
+
+    const handleChainChange = React.useCallback((chain, option, type) => {
+        setShowTokenModal(false)
+        setSelectedToken(option, type)
+        dispatch(setChain(chain))
+       
+    }, [dispatch])
+
+    console.log(type)
    
     return(
 
@@ -552,19 +579,26 @@ const TokenListModal = ({
                             <TokenListSelectionContainer>
                                 <TokenListSelectionWrapper>
                                     <OverallContainer>
-                                    {tokenList.filter((val) => {
+                                    {getOptions(type === "from" ? "currency" : "chain")
+                                    .filter(availabilityFilter)
+                                    .filter((val) => {
                                         if (searchTerm === "") {
                                         return val
-                                        } else if (val.symbol.toLowerCase().includes(searchTerm.toLowerCase()) || val.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                        } else if (val.symbol.toLowerCase().includes(searchTerm.toLowerCase()) || val.full.toLowerCase().includes(searchTerm.toLowerCase())) {
                                         return val
                                         }
-                                    }).map((val, key) => {
+                                    })
+                                    .map(({ symbol, MainIcon, GreyIcon, full, short}) => {
                                         return (
-                                            <ListTokenContainer key={key} opacTrue={false} onClick={() => setSelectedToken(val, type)}>
-                                            <TokenImg src={val.logoURI}></TokenImg>
+                                            <ListTokenContainer key={symbol} opacTrue={false} onClick={() => 
+                                                type === "from" 
+                                                 ? handleCurrencyChange(symbol, {MainIcon: MainIcon, symbol: symbol}, type) 
+                                                 : handleChainChange(symbol, {MainIcon: MainIcon, symbol: symbol}, type)
+                                            }>
+                                            <TokenImg src={MainIcon} width={"30px"} size={"30px"}></TokenImg>
                                             <TokenNameContainer>
-                                                <TokenTitle>{val.symbol}</TokenTitle>
-                                                <TokenSubtitle>{val.name}</TokenSubtitle>
+                                                <TokenTitle>{symbol}</TokenTitle>
+                                                <TokenSubtitle>{full}</TokenSubtitle>
                                             </TokenNameContainer>
                                             <Spacer/>
                                             <BalanceContainer>
