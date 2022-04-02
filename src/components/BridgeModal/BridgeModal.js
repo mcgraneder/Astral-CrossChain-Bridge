@@ -33,6 +33,8 @@ import { useWeb3React } from "@web3-react/core";
 import BridgeFees from "./Steps/BridgeFees";
 import ConfirmationStep from "./Steps/ConfirmationStep";
 import { ConfirmationModal } from "../TransactionConfirmationModal/PendingModal";
+import { currenciesConfig } from "../../utils/AssetConfigs";
+import { chainsConfig } from "../../utils/AssetConfigs";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -108,6 +110,23 @@ export const LegacyBridgeToggleButton = styled.div`
     }
 
 `
+const getOptions = (mode) => {
+    const options =
+      mode === "chain"
+        ? Object.values(chainsConfig)
+        : Object.values(currenciesConfig);
+    return options;
+};
+  
+const getOptionBySymbol = (symbol, mode) =>
+    getOptions(mode).find((option) => option.symbol === symbol);
+  
+const createAvailabilityFilter = (available) => (option) => {
+    if (!available) {
+      return true;
+    }
+    return available.includes(option.symbol);
+};
 
 const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFromToken, setType}) => {
 
@@ -129,9 +148,9 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                setPending(false)
             }, 1000)
         }, 2200)
-       
-       
     }
+
+
     let history = useHistory()
     const { active } = useWeb3React()
     console.log(showGateway)

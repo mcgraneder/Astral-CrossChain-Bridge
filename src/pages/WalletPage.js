@@ -97,15 +97,10 @@ const WalletPage = () => {
         if(text === "") return
 
         var params
-        var walletBalance = await ren.balanceOf(account)
-        walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
         var amount = Web3.utils.toWei(text.toString(), "Gwei")
         var title
 
         if(TransactionType === TRANSACTION_TYPES.WITHDRAWAL) {
-            walletBalance = await bridge.getUserTokenBalance("BTC", account)
-            walletBalance = Web3.utils.toWei(walletBalance.toString(), "wei")
-            amount = Web3.utils.toWei(text.toString(), "Gwei")
             params = [account, amount, "BTC"]
             title = `withdrawed Exactly ${amount} Ren BTC at a price of $200`
 
@@ -161,11 +156,14 @@ const WalletPage = () => {
             });
 
         } catch(error) {
+            console.log(error)
+            const errorCodes = [4001, -32603]
             setPending1(false)
             setRejected(true)
             setTransactionBlock(true)
 
-            if (error.code == 4001) {
+            if (!errorCodes.includes(error.code)) {
+                if(error === "User denied transaction signature.") return
                 title = "Transaction Failed Unexpectedly!"
                 HandleNewNotification(title, false)
             } 
@@ -226,7 +224,6 @@ const WalletPage = () => {
                 setGas={setGas}
                 ren={ren}
                 bridge={bridge}
-                loading={pending}
                 transactionBlock={transactionBlock}
                 balance={balance}
                 setSufficentApproval={setSufficentApproval}

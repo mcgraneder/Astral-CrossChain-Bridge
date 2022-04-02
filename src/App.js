@@ -14,8 +14,45 @@ import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChange
 import { useWeb3React } from "@web3-react/core";
 import useBalance from "./hooks/useBalance";
 import { TransactionStateContext, TransactionProvider } from "./contexts/transactionContext";
+import { BridgeCurrency } from "./constants/EnviornmentVariables";
+import { RenNetwork } from "@renproject/interfaces";
+export const RenChain = {
+  arbitrum: "arbitrum",
+  avalanche: "avalanche",
+  binanceSmartChain: "binanceSmartChain",
+  ethereum: "ethereum",
+  fantom: "fantom",
+  polygon: "polygon",
+  solana: "solana",
+  bitcoin: "bitcoin",
+  zcash: "zcash",
+  bitcoinCash: "bitcoinCash",
+  dogecoin: "dogecoin",
+  digibyte: "digibyte",
+  terra: "terra",
+  filecoin: "filecoin",
+  unknown: "unknown",
+}
 function App() { 
 
+  const networkMappingLegacy = {
+    mainnet: RenNetwork.Mainnet,
+    testnet: RenNetwork.Testnet,
+};
+
+
+  const oldNetworkMappings = {
+      [RenChain.ethereum]: networkMappingLegacy,
+      [RenChain.binanceSmartChain]: networkMappingLegacy,
+      [RenChain.fantom]: networkMappingLegacy,
+      [RenChain.polygon]: networkMappingLegacy,
+      [RenChain.avalanche]: networkMappingLegacy,
+      [RenChain.solana]: networkMappingLegacy,
+      [RenChain.arbitrum]: networkMappingLegacy,
+    };
+  
+
+  console.log(RenNetwork)
   const loading = useOnPageLoad()
 
   return (

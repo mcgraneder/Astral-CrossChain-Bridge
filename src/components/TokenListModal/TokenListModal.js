@@ -5,6 +5,9 @@ import { X } from "react-feather"
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import Edit from "../assets/edit.svg"
 import tokenList from "./tokenList.json"
+import { currenciesConfig } from "../../utils/AssetConfigs"
+import { chainsConfig } from "../../utils/AssetConfigs"
+import { EmptyCircleIcon } from "../Icons/RenIcons"
 
 export const Backdrop = styled.div`
 
@@ -448,7 +451,56 @@ export const Img = styled.img`
     margin-right: 5px;
 `
 
-const TokenListModal = ({ visible, close, setFromToken, setToToken, type }) => {
+const getOptions = (mode) => {
+    const options =
+      mode === "chain"
+        ? Object.values(chainsConfig)
+        : Object.values(currenciesConfig);
+    return options;
+};
+  
+const getOptionBySymbol = (symbol, mode) =>
+    getOptions(mode).find((option) => option.symbol === symbol);
+  
+const createAvailabilityFilter = (available) => (option) => {
+    if (!available) {
+      return true;
+    }
+    return available.includes(option.symbol);
+};
+
+const getAssetData = (selected) => {
+    let full = "Select";
+    let short = "Select";
+    let Icon = EmptyCircleIcon;
+    if (selected) {
+      full = selected.full;
+      short = selected.short;
+      Icon = selected.MainIcon;
+    }
+    return {
+      full,
+      short,
+      Icon,
+    };
+  };
+  
+
+const TokenListModal = ({ 
+    visible, 
+    close, 
+    setFromToken, 
+    setToToken, 
+    type,
+    mode = "currency",
+    available,
+    condensed = false,
+    label,
+    balances,
+    assetLabel = "Asset",
+    blockchainLabel = "Blockchain",
+    ...rest 
+}) => {
 
     const [searchTerm, setSearchTerm] = useState("")
    
