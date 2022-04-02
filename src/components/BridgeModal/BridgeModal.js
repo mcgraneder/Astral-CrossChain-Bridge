@@ -35,6 +35,8 @@ import ConfirmationStep from "./Steps/ConfirmationStep";
 import { ConfirmationModal } from "../TransactionConfirmationModal/PendingModal";
 import { currenciesConfig } from "../../utils/AssetConfigs";
 import { chainsConfig } from "../../utils/AssetConfigs";
+import { useDispatch, useSelector } from "react-redux";
+import { $mint, setMintCurrency } from "../../features/mint/mintSlice";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -150,7 +152,8 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
         }, 2200)
     }
 
-
+    const { currency } = useSelector($mint);
+    console.log(currency)
     let history = useHistory()
     const { active } = useWeb3React()
     console.log(showGateway)

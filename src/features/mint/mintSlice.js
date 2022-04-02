@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import BridgeCurrency from "../../utils/AssetConfigs"
+import { BridgeCurrency } from "../../utils/AssetConfigs"
 
 let initialState = {
   currency: BridgeCurrency.BTC,

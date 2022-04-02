@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BridgeCurrency } from "../../utils/assetConfigs";
+import { BridgeCurrency } from "../../utils/AssetConfigs";
 import { $exchangeRates } from "../marketData/marketDataSlice";
 import { findExchangeRate } from "../marketData/marketDataUtils";
 

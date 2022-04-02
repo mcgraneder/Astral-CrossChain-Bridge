@@ -384,6 +384,20 @@ export const chainsConfig = {
         },
 };
 
+
+const unknownChainConfig = chainsConfig[BridgeChain.UNKNOWNC];
+
+export const getChainConfig = (symbol) =>
+  chainsConfig[symbol] || unknownChainConfig;
+
+  export const getChainRentxName = (symbol) =>
+  chainsConfig[symbol].rentxName || unknownLabel;
+
+export const getChainConfigByRentxName = (name) =>
+  Object.values(chainsConfig).find((chain) => chain.rentxName === name) ||
+  unknownChainConfig;
+
+
 export const currenciesConfig = {
     [BridgeCurrency.BTC]: {
       symbol: BridgeCurrency.BTC,
@@ -699,4 +713,43 @@ export const currenciesConfig = {
       sourceChain: BridgeChain.UNKNOWNC,
       networkMappings: newNetworkMappings,
     },
-  };
+};
+
+const unknownLabel = "unknown";
+
+const unknownCurrencyConfig = currenciesConfig[BridgeCurrency.UNKNOWN];
+
+export const getCurrencyConfig = (symbol) =>
+  currenciesConfig[symbol] || unknownCurrencyConfig;
+
+export const getCurrencyShortLabel = (symbol) =>
+  currenciesConfig[symbol].short || unknownLabel;
+
+export const getCurrencyConfigByRentxName = (name) =>
+  Object.values(currenciesConfig).find(
+    (currency) => currency.rentxName === name
+  ) || unknownCurrencyConfig;
+
+export const getCurrencyConfigByBandchainSymbol = (symbol) =>
+  Object.values(currenciesConfig).find(
+    (config) => config.bandchainSymbol === symbol || config.symbol === symbol
+  ) || unknownCurrencyConfig;
+
+export const getCurrencyConfigByCoingeckoSymbol = (symbol) =>
+  Object.values(currenciesConfig).find(
+    (config) => config.coingeckoSymbol === symbol || config.symbol === symbol
+  ) || unknownCurrencyConfig;
+
+export const getCurrencyRentxName = (symbol) =>
+  currenciesConfig[symbol].rentxName || unknownLabel;
+
+export const getCurrencySourceChain = (symbol) =>
+  currenciesConfig[symbol].sourceChain || BridgeChain.UNKNOWNC;
+
+export const getCurrencyRentxSourceChain = (symbol) => {
+  const bridgeChain = getCurrencySourceChain(symbol);
+  if (bridgeChain) {
+    return getChainRentxName(bridgeChain);
+  }
+  return BridgeChain.UNKNOWNC;
+};

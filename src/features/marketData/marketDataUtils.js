@@ -1,13 +1,14 @@
-import { env } from "../../constants/environmentVariables";
+
 import {
   BridgeChain,
   BridgeCurrency,
   currenciesConfig,
   getCurrencyConfigByBandchainSymbol,
   getCurrencyConfigByCoingeckoSymbol,
-} from "../../utils/assetConfigs";
+} from "../../utils/AssetConfigs";
 
 // move to assetConfig
+const GAS_FEE_ENDPOINT = "https://api.anyblock.tools/ethereum/latest-minimum-gasprice/?pretty";
 
 const mapBandchainToCurrencySymbol = (symbol) => {
   const config = getCurrencyConfigByBandchainSymbol(symbol);
@@ -57,7 +58,7 @@ export const findExchangeRate = (exchangeRates, base, quote = USD_SYMBOL) => {
 };
 
 export const fetchMarketDataGasPrices = async () => {
-  const anyBlockEth = await fetch(env.GAS_FEE_ENDPOINT)
+  const anyBlockEth = await fetch(GAS_FEE_ENDPOINT)
     .then((response) => response.json())
     .catch((error) => {
       console.error(error);

@@ -1,11 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RenNetwork } from "@renproject/interfaces";
-import { env } from "../../constants/environmentVariables";
+const NETWORK = "testnet";
 
 const cachedTargetNetwork = localStorage.getItem("renTargetNetwork");
 
 const initialNetwork =
-  (((cachedTargetNetwork || env.NETWORK))) ||
+  (((cachedTargetNetwork || NETWORK))) ||
   RenNetwork.Testnet;
 
 let initialState = {

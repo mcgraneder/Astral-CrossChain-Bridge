@@ -3,7 +3,7 @@ import {
   BridgeChain,
   BridgeCurrency,
   getChainConfig,
-} from "../../utils/assetConfigs";
+} from "../../utils/AssetConfigs";
 
 
 let initialState = {

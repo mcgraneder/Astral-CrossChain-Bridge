@@ -4,10 +4,10 @@ import { releaseReducer } from "../features/release/releaseSlice";
 import { marketDataReducer } from "../features/marketData/marketDataSlice";
 import { mintReducer } from "../features/mint/mintSlice";
 import { transactionsReducer } from "../features/transactions/transactionSlice";
-import { uiReducer } from "../features/ui/uiSlice";
+// import { uiReducer } from "../features/ui/uiSlice";
 import { walletReducer } from "../features/wallet/walletSlice";
 
-const rootReducer = combineReducers({
+const rooteReducer = combineReducers({
   network: networkReducer,
   wallet: walletReducer,
   mint: mintReducer,
@@ -16,6 +16,6 @@ const rootReducer = combineReducers({
   transactions: transactionsReducer,
 });
 
-// export type RootState = ReturnType<typeof rootReducer>;
+// export type RootState = ReturnType<typeof rooteReducer>;
 
-export default rootReducer;
+export default rooteReducer;

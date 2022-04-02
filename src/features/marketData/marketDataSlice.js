@@ -1,6 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExchangeRate, GasPrice } from "./marketDataUtils";
 
+let initialState = {
+    exchangeRates: [],
+    gasPrices: [],
+  };
+  
 const slice = createSlice({
   name: "marketData",
   initialState,
