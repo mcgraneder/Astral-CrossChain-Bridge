@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const NavContainer = styled.div`
 
@@ -31,6 +31,8 @@ export const NavMenu = styled.div`
     margin: 10px;
     margin-left: ${(props) => props.marginL};
     opacity: ${(props) => props.visible ? "1" : "0"};
+    background: rgb(27,32,52);
+    border-radius: 18px;
 `
 
 export const NavItem = styled.div`
@@ -84,11 +86,36 @@ export const NavLogo = styled.img`
     font-wight: bold;
 `
 
-export const NavButton = styled(Link)`
+const activeClassName= "ACTIVE"
+export const NavButton = styled(NavLink).attrs({
+    activeClassName
+})`
 
     display: inline;
-    background: ${(props) => props.active  ? "rgb(14,22,39)" : "rgb(27,32,52)"};
-    border: 2px solid ${(props) => !props.active ? "rgb(34,43,68)" : "rgb(14, 22, 39)"};
+    width: ${(props) => props.width};
+    border-radius: 18px;
+    height: 93%;
+    text-align: center;
+    line-height: 37px;
+    color: White;
+    // font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+    border: 2px solid rgb(14, 22, 39);
+    &.${activeClassName} {
+        background: rgb(27,32,52);
+        border: 2px solid rgb(34,43,68);
+    }
+
+    &:hover {
+
+        cursor: pointer;
+    }
+`
+
+export const ChainsButton = styled(NavLink)`
+
+    display: inline;
     width: ${(props) => props.width};
     border-radius: 18px;
     height: 93%;

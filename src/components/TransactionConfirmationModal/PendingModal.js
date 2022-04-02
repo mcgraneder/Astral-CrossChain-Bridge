@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
-
 import {X, ArrowDown, ArrowUpCircle, AlertTriangle, CheckCircle} from "react-feather"
 import metaMask from "../assets/metamask.png"
-import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import Bitcoin from "../assets/Bitcoin.svg"
 import Dollar from "../assets/dollar.png"
 import { useEffect } from "react/cjs/react.development";
@@ -296,9 +294,6 @@ const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs
 
 export const RejectionModal = ({visible, close, amount}) => {
     
-  
-    const provider = localStorage.getItem("provider")
-
    
     return (
         <>
@@ -352,9 +347,6 @@ export const PendingModal = ({visible, close, amount, complete}) => {
 
 export const TransactionSubmittedModal = ({visible, close, amount}) => {
     
-    const provider = localStorage.getItem("provider")
-
-   
     return (
         <>
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
@@ -370,7 +362,7 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
                     <SubTitle style={{"fontWeight": "bold"}} color={"rgb(33,114,229)"} size={"15px"}>view on explorer</SubTitle>
                 </TitleWrapper>
                 <AddTokenWrapper>
-                    <AddTokenTitle size={"18px"}>Add RenBTC To Metamask <img src={metaMask} width={"35px"}></img></AddTokenTitle>
+                    <AddTokenTitle size={"18px"}>Add RenBTC To Metamask <img alt="#" src={metaMask} width={"35px"}></img></AddTokenTitle>
                 </AddTokenWrapper>
                 <ButtonWrapper margin={"40px"}>
                     <Button onClick={close}>Close</Button>
@@ -402,7 +394,7 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
             setBridge(bridgeContract)
             setRen(renContract)
         }    
-    }, [library])
+    }, [library, account])
 
     useEffect(() => {
         axios.get(RenBTCPriceRequestURL).then((result) => {

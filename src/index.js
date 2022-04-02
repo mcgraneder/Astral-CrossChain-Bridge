@@ -6,6 +6,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { TransactionStateContext } from './contexts/transactionContext';
 import { Web3Provider } from "@ethersproject/providers";
 import NotificationProvider from './contexts/NotificationsContext';
+import MetaMaskAccountProvider from "./contexts/tokensContext"
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);

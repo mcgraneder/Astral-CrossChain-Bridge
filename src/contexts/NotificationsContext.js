@@ -2,7 +2,7 @@ import React, {  useContext, useMemo, useReducer } from 'react';
 import Notification from '../components/Notifications/Notification';
 import NotificationStyles from '../components/Notifications/NotificationStyles';
 
-const NotificationContext = React.createContext();
+export const NotificationContext = React.createContext();
 const { NotificationContainerStyled } = NotificationStyles;
 
 const PayloadType = [];
@@ -59,26 +59,5 @@ const NotificationProvider = (props) => {
     );
 };
 
-export const useNotification = () => {
-    const dispatch = useContext(NotificationContext);
-
-    if (dispatch === undefined) {
-        throw new Error(
-            'useNotification hook must be used within a NotificationProvider',
-        );
-    }
-
-    console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-    return (props) => {
-        // @ts-ignore
-        dispatch({
-            type: 'add_notification',
-            payload: {
-                id: String(Date.now()),
-                ...props,
-            },
-        });
-    };
-};
 
 export default NotificationProvider;

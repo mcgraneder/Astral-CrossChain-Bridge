@@ -9,6 +9,7 @@ const TransactionPage = () => {
     const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
 
     const { transactions} = usePendingTransaction()
+    console.log(transactions)
 
     return (
 

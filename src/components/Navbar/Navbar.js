@@ -63,7 +63,7 @@ align-items: center;
 export default function Nav() {
 
     const provider = localStorage.getItem("provider")
-    const [toggleState, setToggleState] = useState(Number(localStorage.getItem("state")))
+
     const [balance, setBalance] = useState("0.0000")
     const { library, account, active } = useWeb3React()
     const [showWalletModal, setShowWalletModal] = useState(false);
@@ -83,11 +83,6 @@ export default function Nav() {
             })
         }
     }, [library, account])
-
-    const toggleTab = (index) => {
-        localStorage.setItem("state", index)
-        setToggleState(index)
-    }
 
   return (
       
@@ -113,9 +108,9 @@ export default function Nav() {
                     <NavMenu visible={localStorage.getItem("provider")} marginL={"40px"} marginR={"118px"}>
                         <NavItem  marginL={"0px"} >
                             <NavButton width={"130px"} 
-                                active={true} 
-                                to="/bridge" onClick={() => toggleTab(1)}
-                                >
+                                id={`chains-nav-link`}
+                                to="/chains"
+                            >
                             <Wrapper>
                             <ChainSelectorIcon src={Ethereum} width={"24px"}></ChainSelectorIcon>
                             <ChainText>Kovan</ChainText>
@@ -126,26 +121,23 @@ export default function Nav() {
                     <NavMenu visible={localStorage.getItem("provider")} marginL={"0px"} marginR={"118px"}>
                         <NavItem  marginL={"0px"} >
                             <NavButton  width={"110px"}
-                                active={toggleState !== 1 ? true : false} 
-                                to="/bridge" onClick={() => toggleTab(1)}
+                                id={`bridge-nav-link`}
+                                to="/bridge"
                                 >Bridge
                             </NavButton>
                             <NavButton width={"110px"} 
-                                active={toggleState !== 2 ? true : false} 
+                                id={`wallet-nav-link`} 
                                 to="/wallet" 
-                                onClick={() => toggleTab(2)}
                                 >Wallet
                             </NavButton>
                             <NavButton width={"110px"}
-                                active={toggleState !== 3 ? true : false} 
+                                id={`dex-nav-link`} 
                                 to="/dex" 
-                                onClick={() => toggleTab(3)}
                                 >Trade
                             </NavButton>
                             <NavButton width={"110px"}
-                                active={toggleState !== 4 ? true : false} 
+                                id={`transactions-nav-link`} 
                                 to="/transactions" 
-                                onClick={() => toggleTab(4 )}
                                 >History
                             </NavButton>
                         </NavItem>
