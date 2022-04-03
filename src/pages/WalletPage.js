@@ -58,7 +58,7 @@ const WalletPage = () => {
     const [bridge, setBridge] = useState()
     const [transactionBlock, setTransactionBlock] = useState(true)
     const [sufficentApproval, setSufficentApproval] = useState(true)
-    const {library, account} = useWeb3React()
+    const {library, account } = useWeb3React()
 
     const { pending, setPending } = useContext(TransactionStateContext)
     const { balance, setBalance } = useBalance()
