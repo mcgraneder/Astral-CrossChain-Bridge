@@ -43,6 +43,7 @@ import { $mint, setMintCurrency } from "../../features/mint/mintSlice";
 import { $wallet } from "../../features/wallet/walletSlice";
 import { setChain } from "../../features/wallet/walletSlice";
 import { EmptyCircleIcon } from "../Icons/RenIcons";
+import WalletInputForm from "../WalletModal/components/WalletInput";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -316,8 +317,13 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                         </ReleaseToggleButton>
                     </MinFormToggleButtonContainer>
                     <MintFormWrapper paddingBottom={"0"}>
+                        {!toggle &&
+                        <WalletInputForm 
+                            getMaxDeposit={() => console.log("hey")} 
+                            text={""} 
+                            setText={() => console.log("")}/>}
                         <ButtonWrapper width={"90%"}>
-                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={"Next"}></HomeConnectButton>
+                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={currentChain.short != "ETH" ? `connect to ${currentChain.short} to proceed` : "Next"}></HomeConnectButton>
                         </ButtonWrapper>
                 </MintFormWrapper>
                     

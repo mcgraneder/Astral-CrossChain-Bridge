@@ -5,6 +5,7 @@ import walletConnect from "../assets/wallet_connect.svg"
 import fortmatic from "../assets/fortmatic.svg"
 import torus from "../assets/torus.svg"
 import portis from "../assets/portis.svg"
+import { ExternalLink } from "react-feather"
 import { NavButton2 } from "./HomeConnectButtonStyles"
 
 export const Logo1 = styled.div`
@@ -25,13 +26,17 @@ export const Logo1 = styled.div`
 }
 `;
 
+const External = styled(ExternalLink)`
+    line-height: 10px;
+    color: black;
+`
 const HomeConnectButton = ({ active, height, width, text, click}) => {
 
 
     return (
 
         <>
-            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} onClick={click}>{text}</NavButton2>
+            <NavButton2  width={width} height={height} active={active} color={"rgb(23,42,66)"} onClick={click}>{text}<External strokeWidth={1.5} size={"20px"}/></NavButton2>
         </>
     )
 }
