@@ -153,6 +153,11 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     const [complete, setComplete] = useState(false)
     const [showFees, setShowFees] = useState(false)
     const [showGateway, setShowGateway] = useState(false)
+    const [address, setAddress] = useState("")
+
+    useEffect(() => {
+        console.log(address)
+    }, [address])
 
     let history = useHistory()
     const { active, chainId } = useWeb3React()
@@ -304,7 +309,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                         </BalanceWrapper>                
                     </BalanceContainer>
                 <MintFormContainer>
-                    <MinFormToggleButtonContainer>
+                    <MinFormToggleButtonContainer marginB={toggle ? "20px" : "10px"}>
                         <MintToggleButton side={"left"} colour={"rgb(14, 22, 39)"} active={toggle} onClick={setToggleValue}>
                             <MintFormTextWrapper2>
                                 <MintFormText2>Mint</MintFormText2>
@@ -319,9 +324,11 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                     <MintFormWrapper paddingBottom={"0"}>
                         {!toggle &&
                         <WalletInputForm 
-                            getMaxDeposit={() => console.log("hey")} 
-                            text={""} 
-                            setText={() => console.log("")}/>}
+                            getMaxDeposit={() => null} 
+                            text={address} 
+                            setText={setAddress}
+                            type={"address"}
+                            />}
                         <ButtonWrapper width={"90%"}>
                             <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={currentChain.short != "ETH" ? `connect to ${currentChain.short} to proceed` : "Next"}></HomeConnectButton>
                         </ButtonWrapper>

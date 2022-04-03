@@ -179,6 +179,7 @@ const WalletPage = () => {
             }, 300)
         }
     }
+    
 
     return (
 

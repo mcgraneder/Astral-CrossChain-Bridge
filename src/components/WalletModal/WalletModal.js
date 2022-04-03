@@ -187,7 +187,9 @@ const WalletModal = (
                         <WalletInputForm 
                             getMaxDeposit={getMaxDeposit} 
                             text={text} 
-                            setText={setText}/>
+                            setText={setText}
+                            type={"amount"}
+                        />    
                         <WalletTxDetails  
                             sufficentApproval={sufficentApproval} 
                             sufficentBalance={sufficentBalance} 

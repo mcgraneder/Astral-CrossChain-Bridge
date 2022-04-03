@@ -8,7 +8,7 @@ import portis from "../assets/portis.svg"
 import Disconnect from "./Disconnect";
 import { ArrowLeft, X } from "react-feather"
 import { useWeb3React } from "@web3-react/core"
-
+import useAuth from "../../hooks/useAuth";
 export const FormWrapper = styled.div`
 
 
@@ -363,10 +363,10 @@ export const CloseIcon = styled(X)`
 
 
 
-const Web3Modal = ({visible, close, toggleAccountDetails, connectOn, disconnect}) => {
+const Web3Modal = ({visible, close, toggleAccountDetails}) => {
     
     const { active } = useWeb3React()
-
+    const { connectOn, disconnect } = useAuth()
     const closeAllModals = () => { 
         toggleAccountDetails()
         close()

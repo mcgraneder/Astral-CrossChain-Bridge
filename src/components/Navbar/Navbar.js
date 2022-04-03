@@ -16,7 +16,6 @@ import { NavContainer,
          NavLogoLink,
          NavItem3,
 } from './NavbarStyles';
-import useAuth from '../../hooks/useAuth';
 import threeDots from "../assets/threeDots.svg"
 import Web3 from 'web3';
 import { useWeb3React } from '@web3-react/core';
@@ -68,7 +67,6 @@ export default function Nav() {
     const { library, account, active } = useWeb3React()
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);
-    const { connectOn, disconnect } = useAuth()
 
     const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
     const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
@@ -96,8 +94,6 @@ export default function Nav() {
             visible={showWalletModal} 
             close={toggleWalletModal} 
             toggleAccountDetails={toggleAccountDetails} 
-            connectOn={connectOn} 
-            disconnect={disconnect}
           />
             <NavContainer>
                 <NavWrapper>

@@ -8,8 +8,9 @@ import {
     ForumIcon,
     ForumImg
 } from "../WalletModalStyles";
+import { MapPin } from "react-feather";
 
-const WalletInputForm = ({ setText, text, getMaxDeposit }) => {
+const WalletInputForm = ({ setText, text, getMaxDeposit, type }) => {
 
     const preventMinus = (e) => {
         if (e.code === 'Minus')  e.preventDefault(); 
@@ -21,17 +22,18 @@ const WalletInputForm = ({ setText, text, getMaxDeposit }) => {
             <WalletInputWrapper>
                 <WalletInput 
                     onKeyPress={preventMinus} 
-                    name="number" 
-                    type="number" 
-                    id="in"  
+                    type={type === "address" ? "text" : "number"}  
                     value={text} 
                     onChange={(e) => setText(e.target.value)} 
-                    placeholder="amount">
+                    placeholder={type === "address" ? "Recipient address" : "Amount"}>
                 </WalletInput>
                 <ForumIcon>
-                    <ForumImg src={walletIcon}></ForumImg>
+                    {type !== "address" 
+                    ? <ForumImg src={walletIcon}></ForumImg>
+                    : <MapPin strokeWidth={1}/>
+                    }
                 </ForumIcon>
-                <MaxOption onClick={getMaxDeposit}>max</MaxOption>
+                {type !== "address" && <MaxOption onClick={getMaxDeposit}>max</MaxOption>}
             </WalletInputWrapper>
         </FromContainer>
     )

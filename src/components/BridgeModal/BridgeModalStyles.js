@@ -272,7 +272,7 @@ export const MinFormToggleButtonContainer = styled.div`
     height: 40px;
     // width: 100%;
     display: flex;
-    margin-bottom: 25px;
+    margin-bottom: ${(props) => props.marginB};
     background:rgb(27,32,52);;
    border-top-left-radius: 10px;
    border-top-right-radius: 10px;

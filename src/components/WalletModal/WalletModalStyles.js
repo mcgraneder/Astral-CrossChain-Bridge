@@ -442,7 +442,7 @@ export const Balancetext = styled.div`
 
 export const FromContainer = styled.form`
 
-// margin-bottom: 20px;
+margin-bottom: 20px;
 margin-left: 30px;
 margin-right: 30px;
 // padding: 3px;
@@ -499,6 +499,7 @@ color: white;
 padding-left: 20px;
 border-radius: 10px;
 padding-left: 60px;
+padding-right: 60px;
 font-size: 14px;
 font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
 // border: 3px solid: blue;
