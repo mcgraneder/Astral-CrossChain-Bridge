@@ -154,7 +154,8 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     const [showGateway, setShowGateway] = useState(false)
 
     let history = useHistory()
-    const { active } = useWeb3React()
+    const { active, chainId } = useWeb3React()
+    console.log(chainId)
 
     const setToggleValue = () => setToggle(!toggle);
     const toggleFees = () => setShowFees(!showFees)
@@ -188,6 +189,8 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
 
     const selectedCurrency = getOptionBySymbol(currency, "currency");
     const selectedChain = getOptionBySymbol(chain, "chain");
+    const currentChain = JSON.parse(localStorage.getItem("selected_chain"))
+    console.log(currentChain)
 
     const { currencyIcon, currencyfull, currencyshort } = getAssetData(selectedCurrency);
     const { chainIcon, chainfull, chainshort } = getAssetData(selectedChain);
@@ -273,10 +276,19 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                 <ChainSelector marginbottom={"30px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("to")}>
                         <ChainSelectorIconWrapper >
-                            <ChainSelectorIcon src={selectedChain.MainIcon} width={"30px"} loading="lazy"></ChainSelectorIcon>
+                            <ChainSelectorIcon src={currentChain ? currentChain.MainIcon : EthereumLogo} width={"30px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText><span style={{"fontWeight": "bold", "fontSize": "17px"}}>{selectedChain.short}</span><span style={{"color": "#adadad", "paddingLeft": "5px"}}>{" "}(To {selectedChain.full})</span></ChainSelectorText>
+                            <ChainSelectorText>
+                                <span 
+                                    style={{"fontWeight": "bold", "fontSize": "17px"}}>
+                                    {currentChain ? currentChain.short : "BTC"}
+                                </span>
+                                <span 
+                                    style={{"color": "#adadad", "paddingLeft": "5px"}}>
+                                        {" "}(To {currentChain ? currentChain.full : "Ethereum"})
+                                </span>
+                            </ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>

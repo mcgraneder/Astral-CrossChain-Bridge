@@ -529,6 +529,8 @@ const TokenListModal = ({
 
     const handleCurrencyChange = React.useCallback((currency, option, type) => {
         setSelectedToken(option, type)
+        const selectedCurrency = getOptionBySymbol(currency, "currency");
+        localStorage.setItem("selected_currency", JSON.stringify(selectedCurrency))
         dispatch(setMintCurrency(currency))
         setShowTokenModal(false)
     }, [dispatch])
@@ -536,6 +538,8 @@ const TokenListModal = ({
     const handleChainChange = React.useCallback((chain, option, type) => {
         setSelectedToken(option, type)
         dispatch(setChain(chain))
+        const selectedChain = getOptionBySymbol(chain, "chain");
+        localStorage.setItem("selected_chain", JSON.stringify(selectedChain))
         setShowTokenModal(false)
     }, [dispatch])
 
@@ -600,7 +604,7 @@ const TokenListModal = ({
                                             <ListTokenContainer key={symbol} opacTrue={false} onClick={() => 
                                                 type === "from" 
                                                  ? handleCurrencyChange(symbol, {MainIcon: MainIcon, symbol: symbol}, type) 
-                                                 : handleChainChange(symbol, {MainIcon: MainIcon, symbol: symbol}, type)
+                                                 : handleChainChange(symbol, {short: short, symbol: symbol, full: full}, type)
                                             }>
                                             <TokenImg src={MainIcon} width={"30px"} size={"30px"}></TokenImg>
                                             <TokenNameContainer>
