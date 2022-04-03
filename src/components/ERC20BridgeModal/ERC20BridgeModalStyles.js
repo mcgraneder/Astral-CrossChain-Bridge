@@ -18,7 +18,7 @@ export const BridgeModalContainer = styled.div`
 
     position: absolute;
     top: 12%;
-    // width: 470px;
+    width: 490px;
     // height: 575px;
     background: rgb(14, 22, 39);
     text-align: right;

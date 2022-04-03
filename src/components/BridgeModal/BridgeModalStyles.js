@@ -61,6 +61,7 @@ export const ChainSelector = styled.div`
     &:hover {
 
         background:  rgb(34,43,68);
+        // border: 0.5px solid rgb(13,94,209);
         cursor: pointer;
     }
 `

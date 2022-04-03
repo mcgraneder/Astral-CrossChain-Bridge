@@ -16,41 +16,8 @@ import useBalance from "./hooks/useBalance";
 import { TransactionStateContext, TransactionProvider } from "./contexts/transactionContext";
 import { BridgeCurrency } from "./constants/EnviornmentVariables";
 import { RenNetwork } from "@renproject/interfaces";
-export const RenChain = {
-  arbitrum: "arbitrum",
-  avalanche: "avalanche",
-  binanceSmartChain: "binanceSmartChain",
-  ethereum: "ethereum",
-  fantom: "fantom",
-  polygon: "polygon",
-  solana: "solana",
-  bitcoin: "bitcoin",
-  zcash: "zcash",
-  bitcoinCash: "bitcoinCash",
-  dogecoin: "dogecoin",
-  digibyte: "digibyte",
-  terra: "terra",
-  filecoin: "filecoin",
-  unknown: "unknown",
-}
+
 function App() { 
-
-  const networkMappingLegacy = {
-    mainnet: RenNetwork.Mainnet,
-    testnet: RenNetwork.Testnet,
-};
-
-
-  const oldNetworkMappings = {
-      [RenChain.ethereum]: networkMappingLegacy,
-      [RenChain.binanceSmartChain]: networkMappingLegacy,
-      [RenChain.fantom]: networkMappingLegacy,
-      [RenChain.polygon]: networkMappingLegacy,
-      [RenChain.avalanche]: networkMappingLegacy,
-      [RenChain.solana]: networkMappingLegacy,
-      [RenChain.arbitrum]: networkMappingLegacy,
-    };
-  
 
   console.log(RenNetwork)
   const loading = useOnPageLoad()
@@ -66,7 +33,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={HomePage}></Route>
               <Route exact path="/bridge" component={BridgePage}></Route>
-              <Route exact path="/erc20bridge" component={ERC20BridgePage}></Route>
+              <Route exact path="/bridge/erc20bridge" component={ERC20BridgePage}></Route>
               <Route exact path="/wallet" component={WalletPage}
               />
               <Route exact path="/transactions" component={TransactionPage}></Route>

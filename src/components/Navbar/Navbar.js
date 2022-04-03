@@ -106,7 +106,7 @@ export default function Nav() {
                         <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
                     </NavLogoContainer>
                     <NavMenu visible={localStorage.getItem("provider")} marginL={"40px"} marginR={"118px"}>
-                        <NavItem  marginL={"0px"} >
+                        <NavItem  marginL={"15px"} >
                             <NavButton width={"130px"} 
                                 id={`chains-nav-link`}
                                 to="/chains"

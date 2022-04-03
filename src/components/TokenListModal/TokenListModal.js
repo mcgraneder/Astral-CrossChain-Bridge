@@ -534,10 +534,9 @@ const TokenListModal = ({
     }, [dispatch])
 
     const handleChainChange = React.useCallback((chain, option, type) => {
-        setShowTokenModal(false)
         setSelectedToken(option, type)
         dispatch(setChain(chain))
-       
+        setShowTokenModal(false)
     }, [dispatch])
 
     console.log(type)
@@ -550,12 +549,17 @@ const TokenListModal = ({
                     <TokenListFormWrapper>
                         <TopSection>
                             <HeaderContainer>
-                                <HeaderText>Select a token</HeaderText>
+                                <HeaderText>
+                                    {type==="from" 
+                                    ? "Select A Currency" 
+                                    : "Select A Destination Chain"
+                                    }
+                                </HeaderText>
                                 <CloseIcon onClick={close}/>
                             </HeaderContainer>
                             <TokenInputContainer>
                                 <TokenInput 
-                                    placeholder={"Search name or paste address"}
+                                    placeholder={`Search ${mode} by name or symbol`}
                                     value={searchTerm}
                                     name={"search"}
                                     type={"text"}
@@ -583,12 +587,15 @@ const TokenListModal = ({
                                     .filter(availabilityFilter)
                                     .filter((val) => {
                                         if (searchTerm === "") {
-                                        return val
-                                        } else if (val.symbol.toLowerCase().includes(searchTerm.toLowerCase()) || val.full.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                            return val
+                                        } else if (
+                                            val.symbol.toLowerCase().includes(searchTerm.toLowerCase()) 
+                                            || val.full.toLowerCase().includes(searchTerm.toLowerCase())
+                                        ) {
                                         return val
                                         }
                                     })
-                                    .map(({ symbol, MainIcon, GreyIcon, full, short}) => {
+                                    .map(({ symbol, MainIcon, short, full}) => {
                                         return (
                                             <ListTokenContainer key={symbol} opacTrue={false} onClick={() => 
                                                 type === "from" 
@@ -597,7 +604,7 @@ const TokenListModal = ({
                                             }>
                                             <TokenImg src={MainIcon} width={"30px"} size={"30px"}></TokenImg>
                                             <TokenNameContainer>
-                                                <TokenTitle>{symbol}</TokenTitle>
+                                                <TokenTitle>{short}</TokenTitle>
                                                 <TokenSubtitle>{full}</TokenSubtitle>
                                             </TokenNameContainer>
                                             <Spacer/>
@@ -617,7 +624,10 @@ const TokenListModal = ({
                                     <TextContainer>
                                         <Img src={Edit}></Img>
                                         <BottomSectionText>
-                                            Token Selection List
+                                            {type=="from" 
+                                             ? "Currency Selection List" 
+                                             : "Chain Seleection List"
+                                            }
                                         </BottomSectionText>
                                     </TextContainer>
                                 </BottomSectionTextWrapper>

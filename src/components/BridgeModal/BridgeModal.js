@@ -151,34 +151,13 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     const [pending, setPending] = useState(false)
     const [complete, setComplete] = useState(false)
     const [showFees, setShowFees] = useState(false)
-    const toggleFees = () => setShowFees(!showFees)
     const [showGateway, setShowGateway] = useState(false)
-    const toggleGateway = () => {
-        setConfirm(false)
-        setComplete(false)
-        setPending(true)
-        setTimeout(() => {
-            setComplete(true)
-            setTimeout(() => {
-                setShowGateway(!showGateway)
-               setPending(false)
-            }, 1000)
-        }, 2200)
-    }
-
-    const { currency } = useSelector($mint);
-    const { chain } = useSelector($wallet);
-    const selectedCurrency = getOptionBySymbol(currency, "currency");
-    console.log(selectedCurrency)
-    const selectedChain = getOptionBySymbol(chain, "chain");
-    const { currencyIcon, currencyfull, currencyshort } = getAssetData(selectedCurrency);
-    const { chainIcon, chainfull, chainshort } = getAssetData(selectedChain);
-    
 
     let history = useHistory()
     const { active } = useWeb3React()
-    console.log(showGateway)
+
     const setToggleValue = () => setToggle(!toggle);
+    const toggleFees = () => setShowFees(!showFees)
 
     useEffect(() => {
         if(!localStorage.getItem("provider")) history.push("/") 
@@ -190,19 +169,34 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
         }
     }, [fromToken, toToken, setFromToken])
 
+    const toggleGateway = () => {
+        setConfirm(false)
+        setComplete(false)
+        setPending(true)
+
+        setTimeout(() => {
+            setComplete(true)
+            setTimeout(() => {
+                setShowGateway(!showGateway)
+               setPending(false)
+            }, 1000)
+        }, 2200)
+    }
+
+    const { currency } = useSelector($mint);
+    const { chain } = useSelector($wallet);
+
+    const selectedCurrency = getOptionBySymbol(currency, "currency");
+    const selectedChain = getOptionBySymbol(chain, "chain");
+
+    const { currencyIcon, currencyfull, currencyshort } = getAssetData(selectedCurrency);
+    const { chainIcon, chainfull, chainshort } = getAssetData(selectedChain);
+
     const openTokenList = (type) => {
 
         setType(type)
         toggleTokenModal()
     }
-
-    // const handleCurrencyChange = React.useCallback((event) => {
-    //     dispatch(setMintCurrency(event.target.value))
-    // }, [dispatch])
-
-    // const handleChainChange = React.useCallback((event) => {
-    //     dispatch(setChain(event.target.value))
-    // }, [dispatch])
     
     if (showGateway) return(
         <StyledContainer>    
@@ -256,7 +250,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                                 <MintFormText2>Legacy Bridge</MintFormText2>
                             </MintFormTextWrapper2>
                         </LegacyBridgeToggleButton>
-                        <ERC20BridgeToggleButton side={"right"} to="/erc20bridge">
+                        <ERC20BridgeToggleButton side={"right"} to="/bridge/erc20bridge">
                             <MintFormTextWrapper2>
                                 <MintFormText2>ERC20 Bridge</MintFormText2>
                             </MintFormTextWrapper2>
@@ -269,7 +263,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             <ChainSelectorIcon src={selectedCurrency.MainIcon} width={"30px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>{selectedCurrency.symbol}</ChainSelectorText>
+                            <ChainSelectorText><span style={{"fontWeight": "bold", "fontSize": "17px"}}>{selectedCurrency.short}</span><span style={{"color": "#adadad", "paddingLeft": "5px"}}>{" "}(Bridge {selectedCurrency.full})</span></ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>
@@ -282,7 +276,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             <ChainSelectorIcon src={selectedChain.MainIcon} width={"30px"} loading="lazy"></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
                         <ChainSelectorTextWrapper>
-                            <ChainSelectorText>{selectedChain.symbol}</ChainSelectorText>
+                            <ChainSelectorText><span style={{"fontWeight": "bold", "fontSize": "17px"}}>{selectedChain.short}</span><span style={{"color": "#adadad", "paddingLeft": "5px"}}>{" "}(To {selectedChain.full})</span></ChainSelectorText>
                         </ChainSelectorTextWrapper>
                         <DropdownContainer>
                             <ChainSelectorIcon src={chevronDownLogo} width={"15px"}></ChainSelectorIcon>

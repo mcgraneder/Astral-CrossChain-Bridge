@@ -31,7 +31,6 @@ export const NavMenu = styled.div`
     margin: 10px;
     margin-left: ${(props) => props.marginL};
     opacity: ${(props) => props.visible ? "1" : "0"};
-    background: rgb(27,32,52);
     border-radius: 18px;
 `
 
@@ -137,7 +136,8 @@ export const NavMenu2 = styled.div`
     display: flex;
     list-style: none;
     align-items: center;
-    // padding-right: 30px;
+    width: 418px;
+    // padding-right: 25px;
     text-align: center;
    / // justify-content: center;
     
