@@ -84,6 +84,7 @@ const WalletPage = () => {
         if(library) {
             const bridgeContract = getContract(BridgeAddress, abi, library, account);
             const renContract = getContract(RenAddress, abi2, library, account);
+            console.log(renContract)
             setRen(renContract)
             setBridge(bridgeContract)
             console.log(transactions)

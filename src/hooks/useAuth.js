@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core"
 import { injected, fortmatic, portis, torus, walletconnect } from "../connectors/provider";
+import { PROVIDERS } from '../constants/wallets';
 import { useHistory } from 'react-router-dom';
 
 function useAuth() {
@@ -19,12 +20,12 @@ function useAuth() {
     //use network pollinhg intervak to warn usr their offline
     async function connectOnLoad() {
 
-        if ( localStorage.getItem("provider") == null) return
-        if ( localStorage.getItem("provider") === "fortmatic") provider = fortmatic
-        if ( localStorage.getItem("provider") === "injected") provider = injected
-        if ( localStorage.getItem("provider") === "walletconnect") return
-        if ( localStorage.getItem("provider") === "portis") provider = portis
-        if ( localStorage.getItem("provider") === "torus") provider = torus 
+        if ( provider == null) return
+        if (provider === PROVIDERS.FORTMATIC) provider = fortmatic
+        if (provider === PROVIDERS.INJECTED) provider = injected
+        if (provider === PROVIDERS.WALLETCONNECT) return 
+        if (provider === PROVIDERS.PORTIS) provider = portis
+        if (provider === PROVIDERS.TORUS) provider = torus
 
         try {
             if (provider == injected) {
@@ -65,11 +66,11 @@ function useAuth() {
             return
         }
 
-        if (provider1 === "fortmatic") provider = fortmatic
-        if (provider1 === "injected") provider = injected
-        if (provider1 === "walletconnect") provider = walletconnect  
-        if (provider1 === "portis") provider = portis
-        if (provider1 === "torus") provider = torus
+        if (provider1 === PROVIDERS.FORTMATIC) provider = fortmatic
+        if (provider1 === PROVIDERS.INJECTED) provider = injected
+        if (provider1 === PROVIDERS.WALLETCONNECT) provider = walletconnect  
+        if (provider1 === PROVIDERS.PORTIS) provider = portis
+        if (provider1 === PROVIDERS.TORUS) provider = torus
 
         try {
             activate(provider, undefined, true).then(() => localStorage.setItem("provider", provider1))

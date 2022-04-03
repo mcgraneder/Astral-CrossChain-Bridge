@@ -7,6 +7,14 @@ import { injected,
 
 const PRODUCTION = "0"
 
+export const PROVIDERS = {
+  INJECTED: "injected",
+  PORTIS: "portis",
+  FORTMATIC: "fortmatic",
+  TORUS: "torus",
+  WALLETCONNECT: "walletconnect"
+}
+
 const MAINNET_WALLETS = {
     INJECTED: {
       connector: injected,
@@ -41,14 +49,14 @@ const MAINNET_WALLETS = {
               href: null,
               color: '#4196FC'
             },
-            WALLET_LINK: {
-              connector: walletlink,
-              name: 'Coinbase Wallet',
-              iconName: 'coinbaseWalletIcon.svg',
-              description: 'Use Coinbase Wallet app on mobile device',
-              href: null,
-              color: '#315CF5'
-            },
+            // WALLET_LINK: {
+            //   connector: walletlink,
+            //   name: 'Coinbase Wallet',
+            //   iconName: 'coinbaseWalletIcon.svg',
+            //   description: 'Use Coinbase Wallet app on mobile device',
+            //   href: null,
+            //   color: '#315CF5'
+            // },
             COINBASE_LINK: {
               name: 'Open in Coinbase Wallet',
               iconName: 'coinbaseWalletIcon.svg',
