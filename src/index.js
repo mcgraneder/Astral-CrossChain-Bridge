@@ -9,6 +9,7 @@ import NotificationProvider from './contexts/NotificationsContext';
 import MetaMaskAccountProvider from "./contexts/tokensContext"
 import store from './Store/store';
 import { Provider } from 'react-redux';
+import { TransactionProvider } from "./contexts/transactionContext";
 
 function getLibrary(provider) {
   const library = new Web3Provider(provider);
@@ -20,9 +21,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Web3ReactProvider getLibrary={getLibrary}>
+        <TransactionProvider>
         <NotificationProvider>
           <App />
         </NotificationProvider>
+        </TransactionProvider>
       </Web3ReactProvider>
     </Provider>
   </React.StrictMode>,

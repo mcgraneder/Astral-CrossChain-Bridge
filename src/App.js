@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Suspense } from "react"
 import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
 import BridgePage from "./pages/BridgePage";
@@ -26,8 +26,8 @@ function App() {
 
     <TransactionProvider>
       <div>
-        {loading && <PageLoad></PageLoad>}
           <Router>
+            <Suspense fallback={<PageLoad/>}>
             <Nav/>
             <AccountsChangeModal/>
             <Switch>
@@ -44,6 +44,7 @@ function App() {
               colour1={"rgb(7, 16, 33)"} 
               colour2={"rgb(7, 16, 33)"}
             />
+            </Suspense>
           </Router>
       </div>
     </TransactionProvider>

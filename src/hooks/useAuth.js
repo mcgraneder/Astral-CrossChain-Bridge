@@ -38,7 +38,7 @@ function connectOnLoad() {
                 activate(provider) // a little janky...can't use setError because the connector isn't set
               } else {
                 disconnect()
-                history.push("/")
+                // history.push("/")
             } 
         })
     } else {
@@ -47,10 +47,10 @@ function connectOnLoad() {
                 if (error instanceof UnsupportedChainIdError) {
                     activate(provider) // a little janky...can't use setError because the connector isn't set
                         // disconnect()
-                    history.push("/")
+                    // history.push("/")
                   } else {
                     disconnect()
-                    history.push("/")
+                    // history.push("/")
                  } 
             })
         }, 2000)
@@ -82,10 +82,12 @@ function connectOn(provider1) {
 async function disconnect() {
     try {
         deactivate()
+        // window.location.href = "/"
         localStorage.removeItem("currentAccount");
         localStorage.removeItem("provider");
     } catch (err) {
         console.error(err)
+        // history.push("/")
     }
 }
 

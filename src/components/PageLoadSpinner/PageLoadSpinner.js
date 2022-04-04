@@ -1,17 +1,19 @@
 import React from "react";
 import Loader from "react-loader-spinner";
 import "./PageLoadSpinnerStyles.css"
+import "./style.css"
 
 const PageLoad = () => {
 
     return (
-        <div id="root">
-             <div className="loader-content" style={{"zIndex": "10000000"}}>
-                <div className="loader-wrapper">
-                    <Loader type="ThreeDots" color={`rgb(64,73,116)`} height={50} width={100}/>
-                </div>
-            </div>
+        <div class="overflow dark" id="preload">
+        <div class="circle-line">
+            <div class="circle-red">&nbsp;</div>
+            <div class="circle-blue">&nbsp;</div>
+            <div class="circle-green">&nbsp;</div>
+            <div class="circle-yellow">&nbsp;</div>
         </div>
+    </div>
     )
 }
 
