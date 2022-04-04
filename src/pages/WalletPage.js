@@ -193,7 +193,11 @@ const WalletPage = () => {
                 close={() => setConfirm(!confirm)} 
                 amount={text} 
                 visible={confirm}
-               
+                handleDeposit={
+                    TransactionType === "APPROVAL" ? () => handleTransaction(ren.approve) 
+                    : TransactionType === "DEPOSIT" ? () => handleTransaction(bridge.transferFrom) 
+                    : () => handleTransaction(bridge.transfer)
+                }
                 TransactionType={setTransactionType}
                 gass={gas}
             />

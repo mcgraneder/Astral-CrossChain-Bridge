@@ -373,39 +373,46 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
         </>
     )
 }
-export const ConfirmationModal = ({visible}) => {
+export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDeposit, gass}) => {
 
     const [renPrice, setRenPrice] = useState(0)
     const [priceForAmount, setPriceForAmount] = useState(0)
     const [bridgeFee, setBridgeFee] = useState(0)
-    const [ren, setRen] = useState()
-    const [bridge, setBridge] = useState()
     const [gas, setGas] = useState(0)
     const [txCost, setTxCost] = useState(0)
     const [expectedBalance, setExpectedBalance] = useState(0)
 
     const { library, account  } = useWeb3React()
 
-
     // useEffect(() => {
-    //     axios.get(RenBTCPriceRequestURL).then((result) => {
-    //         const currentPrice = result.data[0].current_price + 0.25
-    //         setRenPrice(currentPrice)
-    //         setPriceForAmount(currentPrice * Number(amount).toFixed(6))
+    //     if(library) {
+
+    //         const bridgeContract = getContract(BridgeAddress, abi, library, account);
+    //         const renContract = getContract(renAddress, abi2, library, account);
+    //         setBridge(bridgeContract)
+    //         setRen(renContract)
+    //     }    
+    // }, [library, account])
+
+    useEffect(() => {
+        axios.get(RenBTCPriceRequestURL).then((result) => {
+            const currentPrice = result.data[0].current_price + 0.25
+            setRenPrice(currentPrice)
+            setPriceForAmount(currentPrice * Number(amount).toFixed(6))
             
-    //     }).catch(error => console.error(error))
+        }).catch(error => console.error(error))
 
-    //     calculateBridgeFee()
-    //     calculateExpectedTransactionCost()
-    //     calculateExpectedBalance()
+        calculateBridgeFee()
+        calculateExpectedTransactionCost()
+        calculateExpectedBalance()
 
-    // }, [close])
+    }, [close])
 
-    // const calculateBridgeFee = () => {
+    const calculateBridgeFee = () => {
 
-    //     const fee = (amount * 0.003).toFixed(8)
-    //     setBridgeFee(fee)
-    // }
+        const fee = (amount * 0.003).toFixed(8)
+        setBridgeFee(fee)
+    }
 
     // const estimateGasForTransaction = async(transactionType) => {
 
@@ -431,22 +438,22 @@ export const ConfirmationModal = ({visible}) => {
     //     console.log(gas)
     // }
 
-    // const calculateExpectedTransactionCost = () => {
+    const calculateExpectedTransactionCost = () => {
 
-    //     const expectedCost = Number(amount) + gas
-    //     setTxCost(expectedCost.toFixed(7))
-    // }
+        const expectedCost = Number(amount) + gas
+        setTxCost(expectedCost.toFixed(7))
+    }
 
-    // const calculateExpectedBalance = () => {
-    //     const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
-    //     setExpectedBalance(calculatedBalanceAfterFee)
-    // }
+    const calculateExpectedBalance = () => {
+        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
+        setExpectedBalance(calculatedBalanceAfterFee)
+    }
     
     return (
         <>
-         {/* <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop> */}
+         <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
             <FormWrapper visible={visible} trueFade={true}>
-                {/* <ErrorText>Confirm Transaction</ErrorText>
+                <ErrorText>Confirm Transaction</ErrorText>
                 <CloseIcon onClick={close}></CloseIcon>
                 <ArrowDownContainer>
                     <ArrowDown color={"White"} size={"15px"}/>
@@ -486,7 +493,7 @@ export const ConfirmationModal = ({visible}) => {
                 </TitleWrapper>
                 <ButtonWrapper margin={"45px"}>
                     <Button onClick={handleDeposit}>Confirm Transaction</Button>
-                </ButtonWrapper> */}
+                </ButtonWrapper>
                 
                
             </FormWrapper>
