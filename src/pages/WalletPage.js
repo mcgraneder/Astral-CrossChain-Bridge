@@ -189,18 +189,14 @@ const WalletPage = () => {
                 amount={text} 
                 visible={pending1}
             />
-        {/* <ConfirmationModal
+        <ConfirmationModal
                 close={() => setConfirm(!confirm)} 
                 amount={text} 
                 visible={confirm}
-                handleDeposit={
-                    TransactionType === "APPROVAL" ? () => handleTransaction(ren.approve) 
-                    : TransactionType === "DEPOSIT" ? () => handleTransaction(bridge.transferFrom) 
-                    : () => handleTransaction(bridge.transfer)
-                }
+               
                 TransactionType={setTransactionType}
                 gass={gas}
-            /> */}
+            />
             <TransactionSubmittedModal
                 close={() => closeSbmissionModal()} 
                 amount={text} 

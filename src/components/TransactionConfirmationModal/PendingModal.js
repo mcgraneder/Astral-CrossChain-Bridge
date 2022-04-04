@@ -373,7 +373,7 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
         </>
     )
 }
-export const ConfirmationModal = ({visible, close, amount, handleDeposit, gass}) => {
+export const ConfirmationModal = ({visible}) => {
 
     const [renPrice, setRenPrice] = useState(0)
     const [priceForAmount, setPriceForAmount] = useState(0)
