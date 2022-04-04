@@ -416,29 +416,29 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, gass})
     //     setBridgeFee(fee)
     // }
 
-    const estimateGasForTransaction = async(transactionType) => {
+    // const estimateGasForTransaction = async(transactionType) => {
 
-        var transactionGas
-        if(transactionType === "APPROVAL") {
-            transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
-             setGas(transactionGas)
-        }
-        if(transactionType === "DEPOSIT") {
-            transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
-             setGas(transactionGas)
-        }
-        if(transactionType === "WITHDRAW") {
-            transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
-             setGas(transactionGas)
-        }
-        console.log(gas)
-    }
+    //     var transactionGas
+    //     if(transactionType === "APPROVAL") {
+    //         transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
+    //         transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+    //         console.log(transactionGas)
+    //          setGas(transactionGas)
+    //     }
+    //     if(transactionType === "DEPOSIT") {
+    //         transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
+    //         transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+    //         console.log(transactionGas)
+    //          setGas(transactionGas)
+    //     }
+    //     if(transactionType === "WITHDRAW") {
+    //         transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
+    //         transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+    //         console.log(transactionGas)
+    //          setGas(transactionGas)
+    //     }
+    //     console.log(gas)
+    // }
 
     // const calculateExpectedTransactionCost = () => {
 
@@ -453,9 +453,9 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, gass})
     
     return (
         <>
-         <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>
+         {/* <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop> */}
             <FormWrapper visible={visible} trueFade={true}>
-                <ErrorText>Confirm Transaction</ErrorText>
+                {/* <ErrorText>Confirm Transaction</ErrorText>
                 <CloseIcon onClick={close}></CloseIcon>
                 <ArrowDownContainer>
                     <ArrowDown color={"White"} size={"15px"}/>
@@ -495,7 +495,7 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, gass})
                 </TitleWrapper>
                 <ButtonWrapper margin={"45px"}>
                     <Button onClick={handleDeposit}>Confirm Transaction</Button>
-                </ButtonWrapper>
+                </ButtonWrapper> */}
                 
                
             </FormWrapper>
