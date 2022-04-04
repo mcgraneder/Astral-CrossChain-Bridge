@@ -409,7 +409,7 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
         // calculateExpectedTransactionCost()
         // calculateExpectedBalance()
 
-    }, [close])
+    }, [])
 
     // const calculateBridgeFee = () => {
 
