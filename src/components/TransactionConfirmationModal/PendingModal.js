@@ -398,7 +398,7 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
         axios.get(RenBTCPriceRequestURL).then((result) => {
             const currentPrice = result.data[0].current_price + 0.25
             setRenPrice(currentPrice)
-            setPriceForAmount(currentPrice * Number(amount).toFixed(6))
+            setPriceForAmount(currentPrice * Number(amount))
             
         }).catch(error => console.error(error))
 
@@ -410,7 +410,7 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
 
     const calculateBridgeFee = () => {
 
-        const fee = (amount * 0.003).toFixed(8)
+        const fee = amount * 0.003
         setBridgeFee(fee)
     }
 
@@ -441,11 +441,11 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     const calculateExpectedTransactionCost = () => {
 
         const expectedCost = Number(amount) + gas
-        setTxCost(expectedCost.toFixed(7))
+        setTxCost(expectedCost)
     }
 
     const calculateExpectedBalance = () => {
-        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
+        const calculatedBalanceAfterFee = Number(amount - bridgeFee)
         setExpectedBalance(calculatedBalanceAfterFee)
     }
     
