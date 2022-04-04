@@ -189,7 +189,7 @@ const WalletPage = () => {
                 amount={text} 
                 visible={pending1}
             />
-        <ConfirmationModal
+        {/* <ConfirmationModal
                 close={() => setConfirm(!confirm)} 
                 amount={text} 
                 visible={confirm}
@@ -200,7 +200,7 @@ const WalletPage = () => {
                 }
                 TransactionType={setTransactionType}
                 gass={gas}
-            />
+            /> */}
             <TransactionSubmittedModal
                 close={() => closeSbmissionModal()} 
                 amount={text} 
@@ -212,10 +212,10 @@ const WalletPage = () => {
                 visible={rejected}
             />
         
-            {/* <TokenListModal 
+            <TokenListModal 
                 visible={showTokenModal} 
                 close={toggleTokenModal}
-            /> */}
+            />
             <WalletModal  
                 setConfirm={setConfirm}
                 setText={setText}
