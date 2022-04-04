@@ -18,9 +18,3 @@ export const PayloadType = {
     iconColor?: string,
 };
 
-export interface IToasts {
-    topR: PayloadType[];
-    topL: PayloadType[];
-    bottomR: PayloadType[];
-    bottomL: PayloadType[];
-}
