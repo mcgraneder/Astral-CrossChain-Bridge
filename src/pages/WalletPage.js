@@ -184,7 +184,7 @@ const WalletPage = () => {
     return (
 
         <>
-        {/* <PendingModal 
+        <PendingModal 
                 close={() => setPending1(!pending1)} 
                 amount={text} 
                 visible={pending1}
@@ -212,7 +212,7 @@ const WalletPage = () => {
                 visible={rejected}
             />
         
-            <TokenListModal 
+            {/* <TokenListModal 
                 visible={showTokenModal} 
                 close={toggleTokenModal}
             /> */}
