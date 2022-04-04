@@ -184,7 +184,7 @@ const WalletPage = () => {
     return (
 
         <>
-        <PendingModal 
+        {/* <PendingModal 
                 close={() => setPending1(!pending1)} 
                 amount={text} 
                 visible={pending1}
@@ -215,7 +215,7 @@ const WalletPage = () => {
             <TokenListModal 
                 visible={showTokenModal} 
                 close={toggleTokenModal}
-            />
+            /> */}
             <WalletModal  
                 setConfirm={setConfirm}
                 setText={setText}
