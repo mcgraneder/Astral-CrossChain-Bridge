@@ -139,7 +139,7 @@ export const NavMenu2 = styled.div`
     width: 418px;
     // padding-right: 25px;
     text-align: center;
-   / // justify-content: center;
+    justify-content: right;
     
     
     // line-height: 50px;
@@ -159,7 +159,7 @@ export const NavItem2 = styled.div`
 
     background: rgb(14, 22, 39);
     height: 40px;
-    width: 100%;
+    // width: 100%;
     padding-left: ${(props) => props.active ? "5px" : "0px"};
     // margin-top: 3px;
     display: flex;

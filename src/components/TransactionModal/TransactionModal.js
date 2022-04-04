@@ -4,7 +4,7 @@ import chevronDownLogo from "../assets/cheverondown.png"
 import chevronDownLogo1 from "../assets/cheverondownB.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import { ChainSelectorIcon } from "../BridgeModal/BridgeModalStyles";
-import DropdownMenu from "./DropdownMenu";
+import DropdownMenu from "./components/Dropdown/DropdownMenu";
 import { StyledContainer, 
          BridgeModalContainer,
          TransactionModalHeaderContainer,
@@ -23,8 +23,7 @@ import { StyledContainer,
          ChainSelectorIconWrapper,
          Spacer,
 } from "./TransactionModalStyles";
-import DropdownMenu3 from "./DropdownMenu3";
-import TransactionList from "./TransactionList/TransactionList";
+import TransactionList from "./components/TransactionList/TransactionList";
 
 const TransactionModal = ({ transactions, toggleTokenModal }) => {
 
@@ -68,13 +67,6 @@ const TransactionModal = ({ transactions, toggleTokenModal }) => {
                                     src={chevronDownLogo} 
                                     width={"15px"}/>
                             </DropdownContainer>
-                            <DropdownMenu3 
-                                active={dropDownActive0} 
-                                width={"125px"} 
-                                height={"100px"} 
-                                top={"65px"} 
-                                left={"215px"}
-                            />
                             <DropdownButton 
                                 width={"170px"} 
                                 background={"rgb(33,114,229)"} 

@@ -178,7 +178,7 @@ const TransactionList = ({transactions}) => {
        
         <>
             <TransactionListContainer>
-                {transactions.map((item, i) => {
+                {transactions.filter((item) => item.type === "WITHDRAWAL").map((item, i) => {
                         if(i >= 0){
                             return <div key={item.id} className="objectname">
                                         <TransactionItemContainer>
