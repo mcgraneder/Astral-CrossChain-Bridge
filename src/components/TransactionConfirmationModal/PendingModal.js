@@ -373,7 +373,7 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
         </>
     )
 }
-export const ConfirmationModal = ({visible, close, amount, handleDeposit, transactionType, gass}) => {
+export const ConfirmationModal = ({visible, close, amount, handleDeposit, gass}) => {
 
     const [renPrice, setRenPrice] = useState(0)
     const [priceForAmount, setPriceForAmount] = useState(0)
@@ -396,25 +396,25 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
         }    
     }, [library, account])
 
-    useEffect(() => {
-        axios.get(RenBTCPriceRequestURL).then((result) => {
-            const currentPrice = result.data[0].current_price + 0.25
-            setRenPrice(currentPrice)
-            setPriceForAmount(currentPrice * Number(amount).toFixed(6))
+    // useEffect(() => {
+    //     axios.get(RenBTCPriceRequestURL).then((result) => {
+    //         const currentPrice = result.data[0].current_price + 0.25
+    //         setRenPrice(currentPrice)
+    //         setPriceForAmount(currentPrice * Number(amount).toFixed(6))
             
-        }).catch(error => console.error(error))
+    //     }).catch(error => console.error(error))
 
-        calculateBridgeFee()
-        calculateExpectedTransactionCost()
-        calculateExpectedBalance()
+    //     calculateBridgeFee()
+    //     calculateExpectedTransactionCost()
+    //     calculateExpectedBalance()
 
-    }, [close])
+    // }, [close])
 
-    const calculateBridgeFee = () => {
+    // const calculateBridgeFee = () => {
 
-        const fee = (amount * 0.003).toFixed(8)
-        setBridgeFee(fee)
-    }
+    //     const fee = (amount * 0.003).toFixed(8)
+    //     setBridgeFee(fee)
+    // }
 
     const estimateGasForTransaction = async(transactionType) => {
 
@@ -440,16 +440,16 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
         console.log(gas)
     }
 
-    const calculateExpectedTransactionCost = () => {
+    // const calculateExpectedTransactionCost = () => {
 
-        const expectedCost = Number(amount) + gas
-        setTxCost(expectedCost.toFixed(7))
-    }
+    //     const expectedCost = Number(amount) + gas
+    //     setTxCost(expectedCost.toFixed(7))
+    // }
 
-    const calculateExpectedBalance = () => {
-        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
-        setExpectedBalance(calculatedBalanceAfterFee)
-    }
+    // const calculateExpectedBalance = () => {
+    //     const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
+    //     setExpectedBalance(calculatedBalanceAfterFee)
+    // }
     
     return (
         <>
@@ -503,48 +503,3 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
     )
 }
 
-const TransactionProcess = (
-    {
-        confirm, 
-        pending, 
-        submitted, 
-        rejected, 
-        visible, 
-        close, 
-        amount,
-        handleDeposit
-    }
-) => {
-
-
-    return (
-
-        <>
-            {pending && <PendingModal 
-                close={close} 
-                amount={amount} 
-                visible={visible}
-            />}
-            {confirm && <ConfirmationModal
-                close={close} 
-                amount={amount} 
-                visible={visible}
-                handleDeposit={handleDeposit}
-            />}
-            {submitted && <TransactionSubmittedModal
-                close={close} 
-                amount={amount} 
-                visible={visible}
-            />}
-            {rejected && <RejectionModal
-                close={close} 
-                amount={amount} 
-                visible={visible}
-            />}
-        
-        </>
-    )
-}
-
-
-export default TransactionProcess;
