@@ -395,14 +395,20 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     // }, [library, account])
 
     useEffect(() => {
-        fetch(RenBTCPriceRequestURL).then((result) => {
-            console.log(currentPrice)
+        const fetchPrice = async() => {
+            const result = await fetch(RenBTCPriceRequestURL)
             console.log(result)
-            const currentPrice = result.data[0].current_price
-            // setRenPrice(currentPrice)
-            // setPriceForAmount(currentPrice * Number(amount))
+        }
+
+        fetchPrice()
+        // fetch(RenBTCPriceRequestURL).then((result) => {
+        //     console.log(currentPrice)
+        //     console.log(result)
+        //     const currentPrice = result.data[0].current_price
+        //     // setRenPrice(currentPrice)
+        //     // setPriceForAmount(currentPrice * Number(amount))
             
-        }).catch(error => console.error(error))
+        // }).catch(error => console.error(error))
 
         // calculateBridgeFee()
         // calculateExpectedTransactionCost()
