@@ -375,12 +375,12 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
 }
 export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDeposit, gass}) => {
 
-    // const [renPrice, setRenPrice] = useState(0)
-    // const [priceForAmount, setPriceForAmount] = useState(0)
-    // const [bridgeFee, setBridgeFee] = useState(0)
-    // const [gas, setGas] = useState(0)
-    // const [txCost, setTxCost] = useState(0)
-    // const [expectedBalance, setExpectedBalance] = useState(0)
+    const [renPrice, setRenPrice] = useState(0)
+    const [priceForAmount, setPriceForAmount] = useState(0)
+    const [bridgeFee, setBridgeFee] = useState(0)
+    const [gas, setGas] = useState(0)
+    const [txCost, setTxCost] = useState(0)
+    const [expectedBalance, setExpectedBalance] = useState(0)
 
     const { library, account  } = useWeb3React()
 
