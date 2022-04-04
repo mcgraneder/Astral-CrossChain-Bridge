@@ -375,12 +375,12 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
 }
 export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDeposit, gass}) => {
 
-    const [renPrice, setRenPrice] = useState(0)
-    const [priceForAmount, setPriceForAmount] = useState(0)
-    const [bridgeFee, setBridgeFee] = useState(0)
-    const [gas, setGas] = useState(0)
-    const [txCost, setTxCost] = useState(0)
-    const [expectedBalance, setExpectedBalance] = useState(0)
+    // const [renPrice, setRenPrice] = useState(0)
+    // const [priceForAmount, setPriceForAmount] = useState(0)
+    // const [bridgeFee, setBridgeFee] = useState(0)
+    // const [gas, setGas] = useState(0)
+    // const [txCost, setTxCost] = useState(0)
+    // const [expectedBalance, setExpectedBalance] = useState(0)
 
     const { library, account  } = useWeb3React()
 
@@ -394,25 +394,25 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     //     }    
     // }, [library, account])
 
-    useEffect(() => {
-        axios.get(RenBTCPriceRequestURL).then((result) => {
-            const currentPrice = result.data[0].current_price + 0.25
-            setRenPrice(currentPrice)
-            setPriceForAmount(currentPrice * Number(amount))
+    // useEffect(() => {
+    //     axios.get(RenBTCPriceRequestURL).then((result) => {
+    //         const currentPrice = result.data[0].current_price + 0.25
+    //         setRenPrice(currentPrice)
+    //         setPriceForAmount(currentPrice * Number(amount))
             
-        }).catch(error => console.error(error))
+    //     }).catch(error => console.error(error))
 
-        calculateBridgeFee()
-        calculateExpectedTransactionCost()
-        calculateExpectedBalance()
+    //     calculateBridgeFee()
+    //     calculateExpectedTransactionCost()
+    //     calculateExpectedBalance()
 
-    }, [close])
+    // }, [close])
 
-    const calculateBridgeFee = () => {
+    // const calculateBridgeFee = () => {
 
-        const fee = amount * 0.003
-        setBridgeFee(fee)
-    }
+    //     const fee = amount * 0.003
+    //     setBridgeFee(fee)
+    // }
 
     // const estimateGasForTransaction = async(transactionType) => {
 
@@ -438,16 +438,16 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     //     console.log(gas)
     // }
 
-    const calculateExpectedTransactionCost = () => {
+    // const calculateExpectedTransactionCost = () => {
 
-        const expectedCost = Number(amount) + gas
-        setTxCost(expectedCost)
-    }
+    //     const expectedCost = Number(amount) + gas
+    //     setTxCost(expectedCost)
+    // }
 
-    const calculateExpectedBalance = () => {
-        const calculatedBalanceAfterFee = Number(amount - bridgeFee)
-        setExpectedBalance(calculatedBalanceAfterFee)
-    }
+    // const calculateExpectedBalance = () => {
+    //     const calculatedBalanceAfterFee = Number(amount - bridgeFee)
+    //     setExpectedBalance(calculatedBalanceAfterFee)
+    // }
     
     return (
         <>
@@ -466,30 +466,30 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 <TokenAmountWrapper height={"70px"} marginTop={"4px"} marginBottom={"0px"}>
-                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>{priceForAmount}</TokenAmount>
+                    <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>1</TokenAmount>
                     <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>Dollars</TokenAmount>
                     <ImgWrapper padding={"20px"} float={"right"}>
                         <img src={Dollar} height={"30px"}></img>
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 <TitleWrapper margin={"10px"}>
-                    <SubTitle2 style={{"fontWeight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = ${renPrice}</SubTitle2>
+                    <SubTitle2 style={{"fontWeight": "bold"}} color={"White"} size={"15px"} margin={"0"}>1 RenBTC = 1</SubTitle2>
                 </TitleWrapper>
                 <Wrapper>
                     <TokenAmountWrapper height={"140px"} marginTop={"15px"}>
                         <TokenAmount2 float={"left"} size={"15px"} colour={"White"} paddingTop={"15px"} paddingRight={"50px"}>Estimated Gas:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"15px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{gass} ETH</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"}paddingTop={"15px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>1 ETH</TokenAmount2>
                         <TokenAmount2 float={"left"} size={"15px"} colour={"White"}paddingTop={"3px"} paddingRight={"50px"}>Token Bridge Fee:</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} paddingTop={"3px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{bridgeFee} ETH</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"15px"} colour={"White"} paddingTop={"3px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>1 ETH</TokenAmount2>
                         <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"25px"} paddingRight={"0px"}>Expected cost to execute transaction</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"25px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{txCost} ETH</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"25px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>1 ETH</TokenAmount2>
                         <TokenAmount2 float={"left"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0px"}>Expected balance after Bridge Fee</TokenAmount2>
-                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>{expectedBalance} ETH</TokenAmount2>
+                        <TokenAmount2 float={"right"} size={"13px"} colour={"#adadad"} paddingTop={"2px"} paddingRight={"0"} style={{"fontWeight": "bold"}}>1 ETH</TokenAmount2>
                         <Divider></Divider>
                     </TokenAmountWrapper>
                 </Wrapper>
                 <TitleWrapper margin={"10px"}>
-                <SubTitle2 style={{"fontWeight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least {expectedBalance} RenBTC after the Bridge fee.</SubTitle2>
+                <SubTitle2 style={{"fontWeight": "bold"}} color={"#adadad"} size={"12.5px"}>This Output is estimated. You will receive at least RenBTC after the Bridge fee.</SubTitle2>
                 </TitleWrapper>
                 <ButtonWrapper margin={"45px"}>
                     <Button onClick={handleDeposit}>Confirm Transaction</Button>
