@@ -386,15 +386,6 @@ export const ConfirmationModal = ({visible}) => {
 
     const { library, account  } = useWeb3React()
 
-    useEffect(() => {
-        if(library) {
-
-            const bridgeContract = getContract(BridgeAddress, abi, library, account);
-            const renContract = getContract(renAddress, abi2, library, account);
-            setBridge(bridgeContract)
-            setRen(renContract)
-        }    
-    }, [library, account])
 
     // useEffect(() => {
     //     axios.get(RenBTCPriceRequestURL).then((result) => {
