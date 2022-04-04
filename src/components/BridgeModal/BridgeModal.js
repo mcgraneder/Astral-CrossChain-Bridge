@@ -227,14 +227,14 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
             complete={complete}
         />
 
-         {/* <ConfirmationModal
+         <ConfirmationModal
             close={() => setConfirm(!confirm)} 
             amount={"1.23"} 
             visible={confirm}
             handleDeposit={toggleGateway}
             TransactionType={"APPROVAL"}
             gass={"0.000354"}
-        /> */}
+        />
         <StyledContainer>
             <BridgeModalContainer>
                 <BridgeModalWrapper>

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css, keyframes } from "styled-components";
 import Circle from "../assets/blue-loader.svg"
 import {X, ArrowDown, ArrowUpCircle, AlertTriangle, CheckCircle} from "react-feather"
 import metaMask from "../assets/metamask.png"
 import Bitcoin from "../assets/Bitcoin.svg"
 import Dollar from "../assets/dollar.png"
-import { useEffect } from "react/cjs/react.development";
 import axios from "axios"
 import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
@@ -373,11 +372,84 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
         </>
     )
 }
-export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDeposit, gass, renPrice, priceForAmount, bridgeFee, gas, txCost, expectedBalance}) => {
+export const ConfirmationModal = ({visible, close, amount, handleDeposit, transactionType, gass}) => {
 
+    const [renPrice, setRenPrice] = useState(0)
+    const [priceForAmount, setPriceForAmount] = useState(0)
+    const [bridgeFee, setBridgeFee] = useState(0)
+    const [ren, setRen] = useState()
+    const [bridge, setBridge] = useState()
+    const [gas, setGas] = useState(0)
+    const [txCost, setTxCost] = useState(0)
+    const [expectedBalance, setExpectedBalance] = useState(0)
 
     const { library, account  } = useWeb3React()
 
+    useEffect(() => {
+        if(library) {
+
+            const bridgeContract = getContract(BridgeAddress, abi, library, account);
+            const renContract = getContract(renAddress, abi2, library, account);
+            setBridge(bridgeContract)
+            setRen(renContract)
+        }    
+    }, [library, account])
+
+    useEffect(() => {
+        axios.get(RenBTCPriceRequestURL).then((result) => {
+            const currentPrice = result.data[0].current_price + 0.25
+            setRenPrice(currentPrice)
+            setPriceForAmount(currentPrice * Number(amount).toFixed(6))
+            
+        }).catch(error => console.error(error))
+
+        calculateBridgeFee()
+        calculateExpectedTransactionCost()
+        calculateExpectedBalance()
+
+    }, [close])
+
+    const calculateBridgeFee = () => {
+
+        const fee = (amount * 0.003).toFixed(8)
+        setBridgeFee(fee)
+    }
+
+    const estimateGasForTransaction = async(transactionType) => {
+
+        var transactionGas
+        if(transactionType === "APPROVAL") {
+            transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
+            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+            console.log(transactionGas)
+             setGas(transactionGas)
+        }
+        if(transactionType === "DEPOSIT") {
+            transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
+            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+            console.log(transactionGas)
+             setGas(transactionGas)
+        }
+        if(transactionType === "WITHDRAW") {
+            transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
+            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+            console.log(transactionGas)
+             setGas(transactionGas)
+        }
+        console.log(gas)
+    }
+
+    const calculateExpectedTransactionCost = () => {
+
+        const expectedCost = Number(amount) + gas
+        setTxCost(expectedCost.toFixed(7))
+    }
+
+    const calculateExpectedBalance = () => {
+        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
+        setExpectedBalance(calculatedBalanceAfterFee)
+    }
+    
     return (
         <>
          <Backdrop visible={visible} onClick={close} trueFade={false}></Backdrop>

@@ -18,7 +18,7 @@ import { ConfirmationModal,
 import { TransactionStateContext } from "../contexts/transactionContext";
 import { useNotification } from "../hooks/useNotification";
 import EthereumLogo from "../components/assets/eth.png"
-import axios from "axios";
+
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
@@ -43,7 +43,6 @@ export const BUTTON_STATES = {
     PENDING: "PENDING"
 }
 
-const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
 
 const WalletPage = () => {
 
@@ -59,11 +58,6 @@ const WalletPage = () => {
     const [bridge, setBridge] = useState()
     const [transactionBlock, setTransactionBlock] = useState(true)
     const [sufficentApproval, setSufficentApproval] = useState(true)
-    const [renPrice, setRenPrice] = useState(0)
-    const [priceForAmount, setPriceForAmount] = useState(0)
-    const [bridgeFee, setBridgeFee] = useState(0)
-    const [txCost, setTxCost] = useState(0)
-    const [expectedBalance, setExpectedBalance] = useState(0)
     const {library, account } = useWeb3React()
 
     const { pending, setPending } = useContext(TransactionStateContext)
@@ -96,61 +90,6 @@ const WalletPage = () => {
             console.log(transactions)
         }
     }, [library, account]) 
-
-    useEffect(() => {
-        axios.get(RenBTCPriceRequestURL).then((result) => {
-            const currentPrice = result.data[0].current_price + 0.25
-            setRenPrice(currentPrice)
-            setPriceForAmount(currentPrice * Number(text).toFixed(6))
-            
-        }).catch(error => console.error(error))
-
-        calculateBridgeFee()
-        calculateExpectedTransactionCost()
-        calculateExpectedBalance()
-
-    }, [confirm])
-
-    const calculateBridgeFee = () => {
-
-        const fee = (text * 0.003).toFixed(8)
-        setBridgeFee(fee)
-    }
-
-    const estimateGasForTransaction = async(transactionType) => {
-
-        var transactionGas
-        if(transactionType === "APPROVAL") {
-            transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
-             setGas(transactionGas)
-        }
-        if(transactionType === "DEPOSIT") {
-            transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, text, "BTC")
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
-             setGas(transactionGas)
-        }
-        if(transactionType === "WITHDRAW") {
-            transactionGas = await bridge.estimateGas.transfer(account, text, "BTC")
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
-             setGas(transactionGas)
-        }
-        console.log(gas)
-    }
-
-    const calculateExpectedTransactionCost = () => {
-
-        const expectedCost = Number(text) + gas
-        setTxCost(expectedCost.toFixed(7))
-    }
-
-    const calculateExpectedBalance = () => {
-        const calculatedBalanceAfterFee = Number(text - bridgeFee).toFixed(7)
-        setExpectedBalance(calculatedBalanceAfterFee)
-    }
 
     const handleTransaction = async(contractFunction) => {
         setConfirm(false)
@@ -261,12 +200,6 @@ const WalletPage = () => {
                 }
                 TransactionType={setTransactionType}
                 gass={gas}
-                renPrice={renPrice}
-                priceForAmount={priceForAmount}
-                bridgeFee={bridgeFee}
-                gas={gas}
-                txCost={txCost}
-                expectedBalance={expectedBalance}
             />
             <TransactionSubmittedModal
                 close={() => closeSbmissionModal()} 
