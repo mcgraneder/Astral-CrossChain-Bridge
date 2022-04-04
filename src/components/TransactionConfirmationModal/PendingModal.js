@@ -395,12 +395,7 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     // }, [library, account])
 
     useEffect(() => {
-        const fetchPrice = async() => {
-            const result = await fetch(RenBTCPriceRequestURL)
-            console.log(result)
-        }
-
-        fetchPrice()
+        console.log("hello")
         // fetch(RenBTCPriceRequestURL).then((result) => {
         //     console.log(currentPrice)
         //     console.log(result)
