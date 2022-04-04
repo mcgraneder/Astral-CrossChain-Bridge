@@ -394,19 +394,19 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     //     }    
     // }, [library, account])
 
-    // useEffect(() => {
-    //     axios.get(RenBTCPriceRequestURL).then((result) => {
-    //         const currentPrice = result.data[0].current_price + 0.25
-    //         setRenPrice(currentPrice)
-    //         setPriceForAmount(currentPrice * Number(amount))
+    useEffect(() => {
+        axios.get(RenBTCPriceRequestURL).then((result) => {
+            const currentPrice = result.data[0].current_price + 0.25
+            setRenPrice(currentPrice)
+            setPriceForAmount(currentPrice * Number(amount))
             
-    //     }).catch(error => console.error(error))
+        }).catch(error => console.error(error))
 
-    //     calculateBridgeFee()
-    //     calculateExpectedTransactionCost()
-    //     calculateExpectedBalance()
+        // calculateBridgeFee()
+        // calculateExpectedTransactionCost()
+        // calculateExpectedBalance()
 
-    // }, [close])
+    }, [close])
 
     // const calculateBridgeFee = () => {
 
