@@ -395,7 +395,7 @@ export const ConfirmationModal = ({visible, close, amount, ren, bridge, handleDe
     // }, [library, account])
 
     useEffect(() => {
-        axios.get(RenBTCPriceRequestURL).then((result) => {
+        fetch(RenBTCPriceRequestURL).then((result) => {
             console.log(currentPrice)
             console.log(result)
             const currentPrice = result.data[0].current_price
