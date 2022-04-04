@@ -195,8 +195,8 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
 
     const selectedCurrency = getOptionBySymbol(currency, "currency");
     const selectedChain = getOptionBySymbol(chain, "chain");
-    const currentChain = JSON.parse(localStorage.getItem("selected_chain"))
-    console.log(currentChain)
+    const currentChain = localStorage.getItem("selected_chain") ? JSON.parse(localStorage.getItem("selected_chain")) : chain
+    console.log(selectedChain)
 
     const { currencyIcon, currencyfull, currencyshort } = getAssetData(selectedCurrency);
     const { chainIcon, chainfull, chainshort } = getAssetData(selectedChain);
@@ -330,7 +330,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             type={"address"}
                             />}
                         <ButtonWrapper width={"90%"}>
-                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={currentChain.short != "ETH" ? `connect to ${currentChain.short} to proceed` : "Next"}></HomeConnectButton>
+                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={selectedChain.short != "ETH" ? `connect to ${selectedChain.short} to proceed` : "Next"}></HomeConnectButton>
                         </ButtonWrapper>
                 </MintFormWrapper>
                     

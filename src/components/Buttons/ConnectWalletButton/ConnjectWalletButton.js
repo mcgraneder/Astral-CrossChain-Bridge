@@ -9,7 +9,7 @@ import portis from "../../assets/portis.svg"
 import { NavButton2 } from "../../Navbar/NavbarStyles"
 import Loader from "../../Loader/Loader"
 import { TransactionStateContext } from "../../../contexts/transactionContext"
-
+import { useWeb3React } from "@web3-react/core";
 export const Logo1 = styled.div`
 
     // position: absolute;
@@ -49,13 +49,15 @@ export const CustomLightSpinner = styled(Spinner)`
   width: ${({ size }) => size};
 `
 
-const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top }) => {
+const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
 
     const { pending } = useContext(TransactionStateContext)
+    const { active, account } = useWeb3React()
     const loading = false;
     var logo
     var width1;
     var width2;
+    console.log(active)
 
     if(localStorage.getItem("provider") === "injected") {
         logo = metamask;
@@ -108,8 +110,25 @@ const ConnectWalletButton = ({ active, close, color, fontsize, height, left, top
             </ButtonText>
              </ConnectButton> 
             : 
-            (!active ?  (provider ? <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} alt="#" width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton> : <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>) 
-            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} alt="#" width={width2} height={width2}/></Logo>{currentAccount?.substring(0, 6)}...{currentAccount?.substring(currentAccount?.length - 4)}</ButtonText></ConnectButton>)}
+            (!active ?  (provider ? <ConnectButton 
+                height={height} 
+                fontsize={fontsize} 
+                col={color} 
+                col2={true} 
+                onClick={close}>
+            <ButtonText 
+                style={{"fontWeight": "bold"}}>
+            <Logo1 
+                left={left} 
+                top={top}>
+            <Loader 
+                stroke="white" 
+                size={"18px"}/>
+            </Logo1>
+                Connecting...
+            </ButtonText>
+             </ConnectButton>  : <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>) 
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} alt="#" width={width2} height={width2}/></Logo>{account?.substring(0, 6)}...{account?.substring(account?.length - 4)}</ButtonText></ConnectButton>)}
         </>
     )
 }
