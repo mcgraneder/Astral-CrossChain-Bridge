@@ -1,6 +1,6 @@
 import React from "react"
 
-const NotFoundPage = () => {
+const InstallMetamaskPage = () => {
 
     return (
         <>
@@ -8,4 +8,4 @@ const NotFoundPage = () => {
     )
 }
 
-export default NotFoundPage
+export default InstallMetamaskPage

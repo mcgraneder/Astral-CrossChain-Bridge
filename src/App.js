@@ -6,10 +6,12 @@ import Footer from "./components/Footer/Footer";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
 import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
+import NotFoundPage from "./pages/NotFoundPage";
+import AboutPage from "./pages/AboutPage"
 
 const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
-
+const InstallMetamaskPage = lazy(() => import("./pages/InstallMetamaskPage"));
 
 const MAIN_PAGE_PATHS = [
   paths.BRIDGE,
@@ -25,6 +27,7 @@ function App() {
 
   return (
 
+    //try put nav in main page
     <TransactionProvider>
       <Router>
         <Suspense fallback={<PageLoad/>}>
@@ -33,6 +36,9 @@ function App() {
           <Switch>
             <Route exact path={paths.HOME} component={HomePage}></Route>
             <Route exact path={MAIN_PAGE_PATHS} component={MainPage} />
+            <Route exact path={paths.NOT_FOUND} component={NotFoundPage} />
+            <Route exact path={paths.INSTALL_METAMASK} component={InstallMetamaskPage}/>
+            <Route exact path={paths.ABOUT} component={AboutPage}/>
           </Switch>
           <Footer/>
         </Suspense>

@@ -1,9 +1,12 @@
 const HOME = "/"
 const BRIDGE = "/bridge"
-const ERC20BRIDGE = "/bridge/erc20bridge"
+const ERC20BRIDGE = "/erc20bridge"
 const WALLET = "/wallet"
 const TRANSACTIONS = "/transactions"
 const DEX = "/dex"
+const NOT_FOUND = "/notfound"
+const INSTALL_METAMASK = "/installmetamask"
+const ABOUT = "/about"
 
 export const paths = {
   BRIDGE,
@@ -11,7 +14,10 @@ export const paths = {
   WALLET,
   HOME,
   TRANSACTIONS,
-  DEX
+  DEX,
+  NOT_FOUND,
+  INSTALL_METAMASK,
+  ABOUT
 };
 
 

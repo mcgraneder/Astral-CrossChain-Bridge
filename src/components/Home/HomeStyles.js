@@ -19,7 +19,7 @@ export const StyledSubTitle = styled.div`
     align-items: center;
     color: White;
     padding: 5px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     background-color: transparent;
     white-space: initial;
     width: 500px;
@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
 
     position: absolute;
-    top: 24%;
+    top: 12%;
 `
 
 export const ButtonWrapper = styled.div`
@@ -42,7 +42,7 @@ export const ButtonWrapper = styled.div`
     display: flex;
    justify-content: center;
    align-items: center;
-   margin-top: 50px;
+   margin-top: 30px;
     
 `
 export const VideoBackground = styled.video`
