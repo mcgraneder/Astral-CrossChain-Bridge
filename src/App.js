@@ -7,11 +7,13 @@ import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChange
 import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 import NotFoundPage from "./pages/NotFoundPage";
-import AboutPage from "./pages/AboutPage"
+
 
 const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const InstallMetamaskPage = lazy(() => import("./pages/InstallMetamaskPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+
 
 const MAIN_PAGE_PATHS = [
   paths.BRIDGE,

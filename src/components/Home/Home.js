@@ -88,7 +88,7 @@ const Home = ({close}) => {
                 <ButtonWrapper>
                 <HomeConnectButton width={"400px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"About This App"}></HomeConnectButton>
                 </ButtonWrapper>
-              
+                {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
             </Container>
             <SupportedAssets/>
         </>

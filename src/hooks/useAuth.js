@@ -53,6 +53,7 @@ function connectOnLoad() {
                     history.push("/")
                  } 
             })
+           
         }, 2000)
     }   
 }
@@ -67,7 +68,12 @@ function connectOn(provider1) {
     if (provider1 === PROVIDERS.PORTIS) provider = portis
     if (provider1 === PROVIDERS.TORUS) provider = torus
 
-    activate(provider, undefined, true).then(() => localStorage.setItem("provider", provider1))
+    activate(provider, undefined, true).then(() => {
+        localStorage.setItem("provider", provider1)
+
+        //change to this soon instad of redirect in home.js
+        // history.replace("/bridge")
+    })
     .catch((error) => {
         if (error instanceof UnsupportedChainIdError) {
             activate(provider) // a little janky...can't use setError because the connector isn't set
