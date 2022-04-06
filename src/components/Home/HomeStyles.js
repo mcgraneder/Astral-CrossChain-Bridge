@@ -22,7 +22,7 @@ export const StyledSubTitle = styled.div`
     margin-bottom: 20px;
     background-color: transparent;
     white-space: initial;
-    width: 500px;
+    width: 540px;
     margin: 0 auto;
 
 `
@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
 
     position: absolute;
-    top: 12%;
+    top: 11%;
 `
 
 export const ButtonWrapper = styled.div`

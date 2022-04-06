@@ -6,7 +6,7 @@ import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletBu
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components"
 import { NavLink } from "react-router-dom";
-
+import SupportedAssets from "./components/SupportedAssets";
 export const Logo1 = styled.div`
 
     position: absolute;
@@ -82,14 +82,15 @@ const Home = ({close}) => {
     return(
         <>
             <Container>
-                <StyledTitle size={90} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
-                <StyledTitle size={45} margin={20} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle>
-                <StyledSubTitle size={20}>Transfer your favouite crypto-currencies cross-chain. We support BTC, ZEC, BCH, SOL, DOGE and more</StyledSubTitle>
+                <StyledTitle size={110} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
+                <StyledTitle size={55} margin={20} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle>
+                <StyledSubTitle size={22}>Transfer your favouite crypto-currencies cross-chain. We support BTC, ZEC, BCH, SOL, DOGE and more</StyledSubTitle>
                 <ButtonWrapper>
-                <HomeConnectButton width={"300px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="55px" fontsize="20" colour="rgb(20, 29, 49)" text={"About This App"}></HomeConnectButton>
+                <HomeConnectButton width={"400px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"About This App"}></HomeConnectButton>
                 </ButtonWrapper>
-                {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
+              
             </Container>
+            <SupportedAssets/>
         </>
     )
 }

@@ -21,6 +21,7 @@ const HomePage = () => {
         history.push("/installmetamask")
         }
       }, [])
+      
     return (
 
         <>

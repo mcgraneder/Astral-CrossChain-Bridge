@@ -87,8 +87,8 @@ export const DisclaimerContainer = styled.div`
     border-radius: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    // padding-top: 12px;
-    padding-bottom: 1px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     margin-bottom: 20px;
     flex-direction: space-between;
 `;
