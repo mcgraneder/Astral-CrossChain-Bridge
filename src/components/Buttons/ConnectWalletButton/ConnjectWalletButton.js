@@ -133,4 +133,4 @@ const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
     )
 }
 
-export default ConnectWalletButton;
+export default React.memo(ConnectWalletButton);

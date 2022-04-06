@@ -222,4 +222,4 @@ const WalletModal = (
     )
 }
 
-export default WalletModal;
+export default React.memo(WalletModal);

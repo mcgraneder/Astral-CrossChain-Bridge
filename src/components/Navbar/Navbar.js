@@ -59,7 +59,7 @@ align-items: center;
 
 `
 
-export default function Nav() {
+function Nav() {
 
     const provider = localStorage.getItem("provider")
 
@@ -164,3 +164,5 @@ export default function Nav() {
         </div>
       );
 }
+
+export default React.memo(Nav)

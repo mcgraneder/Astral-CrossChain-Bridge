@@ -7,7 +7,7 @@ import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChange
 import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 
-const MainPage = lazy(() => import("./MainPage"));
+const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 
 

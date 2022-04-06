@@ -1,11 +1,11 @@
 import React from "react"
 import { Route } from "react-router-dom";
-import BridgePage from "./pages/BridgePage";
-import WalletPage from "./pages/WalletPage";
-import TransactionPage from "./pages/TransactionPage";
-import DexPage from "./pages/DexPage"
-import ERC20BridgePage from "./pages/ERC20BrifgePage";
-import { paths } from "./pages/routes";
+import BridgePage from "./BridgePage";
+import WalletPage from "./WalletPage";
+import TransactionPage from "./TransactionPage";
+import DexPage from "./DexPage"
+import ERC20BridgePage from "./ERC20BrifgePage";
+import { paths } from "./routes";
 
 function App() { 
 
