@@ -27,6 +27,7 @@ const NotificationProvider = (props) => {
     const toasts = useMemo(() => {
         const toaster = {
             topR: [],
+            topL: [],
         };
         state.forEach((toast) =>
             toaster[toast.position].push(toast),

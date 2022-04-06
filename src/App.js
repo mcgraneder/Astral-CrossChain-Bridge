@@ -2,13 +2,13 @@ import React, { Suspense, lazy } from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
 import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
-import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
 import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 
 const MainPage = lazy(() => import("./MainPage"));
+const HomePage = lazy(() => import("./pages/HomePage"));
 
 
 const MAIN_PAGE_PATHS = [
@@ -31,7 +31,7 @@ function App() {
           <Nav/>
           <AccountsChangeModal/>
           <Switch>
-            <Route exact path="/" component={HomePage}></Route>
+            <Route exact path={paths.HOME} component={HomePage}></Route>
             <Route exact path={MAIN_PAGE_PATHS} component={MainPage} />
           </Switch>
           <Footer/>

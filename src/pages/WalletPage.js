@@ -73,7 +73,7 @@ const WalletPage = () => {
             message: 'view transaction on explorer',
             title: title,
             EthereumLogo,
-            position: "topL" || 'topL',
+            position: "topR" || 'topR',
             success: success
         });
     }
