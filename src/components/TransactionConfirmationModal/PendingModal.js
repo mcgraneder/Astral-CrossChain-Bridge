@@ -421,22 +421,18 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
         if(transactionType === "APPROVAL") {
             transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
             transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
              setGas(transactionGas)
         }
         if(transactionType === "DEPOSIT") {
             transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
             transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
              setGas(transactionGas)
         }
         if(transactionType === "WITHDRAW") {
             transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
             transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-            console.log(transactionGas)
              setGas(transactionGas)
         }
-        console.log(gas)
     }
 
     const calculateExpectedTransactionCost = () => {

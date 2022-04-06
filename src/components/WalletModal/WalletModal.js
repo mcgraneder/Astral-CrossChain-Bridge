@@ -145,7 +145,6 @@ const WalletModal = (
     const start = (type) => { 
         if(text === "" || !transactionBlock) return
         getGas()
-        console.log("ts")
         setConfirm(true)
         setTransactionType(type)
     }

@@ -84,10 +84,8 @@ const WalletPage = () => {
         if(library) {
             const bridgeContract = getContract(BridgeAddress, abi, library, account);
             const renContract = getContract(RenAddress, abi2, library, account);
-            console.log(renContract)
             setRen(renContract)
             setBridge(bridgeContract)
-            console.log(transactions)
         }
     }, [library, account]) 
 
@@ -141,8 +139,6 @@ const WalletPage = () => {
                             time: 2
                         },
                     ]);
-                    
-                    console.log(transactions)
 
                     HandleNewNotification(title, true)
                     bridge.getContractTokenbalance("BTC")

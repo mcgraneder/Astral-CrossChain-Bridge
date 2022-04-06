@@ -29,7 +29,7 @@ const usePendingTransactions = () => {
         const transactionData = localStorage.getItem("transactions");
         if (transactionData) {
           setTransactions(JSON.parse(transactionData));
-          console.log(transactions)
+
         }
       }, []);
     

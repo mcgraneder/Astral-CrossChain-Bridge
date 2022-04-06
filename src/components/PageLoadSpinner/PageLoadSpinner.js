@@ -6,12 +6,12 @@ import "./style.css"
 const PageLoad = () => {
 
     return (
-        <div class="overflow dark" id="preload">
-        <div class="circle-line">
-            <div class="circle-red">&nbsp;</div>
-            <div class="circle-blue">&nbsp;</div>
-            <div class="circle-green">&nbsp;</div>
-            <div class="circle-yellow">&nbsp;</div>
+        <div className="overflow dark" id="preload">
+        <div className="circle-line">
+            <div className="circle-red">&nbsp;</div>
+            <div className="circle-blue">&nbsp;</div>
+            <div className="circle-green">&nbsp;</div>
+            <div className="circle-yellow">&nbsp;</div>
         </div>
     </div>
     )

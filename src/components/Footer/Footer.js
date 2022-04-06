@@ -29,11 +29,8 @@ export default function Footer({ visible}) {
     const [blockNumber, setBlockNumber] = React.useState();
 
     useEffect(() => {
-        console.log('running')
         if (library) {
         let stale = false;
-
-        console.log('fetching block number!!')
         library
             .getBlockNumber()
             .then(blockNumber => {

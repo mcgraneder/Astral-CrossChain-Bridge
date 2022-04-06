@@ -520,7 +520,6 @@ const TokenListModal = ({
 
     const available = type === "from" ? supportedLockCurrencies : supportedMintDestinationChains;
     const x = getOptions("currency")
-    console.log(x)
 
     const availabilityFilter = React.useMemo(
         () => createAvailabilityFilter(available),
@@ -543,8 +542,6 @@ const TokenListModal = ({
         setShowTokenModal(false)
     }, [dispatch])
 
-    console.log(type)
-   
     return(
 
         <>

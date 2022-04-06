@@ -18,7 +18,6 @@ function getLibrary(provider) {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <TransactionProvider>
@@ -27,8 +26,7 @@ ReactDOM.render(
         </NotificationProvider>
         </TransactionProvider>
       </Web3ReactProvider>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 
