@@ -1,52 +1,42 @@
-import React, { useState, useEffect, Suspense } from "react"
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import React, { Suspense, lazy } from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./components/Navbar/Navbar";
-import BridgePage from "./pages/BridgePage";
 import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
-import useOnPageLoad from "./hooks/usePageOnLoad";
-import WalletPage from "./pages/WalletPage";
-import TransactionPage from "./pages/TransactionPage";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer/Footer";
-import DexPage from "./pages/DexPage"
-import ERC20BridgePage from "./pages/ERC20BrifgePage";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
-import { useWeb3React } from "@web3-react/core";
-import useBalance from "./hooks/useBalance";
-import { TransactionStateContext, TransactionProvider } from "./contexts/transactionContext";
-import { BridgeCurrency } from "./constants/EnviornmentVariables";
-import { RenNetwork } from "@renproject/interfaces";
+import { TransactionProvider } from "./contexts/transactionContext";
+import { paths } from "./pages/routes";
+
+const MainPage = lazy(() => import("./MainPage"));
+
+
+const MAIN_PAGE_PATHS = [
+  paths.BRIDGE,
+  paths.ERC20BRIDGE,
+  paths.WALLET,
+  paths.HOME,
+  paths.TRANSACTIONS,
+  paths.DEX
+]
+
 
 function App() { 
-
-  console.log(RenNetwork)
-  const loading = useOnPageLoad()
 
   return (
 
     <TransactionProvider>
-      <div>
-          <Router>
-            <Suspense fallback={<PageLoad/>}>
-            <Nav/>
-            <AccountsChangeModal/>
-            <Switch>
-              <Route exact path="/" component={HomePage}></Route>
-              <Route exact path="/bridge" component={BridgePage}></Route>
-              <Route exact path="/bridge/erc20bridge" component={ERC20BridgePage}></Route>
-              <Route exact path="/wallet" component={WalletPage}
-              />
-              <Route exact path="/transactions" component={TransactionPage}></Route>
-              <Route exact path="/dex" component={DexPage}></Route>
-            </Switch>
-            <Footer 
-              colour={"rgb(24,33,58)"} 
-              colour1={"rgb(7, 16, 33)"} 
-              colour2={"rgb(7, 16, 33)"}
-            />
-            </Suspense>
-          </Router>
-      </div>
+      <Router>
+        <Suspense fallback={<PageLoad/>}>
+          <Nav/>
+          <AccountsChangeModal/>
+          <Switch>
+            <Route exact path="/" component={HomePage}></Route>
+            <Route exact path={MAIN_PAGE_PATHS} component={MainPage} />
+          </Switch>
+          <Footer/>
+        </Suspense>
+      </Router>
     </TransactionProvider>
   )
 

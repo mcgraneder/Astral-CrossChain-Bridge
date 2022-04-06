@@ -38,7 +38,7 @@ function connectOnLoad() {
                 activate(provider) // a little janky...can't use setError because the connector isn't set
               } else {
                 disconnect()
-                // history.push("/")
+                history.push("/")
             } 
         })
     } else {
@@ -47,10 +47,10 @@ function connectOnLoad() {
                 if (error instanceof UnsupportedChainIdError) {
                     activate(provider) // a little janky...can't use setError because the connector isn't set
                         // disconnect()
-                    // history.push("/")
+                    history.push("/")
                   } else {
                     disconnect()
-                    // history.push("/")
+                    history.push("/")
                  } 
             })
         }, 2000)

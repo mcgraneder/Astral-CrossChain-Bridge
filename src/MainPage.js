@@ -1,24 +1,25 @@
 import React from "react"
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import BridgePage from "./pages/BridgePage";
 import WalletPage from "./pages/WalletPage";
 import TransactionPage from "./pages/TransactionPage";
 import DexPage from "./pages/DexPage"
 import ERC20BridgePage from "./pages/ERC20BrifgePage";
+import { paths } from "./pages/routes";
 
-function MainPage() { 
+function App() { 
 
   return (
-    <>
-            <Route exact path="/bridge" component={BridgePage}></Route>
-            <Route exact path="/bridge/erc20bridge" component={ERC20BridgePage}></Route>
-            <Route exact path="/wallet" component={WalletPage}/>
-            <Route exact path="/transactions" component={TransactionPage}></Route>
-            <Route exact path="/dex" component={DexPage}></Route>
-    </>
-    
+
+      <>
+        <Route path={paths.BRIDGE} component={BridgePage}></Route>
+        <Route path={paths.ERC20BRIDGE} component={ERC20BridgePage}></Route>
+        <Route path={paths.WALLET} component={WalletPage}/>
+        <Route path={paths.TRANSACTIONS} component={TransactionPage}></Route>
+        <Route path={paths.DEX} component={DexPage}></Route>
+      </>
   )
 
 }
 
-export default MainPage;
+export default App;
