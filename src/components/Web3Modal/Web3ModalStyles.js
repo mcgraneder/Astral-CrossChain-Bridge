@@ -251,12 +251,14 @@ color: rgb(141,141,149);
 
 export const StyledLink = styled(Link)`
 
-    min-height: 50px;
+    font-family: "SuisseIntl","Helvetica","Arial",sans-serif; 
+    min-height: 60px;
     display: flex;
     align-items: center;
-    padding: 5px 125px;
-    font-size: 18px;
-    font-weight: bold;
+    justify-content: center;
+    // padding: 5px 125px;
+    font-size: 20px;
+    // font-weight: bold;
     line-height: 60px;
     color: White;
     border-radius: 10px;
@@ -280,7 +282,7 @@ export const StyledLink = styled(Link)`
 
     span {
 
-        padding-left: 14px;
+        // padding-left: 14px;
         line-height: 19px;
         text-align: center;
         opacity: ${(props) => Number(!props.compact)};
@@ -302,17 +304,14 @@ export const ConnectButton = styled.div`
 
     height: 60px;
     width: 100%;
-    background: rgb(23,42,66);
-    border-radius: 10px;
+    background: rgb(13,94,209);
+    border-radius: 20px;
     margin-top: 20px;
-    
-    border: 1px solid rgb(75,135,220);
    
     &:hover {
 
         background-color: rgb(75,135,220);
-        border: 1px solid rgb(23,42,66);
-        // height: 60.5px;
+        background: rgb(0,80,195);
 
     }
 `

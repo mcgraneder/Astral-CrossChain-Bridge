@@ -41,8 +41,8 @@ font-family: 'Open Sans', sans-serif;
     color:  White;
     margin-left: ${(props) => props.active ? "7px" : "0px"};
     margin-right: ${(props) => props.active ? "7px" : "0px"};
-    font-weight: bold;
-    font-size: 17px;
+    // font-weight: bold;
+    font-size: 16px;
     text-decoration: none;
 
     // border: 1px solid rgb(3,184,189);

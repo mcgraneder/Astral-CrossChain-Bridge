@@ -36,9 +36,9 @@ function App() {
           <Switch>
             <Route exact path={paths.HOME} component={HomePage}></Route>
             <Route exact path={MAIN_PAGE_PATHS} component={MainPage} />
-            <Route exact path={paths.NOT_FOUND} component={NotFoundPage} />
             <Route exact path={paths.INSTALL_METAMASK} component={InstallMetamaskPage}/>
             <Route exact path={paths.ABOUT} component={AboutPage}/>
+            <Route component={NotFoundPage} />
           </Switch>
           <Footer/>
         </Suspense>
