@@ -23,7 +23,7 @@ export const SupportedAssetsContainer = styled.div`
 
     max-width: 960px;
     // width: 100%;
-    // display: block;
+    display: flex;
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
@@ -34,9 +34,9 @@ export const SupportedAssetsContainer = styled.div`
 export const SupportedAssetsWrapper = styled.div`
 
     display: flex;
-    flex-direction: row;
-    justify-content: stretch;
-    margin-top: 470px;
+    // flex-direction: row;
+    // justify-content: stretch;
+    margin-top: 50px;
 `
 
 export const CurrencysContainer = styled.div`

@@ -14,6 +14,7 @@ export const StyledTitle = styled.div`
 `
 export const StyledSubTitle = styled.div`
 
+font-family: SuisseIntl,Helvetica,Arial,sans-serif;
     font-size: ${(props) => props.size}px;
     text-align: center;
     align-items: center;
@@ -32,6 +33,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
+
 
     position: absolute;
     top: 11%;

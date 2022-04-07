@@ -25,11 +25,15 @@ const MAIN_PAGE_PATHS = [
 ]
 
 
+
+
 function App() { 
 
   return (
 
-    //try put nav in main page
+    //try put nav in main page, then do custom nav for home/ about and not found pages etc
+
+    //make welcome and home page the one page (same as main)
     <TransactionProvider>
       <Router>
         <Suspense fallback={<PageLoad/>}>
