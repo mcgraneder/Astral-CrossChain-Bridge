@@ -74,6 +74,7 @@ import ftm from "../components/assets/icons/fantom-circle-icon.svg"
 import avax from "../components/assets/icons/avalanche-circle-icon.svg"
 import sol from "../components/assets/icons/solana-colour-icon.svg"
 import arbi from "../components/assets/icons/arbitrum-circle.svg"
+import dot from "../components/assets/icons/dots-icon.svg"
 
 import * as customColors from "../theme/colors";
 
@@ -201,6 +202,33 @@ export const supportedLockCurrencies =
         BridgeCurrency.LUNA,
         BridgeCurrency.ZEC,
 ]
+
+export const AllCurrencies =
+    [
+        BridgeCurrency.BTC,
+        BridgeCurrency.BCH,
+        BridgeCurrency.DOTS,
+        BridgeCurrency.DOGE,
+        BridgeCurrency.ZEC,
+        BridgeCurrency.DGB,
+        BridgeCurrency.LUNA,
+        BridgeCurrency.FIL,
+        BridgeCurrency.RENBTC,
+        BridgeCurrency.RENBCH,
+        BridgeCurrency.RENDOGE,
+        BridgeCurrency.RENZEC,
+        BridgeCurrency.RENDGB,
+        BridgeCurrency.RENLUNA,
+        BridgeCurrency.RENFIL,
+        BridgeCurrency.ETH,
+        BridgeCurrency.FTM,
+        BridgeCurrency.MATIC,
+        BridgeCurrency.BNB,
+        BridgeCurrency.AVAX,
+        BridgeCurrency.SOL,
+        BridgeCurrency.ARBETH,
+        BridgeCurrency.UNKNOWN,
+    ]
 
 export const supportedMintDestinationChains = [
     BridgeChain.ETHC,
@@ -457,7 +485,7 @@ export const currenciesConfig = {
       FullIcon: BtcFullIcon,
       GreyIcon: BtcGreyIcon,
       Icon: btc,
-      MainIcon: BtcDashedIcon,
+      MainIcon: btc,
       rentxName: "renBTC",
       sourceChain: BridgeChain.ETHC,
       networkMappings: oldNetworkMappings,
@@ -484,7 +512,7 @@ export const currenciesConfig = {
       FullIcon: BchFullIcon,
       GreyIcon: BchGreyIcon,
       Icon: BchIcon,
-      MainIcon: BchDashedIcon,
+      MainIcon: bch,
       rentxName: "renBCH",
       sourceChain: BridgeChain.ETHC,
       bandchainSymbol: BridgeCurrency.BCH,
@@ -498,7 +526,7 @@ export const currenciesConfig = {
       FullIcon: DotsFullIcon,
       GreyIcon: DotsGreyIcon,
       Icon: DotsIcon,
-      MainIcon: DotsFullIcon,
+      MainIcon: dot,
       sourceChain: BridgeChain.UNKNOWNC, // TODO:
       rentxName: "dots",
       bandchainSymbol: "DOT",
@@ -524,7 +552,7 @@ export const currenciesConfig = {
       FullIcon: DogeFullIcon,
       GreyIcon: DogeGreyIcon,
       Icon: DogeIcon,
-      MainIcon: DogeDashedIcon,
+      MainIcon: doge,
       rentxName: "renDOGE",
       sourceChain: BridgeChain.ETHC,
       bandchainSymbol: BridgeCurrency.DOGE,
@@ -552,7 +580,7 @@ export const currenciesConfig = {
       FullIcon: ZecFullIcon,
       GreyIcon: ZecGreyIcon,
       Icon: ZecIcon,
-      MainIcon: ZecDashedIcon,
+      MainIcon: zec,
       rentxName: "renZEC",
       sourceChain: BridgeChain.ETHC,
       bandchainSymbol: BridgeCurrency.ZEC,
@@ -579,7 +607,7 @@ export const currenciesConfig = {
       FullIcon: DgbFullIcon,
       GreyIcon: DgbGreyIcon,
       Icon: DgbIcon,
-      MainIcon: DgbDashedIcon,
+      MainIcon: dgb,
       rentxName: "renDGB",
       sourceChain: BridgeChain.ETHC,
       bandchainSymbol: BridgeCurrency.DGB,
@@ -606,7 +634,7 @@ export const currenciesConfig = {
       FullIcon: FilFullIcon,
       GreyIcon: FilGreyIcon,
       Icon: FilIcon,
-      MainIcon: FilDashedIcon,
+      MainIcon: fil,
       rentxName: "renFIL",
       sourceChain: BridgeChain.ETHC,
       bandchainSymbol: BridgeCurrency.FIL,
@@ -633,7 +661,7 @@ export const currenciesConfig = {
       FullIcon: LunaFullIcon,
       GreyIcon: LunaGreyIcon,
       Icon: LunaIcon,
-      MainIcon: LunaDashedIcon,
+      MainIcon: luna,
       rentxName: "renLUNA",
       sourceChain: BridgeChain.ETHC,
       bandchainSymbol: BridgeCurrency.LUNA,
@@ -647,7 +675,7 @@ export const currenciesConfig = {
       FullIcon: EthereumIcon,
       GreyIcon: NotSetIcon,
       Icon: EthereumIcon,
-      MainIcon: BtcFullIcon,
+      MainIcon: eth,
       rentxName: "eth",
       sourceChain: BridgeChain.ETHC,
       networkMappings: newNetworkMappings,
@@ -745,7 +773,7 @@ export const currenciesConfig = {
       FullIcon: NotSetIcon,
       GreyIcon: NotSetIcon,
       Icon: NotSetIcon,
-      MainIcon: NotSetIcon,
+      MainIcon: dot,
       rentxName: "unknown",
       sourceChain: BridgeChain.UNKNOWNC,
       networkMappings: newNetworkMappings,

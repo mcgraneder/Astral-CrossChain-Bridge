@@ -19,12 +19,12 @@ font-family: SuisseIntl,Helvetica,Arial,sans-serif;
     font-size: ${(props) => props.size}px;
     text-align: center;
     align-items: center;
-    color: White;
+    color: #adadad;
     padding: 5px;
     margin-bottom: 20px;
     background-color: transparent;
     white-space: initial;
-    width: 540px;
+    width: 600px;
     margin: 0 auto;
 
 `

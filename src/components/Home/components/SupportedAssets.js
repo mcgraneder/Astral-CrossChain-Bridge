@@ -5,7 +5,7 @@ import AssetItem from "./AssetItem"
 export const SupportedAssetsContainer = styled.div`
 
 
-    max-width: 960px;
+    max-width: ${(props) => props.maxWidth};
     // width: 100%;
     display: flex;
     box-sizing: border-box;
@@ -20,7 +20,7 @@ export const SupportedAssetsWrapper = styled.div`
     display: flex;
     // flex-direction: row;
     // justify-content: stretch;
-    margin-top: 20px;
+    margin-top: 35px;
 `
 
 export const CurrencysContainer = styled.div`
@@ -50,33 +50,48 @@ justify-content: space-between;
     margin: 12px auto;
     display: flex;
     flex-wrap: wrap;
-    max-width: 40vw;
+    // max-width: 40vw;
     padding: 0;
     list-style-type: none;
 `
 
-const SupportedAssets = () => {
+const SupportedAssets = ({ type }) => {
 
-    return (
+    if (type === "LEGACY") {
+        return (
 
-        <SupportedAssetsContainer>
+        <SupportedAssetsContainer maxWidth={"960px"}>
             <SupportedAssetsWrapper>
                 <CurrencysContainer paddingR={"42px"} paddingL={"0px"} border={true}>
                     <CurrenciesHeader>Supported Currencies</CurrenciesHeader>
                     <CurrenciesList>
-                        <AssetItem assetType={"currency"}/>
+                        <AssetItem assetType={"currency"} type={type}/>
                     </CurrenciesList>
                 </CurrencysContainer>
 
                 <CurrencysContainer paddingR={"0px"} paddingL={"42px"} border={false}>
                     <CurrenciesHeader>Supported Chains</CurrenciesHeader>
                     <CurrenciesList>
-                        <AssetItem assetType={"chain"}/>
+                        <AssetItem assetType={"chain"} type={type}/>
                     </CurrenciesList>
                 </CurrencysContainer>
                 </SupportedAssetsWrapper>
         </SupportedAssetsContainer>
+        )
+    }else return (
+
+        <SupportedAssetsContainer maxWidth={"1200px"}>
+            <SupportedAssetsWrapper>
+                <CurrencysContainer paddingR={"0px"} paddingL={"0px"}>
+                    <CurrenciesHeader>Supported EVM Currencies</CurrenciesHeader>
+                    <CurrenciesList>
+                        <AssetItem assetType={"currency"}type={type} />
+                    </CurrenciesList>
+                </CurrencysContainer>
+            </SupportedAssetsWrapper>
+        </SupportedAssetsContainer>
     )
+    
 }
 
 export default SupportedAssets

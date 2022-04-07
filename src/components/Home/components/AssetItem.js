@@ -1,6 +1,7 @@
-import React, { useMemo } from "react"
+import React from "react"
 import styled from "styled-components"
 import { currenciesConfig, 
+         AllCurrencies,
          supportedLockCurrencies, 
          supportedMintDestinationChains, 
          chainsConfig 
@@ -9,10 +10,12 @@ import Grey from "../../assets/icons/empty-circle-icon.svg"
 
 export const CurrencyItemContainer = styled.li`
 
-padding: 0;
 display: list-item;
     text-align: -webkit-match-parent;
     list-style-type: none;
+    padding-left: ${(props) => props.marginL};
+    padding-right: ${(props) => props.marginR};
+
 `
 export const CurrencyItemWrapper = styled.span`
 
@@ -79,23 +82,28 @@ const createAvailabilityFilter = (available) => (option) => {
 };
 
 
-const AssetItem = ({ assetType }) => {
+const AssetItem = ({ assetType, type }) => {
 
     const available = assetType === "currency" ? supportedLockCurrencies : supportedMintDestinationChains
 
-    const availabilityFilter = React.useMemo(
+    const LegacyavailabilityFilter = React.useMemo(
         () => createAvailabilityFilter(available),
         [available]
+    );
+
+    const EvmavailabilityFilter = React.useMemo(
+        () => createAvailabilityFilter(AllCurrencies),
+        [AllCurrencies]
     );
 
     return (
 
         <>
             {getOptions(assetType)
-            .filter(availabilityFilter)
+            .filter(type === "LEGACY" ? LegacyavailabilityFilter : EvmavailabilityFilter)
             .map(({ MainIcon, full }) => {
                 return(
-                    <CurrencyItemContainer>
+                    <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                         <CurrencyItemWrapper>
                             <CurrencyLogoContainer>
                                 <CurrencyLogo src={MainIcon}></CurrencyLogo>
@@ -104,7 +112,7 @@ const AssetItem = ({ assetType }) => {
                         </CurrencyItemWrapper>
                     </CurrencyItemContainer>
                 )})}
-                <CurrencyItemContainer>
+                <CurrencyItemContainer  marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                     <CurrencyItemWrapper>
                         <CurrencyLogoContainer>
                             <CurrencyLogo src={Grey}></CurrencyLogo>

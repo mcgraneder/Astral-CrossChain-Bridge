@@ -64,6 +64,22 @@ font-family: 'Open Sans', sans-serif;
 
 `
 
+export const StyledTitle2 = styled.div`
+
+font-family: SuisseIntl,Helvetica,Arial,sans-serif;
+    font-size: ${(props) => props.size}px;
+    text-align: ${(props) => props.align};
+    color: White;
+    padding: 5px;
+    max-width: 350px;
+    margin: 0 auto;
+    margin-bottom:  ${(props) => props.margin}px;
+    font-weight: ${(props) => props.weight};
+    // font-style: ${(props) => props.styleds};
+    background-color: transparent;
+    margin-top:  ${(props) => props.marginTop}px;
+`
+
 
 const HomeConnectButton = ({ active, height, width, text, click}) => {
 
@@ -88,20 +104,22 @@ const Home = ({close}) => {
     return(
         <>
         <LoginStyledContainer>
-            {/* <Container> */}
-                <StyledTitle size={110} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
-                <StyledTitle size={55} margin={20} marginTop={0} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle>
-                <StyledSubTitle size={22}>Transfer your favouite crypto-currencies cross-chain. We support BTC, ZEC, BCH, SOL, DOGE and more</StyledSubTitle>
+                <StyledTitle size={100} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
+                <StyledTitle size={50} margin={20} marginTop={0} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle>
+                <StyledSubTitle size={20}>Transfer your favouite crypto-currencies cross-chain. We support many assets such as BTC, ZEC, BCH, SOL, DOGE and more</StyledSubTitle>
                 <ButtonWrapper>
-                    <HomeConnectButton width={"400px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"About This App"}></HomeConnectButton>
+                    <HomeConnectButton width={"500px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"About This App"}></HomeConnectButton>
                 </ButtonWrapper>
-                {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
-                <StyledTitle size={35} margin={0} marginTop={40} weight={400} align={"center"}>Legacy Assets</StyledTitle>
-                <SupportedAssets/>
-                <StyledTitle size={35} margin={0} marginTop={40} weight={400} align={"center"}>EVM Assets</StyledTitle>
+                <StyledTitle2 size={27} margin={0} marginTop={40} weight={400} align={"center"} >
+                    We support all of top the tradtional Legacy Cyptos
+                </StyledTitle2>
+                <SupportedAssets type={"LEGACY"}/>
+                <StyledTitle2 size={27} margin={0} marginTop={40} weight={400} align={"center"} >
+                    Aswell as many EVM and Layer 2 based assets
+                </StyledTitle2>
                 <Wrapper space={"100px"}/>
-                <SupportedAssets/>
-            {/* </Container> */}
+                <SupportedAssets type={"EVM"}/>
+                {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
             </LoginStyledContainer>
         </>
     )
