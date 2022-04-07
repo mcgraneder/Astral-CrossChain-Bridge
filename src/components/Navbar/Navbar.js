@@ -75,7 +75,7 @@ function Nav() {
         if(account) {
             library.getBalance(account).then((result) => {
                 result = Web3.utils.fromWei(result.toString(), "ether")
-                var balance = new Number(result)
+                var balance = Number(result)
                 balance = balance.toFixed(4)
                 setBalance(balance)
             })

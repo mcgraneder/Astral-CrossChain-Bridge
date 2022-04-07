@@ -1,6 +1,5 @@
-import { SvgIcon, SvgIconProps } from "@material-ui/core";
-import { SvgIconComponent } from "@material-ui/icons";
-import React, { FunctionComponent } from "react";
+import { SvgIcon } from "@material-ui/core";
+import React from "react";
 import { getScalingProps } from "../../utils/getScalingProps";
 import { ReactComponent as AvalancheChain } from "../assets/icons/avalanche-chain.svg";
 import { ReactComponent as AvalancheChainCircle } from "../assets/icons/avalanche-chain-circle-icon.svg";

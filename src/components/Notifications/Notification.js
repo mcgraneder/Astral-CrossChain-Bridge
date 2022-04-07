@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NotificationStyles from './NotificationStyles';
-import { CheckCircle, X, Ale, AlertCircle } from 'react-feather';
+import { CheckCircle, X, AlertCircle } from 'react-feather';
 import styled from 'styled-components';
 
 export const CloseIcon = styled(X)`
@@ -38,7 +38,7 @@ const Notification = ({
 
     const notificationWidth = 320;
 
-    const startTimer = () => {
+    const startTimer = React.useCallback(() => {
         if (isClosing) return;
         const idInt = setInterval(() => {
             setBarWidth((prev) => {
@@ -48,16 +48,9 @@ const Notification = ({
                 return prev;
             });
         }, 65);
-    };
+    }, [isClosing]);
 
-    useEffect(() => {
-        if (isClosing) return;
-        if (barWidth === notificationWidth) closeNotification();
-    }, [barWidth, isClosing]);
-
-    useEffect(() => startTimer(), []);
-
-    const closeNotification = () => {
+    const closeNotification = React.useCallback(() => {
         setIsClosing(true);
         setTimeout(() => {
             // @ts-ignore
@@ -66,7 +59,16 @@ const Notification = ({
                 id,
             });
         }, 400);
-    };
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (isClosing) return;
+        if (barWidth === notificationWidth) closeNotification();
+    }, [barWidth, isClosing, closeNotification]);
+
+    useEffect(() => startTimer(), [startTimer]);
+
+    
 
     return (
         <NotificationStyled

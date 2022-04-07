@@ -5,7 +5,7 @@ import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { StyledContainer, 
+import { 
          BridgeModalWrapper, 
          ChainSelector, 
          ChainSelectorWrapper, 
@@ -107,34 +107,16 @@ export const LegacyBridgeToggleButton = styled(Link)`
 const ERC20BridgeModal = ({close, balance }) => {
 
     const [toggle, setToggle] = useState(true)
-    const [height, setHeight] = useState("")
-    const [dropDownActive, setDropDownActive] = useState(false)
     const { active } = useWeb3React()
 
     const setToggleValue = () => {
         setToggle(!toggle);
     }
 
-    const setDropdownValue1 = () => {
-        setDropDownActive(!dropDownActive);
-        setHeight("64px")
-    }
-
-    const setDropdownValue2 = () => {
-        setDropDownActive(!dropDownActive);
-        setHeight("128px")
-    }
-
-    const setDropdownValue3 = () => {
-        if(!dropDownActive) return
-        setDropDownActive(!dropDownActive);
-        setHeight("128px")
-    }
-
     return (
 
         <>
-        <LoginStyledContainer onClick={() => setDropdownValue3()}>
+        <LoginStyledContainer>
             
             <BridgeModalContainer>
             <BridgeSelectorContainer>
@@ -151,7 +133,7 @@ const ERC20BridgeModal = ({close, balance }) => {
             </BridgeSelectorContainer>
             <BridgeModalWrapper>
                 <ChainSelector marginbottom={"2px"}>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue1()}>
+                    <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper>
                             <ChainSelectorIcon src={BitcoinLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
@@ -164,7 +146,7 @@ const ERC20BridgeModal = ({close, balance }) => {
                     </ChainSelectorWrapper>
                 </ChainSelector>
                 <ChainSelector marginbottom={"2px"}>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
+                    <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper >
                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>
@@ -177,7 +159,7 @@ const ERC20BridgeModal = ({close, balance }) => {
                     </ChainSelectorWrapper>
                     </ChainSelector>
                     <ChainSelector marginbottom={"30px"}>
-                    <ChainSelectorWrapper onClick={() => setDropdownValue2()}>
+                    <ChainSelectorWrapper>
                         <ChainSelectorIconWrapper >
                             <ChainSelectorIcon src={EthereumLogo} width={"30px"}></ChainSelectorIcon>
                         </ChainSelectorIconWrapper>

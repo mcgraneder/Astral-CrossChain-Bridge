@@ -1,7 +1,6 @@
 
 import {
   BridgeChain,
-  BridgeCurrency,
   currenciesConfig,
   getCurrencyConfigByBandchainSymbol,
   getCurrencyConfigByCoingeckoSymbol,

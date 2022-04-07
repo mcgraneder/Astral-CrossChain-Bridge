@@ -2,9 +2,9 @@ import React from "react"
 import styled from "styled-components"
 import RenLogo1 from "../components/assets/icons/ren-logo-3f.svg"
 import RenLogo4 from "../components/assets/icons/renvm-logo.svg"
-import { ArrowLeft, X, ExternalLink } from "react-feather"
+import { ArrowLeft } from "react-feather"
 import { useHistory } from "react-router-dom"
-import { TopeSectionWrapper } from "../components/Home/StyledContainer"
+
 export const PageContainer = styled.div`
 
 font-family: SuisseIntl,Helvetica,Arial,sans-serif;
@@ -173,17 +173,17 @@ const AboutPage = () => {
                     <Title>What is RenBridge?</Title>
                     <Text>
                         RenBridge enables the simple wrapping of digital assets on different blockchains. For 
-                        example, RenBridge allows users to take <span>BTC</span> and put it on <a>Ethereum</a>, as an ERC-20 called renBTC.
+                        example, RenBridge allows users to take <span>BTC</span> and put it on <a href="https://bridge.renproject.io/">Ethereum</a>, as an ERC-20 called renBTC.
                     </Text>
                     <Title>How does it work?</Title>
                     <Text>
                         Using RenVM, a universal translator, it converts digital assets to the format needed by its destination 
-                        chain. For example, RenVM takes <span>BTC</span>, holds it, and then converts it to an <a>ERC-20</a> with a 1:1 ratio to 
+                        chain. For example, RenVM takes <span>BTC</span>, holds it, and then converts it to an <a href="https://bridge.renproject.io/">ERC-20</a> with a 1:1 ratio to 
                         ensure your renBTC is always backed by the same amount of BTC. Find out more here ↗.
                     </Text>
                     <Title>How Safe is it?</Title>
                     <Text>
-                        RenVM holds on to your assets when they are on other blockchains. RenVM is new technology, and <a>security 
+                        RenVM holds on to your assets when they are on other blockchains. RenVM is new technology, and <a href="https://bridge.renproject.io/">security 
                         audits ↗</a> don't completely eliminate risks. Please don't supply assets you can't afford to lose!
                     </Text>
                     <FooterContainer>

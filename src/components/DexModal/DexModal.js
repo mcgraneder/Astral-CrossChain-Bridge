@@ -306,7 +306,7 @@ const DexModal = ({ close }) => {
                     <Button>Enter An Amount</Button>
                 </ButtonWrapper>
             </BridgeModalContainer>
-            <DisclaimerContainer>Interfacing with the <div>{" "}</div><div style={{"color": "rgb(13,94,209)", "margin-left": "4px", "fontWeight": "bold"}}> Uniswap protocol</div><img style={{"margin-left": "4px", "margin-top": "0px"}} src={UniswapLogo} width={"15px"}></img></DisclaimerContainer>
+            <DisclaimerContainer>Interfacing with the <div>{" "}</div><div style={{"color": "rgb(13,94,209)", "margin-left": "4px", "fontWeight": "bold"}}> Uniswap protocol</div><img alt="" style={{"margin-left": "4px", "margin-top": "0px"}} src={UniswapLogo} width={"15px"}></img></DisclaimerContainer>
         </StyledContainer>
         </>
     )

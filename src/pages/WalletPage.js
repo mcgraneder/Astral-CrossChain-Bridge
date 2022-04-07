@@ -7,7 +7,6 @@ import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
 import { useWeb3React } from "@web3-react/core";
 import { v4 } from "uuid"
-import DepositSummary from "../components/AccountDetails/TransactionSummary";
 import usePendingTransaction from "../hooks/usePendingTransaction";
 import Web3 from "web3";
 import { ConfirmationModal, 
@@ -61,8 +60,9 @@ const WalletPage = () => {
     const {library, account } = useWeb3React()
 
     const { pending, setPending } = useContext(TransactionStateContext)
+    console.log("hello")
     const { balance, setBalance } = useBalance()
-    const { setDeposits, deposits,  transactions, setTransactions} = usePendingTransaction()
+    const { transactions, setTransactions} = usePendingTransaction()
    
 
     const dispatch = useNotification();
@@ -122,7 +122,7 @@ const WalletPage = () => {
 
                 result.wait().then((result) => {
                     setPending(false)
-                    if (TransactionType == TRANSACTION_TYPES.APPROVAL) {
+                    if (TransactionType === TRANSACTION_TYPES.APPROVAL) {
                         setSufficentApproval(true)
                     }
                     setTransactionBlock(true)
@@ -144,7 +144,7 @@ const WalletPage = () => {
                     bridge.getContractTokenbalance("BTC")
                     .then((balance) => {
                         balance = Web3.utils.fromWei(balance.toString(), "Gwei")             
-                        var bal = new Number(balance)
+                        var bal = Number(balance)
                         bal = bal.toFixed(6)
                         setBalance(bal)
                     });
@@ -232,4 +232,4 @@ const WalletPage = () => {
     )
 }
 
-export default WalletPage
+export default React.memo(WalletPage)

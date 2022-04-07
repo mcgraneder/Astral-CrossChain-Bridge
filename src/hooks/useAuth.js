@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core"
 import { 
     injected, 
@@ -10,21 +10,28 @@ import {
 import { PROVIDERS } from '../constants/wallets';
 import { useHistory } from 'react-router-dom';
 
+
 function useAuth() {
 
     var { active, account, library, activate, deactivate } = useWeb3React()
-    var provider = localStorage.getItem("provider")
     let history = useHistory()
- 
-    useEffect(() => {
-        if(library) localStorage.setItem("currentAccount", account);
-        if (!library) {
-            connectOnLoad()
-       }
-    }, [library])
+
+
+    const disconnect= React.useCallback(() => {
+        try {
+            deactivate()
+            // window.location.href = "/"
+            localStorage.removeItem("currentAccount");
+            localStorage.removeItem("provider");
+        } catch (err) {
+            console.error(err)
+            // history.push("/")
+        }
+    }, [deactivate])
 
 //use network pollinhg intervak to warn usr their offline
-function connectOnLoad() {
+const connectOnLoad = React.useCallback(() => {
+    var provider = localStorage.getItem("provider")
     if ( provider == null) return
     if (provider === PROVIDERS.FORTMATIC) provider = fortmatic
     if (provider === PROVIDERS.INJECTED) provider = injected
@@ -32,7 +39,7 @@ function connectOnLoad() {
     if (provider === PROVIDERS.PORTIS) provider = portis
     if (provider === PROVIDERS.TORUS) provider = torus
 
-    if (provider == injected) {
+    if (provider === injected) {
         activate(provider, undefined, true).catch((error) => {
             if (error instanceof UnsupportedChainIdError) {
                 activate(provider) // a little janky...can't use setError because the connector isn't set
@@ -56,8 +63,17 @@ function connectOnLoad() {
            
         }, 2000)
     }   
-}
+}, [activate, disconnect, history])
+
+    useEffect(() => {
+        if(library) localStorage.setItem("currentAccount", account);
+        if (!library) {
+            connectOnLoad()
+    }
+    }, [library, connectOnLoad, account])
 function connectOn(provider1) {   
+
+    var provider = localStorage.getItem("provider")
     if(active) {
         alert("You must dissconnect first")
         return
@@ -84,18 +100,6 @@ function connectOn(provider1) {
     })
 }
 
-
-async function disconnect() {
-    try {
-        deactivate()
-        // window.location.href = "/"
-        localStorage.removeItem("currentAccount");
-        localStorage.removeItem("provider");
-    } catch (err) {
-        console.error(err)
-        // history.push("/")
-    }
-}
 
   return { connectOnLoad, disconnect, connectOn}
 }

@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
-import { StyledTitle, StyledSubTitle, ButtonWrapper, Container } from "./HomeStyles";
+import { StyledTitle, StyledSubTitle, ButtonWrapper } from "./HomeStyles";
 import { useHistory } from "react-router-dom";
 import { Redirect, Switch } from 'react-router'
-import ConnectWalletButton from "../Buttons/ConnectWalletButton/ConnjectWalletButton";
 import { useWeb3React } from "@web3-react/core";
 import styled from "styled-components"
 import { NavLink } from "react-router-dom";
 import SupportedAssets from "./components/SupportedAssets";
 import { LoginStyledContainer } from "./StyledContainer";
-import { TopeSectionWrapper, BottomSectionWrapper } from "./StyledContainer";
-import { PageContainer } from "../../pages/AboutPage";
+import { TopeSectionWrapper } from "./StyledContainer";
+
 export const Wrapper = styled.div`
 
     height ${(props) => props.space}px;
@@ -46,8 +45,6 @@ font-family: 'Open Sans', sans-serif;
     text-align: center;
     line-height: ${(props) => props.height};
     color:  White;
-    margin-left: ${(props) => props.active ? "7px" : "0px"};
-    margin-right: ${(props) => props.active ? "7px" : "0px"};
     // font-weight: bold;
     font-size: 16px;
     text-decoration: none;
@@ -88,7 +85,7 @@ const HomeConnectButton = ({ active, height, width, text, click}) => {
     return (
 
         <>
-            <NavButton2  width={width} to="/about" height={height} active={active} color={"rgb(23,42,66)"} onClick={click}>{text}</NavButton2>
+            <NavButton2  width={width} to="/about" height={height} color={"rgb(23,42,66)"} onClick={click}>{text}</NavButton2>
         </>
     )
 }

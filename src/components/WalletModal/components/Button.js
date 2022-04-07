@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { ButtonText } from "../../Buttons/ConnectWalletButton/ConnectWalletButtonStyles";
 import Loader from "../../Loader/Loader";
 
 export const NavButton2 = styled.div`

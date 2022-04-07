@@ -74,7 +74,7 @@ const NotFoundPage = () => {
                 <NotFoundWrapper>
                     <Header>404</Header>
                     <Title>We couldn't find this page</Title>
-                    <SubTitle>Try visiting <a href="#">RenBridge</a> - or <a href="#">get in touch</a> if you believe there is an issue</SubTitle>
+                    <SubTitle>Try visiting <a href="https://bridge.renproject.io/">RenBridge</a> - or <a href="https://bridge.renproject.io/">get in touch</a> if you believe there is an issue</SubTitle>
                 </NotFoundWrapper>
             </NotFoundContainer>
         </PageContainer>

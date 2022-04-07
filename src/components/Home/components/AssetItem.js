@@ -95,7 +95,7 @@ const AssetItem = ({ assetType, type }) => {
 
     const EvmavailabilityFilter = React.useMemo(
         () => createAvailabilityFilter(AllCurrencies),
-        [AllCurrencies]
+        []
     );
 
     if (type === "LEGACY" | type === "EVM") {
@@ -104,9 +104,9 @@ const AssetItem = ({ assetType, type }) => {
             <>
                 {getOptions(assetType)
                 .filter(type === "LEGACY" ? LegacyavailabilityFilter : EvmavailabilityFilter)
-                .map(({ MainIcon, full }) => {
+                .map(({ MainIcon, full }, index) => {
                     return(
-                        <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
+                        <CurrencyItemContainer key={index} marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                             <CurrencyItemWrapper>
                                 <CurrencyLogoContainer>
                                     <CurrencyLogo src={MainIcon} effect="blur"></CurrencyLogo>
@@ -115,7 +115,7 @@ const AssetItem = ({ assetType, type }) => {
                             </CurrencyItemWrapper>
                         </CurrencyItemContainer>
                     )})}
-                    <CurrencyItemContainer  marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
+                    <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                         <CurrencyItemWrapper>
                             <CurrencyLogoContainer>
                                 <CurrencyLogo src={Grey} effect="blur"></CurrencyLogo>
@@ -128,9 +128,9 @@ const AssetItem = ({ assetType, type }) => {
     } else if (type === "BROWSER") {return (
         <>
             {Object.values(BrowsersConfig)
-            .map(({ logo, name }) => {
+            .map(({ logo, name }, index) => {
                 return(
-                    <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
+                    <CurrencyItemContainer key={index} marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                         <CurrencyItemWrapper>
                             <CurrencyLogoContainer>
                                 <CurrencyLogo src={logo} effect="blur"></CurrencyLogo>

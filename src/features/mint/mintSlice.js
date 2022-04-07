@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit"; //may need PayLoadAction
 import { BridgeCurrency } from "../../utils/AssetConfigs"
 
 let initialState = {

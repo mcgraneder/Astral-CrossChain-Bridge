@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import BrideModal from "../components/BridgeModal/BridgeModal";
 import useBalance from "../hooks/useBalance";
 import TokenListModal from "../components/TokenListModal/TokenListModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { $mint } from "../features/mint/mintSlice";
-import { setMintCurrency } from "../features/mint/mintSlice";
-import { setChain } from "../features/wallet/walletSlice";
+// import { setMintCurrency } from "../features/mint/mintSlice";
+// import { setChain } from "../features/wallet/walletSlice";
 
 const BridgePage = () => {
 
@@ -14,7 +14,7 @@ const BridgePage = () => {
     const [showTokenModal, setShowTokenModal] = useState(false)
     const [fromToken, setFromToken] = useState(null)
     const [toToken, setToToken] = useState(null)
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const { balance } = useBalance()
 
     const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
@@ -23,14 +23,14 @@ const BridgePage = () => {
     const { currency } = useSelector($mint);
     console.log(currency)
     
-    const handleCurrencyChange = React.useCallback((cur) => {
-        dispatch(setMintCurrency(cur))
-        console.log(cur)
-    }, [dispatch])
+    // const handleCurrencyChange = React.useCallback((cur) => {
+    //     dispatch(setMintCurrency(cur))
+    //     console.log(cur)
+    // }, [dispatch])
 
-    const handleChainChange = React.useCallback((event) => {
-        dispatch(setChain(event.target.value))
-    }, [dispatch])
+    // const handleChainChange = React.useCallback((event) => {
+    //     dispatch(setChain(event.target.value))
+    // }, [dispatch])
 
     return (
 

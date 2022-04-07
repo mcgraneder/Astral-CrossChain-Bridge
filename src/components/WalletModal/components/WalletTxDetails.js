@@ -49,13 +49,13 @@ const WalletTxDetails = ({ sufficentApproval, sufficentBalance, text, loading, s
     const { active } = useWeb3React()
     return (
         <>
-             {text != "" && !sufficentBalance &&  
+             {text !== "" && !sufficentBalance &&  
              <ArrowContainer>
                 <ArrowLogoContainer>
                     <ArrowLogo src={arrowDown}></ArrowLogo>
                 </ArrowLogoContainer>
             </ArrowContainer>}
-            {text != "" && !sufficentBalance && <SpinnerWrapper>  
+            {text !== "" && !sufficentBalance && <SpinnerWrapper>  
             {!sufficentApproval && 
             <TxInfo marginB={"20px"} status={`You need to approve this deposit first`} showArrow={false} showCircle={false}/>}
             {sufficentApproval && 

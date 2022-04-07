@@ -53,7 +53,6 @@ const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
 
     const { pending } = useContext(TransactionStateContext)
     const { active, account } = useWeb3React()
-    const loading = false;
     var logo
     var width1;
     var width2;
@@ -86,7 +85,6 @@ const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
     }
 
     const provider = localStorage.getItem("provider")
-    const currentAccount = localStorage.getItem("currentAccount")
     return (
 
         <>

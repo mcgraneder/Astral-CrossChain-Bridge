@@ -1,5 +1,5 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ExchangeRate, GasPrice } from "./marketDataUtils";
+import { createSelector, createSlice } from "@reduxjs/toolkit"; //may need payLoadAction
+// import { ExchangeRate, GasPrice } from "./marketDataUtils";
 
 let initialState = {
     exchangeRates: [],

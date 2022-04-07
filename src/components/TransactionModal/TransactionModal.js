@@ -29,7 +29,6 @@ const TransactionModal = ({ transactions, toggleTokenModal }) => {
 
     const [dropDownActive0, setDropDownActive0] = useState(false)
     const [dropDownActive, setDropDownActive] = useState(false)
-    const [text, setText] = useState("Deposit History")
 
     const setDropdownValue3 = () => {
         if(!dropDownActive  && !dropDownActive0) return
@@ -59,7 +58,7 @@ const TransactionModal = ({ transactions, toggleTokenModal }) => {
                                 width={"100px"} 
                                 background={"rgb(14, 22, 39)"} 
                                 border={true} 
-                                onClick={e => setDropDownActive0(!dropDownActive0)}>
+                                onClick={() => setDropDownActive0(!dropDownActive0)}>
                                     Pending
                             </DropdownButton>
                             <DropdownContainer left={"215px"}>
@@ -71,8 +70,8 @@ const TransactionModal = ({ transactions, toggleTokenModal }) => {
                                 width={"170px"} 
                                 background={"rgb(33,114,229)"} 
                                 border={false} 
-                                onClick={e => setDropDownActive(!dropDownActive)}>
-                                    {text}
+                                onClick={() => setDropDownActive(!dropDownActive)}>
+                                    Deposit History
                             </DropdownButton>
                             <DropdownContainer>
                                 <ChainSelectorIcon 

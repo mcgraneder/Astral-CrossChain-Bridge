@@ -283,7 +283,7 @@ const InstallMetamaskPage = () => {
         console.log('MetaMask is installed!');
         history.push("/")
       } 
-    }, [])
+    }, [history])
 
     const Back = () => {
         window.open("https://metamask.io/", "_blank")

@@ -9,7 +9,6 @@ import axios from "axios"
 import { getContract } from "../../utils/utils";
 import abi from "../../utils/Abis/ABI.json"
 import abi2 from "../../utils/Abis/AB12.json"
-import Web3	 from "web3";
 import { useWeb3React } from "@web3-react/core"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 const renAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
@@ -372,14 +371,14 @@ export const TransactionSubmittedModal = ({visible, close, amount}) => {
         </>
     )
 }
-export const ConfirmationModal = ({visible, close, amount, handleDeposit, transactionType, gass}) => {
+export const ConfirmationModal = ({visible, close, amount, handleDeposit, gass}) => {
 
     const [renPrice, setRenPrice] = useState(0)
     const [priceForAmount, setPriceForAmount] = useState(0)
     const [bridgeFee, setBridgeFee] = useState(0)
-    const [ren, setRen] = useState()
-    const [bridge, setBridge] = useState()
-    const [gas, setGas] = useState(0)
+    // const [ren, setRen] = useState()
+    // const [bridge, setBridge] = useState()
+    // const [gas, setGas] = useState(0)
     const [txCost, setTxCost] = useState(0)
     const [expectedBalance, setExpectedBalance] = useState(0)
 
@@ -390,10 +389,26 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
 
             const bridgeContract = getContract(BridgeAddress, abi, library, account);
             const renContract = getContract(renAddress, abi2, library, account);
-            setBridge(bridgeContract)
-            setRen(renContract)
+            console.log(bridgeContract, renContract)
+            // setBridge(bridgeContract)
+            // setRen(renContract)
         }    
     }, [library, account])
+
+    const calculateBridgeFee = React.useCallback(() => {
+        const fee = (amount * 0.003).toFixed(8)
+        setBridgeFee(fee)
+    }, [amount])
+
+    const calculateExpectedTransactionCost = React.useCallback(() => {
+        const expectedCost = Number(amount) + 0 //gas
+        setTxCost(expectedCost.toFixed(7))
+    }, [amount])
+
+    const calculateExpectedBalance = React.useCallback(() => {
+        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
+        setExpectedBalance(calculatedBalanceAfterFee)
+    }, [amount, bridgeFee])
 
     useEffect(() => {
         axios.get(RenBTCPriceRequestURL).then((result) => {
@@ -407,44 +422,29 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
         calculateExpectedTransactionCost()
         calculateExpectedBalance()
 
-    }, [close])
+    }, [close, amount, calculateBridgeFee, calculateExpectedBalance, calculateExpectedTransactionCost])
 
-    const calculateBridgeFee = () => {
 
-        const fee = (amount * 0.003).toFixed(8)
-        setBridgeFee(fee)
-    }
+    // const estimateGasForTransaction = async(transactionType) => {
 
-    const estimateGasForTransaction = async(transactionType) => {
+    //     var transactionGas
+    //     if(transactionType === "APPROVAL") {
+    //         transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
+    //         transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+    //          setGas(transactionGas)
+    //     }
+    //     if(transactionType === "DEPOSIT") {
+    //         transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
+    //         transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+    //          setGas(transactionGas)
+    //     }
+    //     if(transactionType === "WITHDRAW") {
+    //         transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
+    //         transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
+    //          setGas(transactionGas)
+    //     }
+    // }
 
-        var transactionGas
-        if(transactionType === "APPROVAL") {
-            transactionGas = await ren.estimateGas.approve(account, BridgeAddress)
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-             setGas(transactionGas)
-        }
-        if(transactionType === "DEPOSIT") {
-            transactionGas = await bridge.estimateGas.transferFrom(account, BridgeAddress, amount, "BTC")
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-             setGas(transactionGas)
-        }
-        if(transactionType === "WITHDRAW") {
-            transactionGas = await bridge.estimateGas.transfer(account, amount, "BTC")
-            transactionGas = Web3.utils.fromWei(transactionGas.toString(), "Gwei")
-             setGas(transactionGas)
-        }
-    }
-
-    const calculateExpectedTransactionCost = () => {
-
-        const expectedCost = Number(amount) + gas
-        setTxCost(expectedCost.toFixed(7))
-    }
-
-    const calculateExpectedBalance = () => {
-        const calculatedBalanceAfterFee = Number(amount - bridgeFee).toFixed(7)
-        setExpectedBalance(calculatedBalanceAfterFee)
-    }
     
     return (
         <>
@@ -459,14 +459,14 @@ export const ConfirmationModal = ({visible, close, amount, handleDeposit, transa
                     <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>{amount}</TokenAmount>
                     <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>RenBTC</TokenAmount>
                     <ImgWrapper padding={"17px"} float={"right"}>
-                        <img src={Bitcoin} width={"35px"}></img>
+                        <img alt="" src={Bitcoin} width={"35px"}></img>
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 <TokenAmountWrapper height={"70px"} marginTop={"4px"} marginBottom={"0px"}>
                     <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>{priceForAmount}</TokenAmount>
                     <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>Dollars</TokenAmount>
                     <ImgWrapper padding={"20px"} float={"right"}>
-                        <img src={Dollar} height={"30px"}></img>
+                        <img alt="" src={Dollar} height={"30px"}></img>
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 <TitleWrapper margin={"10px"}>

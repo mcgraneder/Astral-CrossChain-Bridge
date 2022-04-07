@@ -1,4 +1,4 @@
-import React, {  useContext, useMemo, useReducer } from 'react';
+import React, {  useMemo, useReducer } from 'react';
 import Notification from '../components/Notifications/Notification';
 import NotificationStyles from '../components/Notifications/NotificationStyles';
 

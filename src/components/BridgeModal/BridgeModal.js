@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import BitcoinLogo from "../assets/icons/btc-icon.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import EthereumLogo from "../assets/Ethereum.svg"
 import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { StyledContainer, 
+import { 
          BridgeModalContainer, 
          BridgeModalWrapper, 
          ChainSelector, 
@@ -34,17 +33,13 @@ import BridgeFees from "./Steps/BridgeFees";
 import ConfirmationStep from "./Steps/ConfirmationStep";
 import { ConfirmationModal } from "../TransactionConfirmationModal/PendingModal";
 import { currenciesConfig } from "../../utils/AssetConfigs";
-import { chainsConfig,  BridgeChain,
-    BridgeChainConfig,
-    BridgeCurrency,
-    BridgeCurrencyConfig} from "../../utils/AssetConfigs";
-import { useDispatch, useSelector } from "react-redux";
-import { $mint, setMintCurrency } from "../../features/mint/mintSlice";
+import { chainsConfig } from "../../utils/AssetConfigs";
+import { useSelector } from "react-redux";
+import { $mint } from "../../features/mint/mintSlice";
 import { $wallet } from "../../features/wallet/walletSlice";
-import { setChain } from "../../features/wallet/walletSlice";
-import { EmptyCircleIcon } from "../Icons/RenIcons";
 import WalletInputForm from "../WalletModal/components/WalletInput";
 import { LoginStyledContainer } from "../Home/StyledContainer";
+
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -197,10 +192,12 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     const selectedCurrency = getOptionBySymbol(currency, "currency");
     const selectedChain = getOptionBySymbol(chain, "chain");
     const currentChain = localStorage.getItem("selected_chain") ? JSON.parse(localStorage.getItem("selected_chain")) : chain
-    console.log(selectedChain)
+   
 
-    const { currencyIcon, currencyfull, currencyshort } = getAssetData(selectedCurrency);
-    const { chainIcon, chainfull, chainshort } = getAssetData(selectedChain);
+    const x = getAssetData(selectedCurrency);
+    const y = getAssetData(selectedChain);
+    console.log(x, y)
+
 
     const openTokenList = (type) => {
 
@@ -331,7 +328,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             type={"address"}
                             />}
                         <ButtonWrapper width={"90%"}>
-                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={selectedChain.short != "ETH" ? `connect to ${selectedChain.short} to proceed` : "Next"}></HomeConnectButton>
+                            <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={selectedChain.short !== "ETH" ? `connect to ${selectedChain.short} to proceed` : "Next"}></HomeConnectButton>
                         </ButtonWrapper>
                 </MintFormWrapper>
                     

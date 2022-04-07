@@ -1,21 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import HomeConnectButton from "../../Home/HomeConnectButton";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { ArrowLeft } from "react-feather"
-import { useWeb3React } from "@web3-react/core";
-import BitcoinLogo from "../../assets/Bitcoin.svg"
-import BTC from "../../assets/BTC.svg"
 import BTC2 from "../../assets/BTC2.svg"
-import {X, CheckCircle, Copy, ExternalLink} from "react-feather"
-import EthereumLogo from "../../assets/Ethereum.svg"
-import { 
-    BalanceWrapper, 
-    MintFormWrapper, 
-    ButtonWrapper, 
-    Balancetext
-} from "../BridgeModalStyles";
+import {Copy, ExternalLink} from "react-feather"
+import { BalanceWrapper, Balancetext} from "../BridgeModalStyles";
 
 export const BalanceContainer = styled.div`
 

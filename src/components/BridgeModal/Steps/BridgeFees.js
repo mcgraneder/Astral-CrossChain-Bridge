@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import HomeConnectButton from "../../Home/HomeConnectButton";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { ArrowLeft, X, ExternalLink } from "react-feather"
-import { useWeb3React } from "@web3-react/core";
+import { ArrowLeft } from "react-feather"
 import BitcoinLogo from "../../assets/Bitcoin.svg"
-import chevronDownLogo from "../../assets/cheverondown.png"
-import EthereumLogo from "../../assets/Ethereum.svg"
 import { 
     BalanceWrapper, 
     MintFormWrapper, 
@@ -466,7 +462,7 @@ const BridgeFees = ({ back, balance, toggleGateway }) => {
                     <TokenAmount float={"left"} size={"20px"} lineHieght={"70px"}>Receiving</TokenAmount>
                     <TokenAmount float={"right"} size={"20px"} lineHieght={"70px"}>RenBTC</TokenAmount>
                     <ImgWrapper padding={"17px"} float={"right"}>
-                        <img src={BitcoinLogo} width={"35px"}></img>
+                        <img alt="" src={BitcoinLogo} width={"35px"}></img>
                     </ImgWrapper>
                 </TokenAmountWrapper>
                 </SummarySectionContainer>

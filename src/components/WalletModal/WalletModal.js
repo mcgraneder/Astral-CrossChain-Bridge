@@ -4,7 +4,7 @@ import Web3	 from "web3";
 import Button from "./components/Button";
 import axios from "axios";
 import EthereumLogo from "../assets/Ethereum.svg"
-import { StyledContainer, 
+import { 
          BridgeModalContainer, 
          MintFormWrapper, 
          ButtonWrapper, 
@@ -64,26 +64,9 @@ const WalletModal = (
   
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 
+        setTransactionBlock(true)
       }, [])
 
-      useEffect(() => {
-        if(library) {
- 
-            axios.get(RenBTCPriceRequestURL).then((result) => {
-                const currentPrice = (result.data[0].current_price) * balance
-                var currentBal = new Number(currentPrice)
-                currentBal = currentBal.toFixed(2)
-                setRenPrice(currentBal) 
-            }).catch(error => console.error(error))
-        }
-
-        if(inputText === "Deposit ") {
-            if(ren) beginDeposit()
-        } else {
-            setSufficentApproval(true)
-            getBalance(text)
-        }
-     }, [library, balance, text])
 
     const getMaxDeposit = async() => {
         if(TransactionType === "DEPOSIT") {
@@ -93,7 +76,7 @@ const WalletModal = (
         } else if (TransactionType === "WITHDRAWAL") setText(balance) 
     }
 
-    const getAllowance = async(amount) => {
+    const getAllowance = React.useCallback(async(amount) => {
         try {
             var allowance = await ren.allowance(account, BridgeAddress)
             allowance = Web3.utils.fromWei(allowance.toString(), "Gwei")
@@ -106,9 +89,9 @@ const WalletModal = (
             setSufficentApproval(true)
             console.error(error)
         }
-    }
+    },[ren, setSufficentApproval, account])
 
-    const getGas = async() => {
+    const getGas = React.useCallback(async() => {
         try {
             var gass = await ren.estimateGas.approve(account, BridgeAddress)
             gass = Web3.utils.fromWei(gass.toString(), "Gwei")
@@ -116,22 +99,23 @@ const WalletModal = (
         } catch(error) {
             console.error(error)
         }
-    }
+    }, [ren, account, setGas])
 
-    const getBalance = async(amount) => {
+    const getBalance = React.useCallback(async(amount) => {
+        let bal
         try {
             if (TransactionType === "DEPOSIT" || TransactionType === "APPROVAL") {
-                var balance = await ren.balanceOf(account)
-                balance = Web3.utils.fromWei(balance.toString(), "Gwei")
-                if(Number(balance) >= Number(amount)) {
+                bal = await ren.balanceOf(account)
+                bal = Web3.utils.fromWei(bal.toString(), "Gwei")
+                if(Number(bal) >= Number(amount)) {
                     setSufficentBalance(false)
                 } else {
                     setSufficentBalance(true)
                 }
             } else if (TransactionType === "WITHDRAWAL") {
-                var balance = await bridge.getContractTokenbalance("BTC")
-                balance = Web3.utils.fromWei(balance.toString(), "Gwei")
-                if(Number(balance) >= Number(amount)) {
+                bal = await bridge.getContractTokenbalance("BTC")
+                bal = Web3.utils.fromWei(bal.toString(), "Gwei")
+                if(Number(bal) >= Number(amount)) {
                     setSufficentBalance(false)
                 } else {
                     setSufficentBalance(true)
@@ -141,7 +125,7 @@ const WalletModal = (
             setSufficentApproval(true)
             console.error(error)
         }
-    }
+    }, [TransactionType, account, bridge, ren, setSufficentApproval])
 
     const start = (type) => { 
         if(text === "" || !transactionBlock) return
@@ -150,11 +134,30 @@ const WalletModal = (
         setTransactionType(type)
     }
 
-    const beginDeposit = () => {
+    const beginDeposit = React.useCallback(() => {
         getBalance(text)
         getAllowance(text)
         getGas()
-    }
+    }, [getBalance, getAllowance, getGas, text])
+
+    useEffect(() => {
+        if(library) {
+ 
+            axios.get(RenBTCPriceRequestURL).then((result) => {
+                const currentPrice = (result.data[0].current_price) * balance
+                var currentBal = Number(currentPrice)
+                currentBal = currentBal.toFixed(2)
+                setRenPrice(currentBal) 
+            }).catch(error => console.error(error))
+        }
+
+        if(inputText === "Deposit ") {
+            if(ren) beginDeposit()
+        } else {
+            setSufficentApproval(true)
+            getBalance(text)
+        }
+     }, [library, balance, text, beginDeposit, getBalance, inputText, ren, setSufficentApproval])
 
     const setToggleValue = () => {
         setToggle(!toggle);

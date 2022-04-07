@@ -404,7 +404,7 @@ const Web3Modal = ({visible, close, toggleAccountDetails}) => {
                 <ButtonContainer>
                     <ConnectButton active={active && provider==="injected"} onClick={() => back("injected")}>
                         <TitleContainer margin={"20px"}>
-                            <Logo width={50}><img src={metamask} width={30} /></Logo>
+                            <Logo width={50}><img alt="" src={metamask} width={30} /></Logo>
                             <ModalTitle>
                                 {active && provider ==="injected" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
@@ -414,7 +414,7 @@ const Web3Modal = ({visible, close, toggleAccountDetails}) => {
                     </ConnectButton>
                     <ConnectButton active={active && provider==="fortmatic"} onClick={() => back("fortmatic")}>
                         <TitleContainer margin={"20px"}>
-                            <Logo width={50}><img src={fortmatic} width={27} /></Logo>
+                            <Logo width={50}><img alt="" src={fortmatic} width={27} /></Logo>
                             <ModalTitle>
                                 {active && provider ==="fortmatic" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
@@ -424,7 +424,7 @@ const Web3Modal = ({visible, close, toggleAccountDetails}) => {
                     </ConnectButton>
                     <ConnectButton active={active && provider==="torus"} onClick={() => back("torus")}>
                         <TitleContainer margin={"20px"}>
-                            <Logo width={50}><img src={torus} width={27} /></Logo>
+                            <Logo width={50}><img alt="" src={torus} width={27} /></Logo>
                             <ModalTitle>
                                 {active && provider ==="torus" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
@@ -434,7 +434,7 @@ const Web3Modal = ({visible, close, toggleAccountDetails}) => {
                     </ConnectButton>
                     <ConnectButton active={active && provider==="portis"} onClick={() => back("portis")}>
                         <TitleContainer margin={"20px"}>
-                            <Logo width={50}><img src={portis} width={25} /></Logo>
+                            <Logo width={50}><img alt="" src={portis} width={25} /></Logo>
                             <ModalTitle>
                                 {active && provider ==="portis" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>
@@ -444,7 +444,7 @@ const Web3Modal = ({visible, close, toggleAccountDetails}) => {
                     </ConnectButton>
                     <ConnectButton active={active && provider==="walletconnect"} onClick={() => back("walletconnect")}>
                         <TitleContainer margin={"20px"}>
-                            <Logo width={50}><img src={walletConnect} width={35} /></Logo>
+                            <Logo width={50}><img alt="" src={walletConnect} width={35} /></Logo>
                             <ModalTitle>
                                 {active && provider ==="walletconnect" && <a href="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png"><img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/></a>}
                                 <span className="sp"></span>

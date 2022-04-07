@@ -1,7 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import { ExternalLink } from "react-feather"
-
 
 export const NavButton2 = styled.div`
 

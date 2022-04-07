@@ -4,12 +4,10 @@ import EthereumLogo from "../assets/ethereum-logo.png"
 import { X } from "react-feather"
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import Edit from "../assets/edit.svg"
-import tokenList from "./tokenList.json"
 import { currenciesConfig } from "../../utils/AssetConfigs"
 import { chainsConfig } from "../../utils/AssetConfigs"
-import { EmptyCircleIcon } from "../Icons/RenIcons"
 import { supportedLockCurrencies, supportedMintDestinationChains } from "../../utils/AssetConfigs"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { setMintCurrency } from "../../features/mint/mintSlice"
 import { setChain } from "../../features/wallet/walletSlice"
 export const Backdrop = styled.div`
@@ -472,22 +470,6 @@ const createAvailabilityFilter = (available) => (option) => {
     return available.includes(option.symbol);
 };
 
-const getAssetData = (selected) => {
-    let full = "Select";
-    let short = "Select";
-    let Icon = EmptyCircleIcon;
-    if (selected) {
-      full = selected.full;
-      short = selected.short;
-      Icon = selected.MainIcon;
-    }
-    return {
-      full,
-      short,
-      Icon,
-    };
-  };
-  
 
 const TokenListModal = ({ 
     visible, 
@@ -507,7 +489,7 @@ const TokenListModal = ({
 
     const [searchTerm, setSearchTerm] = useState("")
     const dispatch = useDispatch()
-    const setSelectedToken = (option, type) => {
+    const setSelectedToken = React.useCallback((option, type) => {
         if (type === "from") {
             setFromToken(option)
         }
@@ -516,10 +498,9 @@ const TokenListModal = ({
         }
         setSearchTerm("")
         close()
-    }
+    }, [close, setFromToken, setToToken])
 
     const available = type === "from" ? supportedLockCurrencies : supportedMintDestinationChains;
-    const x = getOptions("currency")
 
     const availabilityFilter = React.useMemo(
         () => createAvailabilityFilter(available),
@@ -532,7 +513,7 @@ const TokenListModal = ({
         localStorage.setItem("selected_currency", JSON.stringify(selectedCurrency))
         dispatch(setMintCurrency(currency))
         setShowTokenModal(false)
-    }, [dispatch])
+    }, [dispatch, setSelectedToken, setShowTokenModal])
 
     const handleChainChange = React.useCallback((chain, option, type) => {
         setSelectedToken(option, type)
@@ -540,7 +521,7 @@ const TokenListModal = ({
         const selectedChain = getOptionBySymbol(chain, "chain");
         localStorage.setItem("selected_chain", JSON.stringify(selectedChain))
         setShowTokenModal(false)
-    }, [dispatch])
+    }, [dispatch, setSelectedToken, setShowTokenModal])
 
     return(
 
@@ -595,6 +576,7 @@ const TokenListModal = ({
                                         ) {
                                         return val
                                         }
+                                        return val
                                     })
                                     .map(({ symbol, MainIcon, short, full}) => {
                                         return (
@@ -625,7 +607,7 @@ const TokenListModal = ({
                                     <TextContainer>
                                         <Img src={Edit}></Img>
                                         <BottomSectionText>
-                                            {type=="from" 
+                                            {type ==="from" 
                                              ? "Currency Selection List" 
                                              : "Chain Seleection List"
                                             }
