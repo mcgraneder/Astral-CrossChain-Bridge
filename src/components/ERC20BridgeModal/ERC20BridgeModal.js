@@ -6,7 +6,6 @@ import HomeConnectButton from "../Home/HomeConnectButton";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { StyledContainer, 
-         BridgeModalContainer, 
          BridgeModalWrapper, 
          ChainSelector, 
          ChainSelectorWrapper, 
@@ -28,7 +27,8 @@ import { StyledContainer,
          Balancetext
 } from "./ERC20BridgeModalStyles";
 import { useWeb3React } from "@web3-react/core";
-
+import { LoginStyledContainer } from "../Home/StyledContainer";
+import { BridgeModalContainer } from "../BridgeModal/BridgeModalStyles";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -134,7 +134,7 @@ const ERC20BridgeModal = ({close, balance }) => {
     return (
 
         <>
-        <StyledContainer onClick={() => setDropdownValue3()}>
+        <LoginStyledContainer onClick={() => setDropdownValue3()}>
             
             <BridgeModalContainer>
             <BridgeSelectorContainer>
@@ -217,7 +217,7 @@ const ERC20BridgeModal = ({close, balance }) => {
                 </MintFormContainer>
             </BridgeModalWrapper>
             </BridgeModalContainer>
-        </StyledContainer>
+        </LoginStyledContainer>
         </>
     )
 }

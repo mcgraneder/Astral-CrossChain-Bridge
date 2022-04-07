@@ -44,6 +44,7 @@ import { $wallet } from "../../features/wallet/walletSlice";
 import { setChain } from "../../features/wallet/walletSlice";
 import { EmptyCircleIcon } from "../Icons/RenIcons";
 import WalletInputForm from "../WalletModal/components/WalletInput";
+import { LoginStyledContainer } from "../Home/StyledContainer";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -208,13 +209,13 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     }
     
     if (showGateway) return(
-        <StyledContainer>    
+        <LoginStyledContainer>    
             <BridgeModalContainer>
                 <BridgeModalWrapper>
                     <ConfirmationStep back={() =>  setShowGateway(!showGateway)} balance={balance}/>
                 </BridgeModalWrapper>
             </BridgeModalContainer>
-        </StyledContainer>
+        </LoginStyledContainer>
     )
 
     else if (showFees) return (
@@ -235,13 +236,13 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
             TransactionType={"APPROVAL"}
             gass={"0.000354"}
         />
-        <StyledContainer>
+        <LoginStyledContainer>
             <BridgeModalContainer>
                 <BridgeModalWrapper>
                     <BridgeFees back={toggleFees} toggleGateway={() => setConfirm(true)} balance={balance}/>
                 </BridgeModalWrapper>
             </BridgeModalContainer>
-        </StyledContainer>
+        </LoginStyledContainer>
         </>
     )
 
@@ -250,7 +251,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
    else return (
 
         <>
-        <StyledContainer>
+        <LoginStyledContainer>
             
             <BridgeModalContainer>
             <BridgeSelectorContainer>
@@ -337,7 +338,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                 </MintFormContainer>
             </BridgeModalWrapper>
             </BridgeModalContainer>
-        </StyledContainer>
+        </LoginStyledContainer>
         </>
     )
 }

@@ -9,6 +9,7 @@ import { currenciesConfig,
 import Grey from "../../assets/icons/empty-circle-icon.svg"
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { BrowsersConfig } from "../../../utils/AssetConfigs";
 export const CurrencyItemContainer = styled.li`
 
 display: list-item;
@@ -97,33 +98,50 @@ const AssetItem = ({ assetType, type }) => {
         [AllCurrencies]
     );
 
-    return (
+    if (type === "LEGACY" | type === "EVM") {
+        return (
 
+            <>
+                {getOptions(assetType)
+                .filter(type === "LEGACY" ? LegacyavailabilityFilter : EvmavailabilityFilter)
+                .map(({ MainIcon, full }) => {
+                    return(
+                        <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
+                            <CurrencyItemWrapper>
+                                <CurrencyLogoContainer>
+                                    <CurrencyLogo src={MainIcon} effect="blur"></CurrencyLogo>
+                                </CurrencyLogoContainer>
+                                <CurrencyTitle>{full === "Binance Smart Chain" ? "Binance" : full}</CurrencyTitle>
+                            </CurrencyItemWrapper>
+                        </CurrencyItemContainer>
+                    )})}
+                    <CurrencyItemContainer  marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
+                        <CurrencyItemWrapper>
+                            <CurrencyLogoContainer>
+                                <CurrencyLogo src={Grey} effect="blur"></CurrencyLogo>
+                            </CurrencyLogoContainer>
+                            <CurrencyTitle>+ More soon</CurrencyTitle>
+                        </CurrencyItemWrapper>
+                    </CurrencyItemContainer>
+            </>          
+        )
+    } else if (type === "BROWSER") {return (
         <>
-            {getOptions(assetType)
-            .filter(type === "LEGACY" ? LegacyavailabilityFilter : EvmavailabilityFilter)
-            .map(({ MainIcon, full }) => {
+            {Object.values(BrowsersConfig)
+            .map(({ logo, name }) => {
                 return(
                     <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                         <CurrencyItemWrapper>
                             <CurrencyLogoContainer>
-                                <CurrencyLogo src={MainIcon} effect="blur"></CurrencyLogo>
+                                <CurrencyLogo src={logo} effect="blur"></CurrencyLogo>
                             </CurrencyLogoContainer>
-                            <CurrencyTitle>{full === "Binance Smart Chain" ? "Binance" : full}</CurrencyTitle>
+                            <CurrencyTitle>{name}</CurrencyTitle>
                         </CurrencyItemWrapper>
                     </CurrencyItemContainer>
                 )})}
-                <CurrencyItemContainer  marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
-                    <CurrencyItemWrapper>
-                        <CurrencyLogoContainer>
-                            <CurrencyLogo src={Grey} effect="blur"></CurrencyLogo>
-                        </CurrencyLogoContainer>
-                        <CurrencyTitle>+ More soon</CurrencyTitle>
-                    </CurrencyItemWrapper>
-                </CurrencyItemContainer>
         </>
-                   
-    )
+
+    )}
 }
 
 export default AssetItem

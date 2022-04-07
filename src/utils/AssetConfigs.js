@@ -76,6 +76,12 @@ import sol from "../components/assets/icons/solana-colour-icon.svg"
 import arbi from "../components/assets/icons/arbitrum-circle.svg"
 import dot from "../components/assets/icons/dots-icon.svg"
 
+import chrome from "../components/assets/Chrome.svg"
+import firefox from "../components/assets/Firefox.svg"
+import edge from "../components/assets/Microsoft Edge.svg"
+import chromium from "../components/assets/chromium.svg"
+import brave from "../components/assets/brave-icon.svg"
+
 import * as customColors from "../theme/colors";
 
 export const RenChain = {
@@ -249,6 +255,47 @@ export const supportedMintDestinationChains = [
     BridgeChain.BSCC,
     BridgeChain.ARBITRUMC,
 ]
+
+export const Browsers = {
+
+  CHROME: "CHROME",
+  BRAVE: "BRAVE",
+  EDGE: "EDGE",
+  FIREFOX: "FIREFOX",
+  CHROMIUM: "CHROMIUM"
+}
+
+export const SupportedBrowsers = [
+  Browsers.CHROME,
+  Browsers.BRAVE,
+  Browsers.EDGE,
+  Browsers.FIREFOX,
+  Browsers.CHROMIUM
+]
+
+export const BrowsersConfig = {
+  [Browsers.CHROME]: {
+    logo: chrome,
+    name: "Google Chrome"
+  },
+  [Browsers.EDGE]: {
+    logo: edge,
+    name: "Microsoft Edge"
+  },
+  [Browsers.BRAVE]: {
+    logo: brave,
+    name: "Brave Browser"
+  },
+  [Browsers.FIREFOX]: {
+    logo: firefox,
+    name: "Firefox"
+  },
+  [Browsers.CHROMIUM]: {
+    logo: chromium,
+    name: "Chromium"
+  },
+}
+
 
 export const chainsConfig = {
         [BridgeChain.BTCC]: {

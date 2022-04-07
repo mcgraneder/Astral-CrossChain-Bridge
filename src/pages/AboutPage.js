@@ -11,6 +11,7 @@ font-family: SuisseIntl,Helvetica,Arial,sans-serif;
     padding-left: 24px;
     padding-right: 24px;
     width: 100%;
+    height: 100%;
     display: block;
     box-sizing: border-box;
     margin-left: auto;

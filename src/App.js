@@ -8,7 +8,6 @@ import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 import NotFoundPage from "./pages/NotFoundPage";
 
-
 const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const InstallMetamaskPage = lazy(() => import("./pages/InstallMetamaskPage"));

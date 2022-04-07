@@ -6,7 +6,7 @@ export const NavContainer = styled.div`
     background:  rgb(35,35,52);
     background:transparent;
     width: 100%;
-    position: fixed;
+    position: absolute;
     // z-index: 99;
 
 `

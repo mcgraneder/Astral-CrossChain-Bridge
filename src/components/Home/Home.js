@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import SupportedAssets from "./components/SupportedAssets";
 import { LoginStyledContainer } from "./StyledContainer";
 import { TopeSectionWrapper, BottomSectionWrapper } from "./StyledContainer";
+import { PageContainer } from "../../pages/AboutPage";
 export const Wrapper = styled.div`
 
     height ${(props) => props.space}px;

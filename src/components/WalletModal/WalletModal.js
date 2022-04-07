@@ -16,6 +16,7 @@ import WalletTxDetails from "./components/WalletTxDetails";
 import DisplayBalance from "./components/DisplayBalance";
 import DropdownMenu from "./components/DropdownMenu";
 import { useWeb3React } from "@web3-react/core"
+import { LoginStyledContainer } from "../Home/StyledContainer";
 
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 const RenBTCPriceRequestURL = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=renbtc&order=market_cap_desc&per_page=100&page=1&sparkline=false"
@@ -173,7 +174,7 @@ const WalletModal = (
     return (
 
         <>
-        <StyledContainer >
+        <LoginStyledContainer>
             <BridgeModalContainer>
                 <DropdownMenu Logo={EthereumLogo} name={"Ethereum"} marginBottom={"5px"}/>
                 <DropdownMenu Logo={BitcoinLogo} name={"Bitcoin"} marginBottom={"20px"}/>
@@ -217,7 +218,7 @@ const WalletModal = (
                     </MintFormWrapper>
                 </MintFormContainer>
             </BridgeModalContainer>
-        </StyledContainer>
+        </LoginStyledContainer>
         </>
     )
 }
