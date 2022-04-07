@@ -20,7 +20,7 @@ export const SupportedAssetsWrapper = styled.div`
     display: flex;
     // flex-direction: row;
     // justify-content: stretch;
-    margin-top: 50px;
+    margin-top: 20px;
 `
 
 export const CurrencysContainer = styled.div`
@@ -62,7 +62,7 @@ const SupportedAssets = () => {
         <SupportedAssetsContainer>
             <SupportedAssetsWrapper>
                 <CurrencysContainer paddingR={"42px"} paddingL={"0px"} border={true}>
-                    <CurrenciesHeader>Supported Assets</CurrenciesHeader>
+                    <CurrenciesHeader>Supported Currencies</CurrenciesHeader>
                     <CurrenciesList>
                         <AssetItem assetType={"currency"}/>
                     </CurrenciesList>

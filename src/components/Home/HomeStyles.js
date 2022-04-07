@@ -11,6 +11,7 @@ export const StyledTitle = styled.div`
     font-weight: ${(props) => props.weight};
     // font-style: ${(props) => props.styleds};
     background-color: transparent;
+    margin-top:  ${(props) => props.marginTop}px;
 `
 export const StyledSubTitle = styled.div`
 

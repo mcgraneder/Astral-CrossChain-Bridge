@@ -13,7 +13,7 @@ import { useWeb3React } from "@web3-react/core";
 export const FormWrapper = styled.div`
 
 
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
