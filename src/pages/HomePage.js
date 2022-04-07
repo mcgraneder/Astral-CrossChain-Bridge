@@ -10,14 +10,14 @@ const HomePage = () => {
     const toggle1 = () => setShow1(!show1);
     let history = useHistory()
 
-    useEffect(() => {
-        if (typeof window.ethereum !== 'undefined') {
-          console.log('MetaMask is installed!');
-        } else {
-          console.log("unsupprted browser")
-            history.push("/installmetamask")
-        }
-      }, [])
+    // useEffect(() => {
+    //     if (typeof window.ethereum !== 'undefined') {
+    //       console.log('MetaMask is installed!');
+    //     } else {
+    //       console.log("unsupprted browser")
+    //         history.push("/installmetamask")
+    //     }
+    //   }, [])
 
     return (
 
