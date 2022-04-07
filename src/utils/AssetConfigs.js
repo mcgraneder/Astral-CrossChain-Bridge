@@ -67,13 +67,13 @@ import dgb from "../components/assets/icons/dgb-icon.svg"
 import fil from "../components/assets/icons/fil-icon.svg"
 import luna from "../components/assets/icons/luna-icon.svg"
 
-import matic from "../components/assets/icons/polygon-colour-icon.svg"
-import eth from "../components/assets/Ethereum.svg"
-import bsc from "../components/assets/icons/binancesmartchain-colour-icon.svg"
-import ftm from "../components/assets/icons/fantom-colour-icon.svg"
-import avax from "../components/assets/icons/avalanche-colour-icon.svg"
+import matic from "../components/assets/icons/polygon-circle-icon.svg"
+import eth from "../components/assets/icons/ethereum-circle-icon.svg"
+import bsc from "../components/assets/icons/binancesmartchain-circle-icon.svg"
+import ftm from "../components/assets/icons/fantom-circle-icon.svg"
+import avax from "../components/assets/icons/avalanche-circle-icon.svg"
 import sol from "../components/assets/icons/solana-colour-icon.svg"
-import arbi from "../components/assets/icons/arbitrum-color.svg"
+import arbi from "../components/assets/icons/arbitrum-circle.svg"
 
 import * as customColors from "../theme/colors";
 
