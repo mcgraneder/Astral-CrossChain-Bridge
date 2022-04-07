@@ -7,7 +7,8 @@ import { currenciesConfig,
          chainsConfig 
 } from "../../../utils/AssetConfigs";
 import Grey from "../../assets/icons/empty-circle-icon.svg"
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 export const CurrencyItemContainer = styled.li`
 
 display: list-item;
@@ -36,7 +37,7 @@ export const CurrencyLogoContainer = styled.span`
     list-style-type: none;
 `
 
-export const CurrencyLogo = styled.img`
+export const CurrencyLogo = styled(LazyLoadImage)`
 
     fill: currentColor;
     width: 65px;
@@ -106,7 +107,7 @@ const AssetItem = ({ assetType, type }) => {
                     <CurrencyItemContainer marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                         <CurrencyItemWrapper>
                             <CurrencyLogoContainer>
-                                <CurrencyLogo src={MainIcon}></CurrencyLogo>
+                                <CurrencyLogo src={MainIcon} effect="blur"></CurrencyLogo>
                             </CurrencyLogoContainer>
                             <CurrencyTitle>{full === "Binance Smart Chain" ? "Binance" : full}</CurrencyTitle>
                         </CurrencyItemWrapper>
@@ -115,7 +116,7 @@ const AssetItem = ({ assetType, type }) => {
                 <CurrencyItemContainer  marginL={type === "EVM" ? "6px" : "0px"} marginR={type === "EVM" ? "6px" : "0px"}>
                     <CurrencyItemWrapper>
                         <CurrencyLogoContainer>
-                            <CurrencyLogo src={Grey}></CurrencyLogo>
+                            <CurrencyLogo src={Grey} effect="blur"></CurrencyLogo>
                         </CurrencyLogoContainer>
                         <CurrencyTitle>+ More soon</CurrencyTitle>
                     </CurrencyItemWrapper>

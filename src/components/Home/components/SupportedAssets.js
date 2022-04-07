@@ -85,7 +85,7 @@ const SupportedAssets = ({ type }) => {
                 <CurrencysContainer paddingR={"0px"} paddingL={"0px"}>
                     <CurrenciesHeader>Supported EVM Currencies</CurrenciesHeader>
                     <CurrenciesList>
-                        <AssetItem assetType={"currency"}type={type} />
+                        <AssetItem assetType={"currency"} type={type} />
                     </CurrenciesList>
                 </CurrencysContainer>
             </SupportedAssetsWrapper>

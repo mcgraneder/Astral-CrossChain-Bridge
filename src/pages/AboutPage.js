@@ -4,7 +4,7 @@ import RenLogo1 from "../components/assets/icons/ren-logo-3f.svg"
 import RenLogo4 from "../components/assets/icons/renvm-logo.svg"
 import { ArrowLeft, X, ExternalLink } from "react-feather"
 import { useHistory } from "react-router-dom"
-
+import { TopeSectionWrapper } from "../components/Home/StyledContainer"
 export const PageContainer = styled.div`
 
 font-family: SuisseIntl,Helvetica,Arial,sans-serif;

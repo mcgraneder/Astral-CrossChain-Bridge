@@ -8,7 +8,7 @@ import styled from "styled-components"
 import { NavLink } from "react-router-dom";
 import SupportedAssets from "./components/SupportedAssets";
 import { LoginStyledContainer } from "./StyledContainer";
-
+import { TopeSectionWrapper, BottomSectionWrapper } from "./StyledContainer";
 export const Wrapper = styled.div`
 
     height ${(props) => props.space}px;
@@ -104,6 +104,7 @@ const Home = ({close}) => {
     return(
         <>
         <LoginStyledContainer>
+            <TopeSectionWrapper>
                 <StyledTitle size={100} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
                 <StyledTitle size={50} margin={20} marginTop={0} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle>
                 <StyledSubTitle size={20}>Transfer your favouite crypto-currencies cross-chain. We support many assets such as BTC, ZEC, BCH, SOL, DOGE and more</StyledSubTitle>
@@ -113,6 +114,7 @@ const Home = ({close}) => {
                 <StyledTitle2 size={27} margin={0} marginTop={40} weight={400} align={"center"} >
                     We support all of top the tradtional Legacy Cyptos
                 </StyledTitle2>
+            
                 <SupportedAssets type={"LEGACY"}/>
                 <StyledTitle2 size={27} margin={0} marginTop={40} weight={400} align={"center"} >
                     Aswell as many EVM and Layer 2 based assets
@@ -120,6 +122,7 @@ const Home = ({close}) => {
                 <Wrapper space={"100px"}/>
                 <SupportedAssets type={"EVM"}/>
                 {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
+                </TopeSectionWrapper>
             </LoginStyledContainer>
         </>
     )
