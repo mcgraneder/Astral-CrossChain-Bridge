@@ -40,7 +40,7 @@ margin-top: -1px;
     display: block;
 `
 export const AboutPageContentsWrapper = styled.div`
-    margin-top: 64px;
+    margin-top: 45px;
     width: 100%;
     display: block;
     box-sizing: border-box;
@@ -65,7 +65,7 @@ font-family: SuisseIntl,Helvetica,Arial,sans-serif;
 `
 export const Text = styled.p`
 
-    margin-bottom: 23px;
+    margin-bottom: ${(props) => props.marginB};
     font-size: 17px;
     font-family: SuisseIntl,Helvetica,Arial,sans-serif;
     font-weight: 400;
@@ -302,7 +302,7 @@ const InstallMetamaskPage = () => {
                         </RightIconContainer>
                     </FooterContainer>
                     <Title>1) Unsupported Browser</Title>
-                    <Text>
+                    <Text marginB={"23px"}>
                       If you have been redirected to this page it can be for two possibilities. The first is that you are using this
                       app from an unsupported browser that does not support the Metamask wallt extension. If your current browser 
                       is not included in the list of supported browsers below, please change and use this app on any of the browsers 
@@ -318,7 +318,7 @@ const InstallMetamaskPage = () => {
             </SupportedAssetsWrapper>
         </SupportedAssetsContainer>
                     <Title>2) Install Metamask Wallet Extension</Title>
-                    <Text>
+                    <Text marginB={"10px"}>
                         If you are using this app with a supported browser then you have been redirected to this page because you dont
                         have Metamask installed. In order to be able to use his app to transfer and recieve cryptocurrencies you need
                         the Metamask wallet. You can get it from the link below!
