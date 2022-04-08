@@ -4,7 +4,7 @@ import RenLogo1 from "../components/assets/icons/ren-logo-3f.svg"
 import RenLogo4 from "../components/assets/icons/renvm-logo.svg"
 import { ArrowLeft } from "react-feather"
 import { useHistory } from "react-router-dom"
-
+import { ButtonWrapper } from "../components/Home/HomeStyles"
 export const PageContainer = styled.div`
 
 font-family: SuisseIntl,Helvetica,Arial,sans-serif;
@@ -112,6 +112,7 @@ export const RightIconContainer = styled.span`
     align-items: center;
     padding-top: 2px;
     padding-left: 25px;
+    margin-right: 70px;
 `
 
 export const HeaderContainer = styled.div`
@@ -137,7 +138,8 @@ export const BackArrow = styled(ArrowLeft)`
     font-size: 1.125rem;
     lex: 0 0 auto;
     color: White;
-    margin-right: 8px;
+    margin-right: 3px;
+    font-weight: bold;
 
 `
 
@@ -153,6 +155,52 @@ export const HeaderText = styled.div`
     color: White;
     // line-height: 25px;
 `
+
+export const NavButton2 = styled.div`
+
+font-family: 'Open Sans', sans-serif;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    line-style: none;
+    background: rgb(13,94,209);
+    width: ${(props) => props.width};
+    border-radius: 18px;
+    height: ${(props) => props.height};
+    text-align: center;
+    line-height: ${(props) => props.height};
+    color:  White;
+    margin-left: ${(props) => props.active ? "7px" : "0px"};
+    margin-right: ${(props) => props.active ? "7px" : "0px"};
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+
+    // border: 1px solid rgb(3,184,189);
+
+    &:hover {
+
+        cursor: pointer;
+        background: rgb(0,80,195);
+        // color: rgb(23,42,66);
+       
+    }
+
+`
+
+const HomeConnectButton = ({ height, width, text, click}) => {
+
+
+    return (
+
+        <>
+            <NavButton2  width={width} height={height} color={"rgb(23,42,66)"} onClick={click} target="blank"><BackArrow strokeWidth={3} size={"20px"}/>{text}</NavButton2>
+        </>
+    )
+}
+
 const AboutPage = () => {
 
     let history = useHistory()
@@ -164,12 +212,6 @@ const AboutPage = () => {
         <PageContainer>
             <AboutPageContentsConainer>
                 <AboutPageContentsWrapper>
-                    <HeaderContainer>
-                        <BackContainer onClick={Back}>
-                            <BackArrow size={"30px"}/>
-                            <HeaderText>Back to Home page</HeaderText>
-                        </BackContainer>
-                    </HeaderContainer>
                     <Title>What is RenBridge?</Title>
                     <Text>
                         RenBridge enables the simple wrapping of digital assets on different blockchains. For 
@@ -193,6 +235,7 @@ const AboutPage = () => {
                         <RightIconContainer>
                             <Icon src={RenLogo4}/>
                         </RightIconContainer>
+                        <HomeConnectButton width={"180px"} left={"82%"} top={"31%"} close={Back} click={Back} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"Back to Home"}></HomeConnectButton>
                     </FooterContainer>
                 </AboutPageContentsWrapper>
             </AboutPageContentsConainer>
