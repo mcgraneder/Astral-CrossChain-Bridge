@@ -1,18 +1,18 @@
 import React from "react";
-import "./PageLoadSpinnerStyles.css"
-import "./style.css"
 
 const PageLoad = () => {
 
     return (
-        <div className="overflow dark" id="preload">
-        <div className="circle-line">
-            <div className="circle-red">&nbsp;</div>
-            <div className="circle-blue">&nbsp;</div>
-            <div className="circle-green">&nbsp;</div>
-            <div className="circle-yellow">&nbsp;</div>
+        <div id="root">
+        <div className="loader">
+          <div className="lds-ellipsis">
+            <div/>
+            <div/>
+            <div/>
+            <div/>
+          </div>
         </div>
-    </div>
+      </div>
     )
 }
 

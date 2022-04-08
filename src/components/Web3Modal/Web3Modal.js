@@ -379,7 +379,7 @@ const Web3Modal = ({visible, close, toggleAccountDetails}) => {
         }
         setTimeout(() => {
             connectOn(provider)
-        }, 500)
+        }, 1200)
     }
   
     const provider = localStorage.getItem("provider")

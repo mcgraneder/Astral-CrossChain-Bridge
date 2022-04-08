@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from "react"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Nav from "./components/Navbar/Navbar";
 import PageLoad from "./components/PageLoadSpinner/PageLoadSpinner";
 import Footer from "./components/Footer/Footer";
 import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChangeModal";
@@ -36,7 +35,6 @@ function App() {
     <TransactionProvider>
       <Router>
         <Suspense fallback={<PageLoad/>}>
-          <Nav/>
           <AccountsChangeModal/>
           <Switch>
             <Route exact path={paths.HOME} component={HomePage}></Route>
