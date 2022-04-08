@@ -4,7 +4,8 @@ import RenLogo1 from "../components/assets/icons/ren-logo-3f.svg"
 import RenLogo4 from "../components/assets/icons/renvm-logo.svg"
 import { ArrowLeft } from "react-feather"
 import { useHistory } from "react-router-dom"
-import { ButtonWrapper } from "../components/Home/HomeStyles"
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 export const PageContainer = styled.div`
 
 font-family: SuisseIntl,Helvetica,Arial,sans-serif;
@@ -90,7 +91,7 @@ export const LeftIconContainer = styled.span`
     border-right: 2px solid White;
     padding-right: 25px;
 `
-export const Icon = styled.img`
+export const Icon = styled(LazyLoadImage)`
 
 width: 2.32692em;
 font-size: inherit;
@@ -230,10 +231,10 @@ const AboutPage = () => {
                     </Text>
                     <FooterContainer>
                         <LeftIconContainer>
-                            <Icon src={RenLogo1}/>
+                            <Icon src={RenLogo1} effect={"blur"}/>
                         </LeftIconContainer>
                         <RightIconContainer>
-                            <Icon src={RenLogo4}/>
+                            <Icon src={RenLogo4} effect={"blur"}/>
                         </RightIconContainer>
                         <HomeConnectButton width={"180px"} left={"82%"} top={"31%"} close={Back} click={Back} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"Back to Home"}></HomeConnectButton>
                     </FooterContainer>
