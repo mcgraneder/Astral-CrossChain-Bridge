@@ -286,7 +286,7 @@ const InstallMetamaskPage = () => {
     }, [history])
 
     const Back = () => {
-        window.open("https://metamask.io/", "_blank")
+        window.open("https://metamask.io/", "_blank", "width=800,height=900")
     }
 
     return (
