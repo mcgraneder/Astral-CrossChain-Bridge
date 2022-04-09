@@ -42,8 +42,8 @@ function App() {
             <Route exact path={MAIN_PAGE_PATHS} component={MainPage} />
             <Route exact path={paths.INSTALL_METAMASK} component={InstallMetamaskPage}/>
             <Route exact path={paths.ABOUT} component={AboutPage}/>
-            <Route component={NotFoundPage} />
             <Route exact path={paths.MOBILE} component={IsMobilePage}/>
+            <Route component={NotFoundPage} />
           </Switch>
           <Footer/>
         </Suspense>
