@@ -3,10 +3,12 @@ import { NavLink } from "react-router-dom";
 
 export const NavContainer = styled.div`
 
-    background:  rgb(35,35,52);
-    background:transparent;
+    // background:  rgba(0,0,0, 0.5);
+    backdrop-filter: blur(5px);
+    // background: rgba(2,8,26, 0.65);
+    border-bottom: rgba(0,0,0, 0.5);
     width: 100%;
-    position: absolute;
+    position: ${(props) => props.position};
     // z-index: 99;
 
 `

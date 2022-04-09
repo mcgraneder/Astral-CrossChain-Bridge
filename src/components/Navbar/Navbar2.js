@@ -73,7 +73,7 @@ function Nav2() {
             close={toggleWalletModal} 
             toggleAccountDetails={toggleAccountDetails} 
           />
-            <NavContainer>
+            <NavContainer position={"fixed"}>
                 <NavWrapper>
                     <NavLogoContainer>
                         <NavLogo src={RenLogo} height="65px" width="65px"></NavLogo>
