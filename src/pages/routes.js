@@ -7,6 +7,7 @@ const DEX = "/dex"
 const NOT_FOUND = "/notfound"
 const INSTALL_METAMASK = "/installmetamask"
 const ABOUT = "/about"
+const MOBILE = "/mobilepage"
 
 export const paths = {
   BRIDGE,
@@ -17,7 +18,8 @@ export const paths = {
   DEX,
   NOT_FOUND,
   INSTALL_METAMASK,
-  ABOUT
+  ABOUT,
+  MOBILE
 };
 
 

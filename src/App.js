@@ -6,6 +6,7 @@ import AccountsChangeModal from "./components/AccountsChangeModal/AccountsChange
 import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 import NotFoundPage from "./pages/NotFoundPage";
+import IsMobilePage from "./pages/IsMobilePage";
 
 const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -42,6 +43,7 @@ function App() {
             <Route exact path={paths.INSTALL_METAMASK} component={InstallMetamaskPage}/>
             <Route exact path={paths.ABOUT} component={AboutPage}/>
             <Route component={NotFoundPage} />
+            <Route exact path={paths.MOBILE} component={IsMobilePage}/>
           </Switch>
           <Footer/>
         </Suspense>
