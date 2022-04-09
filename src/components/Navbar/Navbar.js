@@ -64,7 +64,7 @@ function Nav() {
     const provider = localStorage.getItem("provider")
 
     const [balance, setBalance] = useState("0.0000")
-    const { library, account, active } = useWeb3React()
+    const { library, account } = useWeb3React()
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);
 
@@ -101,7 +101,7 @@ function Nav() {
                         <NavLogo src={RenLogo} height="65px" width="65px"></NavLogo>
                         <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
                     </NavLogoContainer>
-                    <NavMenu visible={localStorage.getItem("provider")} marginL={"40px"} marginR={"118px"}>
+                    <NavMenu marginL={"40px"} marginR={"118px"} display={"flex"}>
                         <NavItem  marginL={"15px"} >
                             <NavButton width={"130px"} 
                                 id={`chains-nav-link`}
@@ -114,7 +114,7 @@ function Nav() {
                             </NavButton>
                         </NavItem>
                     </NavMenu>
-                    <NavMenu visible={localStorage.getItem("provider")} marginL={"0px"} marginR={"118px"}>
+                    <NavMenu marginL={"0px"} marginR={"118px"} display={"flex"}>
                         <NavItem  marginL={"0px"} >
                             <NavButton  width={"110px"}
                                 id={`bridge-nav-link`}
@@ -139,22 +139,24 @@ function Nav() {
                         </NavItem>
                     </NavMenu>
                     <NavMenu2>
-                    <NavItem2 active={provider}>
-                        {provider && <BalanceContainer active={active}>{balance} ETHER</BalanceContainer>}
+                    <NavItem2>
+                            <BalanceContainer>
+                                {balance} ETHER
+                            </BalanceContainer>
                             <ConnectWalletButton 
                                 active={provider} 
                                 left={"82.3%"} 
                                 top={"31.5%"} 
-                                close={!localStorage.getItem("provider") ? toggleWalletModal : toggleAccountDetails} 
-                                onclick={!localStorage.getItem("provider") ? toggleWalletModal : toggleAccountDetails} 
+                                close={toggleAccountDetails} 
+                                onclick={toggleAccountDetails} 
                                 height="160" 
                                 fontsize="17" 
                                 colour="rgb(20, 29, 49)" 
                                 width="40">
                             </ConnectWalletButton>
                     </NavItem2>
-                        <NavItem3 active={provider} visible={localStorage.getItem("provider")}>
-                        <BalanceContainer active={provider}>
+                        <NavItem3>
+                        <BalanceContainer>
                         <NavLogo src={threeDots} height="30px" width="30px"></NavLogo></BalanceContainer> 
                     </NavItem3>
                     </NavMenu2>

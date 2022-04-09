@@ -27,12 +27,12 @@ export const NavWrapper = styled.div`
 
 export const NavMenu = styled.div`
 
-    display: flex;
+    display: ${(props) => props.display};
     list-style: none;
     align-items: center;
     margin: 10px;
     margin-left: ${(props) => props.marginL};
-    opacity: ${(props) => props.visible ? "1" : "0"};
+    // opacity: ${(props) => props.visible ? "1" : "0"};
     border-radius: 18px;
 `
 
@@ -162,7 +162,7 @@ export const NavItem2 = styled.div`
     background: rgb(14, 22, 39);
     height: 40px;
     // width: 100%;
-    padding-left: ${(props) => props.active ? "5px" : "0px"};
+    padding-left: 5px;
     // margin-top: 3px;
     display: flex;
     border-radius: 18px;
@@ -187,7 +187,7 @@ export const NavButton2 = styled.div`
     text-align: center;
     line-height: 35px;
     color:  White; //rgb(75,135,220);
-    margin-left: ${(props) => props.active ? "7px" : "0px"};
+    margin-left: 7px;
     font-weight: bold;
     // z-index: 1000;
 
@@ -245,7 +245,7 @@ export const NavItem3 = styled.div`
 
     padding-left: ${(props) => props.active ? "5px" : "0px"};
     // margin-top: 3px;
-    display: ${(props) => props.visible ? "flex" : "none"};
+    display: flex;
     border-radius: 18px;
     align-items: center;
     justify-content: right;

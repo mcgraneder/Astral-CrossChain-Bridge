@@ -85,8 +85,8 @@ function Nav2() {
                                 active={provider} 
                                 left={"82.3%"} 
                                 top={"31.5%"} 
-                                close={!localStorage.getItem("provider") ? toggleWalletModal : toggleAccountDetails} 
-                                onclick={!localStorage.getItem("provider") ? toggleWalletModal : toggleAccountDetails} 
+                                close={toggleWalletModal} 
+                                onclick={toggleWalletModal} 
                                 height="160" 
                                 fontsize="17" 
                                 colour="rgb(20, 29, 49)" 

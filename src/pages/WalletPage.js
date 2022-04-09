@@ -7,7 +7,6 @@ import abi from "../utils/Abis/ABI.json"
 import abi2 from "../utils/Abis/AB12.json"
 import { useWeb3React } from "@web3-react/core";
 import { v4 } from "uuid"
-import usePendingTransaction from "../hooks/usePendingTransaction";
 import Web3 from "web3";
 import { ConfirmationModal, 
         PendingModal, 
@@ -59,10 +58,10 @@ const WalletPage = () => {
     const [sufficentApproval, setSufficentApproval] = useState(true)
     const {library, account } = useWeb3React()
 
-    const { setPending } = useContext(TransactionStateContext)
+    const { setPending, transactions, setTransactions } = useContext(TransactionStateContext)
     console.log("hello")
     const { balance, setBalance } = useBalance()
-    const { transactions, setTransactions} = usePendingTransaction()
+    // const { transactions, setTransactions} = usePendingTransaction()
    
 
     const dispatch = useNotification();

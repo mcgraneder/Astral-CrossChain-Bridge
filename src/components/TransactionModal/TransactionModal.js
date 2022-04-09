@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import chevronDownLogo from "../assets/cheverondown.png"
 import chevronDownLogo1 from "../assets/cheverondownB.png"
@@ -24,11 +24,14 @@ import { StyledContainer,
          Spacer,
 } from "./TransactionModalStyles";
 import TransactionList from "./components/TransactionList/TransactionList";
+import { TransactionStateContext } from "../../contexts/transactionContext";
 
-const TransactionModal = ({ transactions, toggleTokenModal }) => {
+const TransactionModal = ({toggleTokenModal }) => {
 
     const [dropDownActive0, setDropDownActive0] = useState(false)
     const [dropDownActive, setDropDownActive] = useState(false)
+
+    const { transactions } = useContext(TransactionStateContext)
 
     const setDropdownValue3 = () => {
         if(!dropDownActive  && !dropDownActive0) return
