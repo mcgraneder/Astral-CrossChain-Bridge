@@ -151,20 +151,17 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
     const [showGateway, setShowGateway] = useState(false)
     const [address, setAddress] = useState("")
 
-    useEffect(() => {
-        console.log(address)
-    }, [address])
-
     let history = useHistory()
     const { active, chainId } = useWeb3React()
     console.log(chainId)
 
-    const setToggleValue = () => setToggle(!toggle);
-    const toggleFees = () => setShowFees(!showFees)
-
     useEffect(() => {
         if(!localStorage.getItem("provider")) history.push("/") 
     }, [history])
+
+
+    const setToggleValue = () => setToggle(!toggle);
+    const toggleFees = () => setShowFees(!showFees)
 
     useEffect(() => {
         if(fromToken != null && toToken != null) {

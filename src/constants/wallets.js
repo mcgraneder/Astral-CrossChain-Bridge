@@ -1,3 +1,8 @@
+import metamaskIcon from "../components/assets/icons/metamask-fox.svg"
+import walletConnectIcon from "../components/assets/wallet_connect.svg"
+import fortmaticIcon from "../components/assets/fortmatic.svg"
+import torusIcon from "../components/assets/torus.svg"
+import portisIcon from "../components/assets/portis.svg"
 import { injected, 
     fortmatic, 
     portis, 
@@ -6,6 +11,51 @@ import { injected,
 } from "../connectors/provider";
 
 const PRODUCTION = "0"
+
+const ALL_WALLETS = {
+  INJECTED: "INJECTED",
+  PROTIS: "PORTIS",
+  FORTAMTIC: "FORTMATIC",
+  TORUS: "TORUS",
+  WALLETCONNECT: "WALLETCONNECT"
+}
+export const WALLETS = {
+  [ALL_WALLETS.INJECTED]: {
+    provider: "injected",
+    name: "Metamask",
+    href: null,
+    description: "metamaskIcon wallet",
+    icon: metamaskIcon
+  },
+  [ALL_WALLETS.PORTIS]: {
+    provider: "portis",
+    name: "Portis",
+    href: null,
+    description: "portisIcon wallet",
+    icon: portisIcon
+  },
+  [ALL_WALLETS.FORTAMTIC]: {
+    provider: "fortmatic",
+    name: "Fortmatic",
+    href: null,
+    description: "fortmaticIcon wallet",
+    icon: fortmaticIcon
+  },
+  [ALL_WALLETS.TORUS]: {
+    provider: "torus",
+    name: "Torus",
+    href: null,
+    description: "torusIcon wallet",
+    icon: torusIcon
+  },
+  [ALL_WALLETS.WALLETCONNECT]: {
+    provider: "walletconnect",
+    name: "WalletConnect",
+    href: null,
+    description: "wallet connect wallet",
+    icon: walletConnectIcon
+  },
+}
 
 export const PROVIDERS = {
   INJECTED: "injected",
@@ -28,7 +78,7 @@ const MAINNET_WALLETS = {
     METAMASK: {
       connector: injected,
       name: 'MetaMask',
-      iconName: 'metamask.png',
+      iconName: 'metamaskIcon.png',
       description: 'Easy-to-use browser extension.',
       href: null,
       color: '#E8831D'
@@ -76,7 +126,7 @@ const MAINNET_WALLETS = {
               mobileOnly: true
             },
             FORTMATIC: {
-              connector: fortmatic,
+              connector: fortmaticIcon,
               name: 'Fortmatic',
               iconName: 'fortmaticIcon.png',
               description: 'Login using Fortmatic hosted wallet',
@@ -85,7 +135,7 @@ const MAINNET_WALLETS = {
               mobile: true
             },
             Portis: {
-              connector: portis,
+              connector: portisIcon,
               name: 'Portis',
               iconName: 'portisIcon.png',
               description: 'Login using Portis hosted wallet',
@@ -94,9 +144,9 @@ const MAINNET_WALLETS = {
               mobile: true
             },
             Torus: {
-              connector: torus,
+              connector: torusIcon,
               name: 'Torus',
-              iconName: 'torus.png',
+              iconName: 'torusIcon.png',
               description: 'Login via Google, Facebook and others',
               href: null,
               color: '#5495F7',

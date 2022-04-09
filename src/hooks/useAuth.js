@@ -78,14 +78,20 @@ function connectOn(provider1) {
         alert("You must dissconnect first")
         return
     }
+    console.log(provider1)
     if (provider1 === PROVIDERS.FORTMATIC) provider = fortmatic
     if (provider1 === PROVIDERS.INJECTED) provider = injected
     if (provider1 === PROVIDERS.WALLETCONNECT) provider = walletconnect  
-    if (provider1 === PROVIDERS.PORTIS) provider = portis
+    if (provider1 === PROVIDERS.PORTIS) {
+        console.log("connecting")
+        provider = portis
+    }
     if (provider1 === PROVIDERS.TORUS) provider = torus
 
+    localStorage.setItem("provider", provider1)
+    console.log("connect")
     activate(provider, undefined, true).then(() => {
-        localStorage.setItem("provider", provider1)
+        console.log("connecting")
 
         //change to this soon instad of redirect in home.js
         // history.replace("/bridge")

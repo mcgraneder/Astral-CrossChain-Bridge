@@ -39,6 +39,7 @@ export const Logo = styled.div`
    float: left;
    align-items: center;
    line-height: 35px;
+   margin-right: 5px;
 
    &:hover {
     transition: all 0.2s ease-in-out;

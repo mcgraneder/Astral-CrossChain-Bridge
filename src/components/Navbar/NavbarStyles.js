@@ -162,7 +162,6 @@ export const NavItem2 = styled.div`
     background: rgb(14, 22, 39);
     height: 40px;
     // width: 100%;
-    padding-left: 5px;
     // margin-top: 3px;
     display: flex;
     border-radius: 18px;
@@ -187,7 +186,6 @@ export const NavButton2 = styled.div`
     text-align: center;
     line-height: 35px;
     color:  White; //rgb(75,135,220);
-    margin-left: 7px;
     font-weight: bold;
     // z-index: 1000;
 

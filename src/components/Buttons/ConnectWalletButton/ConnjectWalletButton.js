@@ -1,11 +1,7 @@
-import React, { useContext } from "react"
+import React, { useEffect, useContext } from "react"
 import { ConnectButton, Logo, ButtonText } from "./ConnectWalletButtonStyles"
 import styled, { keyframes } from "styled-components"
-import metamask from "../../assets/metamask.svg"
-import walletConnect from "../../assets/wallet_connect.svg"
-import fortmatic from "../../assets/fortmatic.svg"
-import torus from "../../assets/torus.svg"
-import portis from "../../assets/portis.svg"
+import { WALLETS } from "../../../constants/wallets"
 import { NavButton2 } from "../../Navbar/NavbarStyles"
 import Loader from "../../Loader/Loader"
 import { TransactionStateContext } from "../../../contexts/transactionContext"
@@ -53,38 +49,19 @@ const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
 
     const { pending } = useContext(TransactionStateContext)
     const { active, account } = useWeb3React()
-    var logo
-    var width1;
-    var width2;
-    console.log(active)
-
-    if(localStorage.getItem("provider") === "injected") {
-        logo = metamask;
-        width1=40
-        width2=22
-    }
-    if(localStorage.getItem("provider") === "walletconnect") {
-        logo = walletConnect;
-        width1=40
-        width2=22
-    }
-    if(localStorage.getItem("provider") === "fortmatic") {
-        logo = fortmatic;
-        width1=32
-        width2=20
-    }
-    if(localStorage.getItem("provider") === "portis") {
-        logo = portis;
-        width1=32
-        width2=18
-    }
-    if(localStorage.getItem("provider") === "torus") {
-        logo = torus;
-        width1=32
-        width2=20
-    }
-
     const provider = localStorage.getItem("provider")
+
+    const getWalletOptions = () => {
+        const options = Object.values(WALLETS);
+        return options;
+    };
+      
+    const getWalletByProvider = (provider) =>
+        getWalletOptions().find((option) => option.provider === provider);
+    
+
+    const activeWallet = getWalletByProvider(provider)
+    const logo = activeWallet ? activeWallet.icon : null
     return (
 
         <>
@@ -126,7 +103,7 @@ const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
                 Connecting...
             </ButtonText>
              </ConnectButton>  : <NavButton2 active={active} color={"rgb(23,42,66)"} onClick={close}>Connect Wallet</NavButton2>) 
-            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={width1}><img src={logo} alt="#" width={width2} height={width2}/></Logo>{account?.substring(0, 6)}...{account?.substring(account?.length - 4)}</ButtonText></ConnectButton>)}
+            :  <ConnectButton height={height} fontsize={fontsize} col={color} onClick={close}><ButtonText ><Logo width={22}><img src={logo} alt="#" width={22} height={22}/></Logo>{account?.substring(0, 6)}...{account?.substring(account?.length - 4)}</ButtonText></ConnectButton>)}
         </>
     )
 }

@@ -1,10 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import Disconnect from "./Disconnect";
+import metamask from "../assets/metamask.svg"
+import { WALLETS } from "../../constants/wallets";
 import { ArrowLeft, X } from "react-feather"
-import { useWeb3React } from "@web3-react/core"
-import useAuth from "../../hooks/useAuth";
-import WalletOptions from "./WalletOptions";
 
 export const FormWrapper = styled.div`
 
@@ -13,13 +11,13 @@ export const FormWrapper = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 420px;
+    width: 450px;
     // height: 610px;
     opacity: 0;
     background-color: rgb(27,32,52);
     text-align: right;
-    padding: 30px 15px;
-    padding-top: 40px;
+    padding: 30px 20px;
+    padding-top: 60px;
     border: 1.5px solid rgb(41, 50, 67);
     border-radius: 10px;
     pointer-events: none;
@@ -65,10 +63,10 @@ export const ButtonContainer = styled.div`
     // height: 100%;
     background: rgb(14, 22, 39);
     border-radius: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 1px;
-    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
     flex-direction: space-between;
 
 
@@ -82,21 +80,21 @@ export const DisclaimerContainer = styled.div`
     // height: 100%;
     background: rgb(14, 22, 39);
     border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    // padding-top: 12px;
-    // padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     margin-bottom: 20px;
     flex-direction: space-between;
 `;
 
 export const ConnectButton = styled.div`
 
-    height: 60px;
+    height: 55px;
     width: 100%;
     background:  rgb(27,32,52);
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 15px;
     
     border: 1px solid rgb(37, 46, 63);
    
@@ -138,13 +136,13 @@ export const Logo = styled.div`
 export const ModalTitle = styled.div`
 
     
-    font-size: 20px;
+    font-size: 18px;
     // font-weight: bold;
     align-items: left;
     color: white;
     display: flex;
     padding-left: 20px;
-    line-height: 60px;
+    line-height: 55px;
     // float-left;
     left: 0%;
 
@@ -320,7 +318,7 @@ export const ErrorText = styled.div`
 
   position: absolute;
   left: 11%;
-  top: 1.7%;
+  top: 2.5%;
   color: White;
   font-size: 17px;
 
@@ -334,7 +332,7 @@ export const BackIcon = styled(ArrowLeft)`
 
     position: absolute;
     left: 5%;
-    top: 1.7%;
+    top: 2.5%;
     cursor: pointer;
     color: White;
 
@@ -348,7 +346,7 @@ export const CloseIcon = styled(X)`
 
     position: absolute;
     left: 90%;
-    top: 1.7%;
+    top: 2%;
     cursor: pointer;
     color: White;
 
@@ -358,66 +356,39 @@ export const CloseIcon = styled(X)`
     }
 `
 
+const getWalletOptions = () => {
+    const options = Object.values(WALLETS);
+    return options;
+};
+  
 
-
-const Web3Modal = ({visible, close, toggleAccountDetails}) => {
+const WalletOptions = ({active, provider, back}) => {
     
-    const { active } = useWeb3React()
-    const { connectOn, disconnect } = useAuth()
-    const provider = localStorage.getItem("provider")
-    const closeAllModals = () => { 
-        toggleAccountDetails()
-        close()
-    }
-
-    const back= (provider) => {
-        if(!localStorage.getItem("provider")) {
-            close()
-            toggleAccountDetails()
-        }
-        setTimeout(() => {
-            connectOn(provider)
-        }, 1200)
-    }
-
     return (
-        <>
-         <Backdrop 
-            visible={visible} 
-            onClick={provider ? () => closeAllModals() : close}
-        ></Backdrop>
-        <FormWrapper visible={visible}>
-            <ErrorText onClick={close}>Back</ErrorText>
-                <BackIcon size={20} onClick={close}></BackIcon>
-                <CloseIcon 
-                    size={25} 
-                    onClick={provider ? () => closeAllModals() : close}
-                ></CloseIcon>
-                <DisclaimerContainer>
-                    <ModalTextWrapper>
-                        <ModalText>
-                            Welcome to the <span style={{color:"rgb(77, 102, 235)"}}>
-                            Ren Bridge.</span> You can connect and use our app with 
-                            the<span style={{color:"rgb(77, 102, 235)"}}> Wallet Providers
-                            </span> below.
-                        </ModalText>
-                    </ModalTextWrapper>
-                </DisclaimerContainer>
-                <ButtonContainer>
-                    <WalletOptions 
-                        provider={provider} 
-                        active={active} 
-                        back={back}
-                    />
-                    <Disconnect 
-                        to={"/"} 
-                        connect={disconnect} 
-                        close={closeAllModals}
-                    />
-                </ButtonContainer>
-            </FormWrapper>
+        <>   
+            {getWalletOptions().map((wallet, i) => {
+                return (
+                    <ConnectButton 
+                        key={wallet.provider} 
+                        active={active && provider===wallet.provider} 
+                        onClick={() => back(wallet.provider)}>
+                    <TitleContainer margin={"20px"}>
+                        <Logo width={40}><img alt="" src={wallet.icon} width={25} /></Logo>
+                        <ModalTitle>
+                            {active 
+                            && provider===wallet.provider 
+                            && <a href="#">
+                                <img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/>
+                               </a>}
+                            <span className="sp"></span>
+                            {wallet.name}
+                        </ModalTitle>
+                    </TitleContainer>
+                </ConnectButton>
+                )
+            })}      
         </>
     )
 }
 
-export default Web3Modal;
+export default WalletOptions;
