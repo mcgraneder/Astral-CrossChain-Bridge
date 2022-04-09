@@ -31,7 +31,7 @@ function App() {
   return (
 
     //try put nav in main page, then do custom nav for home/ about and not found pages etc
-
+ //h
     //make welcome and home page the one page (same as main)
     <TransactionProvider>
       <Router>

@@ -69,6 +69,7 @@ a {
 
 const IsMobilePage = () => {
 
+    
     return (
         <PageContainer>
             <NotFoundContainer>
