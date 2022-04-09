@@ -253,23 +253,3 @@ export const ProgressBar1 = ({deposits}) => {
 
 }
 
-const DepositSummary = ({deposits, setDeposits }) => {
-
-    return (
-        <TransactionPopupWrapper active={deposits.length > 0 ? true : false}>
-            { deposits.length > 0 && deposits.map((item, i) => {
-                if(i > 0){
-                    return (<div key={item.id} className="objectname">
-                                <TransactionNotification 
-                                    key={item.id}
-                                    deposits={deposits}
-                                    setDeposits={setDeposits}
-                                    amount={item.amount}
-                                />
-                            </div>)
-            }})}
-        </TransactionPopupWrapper>
-    )
-}
-
-export default DepositSummary;

@@ -120,8 +120,8 @@ const Home = ({close}) => {
                 <Wrapper space={"100px"}/>
                 <SupportedAssets type={"EVM"}/>
                 {active && <Switch> <Redirect exact to="/bridge"/></Switch>}
-                </TopeSectionWrapper>
-            </LoginStyledContainer>
+            </TopeSectionWrapper>
+        </LoginStyledContainer>
         </>
     )
 }

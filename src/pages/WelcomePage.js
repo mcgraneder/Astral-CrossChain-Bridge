@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { Route, useHistory, Switch } from "react-router-dom";
+import React  from "react"
+import { Route } from "react-router-dom";
 import { paths } from "./routes";
 import AboutPage from "./AboutPage";
 import HomePage from "./HomePage"

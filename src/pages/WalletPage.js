@@ -59,7 +59,7 @@ const WalletPage = () => {
     const [sufficentApproval, setSufficentApproval] = useState(true)
     const {library, account } = useWeb3React()
 
-    const { pending, setPending } = useContext(TransactionStateContext)
+    const { setPending } = useContext(TransactionStateContext)
     console.log("hello")
     const { balance, setBalance } = useBalance()
     const { transactions, setTransactions} = usePendingTransaction()

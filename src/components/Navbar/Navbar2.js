@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import RenLogo from "../assets/RenLogo.svg"
-import ConnectWalletButton from '../Buttons/ConnectWalletButton/ConnjectWalletButton';
-import Ethereum from "../assets/ethereum-logo.png"
 import { NavContainer, 
          NavWrapper,
          NavLogoContainer,
          NavLogo,
-         NavMenu,
-         NavItem, 
-         NavButton,
          NavItem2,
          NavMenu2,
-         BalanceContainer,
-         NavLogoLink,
-         NavItem3,
+         NavLogoLink
 } from './NavbarStyles';
-import threeDots from "../assets/threeDots.svg"
-import Web3 from 'web3';
-import { useWeb3React } from '@web3-react/core';
 import AccountDetailsModal from '../AccountDetails/AccountDetailsModal';
 import Web3Modal from '../Web3Modal/Web3Modal';
 import Connect from './Connect';
@@ -64,24 +54,11 @@ function Nav2() {
 
     const provider = localStorage.getItem("provider")
 
-    const [balance, setBalance] = useState("0.0000")
-    const { library, account, active } = useWeb3React()
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);
 
     const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
     const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
-
-    useEffect(() => {
-        if(account) {
-            library.getBalance(account).then((result) => {
-                result = Web3.utils.fromWei(result.toString(), "ether")
-                var balance = Number(result)
-                balance = balance.toFixed(4)
-                setBalance(balance)
-            })
-        }
-    }, [library, account])
 
   return (
       

@@ -2,21 +2,21 @@ import styled, { keyframes } from "styled-components"
 
 const fadein = keyframes `
     0% {
-    margin-top: 2000px;
+    // margin-top: 2000px;
     opacity:0;
     }
     100% {
-    margin-top: 0;
+    // margin-top: 0;
     opacity:1;
     }
 `
 
 const fadeout = keyframes `
     0% {
-    margin-top: 1500px;
+    // margin-top: 1500px;
     }
     100% {
-    margin-bottom: 0;
+    // margin-bottom: 0;
     }
 `
 

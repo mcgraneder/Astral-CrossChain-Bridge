@@ -217,7 +217,9 @@ const TransactionList = ({transactions}) => {
                         </TextContainer>
                     </TransactionItemContainer>
                                     </div>
-                    }})}
+                    }
+                    return null
+                    })}
             </TransactionListContainer>
         </>
     )

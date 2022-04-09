@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Home from "../components/Home/Home";
 import { useHistory } from "react-router-dom";
 import Nav2 from "../components/Navbar/Navbar2";
-import AccountDetailsModal from "../components/AccountDetails/AccountDetailsModal";
+
 const HomePage = ()  => {
 
   const [show1, setShow1] = useState(false);
