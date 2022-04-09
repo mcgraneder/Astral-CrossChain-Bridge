@@ -12,6 +12,10 @@ const HomePage = ()  => {
 
   useEffect(() => {
 
+      if(isMobile) {
+        console.log("mobile device detected")
+        history.push("/mobilepage")
+      } 
       if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
         if(isMobile) {
@@ -22,11 +26,12 @@ const HomePage = ()  => {
         if(isMobile) {
           console.log("mobile device detected")
           history.push("/mobilepage")
-        }// } else {
-        // console.log("unsupprted browser")
-        //   history.push("/installmetamask")
-        // }
+        } else {
+        console.log("unsupprted browser")
+          history.push("/installmetamask")
       }
+      }
+
     }, [history])
 
   return (
