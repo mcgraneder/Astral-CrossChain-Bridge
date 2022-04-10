@@ -5,8 +5,8 @@ export const StyledLink = styled(Link)`
 
     font-size: 24px;
     font-weight: 300;
-    height: 60px;
-    padding: 15px 30px;
+    min-height: 60px;
+    padding: 15px 5px;
     color: White;
     display: flex;
     align-items: center;
@@ -25,8 +25,8 @@ export const StyledLink = styled(Link)`
     }
 
     span {
-        font-size: 500;
-        padding-left: 10px;
+        font-size: 25px;
+        padding-left: 0px;
         color: rgba(255, 255, 255, 0.9);
         opacity: ${(props) => Number(!props.compact)};
         transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1);
