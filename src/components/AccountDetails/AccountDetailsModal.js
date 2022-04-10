@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useContext }  from "react";
 import styled, { css, keyframes } from "styled-components";
 import {X, CheckCircle, Copy, ExternalLink} from "react-feather"
 import metamask from "../assets/metamask.svg"
@@ -8,7 +8,7 @@ import torus from "../assets/torus.svg"
 import portis from "../assets/portis.svg"
 import Loader from "../Loader/Loader";
 import { useWeb3React } from "@web3-react/core";
-
+import { TransactionStateContext } from "../../contexts/transactionContext";
 
 export const FormWrapper = styled.div`
 
@@ -378,7 +378,8 @@ export const Container = styled.div`
 
 const AccountDetailsModal = ({close, visible, toggleAccountDetails}) => {
 
-    const {account } = useWeb3React()
+    const {account, active } = useWeb3React()
+    const { transactions } = useContext(TransactionStateContext)
     var logo
 
     if(localStorage.getItem("provider") === "injected") logo = metamask;
@@ -427,12 +428,16 @@ const AccountDetailsModal = ({close, visible, toggleAccountDetails}) => {
                         <Title size={"14px"} color={"rgb(2,52,152)"}>(Clear All)</Title>                        
                 </TitleWrapper>
 
-                <TitleWrapper spacing={"space-between"}>
-                                <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Withdraw 0.002 RenBTC 0 minutes ago</Title>
+                   { active && transactions.map((transaction, i) => {
+                        return (
+                            <TitleWrapper key={i} spacing={"space-between"}>
+                                <Title style={{"fontWeight": "bold"}} size={"14px"} color={"rgb(32,102,202)"}>Withdraw {transaction.amount} RenBTC {transaction.time}</Title>
                                 <LogoWrapper marginRight={"5px"}>
                                     <CheckCircle size={20} color={"rgb(35,145,85)"}></CheckCircle>
                                 </LogoWrapper>             
-                                </TitleWrapper>
+                            </TitleWrapper>
+                        )
+                   })}
                 </TransactionWrapper>
                
             </FormWrapper>
