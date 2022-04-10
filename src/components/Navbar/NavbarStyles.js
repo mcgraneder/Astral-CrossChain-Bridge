@@ -22,6 +22,10 @@ export const NavWrapper = styled.div`
     
     justify-content: space-between;
    
+    @media(max-width: 1370px) {
+
+        float: right;
+    };
 `
 
 
@@ -35,7 +39,7 @@ export const NavMenu = styled.div`
     // opacity: ${(props) => props.visible ? "1" : "0"};
     border-radius: 18px;
 
-    @media(max-width: 1360px) {
+    @media(max-width: 1370px) {
 
         display: none;
       }
@@ -69,6 +73,13 @@ export const NavLogoContainer = styled.div`
     // padding-top: 5px;
     color: White;
     font-size: 35px;
+
+    @media(max-width: 1370px) {
+
+       
+        display: none;
+      
+    };
   
     
 
