@@ -34,6 +34,11 @@ export const NavMenu = styled.div`
     margin-left: ${(props) => props.marginL};
     // opacity: ${(props) => props.visible ? "1" : "0"};
     border-radius: 18px;
+
+    @media(max-width: 1360px) {
+
+        display: none;
+      }
 `
 
 export const NavItem = styled.div`

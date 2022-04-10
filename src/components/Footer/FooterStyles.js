@@ -10,6 +10,11 @@ export const NavContainer = styled.div`
     bottom: 0;
     // z-index: 99;
 
+    @media(max-width: 840px) {
+
+        display: none;
+      }
+
 `
 export const NavWrapper = styled.div`
 

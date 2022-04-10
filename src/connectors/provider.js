@@ -31,4 +31,20 @@ export const injected = new InjectedConnector({
       rpc: { 1: "https://mainnet.infura.io/v3/ba5ee6592e68419cab422190121eca4c" },
       bridge: 'https://bridge.walletconnect.org',
       qrcode: false
-  })
+})
+
+export const allProviders = {
+    INJECTED: injected,
+    FORTMATIC: fortmatic,
+    PORTIS: portis,
+    WALLETCONNECT: walletconnect,
+    TORUS: torus
+}
+
+export const availableProviders = [
+    allProviders.INJECTED,
+    allProviders.FORTMATIC,
+    allProviders.PORTIS,
+    allProviders.TORUS,
+    allProviders.WALLETCONNECT
+]

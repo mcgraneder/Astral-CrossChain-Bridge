@@ -3,7 +3,7 @@ import { v4 } from "uuid"
 
 const usePendingTransactions = () => {
   
-    const [transactions, setTransactions] = React.useState([
+    const [transactions, setTransactions] = useState([
         {
           id: v4(),
           type: "type",

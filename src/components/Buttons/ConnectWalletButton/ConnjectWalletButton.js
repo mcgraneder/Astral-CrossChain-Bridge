@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useContext } from "react"
 import { ConnectButton, Logo, ButtonText } from "./ConnectWalletButtonStyles"
 import styled, { keyframes } from "styled-components"
 import { WALLETS } from "../../../constants/wallets"
@@ -59,9 +59,9 @@ const ConnectWalletButton = ({ close, color, fontsize, height, left, top }) => {
     const getWalletByProvider = (provider) =>
         getWalletOptions().find((option) => option.provider === provider);
     
-
     const activeWallet = getWalletByProvider(provider)
     const logo = activeWallet ? activeWallet.icon : null
+
     return (
 
         <>

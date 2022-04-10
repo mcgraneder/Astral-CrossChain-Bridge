@@ -22,6 +22,7 @@ const ALL_WALLETS = {
 export const WALLETS = {
   [ALL_WALLETS.INJECTED]: {
     provider: "injected",
+    connector: injected,
     name: "Metamask",
     href: null,
     description: "metamaskIcon wallet",
@@ -29,6 +30,7 @@ export const WALLETS = {
   },
   [ALL_WALLETS.PORTIS]: {
     provider: "portis",
+    connector: portis,
     name: "Portis",
     href: null,
     description: "portisIcon wallet",
@@ -36,6 +38,7 @@ export const WALLETS = {
   },
   [ALL_WALLETS.FORTAMTIC]: {
     provider: "fortmatic",
+    connector: fortmatic,
     name: "Fortmatic",
     href: null,
     description: "fortmaticIcon wallet",
@@ -43,6 +46,7 @@ export const WALLETS = {
   },
   [ALL_WALLETS.TORUS]: {
     provider: "torus",
+    connector: torus,
     name: "Torus",
     href: null,
     description: "torusIcon wallet",
@@ -50,6 +54,7 @@ export const WALLETS = {
   },
   [ALL_WALLETS.WALLETCONNECT]: {
     provider: "walletconnect",
+    connector: walletconnect,
     name: "WalletConnect",
     href: null,
     description: "wallet connect wallet",

@@ -71,26 +71,15 @@ const connectOnLoad = React.useCallback(() => {
             connectOnLoad()
     }
     }, [library, connectOnLoad, account])
-function connectOn(provider1) {   
 
-    var provider = localStorage.getItem("provider")
+function connectOn(provider1) {   
     if(active) {
         alert("You must dissconnect first")
         return
     }
-    console.log(provider1)
-    if (provider1 === PROVIDERS.FORTMATIC) provider = fortmatic
-    if (provider1 === PROVIDERS.INJECTED) provider = injected
-    if (provider1 === PROVIDERS.WALLETCONNECT) provider = walletconnect  
-    if (provider1 === PROVIDERS.PORTIS) {
-        console.log("connecting")
-        provider = portis
-    }
-    if (provider1 === PROVIDERS.TORUS) provider = torus
+    localStorage.setItem("provider", provider1.provider)
 
-    localStorage.setItem("provider", provider1)
-    console.log("connect")
-    activate(provider, undefined, true).then(() => {
+    activate(provider1.connector, undefined, true).then(() => {
         console.log("connecting")
 
         //change to this soon instad of redirect in home.js
@@ -98,7 +87,7 @@ function connectOn(provider1) {
     })
     .catch((error) => {
         if (error instanceof UnsupportedChainIdError) {
-            activate(provider) // a little janky...can't use setError because the connector isn't set
+            activate(provider1.connector) // a little janky...can't use setError because the connector isn't set
         } else {
             disconnect()
             localStorage.removeItem("provider");

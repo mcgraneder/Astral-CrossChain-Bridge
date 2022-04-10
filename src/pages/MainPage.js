@@ -7,12 +7,13 @@ import DexPage from "./DexPage"
 import ERC20BridgePage from "./ERC20BrifgePage";
 import { paths } from "./routes";
 import Nav from "../components/Navbar/Navbar";
-
+import SideBar from "../components/Navbar/SideBar/SideBar";
 function App() { 
 
   return (
 
       <>
+        <SideBar/>
         <Nav/>
         <Route path={paths.BRIDGE} component={BridgePage}></Route>
         <Route path={paths.ERC20BRIDGE} component={ERC20BridgePage}></Route>

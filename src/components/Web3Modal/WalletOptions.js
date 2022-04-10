@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import metamask from "../assets/metamask.svg"
 import { WALLETS } from "../../constants/wallets";
 import { ArrowLeft, X } from "react-feather"
 
@@ -371,15 +370,15 @@ const WalletOptions = ({active, provider, back}) => {
                     <ConnectButton 
                         key={wallet.provider} 
                         active={active && provider===wallet.provider} 
-                        onClick={() => back(wallet.provider)}>
+                        onClick={() => back(wallet)}>
                     <TitleContainer margin={"20px"}>
                         <Logo width={40}><img alt="" src={wallet.icon} width={25} /></Logo>
                         <ModalTitle>
                             {active 
                             && provider===wallet.provider 
-                            && <a href="#">
+                            && <span>
                                 <img height="9px" width="9px" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Basic_green_dot.png" alt='Green Dot clip art'/>
-                               </a>}
+                               </span>}
                             <span className="sp"></span>
                             {wallet.name}
                         </ModalTitle>
