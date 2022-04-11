@@ -13,6 +13,17 @@ export const SupportedAssetsContainer = styled.div`
     margin-right: auto;
     padding-left: 24px;
     padding-right: 24px;
+
+    @media(max-width: 950px) {
+
+        max-width: 800px;
+      }
+
+      @media(max-width: 800px) {
+
+        max-width: 650px;
+      }
+    
 `
 
 export const SupportedAssetsWrapper = styled.div`
@@ -21,6 +32,11 @@ export const SupportedAssetsWrapper = styled.div`
     // flex-direction: row;
     // justify-content: stretch;
     margin-top: 35px;
+
+    @media(max-width: 690px) {
+
+       display: block;
+      }
 `
 
 export const CurrencysContainer = styled.div`
@@ -31,6 +47,12 @@ export const CurrencysContainer = styled.div`
     padding-left: ${(props) => props.paddingL};
     display: block;
     // max-width: 430px;
+
+    @media(max-width: 690px) {
+
+       border: none;
+       padding: 0;
+    }
 `
 
 export const CurrenciesHeader = styled.h2`
@@ -47,7 +69,7 @@ export const CurrenciesHeader = styled.h2`
 export const CurrenciesList = styled.ul`
 
 justify-content: space-between;
-    margin: 12px auto;
+    margin: 32px auto;
     display: flex;
     flex-wrap: wrap;
     // max-width: 40vw;

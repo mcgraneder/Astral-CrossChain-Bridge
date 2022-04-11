@@ -7,6 +7,7 @@ import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 import NotFoundPage from "./pages/NotFoundPage";
 import IsMobilePage from "./pages/IsMobilePage";
+import GridMain from "./pages/LayoutStyles"
 
 const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));

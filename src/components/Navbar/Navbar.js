@@ -21,7 +21,7 @@ import Web3 from 'web3';
 import { useWeb3React } from '@web3-react/core';
 import AccountDetailsModal from '../AccountDetails/AccountDetailsModal';
 import Web3Modal from '../Web3Modal/Web3Modal';
-
+import { Grid } from './SideBar/NavbarStyles';
 export const ChainSelectorIconWrapper = styled.div`
 
     height: 40px;

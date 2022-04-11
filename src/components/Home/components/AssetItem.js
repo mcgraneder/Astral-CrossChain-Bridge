@@ -18,10 +18,15 @@ display: list-item;
     padding-left: ${(props) => props.marginL};
     padding-right: ${(props) => props.marginR};
 
+    @media(max-width: 630px) {
+
+        width: 100px;
+     }
+
 `
 export const CurrencyItemWrapper = styled.span`
 
-display: inline-flex;
+display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;

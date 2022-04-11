@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { breakpoints as bp } from "../GlobalStyle";
+
 export const Grid = styled.div`
 
     display: Grid;
@@ -25,7 +25,7 @@ export const Grid = styled.div`
             .icon {
                 display: none;
             
-            @media(max-width: ${bp.desktop}) {
+            @media(max-width: 1300px) {
 
                 display: flex;
                

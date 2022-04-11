@@ -81,6 +81,11 @@ export const Text = styled.p`
         text-decoration: none;
         color: orange;
     }
+
+    @media(max-width: 830px) {
+
+        text-align: justify;
+  }
 `
 
 export const FooterContainer = styled.div`
@@ -90,6 +95,12 @@ export const FooterContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+
+    @media(max-width: 630px) {
+
+       align-items: left;
+       justify-content: left;
+ }
 `
 
 export const LeftIconContainer = styled.span`

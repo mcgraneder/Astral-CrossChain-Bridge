@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyledTitle, StyledSubTitle, ButtonWrapper } from "./HomeStyles";
+import { StyledTitle, StyledSubTitle, StyledTitle3, ButtonWrapper } from "./HomeStyles";
 import { useHistory } from "react-router-dom";
 import { Redirect, Switch } from 'react-router'
 import { useWeb3React } from "@web3-react/core";
@@ -28,6 +28,8 @@ export const Logo1 = styled.div`
    &:hover {
     transition: all 0.2s ease-in-out;
     background: rgb(77, 102, 235);
+
+    
 }
 `;
 
@@ -59,6 +61,13 @@ font-family: 'Open Sans', sans-serif;
        
     }
 
+    @media(max-width: 800px) {
+
+        width: 400px;
+        font-size: 14px;
+
+    }
+
 
 `
 
@@ -76,6 +85,24 @@ font-family: SuisseIntl,Helvetica,Arial,sans-serif;
     // font-style: ${(props) => props.styleds};
     background-color: transparent;
     margin-top:  ${(props) => props.marginTop}px;
+
+    @media(max-width: 950px) {
+
+        font-size: 24px;
+      }
+
+      @media(max-width: 800px) {
+
+        max-width: 230px;
+        font-size: 20px;
+      }
+
+      @media(max-width: 630px) {
+
+       
+        font-size: 18px;
+ }
+    
 `
 
 
@@ -104,7 +131,7 @@ const Home = ({close}) => {
         <LoginStyledContainer>
             <TopeSectionWrapper>
                 <StyledTitle size={100} margin={0} weight={"bold"} styleds={"italic"} align={"center"}>Ren Bridge V3.</StyledTitle>
-                <StyledTitle size={50} margin={20} marginTop={0} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle>
+                <StyledTitle3 size={50} margin={20} marginTop={0} weight={400} align={"center"}>Crypto Liquidity Unchained</StyledTitle3>
                 <StyledSubTitle size={20}>Transfer your favouite crypto-currencies cross-chain. We support many assets such as BTC, ZEC, BCH, SOL, DOGE and more</StyledSubTitle>
                 <ButtonWrapper>
                     <HomeConnectButton width={"500px"} active={active} left={"82%"} top={"31%"} close={close} onclick={close} height="50px" fontsize="20" colour="rgb(20, 29, 49)" text={"About This App"}></HomeConnectButton>
