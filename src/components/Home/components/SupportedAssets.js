@@ -13,6 +13,7 @@ export const SupportedAssetsContainer = styled.div`
     margin-right: auto;
     padding-left: 24px;
     padding-right: 24px;
+    z-index: -1000;
 
     @media(max-width: 950px) {
 
@@ -32,6 +33,7 @@ export const SupportedAssetsWrapper = styled.div`
     // flex-direction: row;
     // justify-content: stretch;
     margin-top: 35px;
+     z-index: -1000;
 
     @media(max-width: 690px) {
 

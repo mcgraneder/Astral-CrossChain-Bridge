@@ -17,6 +17,7 @@ display: list-item;
     list-style-type: none;
     padding-left: ${(props) => props.marginL};
     padding-right: ${(props) => props.marginR};
+    
 
     @media(max-width: 630px) {
 

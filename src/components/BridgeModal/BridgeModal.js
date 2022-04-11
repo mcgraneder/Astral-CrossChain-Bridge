@@ -39,7 +39,8 @@ import { $mint } from "../../features/mint/mintSlice";
 import { $wallet } from "../../features/wallet/walletSlice";
 import WalletInputForm from "../WalletModal/components/WalletInput";
 import { LoginStyledContainer } from "../Home/StyledContainer";
-
+import BridgeSelector from "./components/BridgeSelector";
+import DropdownMenu from "../WalletModal/components/DropdownMenu";
 export const MintForm = styled.div`
 
     margin-top: 10px;
@@ -246,20 +247,8 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
 
         <>
         <LoginStyledContainer>
-            
             <BridgeModalContainer>
-            <BridgeSelectorContainer>
-            <LegacyBridgeToggleButton side={"left"} colour={"rgb(14, 22, 39)"}>
-                            <MintFormTextWrapper2>
-                                <MintFormText2>Legacy Bridge</MintFormText2>
-                            </MintFormTextWrapper2>
-                        </LegacyBridgeToggleButton>
-                        <ERC20BridgeToggleButton side={"right"} to="/erc20bridge">
-                            <MintFormTextWrapper2>
-                                <MintFormText2>ERC20 Bridge</MintFormText2>
-                            </MintFormTextWrapper2>
-                        </ERC20BridgeToggleButton>
-            </BridgeSelectorContainer>
+            <BridgeSelector/>
             <BridgeModalWrapper>
                 <ChainSelector marginbottom={"2px"}>
                     <ChainSelectorWrapper onClick={() => openTokenList("from")}>

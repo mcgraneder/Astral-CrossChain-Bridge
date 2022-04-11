@@ -19,7 +19,7 @@ export const injected = new InjectedConnector({
       networks: [42] 
   })
   
-  export const torus = new TorusConnector({ chainId: 42, supportedChainIds: [42, 1] })
+  export const torus = new TorusConnector({ chainId: 42 })
   
   export const walletconnect = new WalletConnectConnector({
       rpc: { 1: "https://mainnet.infura.io/v3/7c328fa0092c43a6b22073cdb477c58b" },

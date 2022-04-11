@@ -265,7 +265,6 @@ export const MetamaskContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
 `
 
 export const MetamaskLogo = styled(LazyLoadImage)`

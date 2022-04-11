@@ -2,16 +2,70 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import RenLogo from "../assets/RenLogo.svg"
 import { NavContainer, 
-         NavWrapper,
-         NavLogoContainer,
-         NavLogo,
          NavItem2,
          NavMenu2,
-         NavLogoLink
 } from './NavbarStyles';
 import AccountDetailsModal from '../AccountDetails/AccountDetailsModal';
 import Web3Modal from '../Web3Modal/Web3Modal';
 import Connect from './Connect';
+
+export const NavWrapper = styled.div`
+
+    // background:  rgb(35,35,52);
+    height: 60px;
+    padding: 15px 30px;
+    display: flex;
+    z-index: 99;
+    
+    justify-content: space-between;
+  
+`
+
+export const NavLogoContainer = styled.div`
+
+    width: 50px;
+    display: flex;
+    flex-direction: space-between;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    padding-left: 90px;
+    margin-right: 20px;
+    // padding-top: 5px;
+    color: White;
+    font-size: 35px;
+
+    @media(max-width: 800px) {
+        padding: 0;
+      
+    };
+    
+      
+
+`
+
+export const NavLogoLink = styled.a`
+
+    text-decoration: none;
+    color: White;
+    padding-bottom: 5px;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media(max-width: 800px) {
+        display: none;
+      
+    };
+`
+
+export const NavLogo = styled.img`
+
+    
+    color: White;
+    font-wight: bold;
+`
 
 export const ChainSelectorIconWrapper = styled.div`
 
