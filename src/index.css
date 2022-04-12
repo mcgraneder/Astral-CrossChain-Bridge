@@ -3,7 +3,7 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 50% -20%, #2262b4, #173766, #182847, #161b2c, #1a121a, #0f0e0f); 
+  background: radial-gradient(circle at 50% -20%, #2262b4, #173766, #182847, #161b2c, #12121a, #0b0a0f); 
   /* //radial-gradient(circle at 50% -20%, #2262b4, #132a4c, #16233d, #161b2c, #13141f, #11111a); */
  font-family: 'Syne', sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -8,6 +8,7 @@ import ERC20BridgePage from "./ERC20BrifgePage";
 import { paths } from "./routes";
 import Nav from "../components/Navbar/Navbar";
 import SideBar from "../components/Navbar/SideBar/SideBar";
+import Nav3 from "../components/Navbar/Navbar3";
 import { 
   Grid,
   GridSidebar,
@@ -24,10 +25,9 @@ function App() {
             <SideBar/>
           </GridSidebar>
           <GridHeader>
-          <Nav/>
+          <Nav3/>
           </GridHeader>
           <GridMain>
-            main
             <Route path={paths.BRIDGE} component={BridgePage}></Route>
             <Route path={paths.ERC20BRIDGE} component={ERC20BridgePage}></Route>
             <Route path={paths.WALLET} component={WalletPage}/>

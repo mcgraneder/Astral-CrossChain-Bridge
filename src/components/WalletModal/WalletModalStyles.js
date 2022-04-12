@@ -33,6 +33,7 @@ export const BridgeModalContainer = styled.div`
      box-shadow: 0px 10px 150px 5px rgba(75,135,220,0.03);
     margin: 30px auto 0;
     position: relative;
+    margin-top: 50px;
     // max-width: 400px;
     transition: height 3s ease-out;
 `

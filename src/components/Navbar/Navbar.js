@@ -59,6 +59,9 @@ align-items: center;
 
 `
 
+
+
+
 function Nav() {
 
     const provider = localStorage.getItem("provider")
