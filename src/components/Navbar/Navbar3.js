@@ -37,7 +37,7 @@ display: flex;
 export const NavWrapper = styled.div`
 
 display: grid;
-    grid-template-columns: 420px 1fr 440px;
+    grid-template-columns: 420px 1fr 420px;
     -webkit-box-pack: justify;
     justify-content: space-between;
     -webkit-box-align: center;
@@ -46,7 +46,7 @@ display: grid;
     width: 100%;
     top: 0px;
     padding: 10px;
-    padding-left: 40px;
+    padding-left: 20px;
     padding-right: 20px;
     z-index: 21;
     position: relative;
@@ -57,6 +57,29 @@ display: grid;
     transition: background-position 0.1s ease 0s, box-shadow 0.1s ease 0s;
     background-blend-mode: hard-light;
     box-sizing: border-box;
+
+    @media(max-width: 1330px) {
+
+       
+        padding-top: 21px;
+       
+     };
+
+     @media(max-width: 1330px) {
+
+       
+        grid-template-columns: 240px 1fr 600px;
+       
+     };
+
+     @media(max-width: 930px) {
+
+       
+        grid-template-columns: 40px 1fr 600px;
+       
+     };
+
+     
 `
 export const ChainSelectorIconWrapper = styled.div`
 
@@ -73,11 +96,11 @@ export const ChainSelectorIcon = styled.img`
     // display: flex;
     // justify-content: left;
     // align-items: center;
-    width: ${(props) => props.width};
-    height:  ${(props) => props.width};
+    width: 24px;
+    height:  24px;
     line-height: 0px;
     padding-top: 1px;
-    padding-left: 15px;
+    // padding-left: 15px;
 
     // float: left;
 `
@@ -112,6 +135,14 @@ justify-self: center;
     box-sizing: border-box;
     margin: 0px;
     // min-width: 458px;
+
+    @media(max-width: 1330px) {
+
+       
+        background: transparent;
+        color: transparent;
+       
+     };
 `
 
 const activeClassName= "ACTIVE"
@@ -138,13 +169,111 @@ border: 2px solid rgb(14,22,40);
 
     color: rgb(255, 255, 255);
     background-color: rgb(27,32,53);
+
     border: 2px solid rgb(34,44,69);
+
+    @media(max-width: 1330px) {
+
+       
+        background: transparent;
+        color: transparent;
+        border: none;
+       
+     };
     }
 
     &:hover {
 
         cursor: pointer;
     }
+
+    @media(max-width: 1330px) {
+
+       
+        background: transparent;
+        color: transparent;
+        border: none;
+       
+     };
+  
+`
+
+
+export const ChainButton = styled(NavLink).attrs({
+    activeClassName
+})`
+
+display: flex;
+border-radius: 20px;
+outline: none;
+cursor: pointer;
+text-decoration: none;
+color: rgb(195, 197, 203);
+font-size: 1rem;
+font-weight: 500;
+padding: 9.5px 15px;
+padding-right: 30px;
+margin-left: 20px;
+word-break: break-word;
+background: rgb(14,22,40);
+overflow: hidden;
+min-width: 44px;
+white-space: nowrap;
+border: 2px solid rgb(14,22,40);
+
+@media(max-width: 1390px) {
+
+       
+    margin-right: 30px;
+    margin-left: -10px;
+  
+};
+  
+@media(max-width: 1330px) {
+
+       
+    display: none;
+  
+};
+`
+
+export const ChainButton2 = styled(NavLink).attrs({
+    activeClassName
+})`
+
+display: none;
+border-radius: 20px;
+outline: none;
+cursor: pointer;
+text-decoration: none;
+color: rgb(195, 197, 203);
+font-size: 1rem;
+font-weight: 500;
+padding: 9.5px 15px;
+padding-right: 30px;
+margin-left: 20px;
+word-break: break-word;
+background: rgb(14,22,40);
+overflow: hidden;
+min-width: 44px;
+white-space: nowrap;
+border: 2px solid rgb(14,22,40);
+
+@media(max-width: 1390px) {
+
+       
+    margin-right: 30px;
+    margin-left: -10px;
+  
+};
+
+@media(max-width: 1330px) {
+
+       
+    display: flex
+  
+};
+  
 `
 
 export const NavLogoContainer = styled.div`
@@ -160,6 +289,14 @@ export const NavLogoContainer = styled.div`
     // padding-top: 5px;
     color: White;
     font-size: 35px;
+
+    @media(max-width: 1330px) {
+
+       
+        display: none;
+       
+     };
+    
 
   
 
@@ -190,17 +327,24 @@ export const NavButtonMenuContainer = styled.div`
     -webkit-box-align: center;
     align-items: center;
     justify-self: flex-end;
+
+    @media(max-width: 1330px) {
+
+       
+        float: right;
+       
+     };
     
 
 `
 
 export const NavButtonMenuContainer2 = styled.div`
 
-    display: flex;
-    flex-direction: row;
-    -webkit-box-align: center;
-    align-items: center;
-    justify-self: flex-start;
+display: flex;
+flex-direction: row;
+-webkit-box-align: center;
+align-items: center;
+justify-self: flex-end;
 
 `
 
@@ -295,12 +439,12 @@ max-width: 200px;
 function Nav3() {
 
     const provider = localStorage.getItem("provider")
-
+    const [text, setText] = useState("ETHER")
     const [balance, setBalance] = useState("0.0000")
     const { library, account } = useWeb3React()
     const [showWalletModal, setShowWalletModal] = useState(false);
     const [showAccountDetails, setshowAccountDetails] = useState(false);
-
+    const BP = 1350
     const toggleAccountDetails = () => setshowAccountDetails(!showAccountDetails);
     const toggleWalletModal = () => setShowWalletModal(!showWalletModal);
 
@@ -314,6 +458,16 @@ function Nav3() {
             })
         }
     }, [library, account])
+
+    useEffect(() => {
+
+        if(window.screen.width < BP) {
+            setText("ETH")
+           
+        }
+        else setText("ETHER")
+        console.log("hello")
+    }, [window.screen.width])
 
   return (
       
@@ -331,26 +485,16 @@ function Nav3() {
             <NavContainer position={"absolute"}>
                 <NavWrapper>
                 <NavButtonMenuContainer2>
-                <NavLogoContainer>
+                    <NavLogoContainer>
                         <NavLogo src={RenLogo} height="70px" width="70px"></NavLogo>
                         <NavLogoLink href="https://renproject.io/" >RenBridge</NavLogoLink>
                     </NavLogoContainer>
-                    {/* <ConnectButtonContainer>
-                        <BalanceContainer>
-                                {balance} ETHER
-                            </BalanceContainer>
-                            <ConnectWalletButton 
-                                active={provider} 
-                                left={"82.3%"} 
-                                top={"31.5%"} 
-                                close={toggleAccountDetails} 
-                                onclick={toggleAccountDetails} 
-                                height="160" 
-                                fontsize="17" 
-                                colour="rgb(20, 29, 49)" 
-                                width="60">
-                            </ConnectWalletButton>
-                        </ConnectButtonContainer> */}
+                        <ChainButton width={"130px"} id={`chains-nav-link`} to="/chains">
+                            <Wrapper>
+                                <ChainSelectorIcon src={Ethereum} width={"30px"}></ChainSelectorIcon>
+                                <ChainText>Kovan</ChainText>
+                            </Wrapper>
+                        </ChainButton>
                     </NavButtonMenuContainer2>
                     <NavHeaderLinks>
                     <NavButton  width={"110px"}
@@ -375,9 +519,15 @@ function Nav3() {
                             </NavButton>
                     </NavHeaderLinks>
                     <NavButtonMenuContainer>
+                    <ChainButton2 width={"130px"} id={`chains-nav-link`} to="/chains">
+                            <Wrapper>
+                                <ChainSelectorIcon src={Ethereum} width={"30px"}></ChainSelectorIcon>
+                                <ChainText>Kovan</ChainText>
+                            </Wrapper>
+                        </ChainButton2>
                         <ConnectButtonContainer>
                         <BalanceContainer>
-                                {balance} ETHER
+                                {balance} {text}
                             </BalanceContainer>
                             <ConnectWalletButton 
                                 active={provider} 

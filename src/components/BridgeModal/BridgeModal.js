@@ -116,6 +116,8 @@ export const LegacyBridgeToggleButton = styled.div`
     }
 
 `
+
+
 const getOptions = (mode) => {
     const options =
       mode === "chain"

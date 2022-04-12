@@ -26,7 +26,7 @@ export const StyledSidebar = styled.nav`
         z-index: -1;
     }
 
-    @media(max-width: 1370px) {
+    @media(max-width: 1330px) {
 
         position: fixed;
         display: flex;
@@ -64,7 +64,7 @@ export const StyledOverlay = styled.nav`
         z-index: -1;
     }
 
-    @media(max-width: 1370px) {
+    @media(max-width: 1330px) {
 
         position: fixed;
         display: flex;
@@ -94,7 +94,7 @@ export const Backdrop = styled.div`
         pointer: cursor;
     `}
 
-    @media(min-width: 1370px) {
+    @media(min-width: 1330px) {
 
         opacity: 0;
         pointer-events: none;
