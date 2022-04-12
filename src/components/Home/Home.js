@@ -112,7 +112,7 @@ const HomeConnectButton = ({ active, height, width, text, click}) => {
     return (
 
         <>
-            <NavButton2  width={width} to="/about" id={`about`} height={height} color={"rgb(23,42,66)"} onClick={click}>{text}</NavButton2>
+            <NavButton2  width={width} to="/about" id={`about`} height={height} color={"rgb(23,42,66)"} >{text}</NavButton2>
         </>
     )
 }

@@ -13,9 +13,15 @@ export const StyledTitle = styled.div`
     background-color: transparent;
     margin-top:  ${(props) => props.marginTop}px;
 
+    @media(max-width: 1300px) {
+
+      margin-top: 30px;
+    }
+
     @media(max-width: 950px) {
 
         font-size: 90px;
+        margin-top: 50px;
       }
 
           @media(max-width: 800px) {

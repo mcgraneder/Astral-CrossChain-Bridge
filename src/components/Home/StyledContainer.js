@@ -24,11 +24,13 @@ export const LoginStyledContainer = styled.div`
 
     padding-top: 75px;
     padding-bottom: 100px;
+    
 
 `
 
 export const TopeSectionWrapper = styled.div`
     animation: ${fadein} 1.25s; 
+    
     
 `
 export const BottomSectionWrapper = styled.div`
