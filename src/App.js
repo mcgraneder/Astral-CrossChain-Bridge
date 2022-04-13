@@ -13,6 +13,8 @@ const MainPage = lazy(() => import("./pages/MainPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const InstallMetamaskPage = lazy(() => import("./pages/InstallMetamaskPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
+const WelcomePage = lazy(() => import("./pages/WelcomePage"));
+
 
 
 const MAIN_PAGE_PATHS = [
@@ -24,6 +26,10 @@ const MAIN_PAGE_PATHS = [
   paths.DEX
 ]
 
+const WELCOME_PAGE_PATHS = [
+  paths.HOME,
+  paths.ABOUT
+]
 
 
 
@@ -39,7 +45,7 @@ function App() {
         <Suspense fallback={<PageLoad/>}>
           <AccountsChangeModal/>
           <Switch>
-            <Route exact path={paths.HOME} component={HomePage}></Route>
+            <Route exact path={WELCOME_PAGE_PATHS} component={WelcomePage}></Route>
             <Route exact path={MAIN_PAGE_PATHS} component={MainPage} />
             <Route exact path={paths.INSTALL_METAMASK} component={InstallMetamaskPage}/>
             <Route exact path={paths.ABOUT} component={AboutPage}/>

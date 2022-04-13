@@ -9,27 +9,28 @@ import { paths } from "./routes";
 import Nav from "../components/Navbar/Navbar";
 import SideBar from "../components/Navbar/SideBar/SideBar";
 import Nav3 from "../components/Navbar/Navbar3";
+import Bridges from "./Bridges";
 import { 
   Grid,
   GridSidebar,
   GridHeader,
   GridMain
 } from "./LayoutStyles";
+
+const BRIDEG_PATHS =[
+  paths.BRIDGE,
+  paths.ERC20BRIDGE
+]
 function App() { 
 
   return (
 
       <>
         <Grid>
-          <GridSidebar>
-            <SideBar/>
-          </GridSidebar>
-          <GridHeader>
-          <Nav3/>
-          </GridHeader>
+          <GridSidebar><SideBar/></GridSidebar>
+          <GridHeader><Nav3/></GridHeader>
           <GridMain>
-            <Route path={paths.BRIDGE} component={BridgePage}></Route>
-            <Route path={paths.ERC20BRIDGE} component={ERC20BridgePage}></Route>
+            <Route exact path={BRIDEG_PATHS} component={Bridges}></Route>
             <Route path={paths.WALLET} component={WalletPage}/>
             <Route path={paths.TRANSACTIONS} component={TransactionPage}></Route>
             <Route path={paths.DEX} component={DexPage}></Route>
@@ -40,10 +41,4 @@ function App() {
 
 }
 
-// main
-// <Route path={paths.BRIDGE} component={BridgePage}></Route>
-// <Route path={paths.ERC20BRIDGE} component={ERC20BridgePage}></Route>
-// <Route path={paths.WALLET} component={WalletPage}/>
-// <Route path={paths.TRANSACTIONS} component={TransactionPage}></Route>
-// <Route path={paths.DEX} component={DexPage}></Route>
 export default App;

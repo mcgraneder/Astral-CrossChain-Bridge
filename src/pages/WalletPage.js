@@ -16,7 +16,7 @@ import { ConfirmationModal,
 import { TransactionStateContext } from "../contexts/transactionContext";
 import { useNotification } from "../hooks/useNotification";
 import EthereumLogo from "../components/assets/eth.png"
-
+import useContract from "../hooks/useContract";
 const RenAddress = "0x0A9ADD98C076448CBcFAcf5E457DA12ddbEF4A8f"
 const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
@@ -52,8 +52,6 @@ const WalletPage = () => {
     const [showTokenModal, setShowTokenModal] = useState(false)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [gas, setGas] = useState(0)
-    const [ren, setRen] = useState()
-    const [bridge, setBridge] = useState()
     const [transactionBlock, setTransactionBlock] = useState(true)
     const [sufficentApproval, setSufficentApproval] = useState(true)
     const {library, account } = useWeb3React()
@@ -78,17 +76,7 @@ const WalletPage = () => {
     }
 
     const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
-
-    useEffect(() => {
-        if(library) {
-            const bridgeContract = getContract(BridgeAddress, abi, library, account);
-            const renContract = getContract(RenAddress, abi2, library, account);
-            setRen(renContract)
-            setBridge(bridgeContract)
-            console.log(library)
-        }
-    }, [library, account]) 
-
+    const { ren, bridge } = useContract()
     const handleTransaction = async(contractFunction) => {
         setConfirm(false)
         setPending1(true)

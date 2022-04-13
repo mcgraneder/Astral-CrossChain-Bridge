@@ -33,7 +33,7 @@ export const BridgeModalContainer = styled.div`
      box-shadow: 0px 10px 150px 5px rgba(75,135,220,0.03);
     margin: 30px auto 0;
     position: relative;
-    margin-top: 50px;
+    margin-top: 30px;
     // max-width: 400px;
     transition: height 3s ease-out;
 `
@@ -448,7 +448,7 @@ export const Balancetext = styled.div`
 
 export const FromContainer = styled.form`
 
-margin-bottom: 20px;
+margin-bottom: ${(props) => props.marginB};
 margin-left: 30px;
 margin-right: 30px;
 // padding: 3px;

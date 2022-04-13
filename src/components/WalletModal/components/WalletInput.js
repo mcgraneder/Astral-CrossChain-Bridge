@@ -10,7 +10,7 @@ import {
 } from "../WalletModalStyles";
 import { MapPin } from "react-feather";
 
-const WalletInputForm = ({ setText, text, getMaxDeposit, type }) => {
+const WalletInputForm = ({ setText, text, getMaxDeposit, type, marginB }) => {
 
     const preventMinus = (e) => {
         if (e.code === 'Minus')  e.preventDefault(); 
@@ -18,7 +18,7 @@ const WalletInputForm = ({ setText, text, getMaxDeposit, type }) => {
 
     return(
 
-        <FromContainer>
+        <FromContainer marginB={marginB}>
             <WalletInputWrapper>
                 <WalletInput 
                     onKeyPress={preventMinus} 

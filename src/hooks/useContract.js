@@ -9,8 +9,8 @@ const BridgeAddress = "0x4a01392b1c5D62168375474fb66c2b7a90Da9D8B"
 
 const useContract = () => {
 
-    const [ren, setRen] = useState({})
-    const [bridge, setBridge] = useState({})
+    const [ren, setRen] = useState(null)
+    const [bridge, setBridge] = useState(null)
 
     const { account, library } = useWeb3React()
 

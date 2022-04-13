@@ -8,9 +8,8 @@ function WelcomePage() {
 
   return (
       <>
-      
-        <Route path={paths.HOME} component={HomePage}></Route>
-        <Route path={paths.NOT_FOUND} component={AboutPage}></Route>
+        <Route exact path={paths.HOME} component={HomePage}></Route>
+        <Route exact path={paths.ABOUT} component={AboutPage}></Route>
       </>
   )
 

@@ -27,11 +27,13 @@ display: flex;
     width: 100%;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    position: fixed;
+    position: absolute;
     top: 0px;
     z-index: 2;
     box-sizing: border-box;
     margin-bottom: 30px;
+
+    
 `
 
 export const NavWrapper = styled.div`

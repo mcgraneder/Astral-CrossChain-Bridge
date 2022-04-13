@@ -149,14 +149,17 @@ const WalletModal = (
                 currentBal = currentBal.toFixed(2)
                 setRenPrice(currentBal) 
             }).catch(error => console.error(error))
+
+            if(inputText === "Deposit ") {
+                if(ren != null) beginDeposit()
+            } else {
+                if (ren != null) {
+                    setSufficentApproval(true)
+                    getBalance(text)
+                }
+            }
         }
 
-        if(inputText === "Deposit ") {
-            if(ren) beginDeposit()
-        } else {
-            setSufficentApproval(true)
-            getBalance(text)
-        }
      }, [library, balance, text, beginDeposit, getBalance, inputText, ren, setSufficentApproval])
 
     const setToggleValue = () => {
@@ -192,6 +195,7 @@ const WalletModal = (
                             text={text} 
                             setText={setText}
                             type={"amount"}
+                            marginB={"5px"}
                         />    
                         <WalletTxDetails  
                             sufficentApproval={sufficentApproval} 

@@ -88,7 +88,7 @@ const BridgeSelector = () => {
                 </MintFormTextWrapper2>
             </LegacyBridgeToggleButton>
 
-            <ERC20BridgeToggleButton side={"right"} to="/erc20bridge">
+            <ERC20BridgeToggleButton side={"right"} to="/bridge/erc20bridge">
                 <MintFormTextWrapper2>
                     <MintFormText2>ERC20 Bridge</MintFormText2>
                 </MintFormTextWrapper2>

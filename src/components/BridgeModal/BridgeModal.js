@@ -314,6 +314,7 @@ const BrideModal = ({close, balance, toggleTokenModal, fromToken, toToken, setFr
                             text={address} 
                             setText={setAddress}
                             type={"address"}
+                            marginB={"20px"}
                             />}
                         <ButtonWrapper width={"90%"}>
                             <HomeConnectButton width={"460px"} active={active} left={"70%"} top={"31%"} close={close} click={toggleFees} height="60px" fontsize="17" colour="rgb(20, 29, 49)" text={selectedChain.short !== "ETH" ? `connect to ${selectedChain.short} to proceed` : "Next"}></HomeConnectButton>
