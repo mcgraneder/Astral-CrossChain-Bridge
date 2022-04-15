@@ -25,7 +25,8 @@ const WalletInputForm = ({ setText, text, getMaxDeposit, type, marginB }) => {
                     type={type === "address" ? "text" : "number"}  
                     value={text} 
                     onChange={(e) => setText(e.target.value)} 
-                    placeholder={type === "address" ? "Recipient address" : "Amount"}>
+                    placeholder={type === "address" ? "Recipient address" : "Amount"}
+                   >
                 </WalletInput>
                 <ForumIcon>
                     {type !== "address" 

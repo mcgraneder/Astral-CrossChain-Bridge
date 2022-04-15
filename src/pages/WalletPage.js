@@ -52,9 +52,8 @@ const WalletPage = () => {
     const [showTokenModal, setShowTokenModal] = useState(false)
     const [TransactionType, setTransactionType] = useState("DEPOSIT")
     const [gas, setGas] = useState(0)
-    const [transactionBlock, setTransactionBlock] = useState(true)
     const [sufficentApproval, setSufficentApproval] = useState(true)
-    const {library, account, chainId } = useWeb3React()
+    const { account } = useWeb3React()
 
     const { setPending, transactions, setTransactions } = useContext(TransactionStateContext)
     const { balance, setBalance } = useBalance()
@@ -108,14 +107,12 @@ const WalletPage = () => {
                 setPending1(false)
                 setPending(true)
                 setSubmitted(true)
-                setTransactionBlock(false)
 
                 result.wait().then((result) => {
                     setPending(false)
                     if (TransactionType === TRANSACTION_TYPES.APPROVAL) {
                         setSufficentApproval(true)
                     }
-                    setTransactionBlock(true)
 
                     const id = v4()
                     setTransactions([
@@ -147,7 +144,6 @@ const WalletPage = () => {
             const errorCodes = [4001, -32603]
             setPending1(false)
             setRejected(true)
-            setTransactionBlock(true)
 
             if (!errorCodes.includes(error.code)) {
                 if(error === "User denied transaction signature.") return
@@ -208,11 +204,9 @@ const WalletPage = () => {
                 text={text}
                 TransactionType={TransactionType}
                 setTransactionType={setTransactionType}
-                gas={gas}
                 setGas={setGas}
                 ren={ren}
                 bridge={bridge}
-                transactionBlock={transactionBlock}
                 balance={balance}
                 setSufficentApproval={setSufficentApproval}
                 sufficentApproval={sufficentApproval}
