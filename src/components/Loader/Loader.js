@@ -20,7 +20,7 @@ const StyledSVG = styled.svg`
 
 export default function Loader({
   size = '16px',
-  stroke,
+  stroke=1.5,
   ...rest
 }) {
   return (

@@ -9,8 +9,8 @@ import store from './Store/store';
 import { Provider } from 'react-redux';
 import { TransactionProvider } from "./contexts/transactionContext";
 
-function getLibrary(provider) {
-  const library = new Web3Provider(provider);
+function getLibrary(hello) {
+  const library = new Web3Provider(hello);
   library.pollingInterval = 8000;
   return library;
 }

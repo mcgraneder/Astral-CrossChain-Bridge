@@ -56,6 +56,7 @@ const WalletPage = () => {
     const [sufficentApproval, setSufficentApproval] = useState(true)
     const {library, account, chainId } = useWeb3React()
 
+
     const { setPending, transactions, setTransactions } = useContext(TransactionStateContext)
     const { balance, setBalance } = useBalance()
     const ren  = useContract(RenAddress, abi2)
@@ -78,8 +79,6 @@ const WalletPage = () => {
 
     const toggleTokenModal = () => setShowTokenModal(!showTokenModal)
     const handleTransaction = async(contractFunction) => {
-
-        if(text == 0 || text == "") return
         setConfirm(false)
         setPending1(true)
       
@@ -166,60 +165,7 @@ const WalletPage = () => {
         }
     }
     
-
-    return (
-
-        <>
-        <PendingModal 
-                close={() => setPending1(!pending1)} 
-                amount={text} 
-                visible={pending1}
-            />
-        <ConfirmationModal
-                close={() => setConfirm(!confirm)} 
-                amount={text} 
-                visible={confirm}
-                handleDeposit={
-                    TransactionType === "APPROVAL" ? () => handleTransaction(ren.approve) 
-                    : TransactionType === "DEPOSIT" ? () => handleTransaction(bridge.transferFrom) 
-                    : () => handleTransaction(bridge.transfer)
-                }
-                TransactionType={setTransactionType}
-                gass={gas}
-            />
-            <TransactionSubmittedModal
-                close={() => closeSbmissionModal()} 
-                amount={text} 
-                visible={submitted}
-            />
-            <RejectionModal
-                close={() => setRejected(!rejected)} 
-                amount={text} 
-                visible={rejected}
-            />
-        
-            <TokenListModal 
-                visible={showTokenModal} 
-                close={toggleTokenModal}
-            />
-            <WalletModal  
-                setConfirm={setConfirm}
-                setText={setText}
-                text={text}
-                TransactionType={TransactionType}
-                setTransactionType={setTransactionType}
-                gas={gas}
-                setGas={setGas}
-                ren={ren}
-                bridge={bridge}
-                transactionBlock={transactionBlock}
-                balance={balance}
-                setSufficentApproval={setSufficentApproval}
-                sufficentApproval={sufficentApproval}
-            />
-            
-        </>
-    )
+    return { handleTransaction}
 }
 
 export default React.memo(WalletPage)

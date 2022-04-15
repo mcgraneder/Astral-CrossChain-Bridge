@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BitcoinLogo from "../assets/Bitcoin.svg"
 import Web3	 from "web3";
 import Button from "./components/Button";
@@ -10,6 +10,7 @@ import {
          ButtonWrapper, 
          MintFormContainer, 
 } from "./WalletModalStyles";
+import { TransactionStateContext } from "../../contexts/transactionContext";
 import MintFormToggleTabs from "./components/MintFormToggleTabs";
 import WalletInputForm from "./components/WalletInput";
 import WalletTxDetails from "./components/WalletTxDetails";
@@ -58,6 +59,7 @@ const WalletModal = (
     const [sufficentBalance, setSufficentBalance] = useState(false)
     // const [sufficentApproval, setSufficentApproval] = useState(true)
     const [renPrice, setRenPrice] = useState(0)
+    const { pending } = useContext(TransactionStateContext)
     
     
     const { library, account, active} = useWeb3React()
@@ -127,8 +129,16 @@ const WalletModal = (
         }
     }, [TransactionType, account, bridge, ren, setSufficentApproval])
 
-    const start = (type) => { 
-        if(text === "" || !transactionBlock) return
+    const start = async (type) => { 
+        if(text === "" || text === "0" || pending) return
+
+        if (type === "WITHDRAWAL") {
+            let balance = await bridge.getContractTokenbalance("BTC")
+            balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+            if (Number(text) > balance) return 
+        } else if (type === "DEPOSIT") {
+            if (Number(text) > Number(balance)) return
+        }
         getGas()
         setConfirm(true)
         setTransactionType(type)
@@ -201,24 +211,22 @@ const WalletModal = (
                             sufficentApproval={sufficentApproval} 
                             sufficentBalance={sufficentBalance} 
                             text={text} 
-                            loading={loading} 
+                            loading={pending} 
                             start={start}
                         />
                         <ButtonWrapper>
                             <Button 
                                 state={sufficentApproval} 
                                 balanceState={sufficentBalance}
-                                width={"440px"} 
                                 active={active} 
                                 input={text}
                                 click={
                                     inputText === "Withdraw " ? 
                                     () => start(TRANSACTION_TYPES.WITHDRAWAL) : 
-                                    () => start(TRANSACTION_TYPES.DEPOSIT)} 
-                                height="60px" 
-                                fontsize="17"  
-                                transactionBlock={transactionBlock}
-                                inputText={inputText}
+                                    () => start(TRANSACTION_TYPES.DEPOSIT)
+                                } 
+                                TransactionType={TransactionType}
+                                pending={pending}
                                 text={text}
                             ></Button>
                         </ButtonWrapper>
