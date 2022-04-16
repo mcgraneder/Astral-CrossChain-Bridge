@@ -47,29 +47,35 @@ const WalletModal = (
         setGas, 
         bridge, 
         ren, 
+        loading,
         balance,
         sufficentApproval,
         setSufficentApproval
     }
 ) => {
     const [toggle, setToggle] = useState(true)
+    const [inputText, setInputText] = useState("Deposit ")
+    const [transactionBlock, setTransactionBlock] = useState(true)
     const [sufficentBalance, setSufficentBalance] = useState(false)
+    // const [sufficentApproval, setSufficentApproval] = useState(true)
     const [renPrice, setRenPrice] = useState(0)
-
     const { pending } = useContext(TransactionStateContext)
+    
+    
     const { library, account, active} = useWeb3React()
   
     useEffect(() => {
         if(!localStorage.getItem("provider")) window.location.href = "/" 
+        setTransactionBlock(true)
       }, [])
 
 
     const getMaxDeposit = async() => {
-        if(TransactionType === TRANSACTION_TYPES.DEPOSIT) {
+        if(TransactionType === "DEPOSIT") {
             var walletBalance = await ren.balanceOf(account)
             walletBalance = Web3.utils.fromWei(walletBalance.toString(), "Gwei")
             setText(walletBalance)
-        } else if (TransactionType === TRANSACTION_TYPES.WITHDRAWAL) setText(balance) 
+        } else if (TransactionType === "WITHDRAWAL") setText(balance) 
     }
 
     const getAllowance = React.useCallback(async(amount) => {
@@ -100,10 +106,7 @@ const WalletModal = (
     const getBalance = React.useCallback(async(amount) => {
         let bal
         try {
-            if (
-                TransactionType === TRANSACTION_TYPES.DEPOSIT || 
-                TransactionType === TRANSACTION_TYPES.DEPOSIT
-            ) {
+            if (TransactionType === "DEPOSIT" || TransactionType === "APPROVAL") {
                 bal = await ren.balanceOf(account)
                 bal = Web3.utils.fromWei(bal.toString(), "Gwei")
                 if(Number(bal) >= Number(amount)) {
@@ -111,7 +114,7 @@ const WalletModal = (
                 } else {
                     setSufficentBalance(true)
                 }
-            } else if (TransactionType === TRANSACTION_TYPES.WITHDRAWAL) {
+            } else if (TransactionType === "WITHDRAWAL") {
                 bal = await bridge.getContractTokenbalance("BTC")
                 bal = Web3.utils.fromWei(bal.toString(), "Gwei")
                 if(Number(bal) >= Number(amount)) {
@@ -129,12 +132,14 @@ const WalletModal = (
     const start = async (type) => { 
         if(text === "" || text === "0" || pending) return
 
-        if (type === TRANSACTION_TYPES.WITHDRAWAL) {
+        if (type === "WITHDRAWAL") {
             let balance = await bridge.getContractTokenbalance("BTC")
             balance = Web3.utils.fromWei(balance.toString(), "Gwei")
             if (Number(text) > balance) return 
-        } else if (type === TRANSACTION_TYPES.DEPOSIT) {
-            if (Number(text) > Number(balance)) return
+        } else if (type === "DEPOSIT") {
+            let balance = await ren.balanceOf(account)
+            balance = Web3.utils.fromWei(balance.toString(), "Gwei")
+            if (Number(text) < Number(balance)) return
         }
         getGas()
         setConfirm(true)
@@ -157,7 +162,7 @@ const WalletModal = (
                 setRenPrice(currentBal) 
             }).catch(error => console.error(error))
 
-            if(TransactionType === TRANSACTION_TYPES.DEPOSIT) {
+            if(inputText === "Deposit ") {
                 if(ren != null) beginDeposit()
             } else {
                 if (ren != null) {
@@ -167,30 +172,22 @@ const WalletModal = (
             }
         }
 
-     }, [library, balance, text, beginDeposit, getBalance, TransactionType, ren, setSufficentApproval])
+     }, [library, balance, text, beginDeposit, getBalance, inputText, ren, setSufficentApproval])
 
     const setToggleValue = () => {
         setToggle(!toggle);
 
         if(!toggle) {
-            setTransactionType(TRANSACTION_TYPES.DEPOSIT) 
+            setInputText("Deposit ")
+            setTransactionType("DEPOSIT") 
             beginDeposit()
         } else {
+            setInputText("Withdraw ")
             setSufficentApproval(true)
-            setTransactionType(TRANSACTION_TYPES.WITHDRAWAL)  
+            setTransactionType("WITHDRAWAL")  
         }
         setText("")
     }
-
-    const handleEnter = (e) => {
-        e.preventDefault()
-        if (e.key === 'Enter') {
-            TransactionType === TRANSACTION_TYPES.WITHDRAWAL  
-            ? start(TRANSACTION_TYPES.WITHDRAWAL)
-            : start(TRANSACTION_TYPES.DEPOSIT)
-        } else return
-    }
-        
 
     return (
 
@@ -211,14 +208,12 @@ const WalletModal = (
                             setText={setText}
                             type={"amount"}
                             marginB={"5px"}
-                            start={start}
-
                         />    
                         <WalletTxDetails  
                             sufficentApproval={sufficentApproval} 
                             sufficentBalance={sufficentBalance} 
                             text={text} 
-                            loading={pending} 
+                            loading={loading} 
                             start={start}
                         />
                         <ButtonWrapper>
@@ -228,14 +223,13 @@ const WalletModal = (
                                 active={active} 
                                 input={text}
                                 click={
-                                    TransactionType === TRANSACTION_TYPES.WITHDRAWAL ? 
+                                    inputText === "Withdraw " ? 
                                     () => start(TRANSACTION_TYPES.WITHDRAWAL) : 
                                     () => start(TRANSACTION_TYPES.DEPOSIT)
                                 } 
                                 TransactionType={TransactionType}
                                 pending={pending}
                                 text={text}
-                                handleEnter={handleEnter}
                             ></Button>
                         </ButtonWrapper>
                     </MintFormWrapper>

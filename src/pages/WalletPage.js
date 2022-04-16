@@ -112,6 +112,7 @@ const WalletPage = () => {
                     setPending(false)
                     if (TransactionType === TRANSACTION_TYPES.APPROVAL) {
                         setSufficentApproval(true)
+                        setTransactionType(TRANSACTION_TYPES.DEPOSIT)
                     }
 
                     const id = v4()

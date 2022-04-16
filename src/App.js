@@ -7,15 +7,11 @@ import { TransactionProvider } from "./contexts/transactionContext";
 import { paths } from "./pages/routes";
 import NotFoundPage from "./pages/NotFoundPage";
 import IsMobilePage from "./pages/IsMobilePage";
-import GridMain from "./pages/LayoutStyles"
 
 const MainPage = lazy(() => import("./pages/MainPage"));
-const HomePage = lazy(() => import("./pages/HomePage"));
 const InstallMetamaskPage = lazy(() => import("./pages/InstallMetamaskPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
-
-
 
 const MAIN_PAGE_PATHS = [
   paths.BRIDGE,
